@@ -349,6 +349,19 @@
               }
             }
 
+
+            /* FIX V3: beri ruang ekstra di bawah agar chat terakhir tidak ketutup box input fixed */
+            #pg-assist #chat-msgs{
+              padding-bottom:calc(var(--chat-input-h) + 86px)!important;
+              scroll-padding-bottom:calc(var(--chat-input-h) + 86px)!important;
+            }
+            @media(max-width:899px){
+              #pg-assist #chat-msgs{
+                padding-bottom:calc(var(--chat-input-h) + var(--nav-h) + var(--s-b) + 42px)!important;
+                scroll-padding-bottom:calc(var(--chat-input-h) + var(--nav-h) + var(--s-b) + 42px)!important;
+              }
+            }
+
         </style>
     </head>
     <body>
@@ -602,19 +615,19 @@
 
             function fixChatScrollArea(){
                 var bottom=document.querySelector('#pg-assist .pp-bottom');
-                if(bottom){
-                    document.documentElement.style.setProperty('--chat-input-h',(bottom.offsetHeight+18)+'px');
-                }
+                var bottomH = bottom ? bottom.offsetHeight : 110;
 
-                // Penting: tinggi area chat dihitung manual supaya yang scroll hanya pesan,
-                // sementara box input tetap diam di bawah.
+                // Lebihkan ruang bawah supaya pesan terakhir masih bisa discroll naik
+                // dan tidak ketutup oleh box input fixed + bottom nav.
+                document.documentElement.style.setProperty('--chat-input-h',(bottomH+72)+'px');
+
                 if(chatMsgs && chat && chat.classList.contains('on')){
                     var chatTop=chat.getBoundingClientRect().top;
                     var bottomTop=bottom ? bottom.getBoundingClientRect().top : window.innerHeight;
-                    var available=bottomTop-chatTop-10;
+                    var available=bottomTop-chatTop-14;
 
                     if(!isFinite(available) || available < 180){
-                        available=window.innerHeight-chatTop-(bottom ? bottom.offsetHeight : 110)-90;
+                        available=window.innerHeight-chatTop-bottomH-110;
                     }
 
                     available=Math.max(180, available);
@@ -624,10 +637,19 @@
                     chatMsgs.style.overflowX='hidden';
                     chatMsgs.style.webkitOverflowScrolling='touch';
                     chatMsgs.style.touchAction='pan-y';
+                    chatMsgs.style.paddingBottom='calc(var(--chat-input-h) + 86px)';
+                    chatMsgs.style.scrollPaddingBottom='calc(var(--chat-input-h) + 86px)';
                 }
             }
             window.addEventListener('resize',fixChatScrollArea);
             window.addEventListener('orientationchange',function(){setTimeout(fixChatScrollArea,300)});
+            function scrollChatToBottom(){
+                if(!chatMsgs) return;
+                fixChatScrollArea();
+                requestAnimationFrame(function(){
+                    chatMsgs.scrollTop = chatMsgs.scrollHeight + 9999;
+                });
+            }
 
             var isBusy=false,chatStarted=false;
             var selPairs=[{t:"s-m0",d:"d-m0",w:"w-m0",l:"l-m0",type:"model"},{t:"s-l0",d:"d-l0",w:"w-l0",l:"l-l0",type:"lang"}];
@@ -665,7 +687,7 @@
 
             function sendFrom(input){if(isBusy)return;var msg=input.value.trim();if(!msg)return;input.value="";input.style.height="auto";if(!chatStarted)toChat();addMsg(msg,"user");state.ch.push({role:"user",parts:[{text:msg}]});state.ch=state.ch.slice(-10);save();setBusy(true);
             var tp=document.createElement("div");tp.className="pp-msg";tp.id="typing";tp.innerHTML='<div class="pp-msg-bot"><div class="pp-msg-ava"><i class="fas fa-comment-dots"></i></div><div class="pp-msg-body"><div class="pp-msg-name">Plong</div><div class="pp-bbl-bot" style="color:var(--t4)">Mengetik...</div></div></div>';
-            chatMsgs.appendChild(tp);fixChatScrollArea();requestAnimationFrame(function(){chatMsgs.scrollTop=chatMsgs.scrollHeight});
+            chatMsgs.appendChild(tp);scrollChatToBottom();
             fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:msg,model:state.gm||"qwen2.5:1.5b",language:state.al||"id",history:state.ch})})
             .then(function(r){return r.json()})
             .then(function(data){tp.remove();var reply=data.reply||"Aku belum bisa jawab sekarang.";addMsg(reply,"bot");state.ch.push({role:"model",parts:[{text:reply}]});state.ch=state.ch.slice(-10);save();addFollowUps()})
@@ -688,7 +710,7 @@
                         sendFrom(chatInput);
                     });
                 });
-                chatMsgs.scrollTop=chatMsgs.scrollHeight;
+                scrollChatToBottom();
             }
 
             function setBusy(b){isBusy=b;heroInput.disabled=b;chatInput.disabled=b;heroSend.disabled=b;chatSendBtn.disabled=b;chatInput.placeholder=b?"Plong sedang mengetik...":"Tanya lagi...";heroInput.placeholder=b?"Plong sedang mengetik...":"Ceritakan apa yang kamu rasakan..."}
