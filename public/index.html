@@ -320,6 +320,35 @@
               }
             }
 
+
+            /* FIX FINAL V2: pesan bisa discroll, input tetap diam */
+            #pg-assist .pp-chat.on{
+              display:flex!important;
+              flex-direction:column!important;
+              height:100%!important;
+              min-height:0!important;
+              overflow:hidden!important;
+            }
+            #pg-assist #chat-msgs{
+              flex:0 0 auto!important;
+              min-height:180px!important;
+              overflow-y:auto!important;
+              overflow-x:hidden!important;
+              touch-action:pan-y!important;
+              overscroll-behavior:contain!important;
+              -webkit-overflow-scrolling:touch!important;
+              padding-bottom:24px!important;
+            }
+            #pg-assist .pp-bottom{
+              pointer-events:auto!important;
+            }
+            @media(max-width:899px){
+              #pg-assist #chat-msgs{
+                padding-left:0!important;
+                padding-right:0!important;
+              }
+            }
+
         </style>
     </head>
     <body>
@@ -576,8 +605,29 @@
                 if(bottom){
                     document.documentElement.style.setProperty('--chat-input-h',(bottom.offsetHeight+18)+'px');
                 }
+
+                // Penting: tinggi area chat dihitung manual supaya yang scroll hanya pesan,
+                // sementara box input tetap diam di bawah.
+                if(chatMsgs && chat && chat.classList.contains('on')){
+                    var chatTop=chat.getBoundingClientRect().top;
+                    var bottomTop=bottom ? bottom.getBoundingClientRect().top : window.innerHeight;
+                    var available=bottomTop-chatTop-10;
+
+                    if(!isFinite(available) || available < 180){
+                        available=window.innerHeight-chatTop-(bottom ? bottom.offsetHeight : 110)-90;
+                    }
+
+                    available=Math.max(180, available);
+                    chatMsgs.style.height=available+'px';
+                    chatMsgs.style.maxHeight=available+'px';
+                    chatMsgs.style.overflowY='auto';
+                    chatMsgs.style.overflowX='hidden';
+                    chatMsgs.style.webkitOverflowScrolling='touch';
+                    chatMsgs.style.touchAction='pan-y';
+                }
             }
             window.addEventListener('resize',fixChatScrollArea);
+            window.addEventListener('orientationchange',function(){setTimeout(fixChatScrollArea,300)});
 
             var isBusy=false,chatStarted=false;
             var selPairs=[{t:"s-m0",d:"d-m0",w:"w-m0",l:"l-m0",type:"model"},{t:"s-l0",d:"d-l0",w:"w-l0",l:"l-l0",type:"lang"}];
@@ -599,7 +649,7 @@
             heroInput.addEventListener("input",function(){autoR(heroInput)});
             chatInput.addEventListener("input",function(){autoR(chatInput)});
 
-            function toChat(){if(chatStarted)return;chatStarted=true;cloneDropdowns();hero.classList.add("hide");chat.classList.add("on");fixChatScrollArea();setTimeout(function(){fixChatScrollArea();chatInput.focus()},100)}
+            function toChat(){if(chatStarted)return;chatStarted=true;cloneDropdowns();hero.classList.add("hide");chat.classList.add("on");fixChatScrollArea();setTimeout(function(){fixChatScrollArea();chatInput.focus()},100);setTimeout(fixChatScrollArea,350)}
 
             heroSend.addEventListener("click",function(){sendFrom(heroInput)});
             chatSendBtn.addEventListener("click",function(){sendFrom(chatInput)});
@@ -631,6 +681,7 @@
                 wrap.innerHTML='<div class="pp-msg-ava" style="visibility:hidden"><i class="fas fa-comment-dots"></i></div><div class="pp-msg-body"><div class="pp-fu">'+
                     shuffled.map(function(q){return '<button class="pp-fu-btn" data-q="'+escA(q)+'">'+escH(q)+"</button>"}).join("")+"</div></div>";
                 chatMsgs.appendChild(wrap);
+                fixChatScrollArea();
                 wrap.querySelectorAll(".pp-fu-btn").forEach(function(b){
                     b.addEventListener("click",function(){
                         chatInput.value=b.dataset.q;
