@@ -128,7 +128,7 @@ app.get('/api/models', async (req, res) => {
 
 app.post('/api/chat', async (req, res) => {
   try {
-    const model = req.body.model || 'qwen3.5:0.8b';
+    const model = req.body.model || 'qwen2.5:1.5b';
     const language = req.body.language || 'id';
 
     const system = getSystemPrompt(language);
