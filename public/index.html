@@ -476,7 +476,7 @@
                 <!-- ═══════ ASSIST ═══════ -->
                 <section id="pg-assist" class="pg" aria-label="Asisten">
                     <select id="sel-model" class="sr-only" aria-label="Model">
-                        <option value="qwen2.5:1.5b">Curhat Santai</option>
+                        <option value="qwen3.5:0.8b">Curhat Santai</option>
                         <option disabled value="qwen2.5:0.5b">PokoAI 1.2</option>
                     </select>
                     <select id="sel-lang" class="sr-only" aria-label="Bahasa">
@@ -506,7 +506,7 @@
                                     <div class="pp-drop" id="d-m0" role="listbox" aria-label="Model">
                                         <div class="pp-drop-hd"><span class="pp-drop-hd-t">Model</span><span class="pp-drop-hd-b">Beta</span></div>
                                         <div class="pp-drop-body">
-                                            <button type="button" class="pp-opt" data-model="qwen2.5:1.5b" role="option">
+                                            <button type="button" class="pp-opt" data-model="qwen3.5:0.8b" role="option">
                                                 <span class="pp-opt-ic"><i class="fas fa-heart"></i></span><span class="pp-opt-bd"><span class="pp-opt-nm">Curhat Santai</span><span class="pp-opt-ds">Powered by POKO 1.0</span></span><span class="pp-opt-end"><span class="pp-tg pp-tg--ok">Latest</span><span class="pp-ck"><i class="fas fa-check"></i></span></span>
                                             </button>
                                             <button type="button" class="pp-opt" data-model="qwen2.5:0.5b" role="option" disabled>
@@ -647,13 +647,13 @@
         <script>
             var EMO={marah:{label:"Marah",color:"#DC2626",hue:0,icon:"fa-fire",desc:"Api Chaos"},sedih:{label:"Sedih",color:"#2563EB",hue:220,icon:"fa-droplet",desc:"Aqua Tears"},galau:{label:"Galau",color:"#9333EA",hue:280,icon:"fa-hurricane",desc:"Wind Void"},stres:{label:"Stres",color:"#D97706",hue:35,icon:"fa-bolt",desc:"Spark Friction"},excited:{label:"Excited",color:"#CA8A04",hue:50,icon:"fa-star",desc:"Solar Burst"},tenang:{label:"Tenang",color:"#0D9488",hue:170,icon:"fa-leaf",desc:"Calm Pulse"}};
             var PRODS=[{id:"p1",name:"Coklat Virtual",desc:"Bikin plong makin bahagia",price:50,icon:"🍫"},{id:"p2",name:"Taman Mimpi",desc:"Background eksklusif baru",price:120,icon:"🌸"},{id:"p3",name:"Mahkota Emosi",desc:"Aksesoris makhlukmu",price:0,icon:"👑"},{id:"p4",name:"Bola Kristal",desc:"Lihat prediksi mood minggu ini",price:80,icon:"🔮"},{id:"p5",name:"Sayap Emas",desc:"Evolusi visual karakter",price:350,icon:"✨"}];
-            var ML2={"qwen2.5:1.5b":"Curhat Santai","qwen2.5:0.5b":"PokoAI 1.2"};
+            var ML2={"qwen3.5:0.8b":"Curhat Santai","qwen2.5:0.5b":"PokoAI 1.2"};
             var AL={id:{label:"Indonesia santai",welcome:"Hei! Aku Plong 👋 Aku di sini buat nemenin kamu. Mau cerita apa hari ini?"},"id-formal":{label:"Indonesia formal",welcome:"Halo, aku Plong 👋 Aku siap menemanimu. Apa yang ingin kamu ceritakan?"},en:{label:"English",welcome:"Hey, I'm Plong 👋 I'm here with you. What would you like to talk about?"},"jv-ngoko":{label:"Jawa ngoko",welcome:"Hei, aku Plong 👋 Aku neng kene ngancani kowe."},"jv-krama":{label:"Jawa krama",welcome:"Sugeng rawuh, kula Plong 👋 Kula siap ngancani panjenangan."},su:{label:"Sunda",welcome:"Hai, abdi Plong 👋 Abdi aya di dieu kanggo ngadangu."},ms:{label:"Melayu",welcome:"Hai, saya Plong 👋 Saya ada di sini untuk menemani kamu."}};
             var FOLLOWS=["Gimana cara aku bisa lebih tenang?","Ceritakan hal positif dong","Aku bingung mau ngambil keputusan","Bantu aku pahami perasaanku","Bantu aku urai pelan-pelan","Aku butuh kalimat penyemangat"];
 
             function gLK(){var k=state.al||"id";return AL[k]?k:"id"}
             function gL(){return AL[gLK()]||AL.id}
-            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50},emotions:{tenang:0},art:[],ch:[],gm:"qwen2.5:1.5b",al:"id"};
+            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50},emotions:{tenang:0},art:[],ch:[],gm:"qwen3.5:0.8b",al:"id"};
             function save(){try{localStorage.setItem("vkm",JSON.stringify(state))}catch(e){}}
             function load(){try{var d=JSON.parse(localStorage.getItem("vkm"));if(d)for(var k in d)if(d.hasOwnProperty(k))state[k]=d[k]}catch(e){}}
             load();
@@ -770,10 +770,10 @@
             function togD(p){var d=document.getElementById(p.d),t=document.getElementById(p.t);if(!d||!t)return;var will=!d.classList.contains("show");closeD(will?p.w:null);if(will){d.classList.add("show");d.style.visibility="hidden";posDrop(t,d);d.style.visibility="";t.classList.add("open");t.setAttribute("aria-expanded","true")}else{d.classList.remove("show");t.classList.remove("open");t.setAttribute("aria-expanded","false")}}
             function syncM(v){selPairs.filter(function(p){return p.type==="model"}).forEach(function(p){var d=document.getElementById(p.d);if(!d)return;d.querySelectorAll(".pp-opt[data-model]").forEach(function(o){var on=o.dataset.model===v;o.classList.toggle("on",on);o.setAttribute("aria-selected",on?"true":"false")});var l=document.getElementById(p.l);if(l)l.textContent=ML2[v]||v})}
             function syncL(v){selPairs.filter(function(p){return p.type==="lang"}).forEach(function(p){var d=document.getElementById(p.d);if(!d)return;d.querySelectorAll(".pp-opt[data-lang]").forEach(function(o){var on=o.dataset.lang===v;o.classList.toggle("on",on);o.setAttribute("aria-selected",on?"true":"false")});var l=document.getElementById(p.l);if(l)l.textContent=AL[v]?AL[v].label:"Indonesia santai"})}
-            function setM(v,s){if(s===undefined)s=true;var opts=document.querySelectorAll('.pp-opt[data-model="'+v+'"]');var ok=false;opts.forEach(function(o){if(!o.disabled)ok=true});var fv=ok?v:"qwen2.5:1.5b";state.gm=fv;syncM(fv);save();closeD();if(s)toast("Model: "+(ML2[fv]||fv))}
+            function setM(v,s){if(s===undefined)s=true;var opts=document.querySelectorAll('.pp-opt[data-model="'+v+'"]');var ok=false;opts.forEach(function(o){if(!o.disabled)ok=true});var fv=ok?v:"qwen3.5:0.8b";state.gm=fv;syncM(fv);save();closeD();if(s)toast("Model: "+(ML2[fv]||fv))}
             function setL(v,s){if(s===undefined)s=true;var fv=AL[v]?v:"id";state.al=fv;syncL(fv);save();closeD();if(s)toast("Bahasa: "+(AL[fv]?AL[fv].label:v))}
 
-            function initSel(){selPairs.forEach(function(p){var t=document.getElementById(p.t);if(t)t.addEventListener("click",function(e){e.stopPropagation();togD(p)})});document.querySelectorAll("#d-m0 .pp-opt[data-model]").forEach(function(o){o.addEventListener("click",function(e){e.stopPropagation();if(o.disabled){toast("Model maintenance");return}setM(o.dataset.model)})});document.querySelectorAll("#d-l0 .pp-opt[data-lang]").forEach(function(o){o.addEventListener("click",function(e){e.stopPropagation();setL(o.dataset.lang)})});document.addEventListener("click",function(e){if(!e.target.closest(".pp-sel-btn")&&!e.target.closest(".pp-drop"))closeD()});document.addEventListener("keydown",function(e){if(e.key==="Escape")closeD()});window.addEventListener("resize",function(){selPairs.forEach(function(p){var d=document.getElementById(p.d),t=document.getElementById(p.t);if(d&&d.classList.contains("show"))posDrop(t,d)})});setM(state.gm||"qwen2.5:1.5b",false);setL(gLK(),false)}
+            function initSel(){selPairs.forEach(function(p){var t=document.getElementById(p.t);if(t)t.addEventListener("click",function(e){e.stopPropagation();togD(p)})});document.querySelectorAll("#d-m0 .pp-opt[data-model]").forEach(function(o){o.addEventListener("click",function(e){e.stopPropagation();if(o.disabled){toast("Model maintenance");return}setM(o.dataset.model)})});document.querySelectorAll("#d-l0 .pp-opt[data-lang]").forEach(function(o){o.addEventListener("click",function(e){e.stopPropagation();setL(o.dataset.lang)})});document.addEventListener("click",function(e){if(!e.target.closest(".pp-sel-btn")&&!e.target.closest(".pp-drop"))closeD()});document.addEventListener("keydown",function(e){if(e.key==="Escape")closeD()});window.addEventListener("resize",function(){selPairs.forEach(function(p){var d=document.getElementById(p.d),t=document.getElementById(p.t);if(d&&d.classList.contains("show"))posDrop(t,d)})});setM(state.gm||"qwen3.5:0.8b",false);setL(gLK(),false)}
             initSel();
 
             function autoR(ta){ta.style.height="auto";ta.style.height=Math.min(ta.scrollHeight,140)+"px"}
@@ -820,7 +820,7 @@
                 tp.innerHTML='<div class="pp-msg-bot"><div class="pp-msg-ava"><i class="fas fa-comment-dots"></i></div><div class="pp-msg-body"><div class="pp-msg-name">Plong</div><div class="pp-bbl-bot" style="color:var(--t4)">Mengetik...</div></div></div>';
                 chatMsgs.appendChild(tp);
                 scrollToBottom();
-                fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:msg,model:state.gm||"qwen2.5:1.5b",language:state.al||"id",history:state.ch})})
+                fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:msg,model:state.gm||"qwen3.5:0.8b",language:state.al||"id",history:state.ch})})
                 .then(function(r){return r.json()})
                 .then(function(data){
                     tp.remove();
