@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-const OLLAMA_URL = process.env.OLLAMA_URL || 'http://localhost:11434';
+const OLLAMA_URL = 'https://desktop-bh6k0ih.taildd515d.ts.net';
 
 app.use(cors());
 app.use(express.json({ limit: '1mb' }));
