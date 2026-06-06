@@ -491,7 +491,7 @@
 
                     <!-- HERO -->
                     <div class="pp-hero" id="pp-hero">
-                        <div class="pp-hero-logo">Hai, <div class="pp-hero-logo" id="acct-name-display">User</div>
+                        <div class="pp-hero-logo" id="hero-greeting">Hai, VokaMon User</div>
                         <div class="pp-hero-sub">Teman emosionalmu. Tanya apa saja.</div>
                         <div class="pp-input-wrap">
                             <div class="pp-input-box">
@@ -662,6 +662,49 @@
             if(!state.account.name)state.account.name="VokaMon User";
             if(!state.account.bio)state.account.bio="Lagi belajar memahami emosi pelan-pelan.";
 
+            function cleanUserName(name){
+                name=String(name||"").trim();
+                if(!name)return "";
+                if(name.charAt(0)==="@")name=name.slice(1);
+                return name.slice(0,32);
+            }
+            function getStoredUserName(){
+                var fallback=cleanUserName(state.account&&state.account.name)||"VokaMon User";
+
+                /* Utama: ambil dari localStorage vkm.account.name */
+                try{
+                    var vkm=JSON.parse(localStorage.getItem("vkm")||"{}");
+                    var fromVkm=cleanUserName(vkm&&vkm.account&&vkm.account.name);
+                    if(fromVkm)return fromVkm;
+                }catch(e){}
+
+                /* Cadangan kalau nanti auth/server menyimpan user di key lain */
+                var keys=["vkm_user","vokamon_user","authUser","currentUser","user"];
+                for(var i=0;i<keys.length;i++){
+                    try{
+                        var raw=localStorage.getItem(keys[i]);
+                        if(!raw)continue;
+                        var data=JSON.parse(raw);
+                        var candidate=cleanUserName(data.name||data.fullName||data.displayName||data.username);
+                        if(candidate)return candidate;
+                    }catch(e){}
+                }
+
+                /* Cadangan kalau nama disimpan sebagai string biasa */
+                var simpleKeys=["vkm_name","user_name","display_name"];
+                for(var j=0;j<simpleKeys.length;j++){
+                    var simple=cleanUserName(localStorage.getItem(simpleKeys[j]));
+                    if(simple)return simple;
+                }
+
+                return fallback;
+            }
+            function updateHeroGreeting(){
+                var el=document.getElementById("hero-greeting");
+                if(el)el.textContent="Hai, "+getStoredUserName();
+            }
+            updateHeroGreeting();
+
             function go(id){
                 document.querySelectorAll(".pg").forEach(function(p){
                     p.classList.remove("on");
@@ -727,6 +770,7 @@
                 accVal("acc-name",acc.name||"");
                 accVal("acc-username",acc.username||"");
                 accVal("acc-bio",acc.bio||"");
+                updateHeroGreeting();
             }
             function initAccount(){
                 var saveBtn=document.getElementById("acc-save"),clearBtn=document.getElementById("acc-clear-chat"),resetBtn=document.getElementById("acc-reset");
@@ -735,7 +779,7 @@
                     var username=(u&&u.value.trim())||"@vokamon.user";
                     if(username.charAt(0)!=="@")username="@"+username;
                     state.account={name:(n&&n.value.trim())||"VokaMon User",username:username,bio:(b&&b.value.trim())||"Lagi belajar memahami emosi pelan-pelan."};
-                    save();renderAccount();toast("Profil disimpan");
+                    save();renderAccount();updateHeroGreeting();toast("Profil disimpan");
                 });
                 if(clearBtn)clearBtn.addEventListener("click",function(){
                     if(!confirm("Hapus semua riwayat chat?"))return;
