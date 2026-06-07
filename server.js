@@ -109,13 +109,21 @@ function defaultAppState(user = {}) {
       exp: 0,
       expMax: 30,
       hunger: 50,
-      happy: 50
+      happy: 50,
+      accessory: '',
+      background: '',
+      wings: false,
+      lastCareAt: new Date().toISOString()
     },
     emotions: {
       tenang: 0
     },
     art: [],
     ch: [],
+    vents: [],
+    inventory: [],
+    redeemHistory: [],
+    lastCrystal: null,
     gm: 'qwen2.5:3b',
     al: 'id',
     account: {
@@ -127,25 +135,25 @@ function defaultAppState(user = {}) {
 }
 
 function safeParseState(raw, user) {
-  if (!raw) return defaultAppState(user);
+  if (!raw) return ensureGameState(defaultAppState(user), user);
 
   try {
     const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
     if (parsed && typeof parsed === 'object') {
-      return {
+      return ensureGameState({
         ...defaultAppState(user),
         ...parsed,
         account: {
           ...defaultAppState(user).account,
           ...(parsed.account || {})
         }
-      };
+      }, user);
     }
   } catch (error) {
     console.warn('Gagal parse state_json:', error.message);
   }
 
-  return defaultAppState(user);
+  return ensureGameState(defaultAppState(user), user);
 }
 
 async function getUserById(id) {
@@ -258,6 +266,239 @@ Plong: "Wajar kok kamu kesel. Kadang kalau terlalu banyak yang ditahan, rasanya 
 User: "aku bingung"
 Plong: "Oke, kita pelan-pelan aja. Coba ceritain dulu bagian yang paling bikin kamu kepikiran sekarang."
 `.trim();
+}
+
+
+const ALLOWED_MOODS = ['marah', 'sedih', 'galau', 'stres', 'excited', 'tenang'];
+
+const PRODUCT_CATALOG = {
+  p1: {
+    id: 'p1', name: 'Coklat Virtual', price: 50, icon: '🍫', type: 'consumable',
+    desc: 'Naikkan kenyang dan bahagia Plong.',
+    apply(state) {
+      state.pet.hunger = clamp((state.pet.hunger || 0) + 28, 0, 100);
+      state.pet.happy = clamp((state.pet.happy || 0) + 18, 0, 100);
+      return 'Plong makan coklat virtual dan kelihatan lebih happy.';
+    }
+  },
+  p2: {
+    id: 'p2', name: 'Taman Mimpi', price: 120, icon: '🌸', type: 'unlock', key: 'bg_dream_garden',
+    desc: 'Unlock background eksklusif untuk Plong.',
+    apply(state) {
+      state.pet.background = 'dream_garden';
+      return 'Background Taman Mimpi sudah aktif.';
+    }
+  },
+  p3: {
+    id: 'p3', name: 'Mahkota Emosi', price: 80, icon: '👑', type: 'unlock', key: 'acc_crown',
+    desc: 'Aksesoris mahkota untuk Plong.',
+    apply(state) {
+      state.pet.accessory = 'crown';
+      return 'Mahkota Emosi sudah dipakai oleh Plong.';
+    }
+  },
+  p4: {
+    id: 'p4', name: 'Bola Kristal', price: 90, icon: '🔮', type: 'consumable',
+    desc: 'Buat refleksi mood ringan dari komposisi emosi.',
+    apply(state) {
+      const dominant = getDominantMood(state.emotions || {});
+      state.lastCrystal = {
+        mood: dominant,
+        text: getCrystalText(dominant),
+        createdAt: new Date().toISOString()
+      };
+      state.pet.happy = clamp((state.pet.happy || 0) + 8, 0, 100);
+      return state.lastCrystal.text;
+    }
+  },
+  p5: {
+    id: 'p5', name: 'Sayap Emas', price: 350, icon: '✨', type: 'unlock', key: 'acc_wings',
+    desc: 'Evolusi visual karakter Plong.',
+    apply(state) {
+      state.pet.wings = true;
+      state.pet.happy = clamp((state.pet.happy || 0) + 20, 0, 100);
+      return 'Sayap Emas aktif. Plong kelihatan makin spesial.';
+    }
+  }
+};
+
+function clamp(value, min, max) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return min;
+  return Math.max(min, Math.min(max, n));
+}
+
+function ensureGameState(state, user) {
+  const base = defaultAppState(user || {});
+  const next = { ...base, ...(state || {}) };
+  next.pet = { ...base.pet, ...(next.pet || {}) };
+  next.account = { ...base.account, ...(next.account || {}) };
+  next.emotions = { ...base.emotions, ...(next.emotions || {}) };
+  next.art = Array.isArray(next.art) ? next.art : [];
+  next.ch = Array.isArray(next.ch) ? next.ch : [];
+  next.vents = Array.isArray(next.vents) ? next.vents : [];
+  next.inventory = Array.isArray(next.inventory) ? next.inventory : [];
+  next.redeemHistory = Array.isArray(next.redeemHistory) ? next.redeemHistory : [];
+  next.pet.hunger = clamp(next.pet.hunger, 0, 100);
+  next.pet.happy = clamp(next.pet.happy, 0, 100);
+  next.pet.level = Math.max(1, Number(next.pet.level || 1));
+  next.pet.exp = Math.max(0, Number(next.pet.exp || 0));
+  next.pet.expMax = Math.max(30, Number(next.pet.expMax || 30));
+  next.coins = Math.max(0, Math.floor(Number(next.coins || 0)));
+  return next;
+}
+
+function addPetExp(state, exp) {
+  state.pet.exp += Math.max(0, Math.floor(Number(exp || 0)));
+  let leveled = false;
+  while (state.pet.exp >= state.pet.expMax) {
+    state.pet.exp -= state.pet.expMax;
+    state.pet.level += 1;
+    state.pet.expMax = Math.max(30, Math.floor(state.pet.expMax * 1.35));
+    state.pet.happy = clamp((state.pet.happy || 0) + 8, 0, 100);
+    leveled = true;
+  }
+  return leveled;
+}
+
+function getDominantMood(emotions = {}) {
+  const entries = Object.entries(emotions).filter(([, v]) => Number(v) > 0);
+  if (!entries.length) return 'tenang';
+  entries.sort((a, b) => Number(b[1]) - Number(a[1]));
+  return ALLOWED_MOODS.includes(entries[0][0]) ? entries[0][0] : 'tenang';
+}
+
+function getCrystalText(mood) {
+  const map = {
+    marah: 'Energi kamu lagi panas. Hari ini cocok buat pelan-pelan meredakan dulu, bukan memaksa semuanya beres.',
+    sedih: 'Ada bagian dari dirimu yang lagi butuh ditemani. Jangan buru-buru menganggap perasaan ini salah.',
+    galau: 'Pikiranmu lagi banyak bercabang. Pilih satu hal kecil dulu buat diurai.',
+    stres: 'Tubuh dan pikiranmu kelihatan butuh jeda. Ambil napas, turunkan tempo sebentar.',
+    excited: 'Energi positifmu lagi naik. Simpan momentum ini buat hal yang bikin kamu berkembang.',
+    tenang: 'Mood kamu cukup stabil. Ini waktu yang bagus buat merawat diri dan menjaga ritme.'
+  };
+  return map[mood] || map.tenang;
+}
+
+function extractJsonObject(text) {
+  const raw = String(text || '').trim();
+  try { return JSON.parse(raw); } catch {}
+  const match = raw.match(/\{[\s\S]*\}/);
+  if (!match) return null;
+  try { return JSON.parse(match[0]); } catch { return null; }
+}
+
+function fallbackVentAnalysis(transcript, durationSeconds) {
+  const t = String(transcript || '').toLowerCase();
+  let mood = 'tenang';
+  if (/marah|kesel|anjing|bangsat|benci|emosi|muak|sebel/.test(t)) mood = 'marah';
+  else if (/sedih|nangis|kecewa|hampa|sakit hati|sendiri|capek banget/.test(t)) mood = 'sedih';
+  else if (/bingung|galau|masa depan|takut|overthinking|ragu/.test(t)) mood = 'galau';
+  else if (/stres|stress|pusing|tertekan|deadline|berat|capek/.test(t)) mood = 'stres';
+  else if (/senang|happy|bahagia|semangat|excited|lega/.test(t)) mood = 'excited';
+  const duration = clamp(durationSeconds, 1, 90);
+  const intensity = clamp(Math.round(45 + duration * 0.55 + (t.length > 80 ? 12 : 0)), 35, 92);
+  return {
+    mood,
+    intensity,
+    title: 'Vent tersimpan',
+    summary: transcript ? 'Aku menangkap inti curhatanmu dan menyimpannya sebagai energi emosi.' : 'Suaramu sudah diproses sebagai energi emosi, walau transkrip belum terbaca.',
+    insight: 'Yang penting kamu sudah mengeluarkan sebagian beban itu, pelan-pelan ya.',
+    suggestion: 'Ambil napas sebentar, lalu lanjutkan dengan satu langkah kecil yang paling ringan.',
+    coins: Math.floor(intensity / 8) + 5,
+    exp: Math.floor(intensity / 10) + 6,
+    hungerDelta: 8,
+    happyDelta: mood === 'sedih' || mood === 'stres' ? 8 : 10
+  };
+}
+
+async function analyzeVentWithAI({ transcript, durationSeconds, language, model }) {
+  const selectedLanguage = normalizeLanguage(language || 'id');
+  const content = String(transcript || '').trim().slice(0, 2000);
+  const fallback = fallbackVentAnalysis(content, durationSeconds);
+
+  if (!content && Number(durationSeconds || 0) < 2) return fallback;
+
+  const prompt = `
+Analisis vent/curhat user untuk aplikasi VokaMon.
+Balas hanya JSON valid tanpa markdown.
+
+Bahasa output: ${selectedLanguage}
+Mood yang boleh dipilih: marah, sedih, galau, stres, excited, tenang.
+Durasi suara: ${Math.round(Number(durationSeconds || 0))} detik.
+Transkrip suara: ${content || '(Tidak ada transkrip. Analisis sebagai pelepasan emosi non-verbal.)'}
+
+Format JSON wajib:
+{
+  "mood":"galau",
+  "intensity":70,
+  "title":"judul pendek",
+  "summary":"ringkasan empatik 1 kalimat",
+  "insight":"validasi/insight singkat 1 kalimat",
+  "suggestion":"saran kecil 1 kalimat",
+  "coins":12,
+  "exp":10,
+  "hungerDelta":8,
+  "happyDelta":10
+}
+
+Aturan:
+- Jangan diagnosis medis.
+- Jangan menyebut diri sebagai AI.
+- intensity 20-100.
+- coins 5-20.
+- exp 6-16.
+- hungerDelta 4-12 karena emosi menjadi makanan pet.
+- happyDelta 3-15.
+`.trim();
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), Number(process.env.AI_TIMEOUT_MS || 120000));
+    const r = await fetch(`${OLLAMA_URL}/api/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: model || process.env.DEFAULT_MODEL || 'qwen2.5:3b',
+        stream: false,
+        keep_alive: '10m',
+        messages: [
+          { role: 'system', content: 'Kamu menganalisis emosi user untuk aplikasi self-reflection. Balas hanya JSON valid.' },
+          { role: 'user', content: prompt }
+        ],
+        options: {
+          temperature: 0.35,
+          top_p: 0.82,
+          repeat_penalty: 1.12,
+          num_ctx: 2048,
+          num_predict: 260,
+          num_thread: Number(process.env.AI_NUM_THREAD || 8)
+        }
+      })
+    });
+    clearTimeout(timeout);
+    const text = await r.text();
+    if (!r.ok) return fallback;
+    const parsed = extractJsonObject(JSON.parse(text).message?.content || text);
+    if (!parsed) return fallback;
+    const mood = ALLOWED_MOODS.includes(parsed.mood) ? parsed.mood : fallback.mood;
+    return {
+      mood,
+      intensity: clamp(parsed.intensity, 20, 100),
+      title: String(parsed.title || fallback.title).slice(0, 80),
+      summary: String(parsed.summary || fallback.summary).slice(0, 220),
+      insight: String(parsed.insight || fallback.insight).slice(0, 220),
+      suggestion: String(parsed.suggestion || fallback.suggestion).slice(0, 220),
+      coins: clamp(parsed.coins, 5, 20),
+      exp: clamp(parsed.exp, 6, 16),
+      hungerDelta: clamp(parsed.hungerDelta, 4, 12),
+      happyDelta: clamp(parsed.happyDelta, 3, 15)
+    };
+  } catch (error) {
+    console.warn('AI vent fallback:', error.message);
+    return fallback;
+  }
 }
 
 function convertHistory(history = []) {
@@ -444,6 +685,140 @@ app.put('/api/user/profile', requireAuth, async (req, res) => {
     }
 
     res.status(500).json({ ok: false, error: 'Gagal menyimpan profil.' });
+  }
+});
+
+
+app.get('/api/redeem/products', requireAuth, async (req, res) => {
+  res.json({
+    ok: true,
+    products: Object.values(PRODUCT_CATALOG).map((p) => ({
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      icon: p.icon,
+      desc: p.desc,
+      type: p.type,
+      key: p.key || null
+    }))
+  });
+});
+
+app.post('/api/vent/analyze', requireAuth, async (req, res) => {
+  try {
+    const transcript = String(req.body.transcript || '').trim().slice(0, 2000);
+    const durationSeconds = clamp(req.body.durationSeconds, 1, 90);
+    const model = String(req.body.model || process.env.DEFAULT_MODEL || 'qwen2.5:3b');
+    const language = req.body.language || 'id';
+
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    const result = await analyzeVentWithAI({ transcript, durationSeconds, language, model });
+
+    const mood = ALLOWED_MOODS.includes(result.mood) ? result.mood : 'tenang';
+    const coins = Math.floor(clamp(result.coins, 5, 20));
+    const exp = Math.floor(clamp(result.exp, 6, 16));
+
+    state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + coins);
+    state.emotions[mood] = Math.max(0, Number(state.emotions[mood] || 0)) + 1;
+    state.pet.hunger = clamp((state.pet.hunger || 0) + result.hungerDelta, 0, 100);
+    state.pet.happy = clamp((state.pet.happy || 0) + result.happyDelta, 0, 100);
+    state.pet.lastCareAt = new Date().toISOString();
+    const leveledUp = addPetExp(state, exp);
+
+    const vent = {
+      id: Date.now().toString(36),
+      mood,
+      intensity: Math.floor(result.intensity),
+      transcript,
+      title: result.title,
+      summary: result.summary,
+      insight: result.insight,
+      suggestion: result.suggestion,
+      coins,
+      exp,
+      durationSeconds,
+      createdAt: new Date().toISOString()
+    };
+    state.vents.unshift(vent);
+    state.vents = state.vents.slice(0, 50);
+
+    await saveStateForUser(req.user.id, state);
+
+    res.json({ ok: true, result: { ...vent, leveledUp }, state });
+  } catch (error) {
+    console.error('Vent analyze error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal menganalisis vent.' });
+  }
+});
+
+app.post('/api/redeem', requireAuth, async (req, res) => {
+  try {
+    const productId = String(req.body.productId || '').trim();
+    const product = PRODUCT_CATALOG[productId];
+    if (!product) return res.status(404).json({ ok: false, error: 'Produk tidak ditemukan.' });
+
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    const owned = product.key && state.inventory.includes(product.key);
+
+    if (owned) {
+      if (product.key === 'bg_dream_garden') state.pet.background = 'dream_garden';
+      if (product.key === 'acc_crown') state.pet.accessory = 'crown';
+      if (product.key === 'acc_wings') state.pet.wings = true;
+      await saveStateForUser(req.user.id, state);
+      return res.json({ ok: true, state, message: `${product.name} sudah kamu punya dan sudah dipakai.` });
+    }
+
+    if (Number(state.coins || 0) < product.price) {
+      return res.status(400).json({ ok: false, error: 'Soul Coins belum cukup.' });
+    }
+
+    state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) - product.price);
+    const message = product.apply(state);
+
+    if (product.key && !state.inventory.includes(product.key)) state.inventory.push(product.key);
+    state.redeemHistory.unshift({
+      id: Date.now().toString(36),
+      productId,
+      name: product.name,
+      price: product.price,
+      message,
+      createdAt: new Date().toISOString()
+    });
+    state.redeemHistory = state.redeemHistory.slice(0, 50);
+
+    await saveStateForUser(req.user.id, state);
+    res.json({ ok: true, state, message });
+  } catch (error) {
+    console.error('Redeem error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal redeem produk.' });
+  }
+});
+
+app.post('/api/pet/action', requireAuth, async (req, res) => {
+  try {
+    const action = String(req.body.action || '').trim();
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    let message = 'Plong merasa ditemani.';
+
+    if (action === 'play') {
+      state.pet.happy = clamp((state.pet.happy || 0) + 10, 0, 100);
+      state.pet.hunger = clamp((state.pet.hunger || 0) - 4, 0, 100);
+      addPetExp(state, 4);
+      message = 'Kamu bermain sebentar dengan Plong. Mood-nya naik.';
+    } else if (action === 'calm') {
+      state.pet.happy = clamp((state.pet.happy || 0) + 6, 0, 100);
+      addPetExp(state, 3);
+      message = 'Plong ikut tenang bareng kamu.';
+    } else {
+      return res.status(400).json({ ok: false, error: 'Aksi pet tidak valid.' });
+    }
+
+    state.pet.lastCareAt = new Date().toISOString();
+    await saveStateForUser(req.user.id, state);
+    res.json({ ok: true, state, message });
+  } catch (error) {
+    console.error('Pet action error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal menjalankan aksi pet.' });
   }
 });
 
