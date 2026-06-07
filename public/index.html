@@ -421,6 +421,54 @@
             .vent-ai-note{margin-top:9px;padding:9px 10px;border-radius:var(--r3);background:var(--tl-bg);border:1px solid var(--tl-bd);font-size:11px;color:var(--t2);line-height:1.55;text-align:left}
             .pc-owned{font-size:9px;font-weight:800;color:var(--tl);background:var(--tl-bg);border:1px solid var(--tl-bd);padding:2px 6px;border-radius:999px;margin-left:4px}
 
+
+
+            /* MOBILE UI POLISH + AVATAR PAGE */
+            #pg-avatar{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding-bottom:calc(var(--nav-h) + var(--s-b) + 18px)}
+            .pet-act-primary{background:var(--ac)!important;color:#fff!important;border-color:var(--ac)!important;box-shadow:0 1px 4px rgba(232,77,26,.18)!important}
+            .pet-act-primary:hover{background:var(--ac2)!important}
+
+            @media(max-width:599px){
+              body{overflow:hidden}
+              #main{height:100dvh;min-height:0;padding-bottom:calc(var(--nav-h) + var(--s-b));}
+              .pg{padding:12px;min-height:0}
+              .ph{margin-bottom:10px}.pt{font-size:18px}.ps{font-size:10px}
+              #bnav{justify-content:flex-start;gap:2px;overflow-x:auto;overflow-y:hidden;padding-left:6px;padding-right:6px;scrollbar-width:none}
+              #bnav::-webkit-scrollbar{display:none}
+              .nb{flex:0 0 58px;min-width:58px;padding:4px 4px;font-size:8px}
+              .nb i{font-size:16px}.nb span{max-width:54px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+              #pg-home{gap:8px;padding-bottom:calc(var(--nav-h) + var(--s-b) + 16px)}
+              .pet-h{min-height:auto;padding:14px 10px 12px;border-radius:14px}
+              #pet-canvas{width:min(230px,66vw)!important;height:min(230px,66vw)!important;margin:-8px auto 0!important}
+              .pn{font-size:17px}.pm{font-size:10px}.xptr{width:min(170px,58vw);margin-left:auto;margin-right:auto}
+              .pet-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;margin-top:10px}
+              .pet-actions .pet-act{justify-content:center;width:100%;min-height:34px;font-size:10px;padding:6px 8px}
+              .pet-actions .pet-act-primary{grid-column:1 / -1}
+              .sr{gap:6px}.sc,.es{padding:9px;border-radius:10px}
+              .eg{max-height:64px;overflow-y:auto}
+              #pg-avatar .pet-custom{padding:12px;border-radius:14px}
+              #pg-avatar .pet-custom-head{align-items:flex-start;flex-direction:column;gap:8px}
+              #pg-avatar .pet-custom-head .pet-custom-btn{width:100%;justify-content:center}
+              #pg-avatar .pet-custom-grid{gap:12px}
+              #pg-avatar .pet-custom-section{gap:7px}
+              .pet-picks{gap:6px}.pet-pick{min-height:34px;font-size:10px;padding:6px 9px}.pet-color{width:32px;height:32px}
+              .pet-custom-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+              .pet-custom-actions .pet-custom-btn{justify-content:center;width:100%}
+              .acct-grid{grid-template-columns:1fr 1fr}
+            }
+
+            @media(max-width:380px){
+              .nb{flex-basis:54px;min-width:54px}.pet-actions{grid-template-columns:1fr}.pet-actions .pet-act-primary{grid-column:auto}
+              #pet-canvas{width:min(210px,70vw)!important;height:min(210px,70vw)!important}
+              .sr{grid-template-columns:1fr}
+            }
+
+            @supports(-webkit-touch-callout:none){
+              #main{height:-webkit-fill-available}
+              #pg-home,#pg-avatar,#pg-account,#pg-vent{overscroll-behavior-y:contain}
+              #pet-canvas{transform:translate3d(0,-4px,0)!important;image-rendering:auto}
+            }
+
             /* ═══════ ACCOUNT PAGE ═══════ */
             #pg-account{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
             .acct-card{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
@@ -451,7 +499,7 @@
             .acct-pref-row span{color:var(--t3)}
             .acct-pref-row strong{color:var(--t1);text-align:right}
             @media(max-width:480px){.nb{padding:4px 7px;font-size:8px}.nb i{font-size:16px}.acct-grid{grid-template-columns:1fr 1fr}}
-            @media(min-width:900px){#pg-account{padding-bottom:24px}.acct-grid{grid-template-columns:repeat(4,1fr)}}
+            @media(min-width:900px){#pg-account{padding-bottom:24px}.acct-grid{grid-template-columns:repeat(4,1fr)}#pg-avatar{padding-bottom:24px}}
 
 
             /* ═══════ AUTH / LOGIN REGISTER ═══════ */
@@ -533,6 +581,7 @@
                 </div>
                 <nav>
                     <button class="sb on" data-page="pg-home"><i class="fas fa-home"></i> Beranda</button>
+                    <button class="sb" data-page="pg-avatar"><i class="fas fa-user-astronaut"></i> Avatar</button>
                     <button class="sb" data-page="pg-vent"><i class="fas fa-microphone"></i> Vent</button>
                     <button class="sb" data-page="pg-art"><i class="fas fa-palette"></i> Galeri Seni</button>
                     <button class="sb" data-page="pg-redeem"><i class="fas fa-shopping-bag"></i> Redeem</button>
@@ -567,6 +616,7 @@
                             <div class="pet-actions">
                                 <button class="pet-act" id="pet-play" type="button"><i class="fas fa-hand-sparkles"></i> Elus Plong</button>
                                 <button class="pet-act" id="pet-calm" type="button"><i class="fas fa-leaf"></i> Tenang bareng</button>
+                                <button class="pet-act pet-act-primary" type="button" data-page="pg-avatar"><i class="fas fa-user-astronaut"></i> Kustom avatar</button>
                             </div>
                         </div>
                     </div>
@@ -587,6 +637,17 @@
                         </div>
                     </div>
 
+                </section>
+
+
+                <!-- AVATAR CUSTOMIZER -->
+                <section id="pg-avatar" class="pg" aria-label="Kustom Avatar">
+                    <div class="ph">
+                        <div>
+                            <h1 class="pt">Kustom Avatar</h1>
+                            <p class="ps">Ubah tampilan Plong tanpa bikin Beranda penuh.</p>
+                        </div>
+                    </div>
                     <div class="pet-custom" id="pet-customizer">
                         <div class="pet-custom-head">
                             <div>
@@ -854,6 +915,7 @@
 
         <nav id="bnav" aria-label="Navigasi">
             <button class="nb on" data-page="pg-home"><i class="fas fa-home"></i><span>Home</span></button>
+            <button class="nb" data-page="pg-avatar"><i class="fas fa-user-astronaut"></i><span>Avatar</span></button>
             <button class="nb" data-page="pg-vent"><i class="fas fa-microphone"></i><span>Vent</span></button>
             <button class="nb" data-page="pg-art"><i class="fas fa-palette"></i><span>Art</span></button>
             <button class="nb" data-page="pg-redeem"><i class="fas fa-shopping-bag"></i><span>Redeem</span></button>
