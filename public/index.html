@@ -78,13 +78,43 @@
             #toast{position:fixed;top:calc(var(--s-t)+16px);left:50%;transform:translateX(-50%) translateY(-90px);z-index:9999;background:var(--t1);color:#fff;border:1px solid rgba(255,255,255,.1);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);padding:9px 18px;border-radius:var(--r);font-size:12px;font-weight:500;transition:transform .3s cubic-bezier(.32,1.3,.58,1);pointer-events:none;white-space:nowrap;max-width:calc(100vw - 24px);overflow:hidden;text-overflow:ellipsis}
             #toast.show{transform:translateX(-50%) translateY(0)}
 
-            #pg-home{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch}
-            .pet-h{display:flex;flex-direction:column;align-items:center;padding:18px 14px;background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);position:relative;overflow:hidden}
-            .pet-h::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 35% at 50% 0%,rgba(232,77,26,.04) 0%,transparent 70%);pointer-events:none}
+            #pg-home{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding-bottom:calc(var(--nav-h) + var(--s-b) + 18px)}
+
+            /* PET CARD FIX
+               Mobile/iOS sometimes clipped the canvas because the avatar was drawn near
+               the bottom of a tight card. Give the canvas a stable square size, make the
+               card tall enough, and allow aura/accessories to remain visible. */
+            .pet-h{
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                justify-content:center;
+                min-height:238px;
+                padding:18px 14px 16px;
+                background:var(--bg2);
+                border:1px solid var(--bd1);
+                border-radius:var(--r);
+                position:relative;
+                overflow:visible;
+                isolation:isolate;
+            }
+            .pet-h::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 35% at 50% 0%,rgba(232,77,26,.04) 0%,transparent 70%);pointer-events:none;border-radius:inherit;z-index:-1}
             .pn{font-size:18px;font-weight:800}.pm{font-size:11px;color:var(--t3);margin-top:1px}
             .xptr{width:120px;height:3px;background:var(--bg4);border-radius:2px;margin-top:6px;overflow:hidden}
             .xpf{height:100%;background:linear-gradient(90deg,var(--ac),#ff8c65);border-radius:2px;transition:width .4s}
-            #pet-canvas{display:block}
+            #pet-canvas{
+                display:block;
+                width:clamp(176px,52vw,220px);
+                height:clamp(176px,52vw,220px);
+                max-width:100%;
+                aspect-ratio:1/1;
+                flex:0 0 auto;
+                margin:-2px auto 4px;
+                object-fit:contain;
+                transform:translateZ(0);
+                contain:layout paint;
+            }
+            .pet-hi{position:relative;z-index:1;width:100%}
             .sr{display:grid;grid-template-columns:1fr 1fr;gap:6px}
             .sc{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r3);padding:10px}
             .sl{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--t3);margin-bottom:5px}
@@ -311,8 +341,9 @@
             #pg-assist{padding:0}
             #art-grid{grid-template-columns:repeat(3,1fr)}
             .sr{grid-template-columns:repeat(2,1fr)}
-            .pet-h{flex-direction:row;align-items:center;gap:18px;padding:18px}
-            .pet-hi{flex:1;text-align:left}.xptr{margin:6px 0 0;width:160px}
+            .pet-h{flex-direction:row;align-items:center;justify-content:flex-start;gap:18px;min-height:226px;padding:18px;overflow:visible}
+            #pet-canvas{width:220px;height:220px;margin:0}
+            .pet-hi{flex:1;text-align:left;width:auto}.xptr{margin:6px 0 0;width:160px}
             .pp-hero-logo{font-size:32px}.pp-hero-sub{font-size:14px}
             .pp-input-box{border-radius:18px;padding:10px 10px 10px 20px}
             .pp-input-box textarea{font-size:16px}
@@ -353,6 +384,18 @@
             .pet-act:hover{background:var(--bg3);border-color:var(--bd2)}
             .pet-act:disabled{opacity:.5;cursor:not-allowed}
 
+
+
+            @media(max-width:480px){
+              .pet-h{min-height:246px;padding-top:14px;padding-bottom:14px}
+              #pet-canvas{width:min(210px,68vw);height:min(210px,68vw);margin-top:-4px}
+              .pet-actions{margin-top:8px}
+              .pet-custom{margin-top:2px}
+            }
+            @supports(-webkit-touch-callout:none){
+              #pet-canvas{transform:translate3d(0,0,0);backface-visibility:hidden}
+              .pet-h{overflow:visible!important}
+            }
 
             /* ═══════ PET AVATAR CUSTOMIZER ═══════ */
             .pet-custom{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:12px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
@@ -516,7 +559,7 @@
                         </div>
                     </div>
                     <div class="pet-h">
-                        <canvas id="pet-canvas" width="180" height="180"></canvas>
+                        <canvas id="pet-canvas" width="220" height="220"></canvas>
                         <div class="pet-hi" style="text-align:center">
                             <h2 id="pet-name-display" class="pn">Plong</h2>
                             <p class="pm" id="pet-mood-text" style="color:var(--t3)">Mood: Tenang ✨</p>
@@ -1005,7 +1048,7 @@
             }
             function drawStar(c,x,y,r,color){c.save();c.translate(x,y);c.beginPath();for(var i=0;i<10;i++){var rr=i%2===0?r:r*.45;var a=-Math.PI/2+i*Math.PI/5;c.lineTo(Math.cos(a)*rr,Math.sin(a)*rr);}c.closePath();c.fillStyle=color;c.fill();c.restore();}
             function dP(mood){
-                var c=pX,W=pC.width,H=pC.height,cx=W/2,cy=H/2+8,cfg=EMO[mood]||EMO.tenang,t=pA;
+                var c=pX,W=pC.width,H=pC.height,cx=W/2,cy=H/2+2,cfg=EMO[mood]||EMO.tenang,t=pA;
                 var av=(state&&state.pet&&state.pet.avatar)||{};
                 var body=avatarPalette(av.body), shape=av.shape||'round', eyes=av.eyes||'cute', mouth=av.mouth||'smile', acc=av.accessory||state.pet.accessory||'none', aura=av.aura||'none';
                 if(state.pet&&state.pet.accessory==='crown'&&acc==='none')acc='crown';
@@ -1081,7 +1124,22 @@
                 pA++;pAF=requestAnimationFrame(function(){dP(mood)});
             }
                         var var_t1=getComputedStyle(document.documentElement).getPropertyValue("--t1").trim()||"#111113";
-            function sP(m){cancelAnimationFrame(pAF);dP(m)}
+            function fixPetCanvasSize(){
+                if(!pC)return;
+                /* Keep an internal 220x220 drawing area so iOS Safari does not collapse
+                   or crop the canvas when CSS clamp changes the visual size. */
+                if(pC.width!==220)pC.width=220;
+                if(pC.height!==220)pC.height=220;
+            }
+            window.addEventListener('resize',function(){fixPetCanvasSize();},{passive:true});
+            window.addEventListener('orientationchange',function(){setTimeout(function(){fixPetCanvasSize();sP(getPetMood());},250);},{passive:true});
+            function getPetMood(){
+                try{
+                    var dom=Object.entries(state.emotions||{}).sort(function(a,b){return b[1]-a[1]})[0];
+                    return (dom&&dom[0])||'tenang';
+                }catch(e){return 'tenang'}
+            }
+            function sP(m){fixPetCanvasSize();cancelAnimationFrame(pAF);dP(m)}
 
             /* WAVE */
             var wC=document.getElementById("wave-canvas"),wX=wC.getContext("2d"),an,wAF;
