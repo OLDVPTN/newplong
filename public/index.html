@@ -418,6 +418,12 @@
             .pet-custom-btn.primary{background:var(--ac);border-color:var(--ac);color:#fff;box-shadow:0 1px 4px rgba(232,77,26,.18)}
             .pet-custom-btn.primary:hover{background:var(--ac2)}
             @media(min-width:700px){.pet-custom-grid{grid-template-columns:repeat(2,1fr)}}
+            .avatar-preview-card{background:linear-gradient(180deg,var(--bg2),#fff);border:1px solid var(--bd1);border-radius:var(--r);padding:14px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.035);margin-bottom:10px}
+            .avatar-preview-stage{width:132px;height:132px;border-radius:18px;background:radial-gradient(circle at 50% 20%,var(--ac-bg),var(--bg3));border:1px solid var(--bd1);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+            #avatar-preview-canvas{width:128px;height:128px;display:block}
+            .avatar-preview-info{min-width:0;flex:1}.avatar-preview-info strong{display:block;font-size:14px;color:var(--t1);font-weight:800}.avatar-preview-info span{display:block;font-size:11px;color:var(--t3);line-height:1.5;margin-top:3px}
+            .avatar-preview-badge{display:inline-flex!important;width:auto!important;margin-top:8px!important;padding:4px 8px;border-radius:20px;background:var(--tl-bg);border:1px solid var(--tl-bd);color:var(--tl)!important;font-size:10px!important;font-weight:800!important}
+
             .vent-ai-note{margin-top:9px;padding:9px 10px;border-radius:var(--r3);background:var(--tl-bg);border:1px solid var(--tl-bd);font-size:11px;color:var(--t2);line-height:1.55;text-align:left}
             .pc-owned{font-size:9px;font-weight:800;color:var(--tl);background:var(--tl-bg);border:1px solid var(--tl-bd);padding:2px 6px;border-radius:999px;margin-left:4px}
 
@@ -465,9 +471,25 @@
 
             @supports(-webkit-touch-callout:none){
               #main{height:-webkit-fill-available}
-              #pg-home,#pg-avatar,#pg-account,#pg-vent{overscroll-behavior-y:contain}
+              #pg-home,#pg-garden,#pg-avatar,#pg-account,#pg-vent{overscroll-behavior-y:contain}
               #pet-canvas{transform:translate3d(0,-4px,0)!important;image-rendering:auto}
             }
+
+
+            /* ═══════ GARDEN PAGE ═══════ */
+            #pg-garden{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding-bottom:calc(var(--nav-h) + var(--s-b) + 18px)}
+            .garden-card{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
+            .garden-stage{min-height:190px;border-radius:18px;background:linear-gradient(180deg,#ECFDF5 0%,#FFFBEB 100%);border:1px solid var(--tl-bd);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:10px}
+            .garden-stage::before{content:'';position:absolute;left:-10%;right:-10%;bottom:-18px;height:78px;background:linear-gradient(180deg,#A7F3D0,#65A30D);border-radius:50% 50% 0 0;opacity:.9}
+            .garden-plant{position:relative;z-index:2;text-align:center;transform:translateY(10px)}
+            .garden-emoji{font-size:58px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.12));transition:transform .25s}.garden-emoji.grow{transform:scale(1.12)}
+            .garden-soil{position:relative;z-index:1;width:112px;height:26px;background:#92400E;border-radius:50%;margin:-6px auto 0;box-shadow:inset 0 5px 0 rgba(255,255,255,.12)}
+            .garden-progress{height:8px;background:var(--bg4);border-radius:999px;overflow:hidden;margin-top:8px}.garden-progress span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--tl),#84CC16);border-radius:999px;transition:width .25s}
+            .garden-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.garden-seed,.garden-feed{border:1px solid var(--bd1);background:var(--bg);border-radius:var(--r3);padding:10px 8px;text-align:center;transition:all .12s;min-height:74px}.garden-seed:hover,.garden-feed:hover{background:var(--bg3);border-color:var(--bd2)}.garden-seed strong,.garden-feed strong{display:block;font-size:11px;color:var(--t2);margin-top:3px}.garden-seed span,.garden-feed span{display:block;font-size:22px;line-height:1}.garden-seed small,.garden-feed small{display:block;font-size:9px;color:var(--t4);margin-top:2px;line-height:1.25}
+            .garden-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}.garden-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:var(--r3);min-height:38px;padding:8px 12px;font-size:12px;font-weight:800;border:1px solid var(--bd1);background:var(--bg);color:var(--t2);transition:all .12s}.garden-btn:hover{background:var(--bg3);border-color:var(--bd2)}.garden-btn.primary{background:var(--tl);border-color:var(--tl);color:#fff}.garden-btn.warn{background:var(--ac);border-color:var(--ac);color:#fff}.garden-btn:disabled{opacity:.45;cursor:not-allowed}
+            .garden-note{font-size:11px;color:var(--t3);line-height:1.55;margin-top:7px}.garden-inv{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.garden-history{display:flex;flex-direction:column;gap:6px;max-height:160px;overflow-y:auto}.garden-history-item{font-size:11px;color:var(--t3);background:var(--bg3);border:1px solid var(--bd1);border-radius:var(--r3);padding:7px 9px}
+            @media(max-width:480px){.avatar-preview-card{align-items:center;flex-direction:column;text-align:center}.avatar-preview-stage{width:150px;height:150px}#avatar-preview-canvas{width:146px;height:146px}.garden-grid,.garden-inv{grid-template-columns:1fr}.garden-actions{grid-template-columns:1fr}}
+            @media(min-width:900px){#pg-garden{padding-bottom:24px}.garden-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:10px;align-items:start}.garden-stage{min-height:240px}}
 
             /* ═══════ ACCOUNT PAGE ═══════ */
             #pg-account{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
@@ -616,6 +638,7 @@
                             <div class="pet-actions">
                                 <button class="pet-act" id="pet-play" type="button"><i class="fas fa-hand-sparkles"></i> Elus Plong</button>
                                 <button class="pet-act" id="pet-calm" type="button"><i class="fas fa-leaf"></i> Tenang bareng</button>
+                                <button class="pet-act" type="button" data-page="pg-garden"><i class="fas fa-seedling"></i> Tanam sayur</button>
                                 <button class="pet-act pet-act-primary" type="button" data-page="pg-avatar"><i class="fas fa-user-astronaut"></i> Kustom avatar</button>
                             </div>
                         </div>
@@ -640,12 +663,70 @@
                 </section>
 
 
+
+                <!-- GARDEN -->
+                <section id="pg-garden" class="pg" aria-label="Kebun Plong">
+                    <div class="ph">
+                        <div>
+                            <h1 class="pt">Kebun Plong</h1>
+                            <p class="ps">Tanam sayur, siram, panen, lalu kasih makan petmu.</p>
+                        </div>
+                    </div>
+                    <div class="garden-layout">
+                        <div class="garden-card">
+                            <div class="garden-stage">
+                                <div class="garden-plant">
+                                    <div class="garden-emoji" id="garden-emoji">🌱</div>
+                                    <div class="garden-soil"></div>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                                <div>
+                                    <div class="acct-title" style="margin-bottom:2px">Plot utama</div>
+                                    <div class="garden-note" id="garden-status">Belum ada tanaman. Pilih bibit dulu.</div>
+                                </div>
+                                <strong id="garden-percent" style="font-size:18px;color:var(--tl)">0%</strong>
+                            </div>
+                            <div class="garden-progress"><span id="garden-progress-fill"></span></div>
+                            <div class="garden-actions">
+                                <button class="garden-btn primary" id="garden-water" type="button"><i class="fas fa-droplet"></i> Siram</button>
+                                <button class="garden-btn warn" id="garden-harvest" type="button"><i class="fas fa-basket-shopping"></i> Panen</button>
+                            </div>
+                            <p class="garden-note">Mirip game tanam: pilih bibit, siram beberapa kali sampai 100%, panen, lalu sayurnya bisa dipakai buat ngasih makan Plong.</p>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:10px">
+                            <div class="garden-card">
+                                <div class="acct-title">Pilih bibit</div>
+                                <div class="garden-grid" id="garden-seeds"></div>
+                            </div>
+                            <div class="garden-card">
+                                <div class="acct-title">Stok makanan pet</div>
+                                <div class="garden-inv" id="garden-inventory"></div>
+                            </div>
+                            <div class="garden-card">
+                                <div class="acct-title">Riwayat kebun</div>
+                                <div class="garden-history" id="garden-history"><div class="garden-history-item">Belum ada aktivitas kebun.</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- AVATAR CUSTOMIZER -->
                 <section id="pg-avatar" class="pg" aria-label="Kustom Avatar">
                     <div class="ph">
                         <div>
                             <h1 class="pt">Kustom Avatar</h1>
                             <p class="ps">Ubah tampilan Plong tanpa bikin Beranda penuh.</p>
+                        </div>
+                    </div>
+                    <div class="avatar-preview-card">
+                        <div class="avatar-preview-stage">
+                            <canvas id="avatar-preview-canvas" width="180" height="180" aria-label="Preview avatar Plong"></canvas>
+                        </div>
+                        <div class="avatar-preview-info">
+                            <strong>Preview avatar</strong>
+                            <span>Perubahan di bawah akan muncul di sini dulu. Avatar di Beranda baru berubah setelah kamu klik Simpan avatar.</span>
+                            <span class="avatar-preview-badge" id="avatar-preview-status">Preview belum disimpan</span>
                         </div>
                     </div>
                     <div class="pet-custom" id="pet-customizer">
@@ -714,7 +795,7 @@
                         </div>
                         <div class="pet-custom-actions">
                             <button class="pet-custom-btn primary" id="pet-save-avatar" type="button"><i class="fas fa-check"></i> Simpan avatar</button>
-                            <button class="pet-custom-btn" id="pet-reset-avatar" type="button"><i class="fas fa-rotate-left"></i> Reset</button>
+                            <button class="pet-custom-btn" id="pet-reset-avatar" type="button"><i class="fas fa-rotate-left"></i> Reset preview</button>
                         </div>
                     </div>
                 </section>
@@ -915,6 +996,7 @@
 
         <nav id="bnav" aria-label="Navigasi">
             <button class="nb on" data-page="pg-home"><i class="fas fa-home"></i><span>Home</span></button>
+            <button class="nb" data-page="pg-garden"><i class="fas fa-seedling"></i><span>Kebun</span></button>
             <button class="nb" data-page="pg-avatar"><i class="fas fa-user-astronaut"></i><span>Avatar</span></button>
             <button class="nb" data-page="pg-vent"><i class="fas fa-microphone"></i><span>Vent</span></button>
             <button class="nb" data-page="pg-art"><i class="fas fa-palette"></i><span>Art</span></button>
@@ -929,6 +1011,7 @@
             var ML2={"qwen2.5:3b":"Curhat Santai","qwen2.5:0.5b":"PokoAI 1.2"};
             var AL={id:{label:"Indonesia santai",welcome:"Hei! Aku Plong 👋 Aku di sini buat nemenin kamu. Mau cerita apa hari ini?"},"id-formal":{label:"Indonesia formal",welcome:"Halo, aku Plong 👋 Aku siap menemanimu. Apa yang ingin kamu ceritakan?"},en:{label:"English",welcome:"Hey, I'm Plong 👋 I'm here with you. What would you like to talk about?"},"jv-ngoko":{label:"Jawa ngoko",welcome:"Hei, aku Plong 👋 Aku neng kene ngancani kowe."},"jv-krama":{label:"Jawa krama",welcome:"Sugeng rawuh, kula Plong 👋 Kula siap ngancani panjenangan."},su:{label:"Sunda",welcome:"Hai, abdi Plong 👋 Abdi aya di dieu kanggo ngadangu."},ms:{label:"Melayu",welcome:"Hai, saya Plong 👋 Saya ada di sini untuk menemani kamu."}};
             var FOLLOWS=["Gimana cara aku bisa lebih tenang?","Ceritakan hal positif dong","Aku bingung mau ngambil keputusan","Bantu aku pahami perasaanku","Bantu aku urai pelan-pelan","Aku butuh kalimat penyemangat"];
+            var VEGGIES={carrot:{id:"carrot",name:"Wortel Ceria",icon:"🥕",growNeed:3,hunger:24,happy:7,desc:"Kenyang +24"},lettuce:{id:"lettuce",name:"Selada Tenang",icon:"🥬",growNeed:2,hunger:18,happy:10,desc:"Happy +10"},tomato:{id:"tomato",name:"Tomat Semangat",icon:"🍅",growNeed:4,hunger:28,happy:12,desc:"Kenyang +28"}};
 
             function gLK(){var k=state.al||"id";return AL[k]?k:"id"}
             function gL(){return AL[gLK()]||AL.id}
@@ -967,7 +1050,7 @@
                 if(el)el.textContent="Hai, "+getStoredUserName();
             }
 
-            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,gm:"qwen2.5:3b",al:"id"};
+            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{plot:null,inventory:{carrot:0,lettuce:0,tomato:0},history:[]},gm:"qwen2.5:3b",al:"id"};
             function save(){try{localStorage.setItem("vkm",JSON.stringify(state))}catch(e){}; if(window.__vkmAuthReady&&typeof queueSyncState==="function")queueSyncState()}
             function load(){try{var d=JSON.parse(localStorage.getItem("vkm"));if(d)for(var k in d)if(d.hasOwnProperty(k))state[k]=d[k]}catch(e){}}
             load();
@@ -985,7 +1068,7 @@
             window.__vkmAuthReady=false;
 
             function defaultStateForUser(user){
-                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
+                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{plot:null,inventory:{carrot:0,lettuce:0,tomato:0},history:[]},gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
             }
             function ensureDefaults(){
                 if(!state.pet)state.pet={name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50};
@@ -995,6 +1078,10 @@
                 if(!state.vents)state.vents=[];
                 if(!state.inventory)state.inventory=[];
                 if(!state.redeemHistory)state.redeemHistory=[];
+                if(!state.garden)state.garden={plot:null,inventory:{carrot:0,lettuce:0,tomato:0},history:[]};
+                if(!state.garden.inventory)state.garden.inventory={carrot:0,lettuce:0,tomato:0};
+                ['carrot','lettuce','tomato'].forEach(function(k){state.garden.inventory[k]=Math.max(0,Number(state.garden.inventory[k]||0));});
+                if(!Array.isArray(state.garden.history))state.garden.history=[];
                 if(!state.pet.accessory)state.pet.accessory="";
                 if(!state.pet.background)state.pet.background="";
                 if(typeof state.pet.wings!=="boolean")state.pet.wings=false;
@@ -1095,6 +1182,8 @@
                 p.classList.add("on");
                 document.querySelectorAll('[data-page="'+id+'"]').forEach(function(b){b.classList.add("on")});
                 refreshUI();
+                if(id==="pg-avatar"&&typeof prepareAvatarPreview==="function")prepareAvatarPreview();
+                if(id==="pg-garden"&&typeof renderGarden==="function")renderGarden();
             }
             document.querySelectorAll("[data-page]").forEach(function(b){b.addEventListener("click",function(){go(b.dataset.page)})});
 
@@ -1211,7 +1300,7 @@
 
             function clamp(n,min,max){n=Number(n);if(!isFinite(n))return min;return Math.max(min,Math.min(max,n))}
             function hasItem(key){return !!(key&&state.inventory&&state.inventory.indexOf(key)>-1)}
-            function applyStateFromServer(next){if(next&&typeof next==="object"){state=Object.assign(defaultStateForUser(authUser),next);ensureDefaults();try{localStorage.setItem("vkm",JSON.stringify(state))}catch(e){}refreshUI();renderAccount();if(typeof renderAvatarPicker==="function")renderAvatarPicker();setM(state.gm||"qwen2.5:3b",false);setL(gLK(),false);}}
+            function applyStateFromServer(next){if(next&&typeof next==="object"){state=Object.assign(defaultStateForUser(authUser),next);ensureDefaults();try{localStorage.setItem("vkm",JSON.stringify(state))}catch(e){}refreshUI();renderAccount();if(typeof renderAvatarPicker==="function")renderAvatarPicker();if(typeof renderGarden==="function")renderGarden();setM(state.gm||"qwen2.5:3b",false);setL(gLK(),false);}}
             function moodLabel(m){return EMO[m]?EMO[m].label:"Tenang"}
             function guessMoodFromTranscript(txt){
                 txt=String(txt||"").toLowerCase();
@@ -1335,16 +1424,78 @@
             }
 
 
+            /* GARDEN / TANAM SAYUR */
+            function ensureGardenLocal(){
+                if(!state.garden)state.garden={plot:null,inventory:{carrot:0,lettuce:0,tomato:0},history:[]};
+                if(!state.garden.inventory)state.garden.inventory={carrot:0,lettuce:0,tomato:0};
+                Object.keys(VEGGIES).forEach(function(k){state.garden.inventory[k]=Math.max(0,Number(state.garden.inventory[k]||0));});
+                if(!Array.isArray(state.garden.history))state.garden.history=[];
+                return state.garden;
+            }
+            function gardenEmojiFor(plot){
+                if(!plot)return '🌱';
+                var v=VEGGIES[plot.seed]||VEGGIES.carrot;
+                var p=Number(plot.progress||0);
+                if(plot.ready)return v.icon;
+                if(p<35)return '🌱';
+                if(p<75)return '🌿';
+                return '🪴';
+            }
+            function renderGarden(){
+                var g=ensureGardenLocal(), plot=g.plot;
+                var emoji=document.getElementById('garden-emoji'), status=document.getElementById('garden-status'), pct=document.getElementById('garden-percent'), fill=document.getElementById('garden-progress-fill');
+                if(emoji){emoji.textContent=gardenEmojiFor(plot);emoji.classList.toggle('grow',!!plot&&Number(plot.progress||0)>0)}
+                var progress=plot?Math.max(0,Math.min(100,Number(plot.progress||0))):0;
+                if(pct)pct.textContent=progress+'%';
+                if(fill)fill.style.width=progress+'%';
+                if(status){
+                    if(!plot)status.textContent='Belum ada tanaman. Pilih bibit dulu.';
+                    else{var v=VEGGIES[plot.seed]||VEGGIES.carrot;status.textContent=plot.ready?v.name+' siap dipanen!':v.name+' tumbuh. Siram '+(plot.waterCount||0)+'/'+(plot.growNeed||v.growNeed)+' kali.';}
+                }
+                var water=document.getElementById('garden-water'), harvest=document.getElementById('garden-harvest');
+                if(water)water.disabled=!plot||plot.ready;
+                if(harvest)harvest.disabled=!plot||!plot.ready;
+                var seeds=document.getElementById('garden-seeds');
+                if(seeds){seeds.innerHTML=Object.keys(VEGGIES).map(function(k){var v=VEGGIES[k];return '<button class="garden-seed" data-seed="'+k+'"><span>'+v.icon+'</span><strong>'+escH(v.name)+'</strong><small>'+v.growNeed+'x siram</small></button>'}).join('');seeds.querySelectorAll('[data-seed]').forEach(function(b){b.addEventListener('click',function(){gardenPlant(b.dataset.seed)})});}
+                var inv=document.getElementById('garden-inventory');
+                if(inv){inv.innerHTML=Object.keys(VEGGIES).map(function(k){var v=VEGGIES[k],n=Number(g.inventory[k]||0);return '<button class="garden-feed" data-feed="'+k+'" '+(n>0?'':'disabled')+'><span>'+v.icon+'</span><strong>'+escH(v.name)+' x'+n+'</strong><small>'+escH(v.desc)+' · kasih makan</small></button>'}).join('');inv.querySelectorAll('[data-feed]').forEach(function(b){b.addEventListener('click',function(){gardenFeed(b.dataset.feed)})});}
+                var hist=document.getElementById('garden-history');
+                if(hist){hist.innerHTML=(g.history&&g.history.length?g.history.slice(0,8).map(function(h){return '<div class="garden-history-item">'+escH(h.text||'Aktivitas kebun')+'</div>'}).join(''):'<div class="garden-history-item">Belum ada aktivitas kebun.</div>');}
+            }
+            async function gardenRequest(url,body){
+                if(!authToken){showAuth('Silakan login dulu.');return null;}
+                try{
+                    var res=await apiFetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})});
+                    var data=await res.json();
+                    if(!res.ok||!data.ok)throw new Error(data.error||'Aksi kebun gagal');
+                    applyStateFromServer(data.state);
+                    toast(data.message||'Kebun diperbarui');
+                    sP(getPetMood());
+                    return data;
+                }catch(e){toast(e.message||'Kebun lagi bermasalah');return null;}
+            }
+            function gardenPlant(seed){gardenRequest('/api/garden/plant',{seed:seed});}
+            function gardenWater(){gardenRequest('/api/garden/water',{});}
+            function gardenHarvest(){gardenRequest('/api/garden/harvest',{});}
+            function gardenFeed(veggie){gardenRequest('/api/garden/feed',{veggie:veggie});}
+            var gardenWaterBtn=document.getElementById('garden-water'),gardenHarvestBtn=document.getElementById('garden-harvest');
+            if(gardenWaterBtn)gardenWaterBtn.addEventListener('click',gardenWater);
+            if(gardenHarvestBtn)gardenHarvestBtn.addEventListener('click',gardenHarvest);
+
             /* PET AVATAR CUSTOMIZER */
             var AVATAR_DEFAULT={body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"};
+            var avatarDraft=null;
+            function copyAvatar(av){return Object.assign({},AVATAR_DEFAULT,av||{});}
             function ensureAvatar(){
                 if(!state.pet)state.pet={};
-                if(!state.pet.avatar)state.pet.avatar={};
-                Object.keys(AVATAR_DEFAULT).forEach(function(k){if(!state.pet.avatar[k])state.pet.avatar[k]=AVATAR_DEFAULT[k];});
+                if(!state.pet.avatar)state.pet.avatar=copyAvatar();
+                state.pet.avatar=copyAvatar(state.pet.avatar);
                 return state.pet.avatar;
             }
+            function getAvatarDraft(){if(!avatarDraft)avatarDraft=copyAvatar(ensureAvatar());return avatarDraft;}
+            function prepareAvatarPreview(){avatarDraft=copyAvatar(ensureAvatar());renderAvatarPicker();drawAvatarPreview();}
             function renderAvatarPicker(){
-                var av=ensureAvatar();
+                var av=getAvatarDraft();
                 document.querySelectorAll('[data-avatar]').forEach(function(btn){
                     var key=btn.dataset.avatar,val=btn.dataset.value;
                     var locked=(key==='accessory'&&val==='crown'&&!hasItem('acc_crown'));
@@ -1352,49 +1503,67 @@
                     btn.classList.toggle('locked',locked);
                     if(locked)btn.title='Redeem Mahkota Emosi dulu';
                 });
+                drawAvatarPreview();
+            }
+            function drawStaticAvatar(canvas,av){
+                if(!canvas)return;
+                var c=canvas.getContext('2d'),W=canvas.width,H=canvas.height,cx=W/2,cy=H/2+4;
+                av=copyAvatar(av);var body=avatarPalette(av.body),shape=av.shape,eyes=av.eyes,mouth=av.mouth,acc=av.accessory,aura=av.aura;
+                c.clearRect(0,0,W,H);
+                var bg=c.createRadialGradient(cx,cy-20,10,cx,cy,90);bg.addColorStop(0,'#fff');bg.addColorStop(1,body+'22');c.fillStyle=bg;c.fillRect(0,0,W,H);
+                c.beginPath();c.ellipse(cx,cy+54,44,9,0,0,Math.PI*2);c.fillStyle='rgba(0,0,0,.06)';c.fill();
+                if(aura==='halo'){c.beginPath();c.ellipse(cx,cy-58,38,9,0,0,Math.PI*2);c.strokeStyle='rgba(245,158,11,.7)';c.lineWidth=4;c.stroke();}
+                if(aura==='spark'){for(var si=0;si<7;si++){var aa=si*.9, rr=65;drawStar(c,cx+Math.cos(aa)*rr,cy+Math.sin(aa)*rr*.72,3.5,body+'aa')}}
+                if(aura==='bubble'){for(var bi=0;bi<7;bi++){var ba=bi*.9, br=62;c.beginPath();c.arc(cx+Math.cos(ba)*br,cy+Math.sin(ba)*br*.72,4,0,Math.PI*2);c.strokeStyle='rgba(13,148,136,.35)';c.stroke();}}
+                var bR=45;c.beginPath();
+                if(shape==='squishy'){c.moveTo(cx-bR,cy);c.bezierCurveTo(cx-bR-8,cy-34,cx-15,cy-54,cx+5,cy-45);c.bezierCurveTo(cx+42,cy-56,cx+bR+12,cy-18,cx+bR-4,cy+20);c.bezierCurveTo(cx+32,cy+56,cx-32,cy+56,cx-bR,cy);}
+                else if(shape==='ghost'){c.arc(cx,cy-4,bR,Math.PI,0,false);c.lineTo(cx+bR,cy+42);for(var gi=0;gi<4;gi++){c.quadraticCurveTo(cx+bR-(gi*24+12),cy+54,cx+bR-(gi+1)*24,cy+42);}c.closePath();}
+                else{c.ellipse(cx,cy,bR,bR*.86,0,0,Math.PI*2);}
+                var grad=c.createRadialGradient(cx-12,cy-16,6,cx,cy,bR+18);grad.addColorStop(0,'#fff');grad.addColorStop(1,body+'dd');c.fillStyle=grad;c.fill();c.strokeStyle=body+'66';c.lineWidth=1.2;c.stroke();
+                [-14,14].forEach(function(ox){var eY=cy-12;c.beginPath();if(eyes==='sleepy'){c.moveTo(cx+ox-6,eY);c.quadraticCurveTo(cx+ox,eY+4,cx+ox+6,eY);c.strokeStyle=var_t1;c.lineWidth=2;c.stroke();}else if(eyes==='star'){drawStar(c,cx+ox,eY,6,var_t1);drawStar(c,cx+ox+1,eY-1,2,'#fff');}else{c.ellipse(cx+ox,eY,5,6,0,0,Math.PI*2);c.fillStyle='#fff';c.fill();c.beginPath();c.arc(cx+ox+1.5,eY+.8,3,0,Math.PI*2);c.fillStyle=var_t1;c.fill();c.beginPath();c.arc(cx+ox+2.5,eY-.8,1,0,Math.PI*2);c.fillStyle='#fff';c.fill();}});
+                c.beginPath();c.strokeStyle=var_t1;c.lineWidth=2;c.lineCap='round';var mx=cx,my=cy+10;if(mouth==='open'){c.arc(mx,my+2,6,0,Math.PI*2);c.fillStyle='rgba(17,17,19,.82)';c.fill();}else if(mouth==='tiny'){c.moveTo(mx-3,my+1);c.quadraticCurveTo(mx,my+4,mx+3,my+1);c.stroke();}else{c.moveTo(mx-8,my);c.quadraticCurveTo(mx,my+7,mx+8,my);c.stroke();}
+                [-17,17].forEach(function(ox){c.beginPath();c.ellipse(cx+ox,cy+7,7,3,0,0,Math.PI*2);c.fillStyle=body+'22';c.fill();});
+                if(acc==='crown'){c.beginPath();c.moveTo(cx-23,cy-48);c.lineTo(cx-14,cy-66);c.lineTo(cx,cy-51);c.lineTo(cx+14,cy-66);c.lineTo(cx+23,cy-48);c.closePath();c.fillStyle='#F59E0B';c.fill();}
+                else if(acc==='cap'){c.beginPath();c.ellipse(cx-3,cy-48,28,12,-.18,Math.PI,Math.PI*2);c.fillStyle='#111113';c.fill();c.beginPath();c.ellipse(cx+20,cy-42,17,6,-.2,0,Math.PI*2);c.fillStyle='#3F3F46';c.fill();}
+                else if(acc==='headphone'){c.beginPath();c.arc(cx,cy-23,38,Math.PI*.98,Math.PI*2.02);c.strokeStyle='#111113';c.lineWidth=5;c.stroke();[-1,1].forEach(function(side){c.beginPath();c.roundRect(cx+side*34-7,cy-13,14,24,6);c.fillStyle='#111113';c.fill();});}
+                else if(acc==='flower'){for(var fi=0;fi<6;fi++){var fa=fi*Math.PI/3;c.beginPath();c.ellipse(cx-28+Math.cos(fa)*6,cy-44+Math.sin(fa)*6,5,3,fa,0,Math.PI*2);c.fillStyle='#EC4899';c.fill();}c.beginPath();c.arc(cx-28,cy-44,3,0,Math.PI*2);c.fillStyle='#FDE68A';c.fill();}
+            }
+            function drawAvatarPreview(){
+                var cv=document.getElementById('avatar-preview-canvas');
+                if(cv){cv.width=180;cv.height=180;drawStaticAvatar(cv,getAvatarDraft());}
+                var st=document.getElementById('avatar-preview-status');
+                if(st)st.textContent='Preview belum disimpan';
             }
             function setAvatarPart(key,value,silent){
                 if(key==='accessory'&&value==='crown'&&!hasItem('acc_crown')){toast('Redeem Mahkota Emosi dulu ya');return;}
-                var av=ensureAvatar();
-                av[key]=value;
+                var av=getAvatarDraft();av[key]=value;
                 renderAvatarPicker();
-                save();
-                var dom=Object.entries(state.emotions||{}).sort(function(a,b){return b[1]-a[1]})[0];
-                sP((dom&&dom[0])||'tenang');
-                if(!silent)toast('Avatar Plong diubah');
+                if(!silent)toast('Preview avatar diubah');
             }
             async function saveAvatarToServer(){
                 if(!authToken){showAuth('Silakan login dulu untuk menyimpan avatar.');return;}
                 try{
-                    ensureAvatar();
-                    var res=await apiFetch('/api/pet/avatar',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({avatar:state.pet.avatar})});
+                    var draft=getAvatarDraft();
+                    var res=await apiFetch('/api/pet/avatar',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({avatar:draft})});
                     var data=await res.json();
                     if(!res.ok||!data.ok)throw new Error(data.error||'Gagal menyimpan avatar');
                     applyStateFromServer(data.state);
+                    avatarDraft=copyAvatar(state.pet.avatar);
+                    renderAvatarPicker();
+                    sP(getPetMood());
+                    var st=document.getElementById('avatar-preview-status');if(st)st.textContent='Avatar tersimpan';
                     toast(data.message||'Avatar Plong tersimpan');
                 }catch(e){toast(e.message||'Gagal menyimpan avatar')}
             }
             function randomAvatar(){
                 var pick=function(arr){return arr[Math.floor(Math.random()*arr.length)]};
-                state.pet.avatar={
-                    body:pick(['orange','teal','blue','purple','gold','pink']),
-                    shape:pick(['round','squishy','ghost']),
-                    eyes:pick(['cute','sleepy','star']),
-                    mouth:pick(['smile','tiny','open']),
-                    accessory:pick(hasItem('acc_crown')?['none','cap','headphone','flower','crown']:['none','cap','headphone','flower']),
-                    aura:pick(['none','spark','halo','bubble'])
-                };
-                renderAvatarPicker();save();sP('tenang');toast('Avatar random dibuat');
+                avatarDraft={body:pick(['orange','teal','blue','purple','gold','pink']),shape:pick(['round','squishy','ghost']),eyes:pick(['cute','sleepy','star']),mouth:pick(['smile','tiny','open']),accessory:pick(hasItem('acc_crown')?['none','cap','headphone','flower','crown']:['none','cap','headphone','flower']),aura:pick(['none','spark','halo','bubble'])};
+                renderAvatarPicker();toast('Preview random dibuat');
             }
-            function resetAvatar(){
-                state.pet.avatar=Object.assign({},AVATAR_DEFAULT);
-                renderAvatarPicker();save();sP('tenang');toast('Avatar direset');
-            }
+            function resetAvatar(){avatarDraft=copyAvatar(AVATAR_DEFAULT);renderAvatarPicker();toast('Preview direset');}
             function initAvatarCustomizer(){
-                ensureAvatar();
-                document.querySelectorAll('[data-avatar]').forEach(function(btn){
-                    btn.addEventListener('click',function(){setAvatarPart(btn.dataset.avatar,btn.dataset.value)});
-                });
+                ensureAvatar();avatarDraft=copyAvatar(state.pet.avatar);
+                document.querySelectorAll('[data-avatar]').forEach(function(btn){btn.addEventListener('click',function(){setAvatarPart(btn.dataset.avatar,btn.dataset.value)});});
                 var saveBtn=document.getElementById('pet-save-avatar'),randomBtn=document.getElementById('pet-random'),resetBtn=document.getElementById('pet-reset-avatar');
                 if(saveBtn)saveBtn.addEventListener('click',saveAvatarToServer);
                 if(randomBtn)randomBtn.addEventListener('click',randomAvatar);
@@ -1580,7 +1749,7 @@
             var petPlayBtn=document.getElementById("pet-play"),petCalmBtn=document.getElementById("pet-calm");
             if(petPlayBtn)petPlayBtn.addEventListener("click",function(){petAction("play")});
             if(petCalmBtn)petCalmBtn.addEventListener("click",function(){petAction("calm")});
-            initAvatarCustomizer();initAccount();sP("tenang");wI();refreshUI();bootAuth();
+            initAvatarCustomizer();initAccount();renderGarden();sP("tenang");wI();refreshUI();bootAuth();
         </script>
     </body>
 </html>
