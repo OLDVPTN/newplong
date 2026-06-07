@@ -113,7 +113,15 @@ function defaultAppState(user = {}) {
       accessory: '',
       background: '',
       wings: false,
-      lastCareAt: new Date().toISOString()
+      lastCareAt: new Date().toISOString(),
+      avatar: {
+        body: 'orange',
+        shape: 'round',
+        eyes: 'cute',
+        mouth: 'smile',
+        accessory: 'none',
+        aura: 'none'
+      }
     },
     emotions: {
       tenang: 0
@@ -294,6 +302,7 @@ const PRODUCT_CATALOG = {
     desc: 'Aksesoris mahkota untuk Plong.',
     apply(state) {
       state.pet.accessory = 'crown';
+      state.pet.avatar = { ...(state.pet.avatar || {}), accessory: 'crown' };
       return 'Mahkota Emosi sudah dipakai oleh Plong.';
     }
   },
@@ -332,6 +341,7 @@ function ensureGameState(state, user) {
   const base = defaultAppState(user || {});
   const next = { ...base, ...(state || {}) };
   next.pet = { ...base.pet, ...(next.pet || {}) };
+  next.pet.avatar = { ...base.pet.avatar, ...(next.pet.avatar || {}) };
   next.account = { ...base.account, ...(next.account || {}) };
   next.emotions = { ...base.emotions, ...(next.emotions || {}) };
   next.art = Array.isArray(next.art) ? next.art : [];
@@ -388,27 +398,110 @@ function extractJsonObject(text) {
   try { return JSON.parse(match[0]); } catch { return null; }
 }
 
+function detectMoodFromText(transcript = '') {
+  const text = String(transcript || '').toLowerCase();
+
+  const rules = [
+    { mood: 'excited', score: 0, patterns: [
+      /\bsenang\b/g, /seneng/g, /bahagia/g, /happy/g, /gembira/g, /semangat/g,
+      /excited/g, /antusias/g, /bangga/g, /bersyukur/g, /suka banget/g, /senang banget/g, /seneng banget/g
+    ]},
+    { mood: 'tenang', score: 0, patterns: [
+      /tenang/g, /lega/g, /damai/g, /rileks/g, /relax/g, /kalem/g, /plong/g, /adem/g
+    ]},
+    { mood: 'marah', score: 0, patterns: [
+      /marah/g, /kesel/g, /kesal/g, /benci/g, /emosi/g, /muak/g, /sebel/g, /jengkel/g, /anjing/g, /bangsat/g
+    ]},
+    { mood: 'sedih', score: 0, patterns: [
+      /sedih/g, /nangis/g, /menangis/g, /kecewa/g, /hampa/g, /sakit hati/g, /sendiri/g, /kesepian/g, /putus asa/g
+    ]},
+    { mood: 'stres', score: 0, patterns: [
+      /stres/g, /stress/g, /pusing/g, /tertekan/g, /deadline/g, /beban/g, /berat banget/g, /capek/g, /lelah/g, /kewalahan/g
+    ]},
+    { mood: 'galau', score: 0, patterns: [
+      /galau/g, /bingung/g, /masa depan/g, /takut/g, /overthinking/g, /ragu/g, /dilema/g, /cemas/g, /khawatir/g
+    ]}
+  ];
+
+  for (const rule of rules) {
+    for (const pattern of rule.patterns) {
+      const matches = text.match(pattern);
+      if (matches) rule.score += matches.length;
+    }
+  }
+
+  // Frasa positif yang kuat harus menang dari default model kecil yang kadang menebak “galau”.
+  if (/senang banget|seneng banget|bahagia banget|happy banget|lagi senang|lagi seneng|aku senang|aku seneng|aku bahagia/.test(text)) {
+    return { mood: 'excited', confidence: 5 };
+  }
+  if (/lega banget|aku tenang|lagi tenang|rasanya plong/.test(text)) {
+    return { mood: 'tenang', confidence: 4 };
+  }
+
+  rules.sort((a, b) => b.score - a.score);
+  if (!rules[0] || rules[0].score <= 0) return { mood: 'tenang', confidence: 0 };
+
+  return { mood: rules[0].mood, confidence: rules[0].score };
+}
+
 function fallbackVentAnalysis(transcript, durationSeconds) {
   const t = String(transcript || '').toLowerCase();
-  let mood = 'tenang';
-  if (/marah|kesel|anjing|bangsat|benci|emosi|muak|sebel/.test(t)) mood = 'marah';
-  else if (/sedih|nangis|kecewa|hampa|sakit hati|sendiri|capek banget/.test(t)) mood = 'sedih';
-  else if (/bingung|galau|masa depan|takut|overthinking|ragu/.test(t)) mood = 'galau';
-  else if (/stres|stress|pusing|tertekan|deadline|berat|capek/.test(t)) mood = 'stres';
-  else if (/senang|happy|bahagia|semangat|excited|lega/.test(t)) mood = 'excited';
+  const detected = detectMoodFromText(t);
+  const mood = detected.mood || 'tenang';
   const duration = clamp(durationSeconds, 1, 90);
   const intensity = clamp(Math.round(45 + duration * 0.55 + (t.length > 80 ? 12 : 0)), 35, 92);
+
+  const moodCopy = {
+    excited: {
+      title: 'Energi positif tersimpan',
+      summary: 'Aku menangkap energi senang dari ceritamu dan menyimpannya sebagai emosi positif.',
+      insight: 'Senang juga layak dirayakan, meski lewat hal kecil.',
+      suggestion: 'Simpan momen ini sebentar, biar tubuhmu ikut ngerasain rasa baiknya.'
+    },
+    tenang: {
+      title: 'Rasa tenang tersimpan',
+      summary: 'Aku menangkap suasana yang lebih adem dari vent kamu.',
+      insight: 'Rasa tenang seperti ini bisa jadi tempat singgah yang aman buat pikiranmu.',
+      suggestion: 'Nikmati pelan-pelan, nggak perlu buru-buru pindah ke hal lain.'
+    },
+    marah: {
+      title: 'Api emosi tersimpan',
+      summary: 'Aku menangkap rasa kesal atau marah yang lagi keluar dari ceritamu.',
+      insight: 'Marah itu sinyal kalau ada sesuatu yang terasa nggak adil atau melewati batasmu.',
+      suggestion: 'Coba redakan tubuh dulu sebelum ambil keputusan besar.'
+    },
+    sedih: {
+      title: 'Rasa sedih tersimpan',
+      summary: 'Aku menangkap bagian dari dirimu yang lagi berat dan butuh ditemani.',
+      insight: 'Sedih bukan tanda kamu lemah, itu tanda ada hal yang berarti buatmu.',
+      suggestion: 'Temani dirimu pelan-pelan dulu, jangan dipaksa langsung baik-baik saja.'
+    },
+    stres: {
+      title: 'Beban pikiran tersimpan',
+      summary: 'Aku menangkap tekanan atau rasa lelah yang lagi numpuk.',
+      insight: 'Kalau semuanya terasa berat, biasanya tubuhmu lagi minta jeda.',
+      suggestion: 'Ambil satu hal paling kecil yang bisa kamu bereskan dulu.'
+    },
+    galau: {
+      title: 'Pikiran bercabang tersimpan',
+      summary: 'Aku menangkap rasa bingung atau pikiran yang lagi bercabang.',
+      insight: 'Galau sering muncul saat ada banyak kemungkinan yang belum jelas.',
+      suggestion: 'Coba pilih satu hal yang paling bikin kepikiran, lalu urai pelan-pelan.'
+    }
+  };
+
+  const copy = moodCopy[mood] || moodCopy.tenang;
   return {
     mood,
     intensity,
-    title: 'Vent tersimpan',
-    summary: transcript ? 'Aku menangkap inti curhatanmu dan menyimpannya sebagai energi emosi.' : 'Suaramu sudah diproses sebagai energi emosi, walau transkrip belum terbaca.',
-    insight: 'Yang penting kamu sudah mengeluarkan sebagian beban itu, pelan-pelan ya.',
-    suggestion: 'Ambil napas sebentar, lalu lanjutkan dengan satu langkah kecil yang paling ringan.',
+    title: copy.title,
+    summary: transcript ? copy.summary : 'Suaramu sudah diproses sebagai energi emosi, walau transkrip belum terbaca.',
+    insight: copy.insight,
+    suggestion: copy.suggestion,
     coins: Math.floor(intensity / 8) + 5,
     exp: Math.floor(intensity / 10) + 6,
     hungerDelta: 8,
-    happyDelta: mood === 'sedih' || mood === 'stres' ? 8 : 10
+    happyDelta: mood === 'sedih' || mood === 'stres' ? 8 : 12
   };
 }
 
@@ -428,9 +521,9 @@ Mood yang boleh dipilih: marah, sedih, galau, stres, excited, tenang.
 Durasi suara: ${Math.round(Number(durationSeconds || 0))} detik.
 Transkrip suara: ${content || '(Tidak ada transkrip. Analisis sebagai pelepasan emosi non-verbal.)'}
 
-Format JSON wajib:
+Format JSON wajib. Isi mood dengan salah satu mood yang cocok, jangan menyalin placeholder:
 {
-  "mood":"galau",
+  "mood":"excited",
   "intensity":70,
   "title":"judul pendek",
   "summary":"ringkasan empatik 1 kalimat",
@@ -442,9 +535,18 @@ Format JSON wajib:
   "happyDelta":10
 }
 
+Panduan mood:
+- Jika transkrip berisi senang, seneng, bahagia, happy, semangat, excited, antusias, bangga, atau bersyukur, pilih mood "excited".
+- Jika transkrip berisi lega, tenang, damai, rileks, plong, atau kalem, pilih mood "tenang".
+- Jika transkrip berisi bingung, galau, ragu, dilema, overthinking, cemas, atau khawatir, pilih mood "galau".
+- Jika transkrip berisi stres, pusing, tertekan, deadline, kewalahan, capek, atau lelah, pilih mood "stres".
+- Jika transkrip berisi sedih, nangis, kecewa, hampa, sakit hati, sendiri, atau kesepian, pilih mood "sedih".
+- Jika transkrip berisi marah, kesel, kesal, benci, emosi, muak, sebel, atau jengkel, pilih mood "marah".
+
 Aturan:
 - Jangan diagnosis medis.
 - Jangan menyebut diri sebagai AI.
+- Jangan default ke galau kalau transkripnya positif.
 - intensity 20-100.
 - coins 5-20.
 - exp 6-16.
@@ -482,7 +584,10 @@ Aturan:
     if (!r.ok) return fallback;
     const parsed = extractJsonObject(JSON.parse(text).message?.content || text);
     if (!parsed) return fallback;
-    const mood = ALLOWED_MOODS.includes(parsed.mood) ? parsed.mood : fallback.mood;
+    const aiMood = ALLOWED_MOODS.includes(parsed.mood) ? parsed.mood : fallback.mood;
+    const keywordMood = detectMoodFromText(content);
+    const mood = keywordMood.confidence >= 2 ? keywordMood.mood : aiMood;
+
     return {
       mood,
       intensity: clamp(parsed.intensity, 20, 100),
@@ -762,7 +867,7 @@ app.post('/api/redeem', requireAuth, async (req, res) => {
 
     if (owned) {
       if (product.key === 'bg_dream_garden') state.pet.background = 'dream_garden';
-      if (product.key === 'acc_crown') state.pet.accessory = 'crown';
+      if (product.key === 'acc_crown') { state.pet.accessory = 'crown'; state.pet.avatar = { ...(state.pet.avatar || {}), accessory: 'crown' }; }
       if (product.key === 'acc_wings') state.pet.wings = true;
       await saveStateForUser(req.user.id, state);
       return res.json({ ok: true, state, message: `${product.name} sudah kamu punya dan sudah dipakai.` });
@@ -791,6 +896,43 @@ app.post('/api/redeem', requireAuth, async (req, res) => {
   } catch (error) {
     console.error('Redeem error:', error);
     res.status(500).json({ ok: false, error: 'Gagal redeem produk.' });
+  }
+});
+
+
+app.put('/api/pet/avatar', requireAuth, async (req, res) => {
+  try {
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    const incoming = req.body.avatar || {};
+    const allowed = {
+      body: ['orange', 'teal', 'blue', 'purple', 'gold', 'pink'],
+      shape: ['round', 'squishy', 'ghost'],
+      eyes: ['cute', 'sleepy', 'star'],
+      mouth: ['smile', 'tiny', 'open'],
+      accessory: ['none', 'cap', 'headphone', 'flower', 'crown'],
+      aura: ['none', 'spark', 'halo', 'bubble']
+    };
+
+    const current = state.pet.avatar || {};
+    const avatar = {};
+    for (const key of Object.keys(allowed)) {
+      const value = String(incoming[key] || current[key] || '').trim();
+      avatar[key] = allowed[key].includes(value) ? value : allowed[key][0];
+    }
+
+    if (avatar.accessory === 'crown' && !state.inventory.includes('acc_crown')) {
+      avatar.accessory = current.accessory && current.accessory !== 'crown' ? current.accessory : 'none';
+    }
+
+    state.pet.avatar = avatar;
+    if (avatar.accessory === 'crown') state.pet.accessory = 'crown';
+    state.pet.lastCareAt = new Date().toISOString();
+
+    await saveStateForUser(req.user.id, state);
+    res.json({ ok: true, state, message: 'Avatar Plong berhasil disimpan.' });
+  } catch (error) {
+    console.error('Pet avatar error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal menyimpan avatar pet.' });
   }
 });
 
