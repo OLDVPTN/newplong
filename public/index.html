@@ -352,6 +352,29 @@
             .pet-act{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--bd1);background:var(--bg2);color:var(--t2);border-radius:18px;padding:6px 10px;font-size:11px;font-weight:700;box-shadow:0 1px 2px rgba(0,0,0,.035);transition:all .12s}
             .pet-act:hover{background:var(--bg3);border-color:var(--bd2)}
             .pet-act:disabled{opacity:.5;cursor:not-allowed}
+
+
+            /* ═══════ PET AVATAR CUSTOMIZER ═══════ */
+            .pet-custom{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:12px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
+            .pet-custom-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+            .pet-custom-title{font-size:11px;font-weight:800;color:var(--t2);text-transform:uppercase;letter-spacing:.6px}
+            .pet-custom-sub{font-size:10px;color:var(--t4);margin-top:1px}
+            .pet-custom-grid{display:grid;gap:10px}
+            .pet-custom-section{display:flex;flex-direction:column;gap:6px}
+            .pet-custom-label{font-size:10px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:.5px}
+            .pet-picks{display:flex;gap:6px;flex-wrap:wrap}
+            .pet-pick{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:34px;border-radius:999px;border:1px solid var(--bd1);background:var(--bg);color:var(--t2);font-size:11px;font-weight:800;padding:6px 10px;transition:all .12s;box-shadow:0 1px 2px rgba(0,0,0,.02)}
+            .pet-pick:hover{background:var(--bg3);border-color:var(--bd2)}
+            .pet-pick.on{background:var(--ac-bg);border-color:var(--ac-bd);color:var(--ac)}
+            .pet-pick.locked{opacity:.45;cursor:not-allowed;filter:grayscale(.45)}
+            .pet-color{width:30px;height:30px;border-radius:50%;padding:0;border:2px solid var(--bd1);box-shadow:inset 0 0 0 2px rgba(255,255,255,.55),0 1px 2px rgba(0,0,0,.05)}
+            .pet-color.on{border-color:var(--ac);transform:scale(1.05)}
+            .pet-custom-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+            .pet-custom-btn{display:inline-flex;align-items:center;gap:6px;border-radius:var(--r3);min-height:36px;padding:8px 12px;font-size:12px;font-weight:800;border:1px solid var(--bd1);background:var(--bg);color:var(--t2);transition:all .12s}
+            .pet-custom-btn:hover{background:var(--bg3);border-color:var(--bd2)}
+            .pet-custom-btn.primary{background:var(--ac);border-color:var(--ac);color:#fff;box-shadow:0 1px 4px rgba(232,77,26,.18)}
+            .pet-custom-btn.primary:hover{background:var(--ac2)}
+            @media(min-width:700px){.pet-custom-grid{grid-template-columns:repeat(2,1fr)}}
             .vent-ai-note{margin-top:9px;padding:9px 10px;border-radius:var(--r3);background:var(--tl-bg);border:1px solid var(--tl-bd);font-size:11px;color:var(--t2);line-height:1.55;text-align:left}
             .pc-owned{font-size:9px;font-weight:800;color:var(--tl);background:var(--tl-bg);border:1px solid var(--tl-bd);padding:2px 6px;border-radius:999px;margin-left:4px}
 
@@ -518,6 +541,76 @@
                         <div class="et">Komposisi Emosi</div>
                         <div id="emo-tags" class="eg">
                             <span class="ei"><span class="ed" style="background:var(--tenang)"></span>Tenang 0</span>
+                        </div>
+                    </div>
+
+                    <div class="pet-custom" id="pet-customizer">
+                        <div class="pet-custom-head">
+                            <div>
+                                <div class="pet-custom-title">Kustom Avatar Plong</div>
+                                <div class="pet-custom-sub">Ubah warna, wajah, aura, dan aksesoris kayak avatar game.</div>
+                            </div>
+                            <button class="pet-custom-btn" id="pet-random" type="button"><i class="fas fa-dice"></i> Random</button>
+                        </div>
+                        <div class="pet-custom-grid">
+                            <div class="pet-custom-section">
+                                <div class="pet-custom-label">Warna badan</div>
+                                <div class="pet-picks" data-avatar-group="body">
+                                    <button class="pet-pick pet-color" style="background:#E84D1A" data-avatar="body" data-value="orange" title="Orange"></button>
+                                    <button class="pet-pick pet-color" style="background:#0D9488" data-avatar="body" data-value="teal" title="Teal"></button>
+                                    <button class="pet-pick pet-color" style="background:#2563EB" data-avatar="body" data-value="blue" title="Blue"></button>
+                                    <button class="pet-pick pet-color" style="background:#9333EA" data-avatar="body" data-value="purple" title="Purple"></button>
+                                    <button class="pet-pick pet-color" style="background:#F59E0B" data-avatar="body" data-value="gold" title="Gold"></button>
+                                    <button class="pet-pick pet-color" style="background:#EC4899" data-avatar="body" data-value="pink" title="Pink"></button>
+                                </div>
+                            </div>
+                            <div class="pet-custom-section">
+                                <div class="pet-custom-label">Bentuk</div>
+                                <div class="pet-picks" data-avatar-group="shape">
+                                    <button class="pet-pick" data-avatar="shape" data-value="round">Bulat</button>
+                                    <button class="pet-pick" data-avatar="shape" data-value="squishy">Squishy</button>
+                                    <button class="pet-pick" data-avatar="shape" data-value="ghost">Ghost</button>
+                                </div>
+                            </div>
+                            <div class="pet-custom-section">
+                                <div class="pet-custom-label">Mata</div>
+                                <div class="pet-picks" data-avatar-group="eyes">
+                                    <button class="pet-pick" data-avatar="eyes" data-value="cute">Cute</button>
+                                    <button class="pet-pick" data-avatar="eyes" data-value="sleepy">Sleepy</button>
+                                    <button class="pet-pick" data-avatar="eyes" data-value="star">Star</button>
+                                </div>
+                            </div>
+                            <div class="pet-custom-section">
+                                <div class="pet-custom-label">Mulut</div>
+                                <div class="pet-picks" data-avatar-group="mouth">
+                                    <button class="pet-pick" data-avatar="mouth" data-value="smile">Smile</button>
+                                    <button class="pet-pick" data-avatar="mouth" data-value="tiny">Tiny</button>
+                                    <button class="pet-pick" data-avatar="mouth" data-value="open">Open</button>
+                                </div>
+                            </div>
+                            <div class="pet-custom-section">
+                                <div class="pet-custom-label">Aksesoris</div>
+                                <div class="pet-picks" data-avatar-group="accessory">
+                                    <button class="pet-pick" data-avatar="accessory" data-value="none">None</button>
+                                    <button class="pet-pick" data-avatar="accessory" data-value="cap">Cap</button>
+                                    <button class="pet-pick" data-avatar="accessory" data-value="headphone">Headphone</button>
+                                    <button class="pet-pick" data-avatar="accessory" data-value="flower">Flower</button>
+                                    <button class="pet-pick" data-avatar="accessory" data-value="crown">Crown</button>
+                                </div>
+                            </div>
+                            <div class="pet-custom-section">
+                                <div class="pet-custom-label">Aura</div>
+                                <div class="pet-picks" data-avatar-group="aura">
+                                    <button class="pet-pick" data-avatar="aura" data-value="none">None</button>
+                                    <button class="pet-pick" data-avatar="aura" data-value="spark">Spark</button>
+                                    <button class="pet-pick" data-avatar="aura" data-value="halo">Halo</button>
+                                    <button class="pet-pick" data-avatar="aura" data-value="bubble">Bubble</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pet-custom-actions">
+                            <button class="pet-custom-btn primary" id="pet-save-avatar" type="button"><i class="fas fa-check"></i> Simpan avatar</button>
+                            <button class="pet-custom-btn" id="pet-reset-avatar" type="button"><i class="fas fa-rotate-left"></i> Reset</button>
                         </div>
                     </div>
                 </section>
@@ -769,7 +862,7 @@
                 if(el)el.textContent="Hai, "+getStoredUserName();
             }
 
-            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString()},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,gm:"qwen2.5:3b",al:"id"};
+            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,gm:"qwen2.5:3b",al:"id"};
             function save(){try{localStorage.setItem("vkm",JSON.stringify(state))}catch(e){}; if(window.__vkmAuthReady&&typeof queueSyncState==="function")queueSyncState()}
             function load(){try{var d=JSON.parse(localStorage.getItem("vkm"));if(d)for(var k in d)if(d.hasOwnProperty(k))state[k]=d[k]}catch(e){}}
             load();
@@ -787,7 +880,7 @@
             window.__vkmAuthReady=false;
 
             function defaultStateForUser(user){
-                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString()},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
+                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
             }
             function ensureDefaults(){
                 if(!state.pet)state.pet={name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50};
@@ -801,6 +894,9 @@
                 if(!state.pet.background)state.pet.background="";
                 if(typeof state.pet.wings!=="boolean")state.pet.wings=false;
                 if(!state.pet.lastCareAt)state.pet.lastCareAt=new Date().toISOString();
+                if(!state.pet.avatar)state.pet.avatar={body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"};
+                var avd={body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"};
+                Object.keys(avd).forEach(function(k){if(!state.pet.avatar[k])state.pet.avatar[k]=avd[k];});
                 if(!state.gm)state.gm="qwen2.5:3b";
                 if(!state.al)state.al="id";
                 if(!state.account)state.account={name:"VokaMon User",username:"@vokamon.user",bio:"Lagi belajar memahami emosi pelan-pelan."};
@@ -903,8 +999,88 @@
 
             /* PET */
             var pC=document.getElementById("pet-canvas"),pX=pC.getContext("2d"),pA=0,pAF;
-            function dP(mood){var c=pX,W=pC.width,H=pC.height,cx=W/2,cy=H/2+6,cfg=EMO[mood]||EMO.tenang,t=pA;c.clearRect(0,0,W,H);c.beginPath();c.ellipse(cx,cy+50,40,8,0,0,Math.PI*2);c.fillStyle="rgba(0,0,0,0.04)";c.fill();var g=c.createRadialGradient(cx,cy,6,cx,cy,80);g.addColorStop(0,cfg.color+"12");g.addColorStop(1,"transparent");c.fillStyle=g;c.fillRect(0,0,W,H);var bob=Math.sin(t*.05)*4,bR=46;c.beginPath();c.ellipse(cx,cy+bob,bR,bR*.85,0,0,Math.PI*2);var bg=c.createRadialGradient(cx-10,cy-10+bob,5,cx,cy+bob,bR);bg.addColorStop(0,"#ffffff");bg.addColorStop(1,cfg.color+"cc");c.fillStyle=bg;c.fill();c.strokeStyle=cfg.color+"55";c.lineWidth=1;c.stroke();var eY=cy-12+bob;[-14,14].forEach(function(ox){var bl=Math.floor(t/120)%8===0?1:0;c.beginPath();if(bl){c.moveTo(cx+ox-5,eY);c.lineTo(cx+ox+5,eY);c.strokeStyle=var_t1;c.lineWidth=1.8;c.stroke()}else{c.ellipse(cx+ox,eY,5,6,0,0,Math.PI*2);c.fillStyle="#fff";c.fill();c.strokeStyle="rgba(0,0,0,.06)";c.lineWidth=.5;c.stroke();c.beginPath();c.arc(cx+ox+1.5,eY+.8,3,0,Math.PI*2);c.fillStyle=var_t1;c.fill();c.beginPath();c.arc(cx+ox+2.5,eY-.8,1,0,Math.PI*2);c.fillStyle="#fff";c.fill()}});c.beginPath();c.strokeStyle=var_t1;c.lineWidth=1.8;var mx=cx,my=cy+10+bob;if(mood==="marah")c.moveTo(mx-8,my+2),c.quadraticCurveTo(mx,my-2,mx+8,my+2);else if(mood==="sedih")c.moveTo(mx-7,my+4),c.quadraticCurveTo(mx,my,mx+7,my+4);else if(mood==="excited"||mood==="tenang")c.moveTo(mx-8,my),c.quadraticCurveTo(mx,my+6,mx+8,my);else c.moveTo(mx-7,my+1),c.lineTo(mx+7,my+1);c.stroke();if(mood==="excited"||mood==="tenang")[-16,16].forEach(function(ox){c.beginPath();c.ellipse(cx+ox,cy+5+bob,7,3,0,0,Math.PI*2);c.fillStyle=cfg.color+"18";c.fill()});if(mood==="marah")for(var i=0;i<3;i++){var a=t*.04+i*2.09;c.beginPath();c.arc(cx+Math.cos(a)*60,cy+Math.sin(a)*52+bob,2+Math.sin(t*.1+i),0,Math.PI*2);c.fillStyle=cfg.color+"66";c.fill()}if(mood==="excited")for(var j=0;j<4;j++){var a2=t*.03+j*1.57,r=62+Math.sin(t*.07+j)*4;c.font="10px serif";c.fillStyle=cfg.color+"88";c.fillText("✦",cx+Math.cos(a2)*r,cy+Math.sin(a2)*r*.55+bob)}pA++;pAF=requestAnimationFrame(function(){dP(mood)})}
-            var var_t1=getComputedStyle(document.documentElement).getPropertyValue("--t1").trim()||"#111113";
+            function avatarPalette(body){
+                var map={orange:'#E84D1A',teal:'#0D9488',blue:'#2563EB',purple:'#9333EA',gold:'#F59E0B',pink:'#EC4899'};
+                return map[body]||map.orange;
+            }
+            function drawStar(c,x,y,r,color){c.save();c.translate(x,y);c.beginPath();for(var i=0;i<10;i++){var rr=i%2===0?r:r*.45;var a=-Math.PI/2+i*Math.PI/5;c.lineTo(Math.cos(a)*rr,Math.sin(a)*rr);}c.closePath();c.fillStyle=color;c.fill();c.restore();}
+            function dP(mood){
+                var c=pX,W=pC.width,H=pC.height,cx=W/2,cy=H/2+8,cfg=EMO[mood]||EMO.tenang,t=pA;
+                var av=(state&&state.pet&&state.pet.avatar)||{};
+                var body=avatarPalette(av.body), shape=av.shape||'round', eyes=av.eyes||'cute', mouth=av.mouth||'smile', acc=av.accessory||state.pet.accessory||'none', aura=av.aura||'none';
+                if(state.pet&&state.pet.accessory==='crown'&&acc==='none')acc='crown';
+                c.clearRect(0,0,W,H);
+
+                if(state.pet&&state.pet.background==='dream_garden'){
+                    var sky=c.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#FFF7ED');sky.addColorStop(1,'#ECFDF5');c.fillStyle=sky;c.fillRect(0,0,W,H);
+                    for(var bgI=0;bgI<7;bgI++){drawStar(c,25+bgI*22,34+Math.sin(t*.02+bgI)*5,3,'rgba(232,77,26,.18)')}
+                }
+
+                c.beginPath();c.ellipse(cx,cy+51,42,8,0,0,Math.PI*2);c.fillStyle='rgba(0,0,0,0.045)';c.fill();
+                var glow=c.createRadialGradient(cx,cy,6,cx,cy,88);glow.addColorStop(0,cfg.color+'18');glow.addColorStop(1,'transparent');c.fillStyle=glow;c.fillRect(0,0,W,H);
+
+                var bob=Math.sin(t*.05)*4, bR=46;
+                if(aura==='halo'){
+                    c.beginPath();c.ellipse(cx,cy-58+bob,38,9,0,0,Math.PI*2);c.strokeStyle='rgba(245,158,11,.65)';c.lineWidth=4;c.stroke();
+                }else if(aura==='spark'){
+                    for(var si=0;si<7;si++){var aa=t*.035+si*.9, rr=68+Math.sin(t*.04+si)*6;drawStar(c,cx+Math.cos(aa)*rr,cy+Math.sin(aa)*rr*.72+bob,3.5,cfg.color+'99')}
+                }else if(aura==='bubble'){
+                    for(var bi=0;bi<8;bi++){var ba=t*.025+bi*.78, br=58+Math.sin(t*.05+bi)*9;c.beginPath();c.arc(cx+Math.cos(ba)*br,cy+Math.sin(ba)*br*.75+bob,3+Math.sin(t*.07+bi)*1.5,0,Math.PI*2);c.strokeStyle='rgba(13,148,136,.35)';c.lineWidth=1;c.stroke();}
+                }
+
+                if(state.pet&&state.pet.wings){
+                    c.save();c.globalAlpha=.75;[-1,1].forEach(function(side){c.beginPath();c.ellipse(cx+side*47,cy+10+bob,22,38,side*.45,0,Math.PI*2);c.fillStyle='rgba(255,255,255,.9)';c.fill();c.strokeStyle=cfg.color+'44';c.lineWidth=1;c.stroke();});c.restore();
+                }
+
+                c.beginPath();
+                if(shape==='squishy'){
+                    c.moveTo(cx-bR,cy+bob);c.bezierCurveTo(cx-bR-8,cy-34+bob,cx-15,cy-54+bob,cx+5,cy-45+bob);c.bezierCurveTo(cx+42,cy-56+bob,cx+bR+12,cy-18+bob,cx+bR-4,cy+20+bob);c.bezierCurveTo(cx+32,cy+56+bob,cx-32,cy+56+bob,cx-bR,cy+bob);
+                }else if(shape==='ghost'){
+                    c.arc(cx,cy-4+bob,bR,Math.PI,0,false);c.lineTo(cx+bR,cy+42+bob);for(var gi=0;gi<4;gi++){c.quadraticCurveTo(cx+bR-(gi*24+12),cy+54+bob,cx+bR-(gi+1)*24,cy+42+bob);}c.closePath();
+                }else{
+                    c.ellipse(cx,cy+bob,bR,bR*.86,0,0,Math.PI*2);
+                }
+                var grad=c.createRadialGradient(cx-12,cy-16+bob,6,cx,cy+bob,bR+18);grad.addColorStop(0,'#fff');grad.addColorStop(1,body+'dd');c.fillStyle=grad;c.fill();c.strokeStyle=body+'66';c.lineWidth=1.2;c.stroke();
+
+                if(av.body==='pink'||av.body==='gold'){
+                    for(var pi=0;pi<5;pi++){c.beginPath();c.arc(cx-20+pi*10,cy-38+bob+Math.sin(t*.05+pi)*2,2.2,0,Math.PI*2);c.fillStyle='rgba(255,255,255,.45)';c.fill();}
+                }
+
+                var eY=cy-12+bob;
+                [-14,14].forEach(function(ox){
+                    c.beginPath();
+                    if(eyes==='sleepy'){
+                        c.moveTo(cx+ox-6,eY);c.quadraticCurveTo(cx+ox,eY+4,cx+ox+6,eY);c.strokeStyle=var_t1;c.lineWidth=2;c.stroke();
+                    }else if(eyes==='star'){
+                        drawStar(c,cx+ox,eY,6,var_t1);
+                        drawStar(c,cx+ox+1,eY-1,2,'#fff');
+                    }else{
+                        c.ellipse(cx+ox,eY,5,6,0,0,Math.PI*2);c.fillStyle='#fff';c.fill();c.strokeStyle='rgba(0,0,0,.06)';c.lineWidth=.5;c.stroke();c.beginPath();c.arc(cx+ox+1.5,eY+.8,3,0,Math.PI*2);c.fillStyle=var_t1;c.fill();c.beginPath();c.arc(cx+ox+2.5,eY-.8,1,0,Math.PI*2);c.fillStyle='#fff';c.fill();
+                    }
+                });
+
+                c.beginPath();c.strokeStyle=var_t1;c.lineWidth=2;c.lineCap='round';var mx=cx,my=cy+10+bob;
+                if(mouth==='open'){c.arc(mx,my+2,6,0,Math.PI*2);c.fillStyle='rgba(17,17,19,.82)';c.fill();}
+                else if(mouth==='tiny'){c.moveTo(mx-3,my+1);c.quadraticCurveTo(mx,my+4,mx+3,my+1);c.stroke();}
+                else if(mood==='marah'){c.moveTo(mx-8,my+2);c.quadraticCurveTo(mx,my-2,mx+8,my+2);c.stroke();}
+                else{c.moveTo(mx-8,my);c.quadraticCurveTo(mx,my+7,mx+8,my);c.stroke();}
+
+                [-17,17].forEach(function(ox){c.beginPath();c.ellipse(cx+ox,cy+7+bob,7,3,0,0,Math.PI*2);c.fillStyle=body+'22';c.fill();});
+
+                if(acc==='crown'){
+                    c.beginPath();c.moveTo(cx-23,cy-48+bob);c.lineTo(cx-14,cy-66+bob);c.lineTo(cx,cy-51+bob);c.lineTo(cx+14,cy-66+bob);c.lineTo(cx+23,cy-48+bob);c.closePath();c.fillStyle='#F59E0B';c.fill();c.strokeStyle='rgba(180,83,9,.45)';c.stroke();
+                    [-14,14].forEach(function(ox){drawStar(c,cx+ox,cy-66+bob,3,'#fff7ed')});
+                }else if(acc==='cap'){
+                    c.beginPath();c.ellipse(cx-3,cy-48+bob,28,12,-.18,Math.PI,Math.PI*2);c.fillStyle='#111113';c.fill();c.beginPath();c.ellipse(cx+20,cy-42+bob,17,6,-.2,0,Math.PI*2);c.fillStyle='#3F3F46';c.fill();
+                }else if(acc==='headphone'){
+                    c.beginPath();c.arc(cx,cy-23+bob,38,Math.PI*.98,Math.PI*2.02);c.strokeStyle='#111113';c.lineWidth=5;c.stroke();[-1,1].forEach(function(side){c.beginPath();c.roundRect(cx+side*34-7,cy-13+bob,14,24,6);c.fillStyle='#111113';c.fill();});
+                }else if(acc==='flower'){
+                    for(var fi=0;fi<6;fi++){var fa=fi*Math.PI/3;c.beginPath();c.ellipse(cx-28+Math.cos(fa)*6,cy-44+bob+Math.sin(fa)*6,5,3,fa,0,Math.PI*2);c.fillStyle='#EC4899';c.fill();}c.beginPath();c.arc(cx-28,cy-44+bob,3,0,Math.PI*2);c.fillStyle='#FDE68A';c.fill();
+                }
+
+                pA++;pAF=requestAnimationFrame(function(){dP(mood)});
+            }
+                        var var_t1=getComputedStyle(document.documentElement).getPropertyValue("--t1").trim()||"#111113";
             function sP(m){cancelAnimationFrame(pAF);dP(m)}
 
             /* WAVE */
@@ -915,8 +1091,18 @@
 
             function clamp(n,min,max){n=Number(n);if(!isFinite(n))return min;return Math.max(min,Math.min(max,n))}
             function hasItem(key){return !!(key&&state.inventory&&state.inventory.indexOf(key)>-1)}
-            function applyStateFromServer(next){if(next&&typeof next==="object"){state=Object.assign(defaultStateForUser(authUser),next);ensureDefaults();try{localStorage.setItem("vkm",JSON.stringify(state))}catch(e){}refreshUI();renderAccount();setM(state.gm||"qwen2.5:3b",false);setL(gLK(),false);}}
+            function applyStateFromServer(next){if(next&&typeof next==="object"){state=Object.assign(defaultStateForUser(authUser),next);ensureDefaults();try{localStorage.setItem("vkm",JSON.stringify(state))}catch(e){}refreshUI();renderAccount();if(typeof renderAvatarPicker==="function")renderAvatarPicker();setM(state.gm||"qwen2.5:3b",false);setL(gLK(),false);}}
             function moodLabel(m){return EMO[m]?EMO[m].label:"Tenang"}
+            function guessMoodFromTranscript(txt){
+                txt=String(txt||"").toLowerCase();
+                if(/senang banget|seneng banget|bahagia banget|happy banget|lagi senang|lagi seneng|aku senang|aku seneng|aku bahagia|semangat|excited|bersyukur|bangga/.test(txt))return "excited";
+                if(/lega banget|aku tenang|lagi tenang|rasanya plong|damai|rileks|kalem/.test(txt))return "tenang";
+                if(/marah|kesel|kesal|benci|emosi|muak|sebel|jengkel|anjing|bangsat/.test(txt))return "marah";
+                if(/sedih|nangis|menangis|kecewa|hampa|sakit hati|sendiri|kesepian/.test(txt))return "sedih";
+                if(/stres|stress|pusing|tertekan|deadline|beban|berat banget|capek|lelah|kewalahan/.test(txt))return "stres";
+                if(/galau|bingung|masa depan|takut|overthinking|ragu|dilema|cemas|khawatir/.test(txt))return "galau";
+                return "tenang";
+            }
             function startSpeechCapture(){
                 var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
                 speechText="";
@@ -967,8 +1153,8 @@
                     renderVentResult(data.result);
                 }catch(e){
                     console.warn(e);
-                    var ms=Object.keys(EMO),dt=ms[Math.floor(Math.random()*ms.length)],it=Math.floor(Math.random()*40)+60;
-                    fV(dt,it,"Aku belum bisa membaca dengan AI, jadi vent ini diproses lokal dulu.","Coba ulangi lagi nanti kalau server AI sudah stabil.");
+                    var dt=guessMoodFromTranscript(transcript),it=Math.floor(Math.random()*30)+60;
+                    fV(dt,it,"Aku belum bisa membaca dengan AI, jadi vent ini diproses lokal dari transkrip yang tertangkap.","Coba ulangi lagi nanti kalau server AI sudah stabil.");
                 }
             }
             function renderVentResult(result){
@@ -976,7 +1162,8 @@
                 sP(mood);
                 var rE=document.getElementById("emo-res");
                 rE.style.display="block";
-                rE.innerHTML='<div style="font-size:26px;margin-bottom:4px"><i class="fas '+cfg.icon+'"></i></div><h3 style="font-size:15px;font-weight:800;color:'+cfg.color+';margin-bottom:2px">'+cfg.label+'</h3><p style="font-size:10px;color:var(--t3);margin-bottom:8px">Intensitas · '+(result.intensity||0)+'%</p><div style="display:flex;align-items:center;justify-content:center;gap:4px;font-weight:700;color:var(--ac);font-size:12px"><i class="fas fa-coins"></i> +'+coins+'</div><div class="vent-ai-note"><strong>'+escH(result.title||"Refleksi Plong")+'</strong><br>'+escH(result.summary||"")+'<br><span style="color:var(--t3)">'+escH(result.suggestion||"")+'</span></div>';
+                var tr=result.transcript?'<br><span style="color:var(--t4);font-size:10px">Terdengar: “'+escH(String(result.transcript).slice(0,100))+'”</span>':'';
+                rE.innerHTML='<div style="font-size:26px;margin-bottom:4px"><i class="fas '+cfg.icon+'"></i></div><h3 style="font-size:15px;font-weight:800;color:'+cfg.color+';margin-bottom:2px">'+cfg.label+'</h3><p style="font-size:10px;color:var(--t3);margin-bottom:8px">Intensitas · '+(result.intensity||0)+'%</p><div style="display:flex;align-items:center;justify-content:center;gap:4px;font-weight:700;color:var(--ac);font-size:12px"><i class="fas fa-coins"></i> +'+coins+'</div><div class="vent-ai-note"><strong>'+escH(result.title||"Refleksi Plong")+'</strong><br>'+escH(result.summary||"")+'<br><span style="color:var(--t3)">'+escH(result.suggestion||"")+'</span>'+tr+'</div>';
                 document.getElementById("live-emo").innerHTML='<span style="font-size:12px;font-weight:600;color:'+cfg.color+'"><i class="fas '+cfg.icon+'"></i> '+cfg.label+'</span>';
                 var rc=rB.getBoundingClientRect();cF(rc.left+rc.width/2,rc.top,coins);uC();
                 if(result.leveledUp)toast("🎉 Plong naik level!");
@@ -1025,6 +1212,74 @@
                     toast(data.message||"Plong senang");
                     sP(Object.entries(state.emotions||{}).sort(function(a,b){return b[1]-a[1]})[0]?.[0]||"tenang");
                 }catch(e){toast(e.message||"Gagal menjalankan aksi pet")}
+            }
+
+
+            /* PET AVATAR CUSTOMIZER */
+            var AVATAR_DEFAULT={body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"};
+            function ensureAvatar(){
+                if(!state.pet)state.pet={};
+                if(!state.pet.avatar)state.pet.avatar={};
+                Object.keys(AVATAR_DEFAULT).forEach(function(k){if(!state.pet.avatar[k])state.pet.avatar[k]=AVATAR_DEFAULT[k];});
+                return state.pet.avatar;
+            }
+            function renderAvatarPicker(){
+                var av=ensureAvatar();
+                document.querySelectorAll('[data-avatar]').forEach(function(btn){
+                    var key=btn.dataset.avatar,val=btn.dataset.value;
+                    var locked=(key==='accessory'&&val==='crown'&&!hasItem('acc_crown'));
+                    btn.classList.toggle('on',av[key]===val);
+                    btn.classList.toggle('locked',locked);
+                    if(locked)btn.title='Redeem Mahkota Emosi dulu';
+                });
+            }
+            function setAvatarPart(key,value,silent){
+                if(key==='accessory'&&value==='crown'&&!hasItem('acc_crown')){toast('Redeem Mahkota Emosi dulu ya');return;}
+                var av=ensureAvatar();
+                av[key]=value;
+                renderAvatarPicker();
+                save();
+                var dom=Object.entries(state.emotions||{}).sort(function(a,b){return b[1]-a[1]})[0];
+                sP((dom&&dom[0])||'tenang');
+                if(!silent)toast('Avatar Plong diubah');
+            }
+            async function saveAvatarToServer(){
+                if(!authToken){showAuth('Silakan login dulu untuk menyimpan avatar.');return;}
+                try{
+                    ensureAvatar();
+                    var res=await apiFetch('/api/pet/avatar',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({avatar:state.pet.avatar})});
+                    var data=await res.json();
+                    if(!res.ok||!data.ok)throw new Error(data.error||'Gagal menyimpan avatar');
+                    applyStateFromServer(data.state);
+                    toast(data.message||'Avatar Plong tersimpan');
+                }catch(e){toast(e.message||'Gagal menyimpan avatar')}
+            }
+            function randomAvatar(){
+                var pick=function(arr){return arr[Math.floor(Math.random()*arr.length)]};
+                state.pet.avatar={
+                    body:pick(['orange','teal','blue','purple','gold','pink']),
+                    shape:pick(['round','squishy','ghost']),
+                    eyes:pick(['cute','sleepy','star']),
+                    mouth:pick(['smile','tiny','open']),
+                    accessory:pick(hasItem('acc_crown')?['none','cap','headphone','flower','crown']:['none','cap','headphone','flower']),
+                    aura:pick(['none','spark','halo','bubble'])
+                };
+                renderAvatarPicker();save();sP('tenang');toast('Avatar random dibuat');
+            }
+            function resetAvatar(){
+                state.pet.avatar=Object.assign({},AVATAR_DEFAULT);
+                renderAvatarPicker();save();sP('tenang');toast('Avatar direset');
+            }
+            function initAvatarCustomizer(){
+                ensureAvatar();
+                document.querySelectorAll('[data-avatar]').forEach(function(btn){
+                    btn.addEventListener('click',function(){setAvatarPart(btn.dataset.avatar,btn.dataset.value)});
+                });
+                var saveBtn=document.getElementById('pet-save-avatar'),randomBtn=document.getElementById('pet-random'),resetBtn=document.getElementById('pet-reset-avatar');
+                if(saveBtn)saveBtn.addEventListener('click',saveAvatarToServer);
+                if(randomBtn)randomBtn.addEventListener('click',randomAvatar);
+                if(resetBtn)resetBtn.addEventListener('click',resetAvatar);
+                renderAvatarPicker();
             }
 
             /* ACCOUNT */
@@ -1205,7 +1460,7 @@
             var petPlayBtn=document.getElementById("pet-play"),petCalmBtn=document.getElementById("pet-calm");
             if(petPlayBtn)petPlayBtn.addEventListener("click",function(){petAction("play")});
             if(petCalmBtn)petCalmBtn.addEventListener("click",function(){petAction("calm")});
-            initAccount();sP("tenang");wI();refreshUI();bootAuth();
+            initAvatarCustomizer();initAccount();sP("tenang");wI();refreshUI();bootAuth();
         </script>
     </body>
 </html>
