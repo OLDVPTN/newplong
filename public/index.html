@@ -1183,7 +1183,10 @@
                 document.querySelectorAll('[data-page="'+id+'"]').forEach(function(b){b.classList.add("on")});
                 refreshUI();
                 if(id==="pg-avatar"&&typeof prepareAvatarPreview==="function")prepareAvatarPreview();
-                if(id==="pg-garden"&&typeof renderGarden==="function")renderGarden();
+                if(id==="pg-garden"){
+                    if(typeof renderGarden==="function")renderGarden();
+                    if(typeof loadGardenFromServer==="function")loadGardenFromServer();
+                }
             }
             document.querySelectorAll("[data-page]").forEach(function(b){b.addEventListener("click",function(){go(b.dataset.page)})});
 
@@ -1456,25 +1459,73 @@
                 if(water)water.disabled=!plot||plot.ready;
                 if(harvest)harvest.disabled=!plot||!plot.ready;
                 var seeds=document.getElementById('garden-seeds');
-                if(seeds){seeds.innerHTML=Object.keys(VEGGIES).map(function(k){var v=VEGGIES[k];return '<button class="garden-seed" data-seed="'+k+'"><span>'+v.icon+'</span><strong>'+escH(v.name)+'</strong><small>'+v.growNeed+'x siram</small></button>'}).join('');seeds.querySelectorAll('[data-seed]').forEach(function(b){b.addEventListener('click',function(){gardenPlant(b.dataset.seed)})});}
+                if(seeds){seeds.innerHTML=Object.keys(VEGGIES).map(function(k){var v=VEGGIES[k];var dis=plot?' disabled':'';var hint=plot?(plot.ready?'Panen dulu':'Tanaman lain sedang tumbuh'):v.growNeed+'x siram';return '<button class="garden-seed" data-seed="'+k+'"'+dis+'><span>'+v.icon+'</span><strong>'+escH(v.name)+'</strong><small>'+escH(hint)+'</small></button>'}).join('');seeds.querySelectorAll('[data-seed]').forEach(function(b){b.addEventListener('click',function(){gardenPlant(b.dataset.seed)})});}
                 var inv=document.getElementById('garden-inventory');
                 if(inv){inv.innerHTML=Object.keys(VEGGIES).map(function(k){var v=VEGGIES[k],n=Number(g.inventory[k]||0);return '<button class="garden-feed" data-feed="'+k+'" '+(n>0?'':'disabled')+'><span>'+v.icon+'</span><strong>'+escH(v.name)+' x'+n+'</strong><small>'+escH(v.desc)+' · kasih makan</small></button>'}).join('');inv.querySelectorAll('[data-feed]').forEach(function(b){b.addEventListener('click',function(){gardenFeed(b.dataset.feed)})});}
                 var hist=document.getElementById('garden-history');
                 if(hist){hist.innerHTML=(g.history&&g.history.length?g.history.slice(0,8).map(function(h){return '<div class="garden-history-item">'+escH(h.text||'Aktivitas kebun')+'</div>'}).join(''):'<div class="garden-history-item">Belum ada aktivitas kebun.</div>');}
             }
-            async function gardenRequest(url,body){
-                if(!authToken){showAuth('Silakan login dulu.');return null;}
+            var gardenBusy=false;
+            function setGardenBusy(on){
+                gardenBusy=!!on;
+                document.querySelectorAll('.garden-seed,.garden-feed,#garden-water,#garden-harvest').forEach(function(btn){
+                    if(!btn)return;
+                    if(on){
+                        btn.dataset.prevDisabled=btn.disabled?'1':'0';
+                        btn.disabled=true;
+                    }else if(btn.dataset.prevDisabled==='0'){
+                        btn.disabled=false;
+                    }
+                });
+                if(!on)renderGarden();
+            }
+            async function loadGardenFromServer(){
+                if(!authToken)return;
                 try{
-                    var res=await apiFetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})});
+                    var res=await apiFetch('/api/garden');
                     var data=await res.json();
-                    if(!res.ok||!data.ok)throw new Error(data.error||'Aksi kebun gagal');
-                    applyStateFromServer(data.state);
+                    if(res.ok&&data.ok&&data.state){
+                        applyStateFromServer(data.state);
+                    }else if(data&&data.garden){
+                        state.garden=data.garden;
+                        ensureDefaults();
+                        renderGarden();
+                    }
+                }catch(e){
+                    console.warn('Load garden gagal:',e.message||e);
+                }
+            }
+            async function gardenRequest(url,body){
+                if(gardenBusy)return null;
+                if(!authToken){showAuth('Silakan login dulu.');return null;}
+                setGardenBusy(true);
+                try{
+                    var res=await apiFetch(url,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(body||{})});
+                    var text=await res.text();
+                    var data={};
+                    try{data=text?JSON.parse(text):{};}catch(parseErr){data={error:text||'Response server tidak valid.'};}
+                    if(!res.ok||!data.ok){
+                        console.warn('Garden request failed',url,res.status,data);
+                        throw new Error(data.error||('Aksi kebun gagal. Status '+res.status));
+                    }
+                    if(data.state)applyStateFromServer(data.state);
+                    else if(data.garden){state.garden=data.garden;ensureDefaults();renderGarden();}
                     toast(data.message||'Kebun diperbarui');
                     sP(getPetMood());
                     return data;
-                }catch(e){toast(e.message||'Kebun lagi bermasalah');return null;}
+                }catch(e){
+                    toast(e.message||'Kebun lagi bermasalah');
+                    return null;
+                }finally{
+                    setGardenBusy(false);
+                }
             }
-            function gardenPlant(seed){gardenRequest('/api/garden/plant',{seed:seed});}
+            function gardenPlant(seed){
+                var g=ensureGardenLocal();
+                if(g.plot&&!g.plot.ready){toast('Masih ada tanaman yang sedang tumbuh. Siram dulu ya.');return;}
+                if(g.plot&&g.plot.ready){toast('Panen tanaman yang siap dulu ya.');return;}
+                gardenRequest('/api/garden/plant',{seed:seed});
+            }
             function gardenWater(){gardenRequest('/api/garden/water',{});}
             function gardenHarvest(){gardenRequest('/api/garden/harvest',{});}
             function gardenFeed(veggie){gardenRequest('/api/garden/feed',{veggie:veggie});}
