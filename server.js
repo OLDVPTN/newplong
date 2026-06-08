@@ -111,15 +111,31 @@ function defaultAppState(user = {}) {
       hunger: 50,
       happy: 50,
       energy: 70,
-      clean: 70,
-      sleeping: false,
-      reaction: 'idle',
+      bond: 0,
+      worker: {
+        lastClaimAt: new Date().toISOString(),
+        essence: {
+          marah: 0,
+          sedih: 0,
+          galau: 0,
+          stres: 0,
+          excited: 0,
+          tenang: 0
+        },
+        totalEarned: 0,
+        today: {
+          date: new Date().toISOString().slice(0, 10),
+          vent: 0,
+          chat: 0,
+          garden: 0,
+          care: 0,
+          bonusClaimed: false
+        }
+      },
       accessory: '',
       background: '',
       wings: false,
       lastCareAt: new Date().toISOString(),
-      lastDecayAt: new Date().toISOString(),
-      careHistory: [],
       avatar: {
         body: 'orange',
         shape: 'round',
@@ -534,14 +550,11 @@ function ensureGameState(state, user) {
   next.pet.hunger = clamp(next.pet.hunger, 0, 100);
   next.pet.happy = clamp(next.pet.happy, 0, 100);
   next.pet.energy = clamp(next.pet.energy ?? 70, 0, 100);
-  next.pet.clean = clamp(next.pet.clean ?? 70, 0, 100);
-  next.pet.sleeping = Boolean(next.pet.sleeping);
-  next.pet.reaction = String(next.pet.reaction || 'idle').slice(0, 20);
-  next.pet.lastDecayAt = next.pet.lastDecayAt || new Date().toISOString();
-  next.pet.careHistory = Array.isArray(next.pet.careHistory) ? next.pet.careHistory.slice(0, 20) : [];
+  next.pet.bond = clamp(next.pet.bond ?? 0, 0, 100);
   next.pet.level = Math.max(1, Number(next.pet.level || 1));
   next.pet.exp = Math.max(0, Number(next.pet.exp || 0));
   next.pet.expMax = Math.max(30, Number(next.pet.expMax || 30));
+  ensurePetWorker(next);
   next.coins = Math.max(0, Math.floor(Number(next.coins || 0)));
   return next;
 }
@@ -558,6 +571,109 @@ function addPetExp(state, exp) {
   }
   return leveled;
 }
+
+function ensurePetWorker(state) {
+  const today = new Date().toISOString().slice(0, 10);
+  if (!state.pet) state.pet = defaultAppState().pet;
+  state.pet.energy = clamp(state.pet.energy ?? 70, 0, 100);
+  state.pet.bond = clamp(state.pet.bond ?? 0, 0, 100);
+  if (!state.pet.worker || typeof state.pet.worker !== 'object') state.pet.worker = {};
+  if (!state.pet.worker.essence || typeof state.pet.worker.essence !== 'object') state.pet.worker.essence = {};
+  for (const mood of ALLOWED_MOODS) {
+    state.pet.worker.essence[mood] = Math.max(0, Math.floor(Number(state.pet.worker.essence[mood] || 0)));
+  }
+  state.pet.worker.lastClaimAt = state.pet.worker.lastClaimAt || new Date().toISOString();
+  state.pet.worker.totalEarned = Math.max(0, Math.floor(Number(state.pet.worker.totalEarned || 0)));
+  if (!state.pet.worker.today || state.pet.worker.today.date !== today) {
+    state.pet.worker.today = { date: today, vent: 0, chat: 0, garden: 0, care: 0, bonusClaimed: false };
+  }
+  state.pet.worker.today.vent = Math.max(0, Math.floor(Number(state.pet.worker.today.vent || 0)));
+  state.pet.worker.today.chat = Math.max(0, Math.floor(Number(state.pet.worker.today.chat || 0)));
+  state.pet.worker.today.garden = Math.max(0, Math.floor(Number(state.pet.worker.today.garden || 0)));
+  state.pet.worker.today.care = Math.max(0, Math.floor(Number(state.pet.worker.today.care || 0)));
+  state.pet.worker.today.bonusClaimed = Boolean(state.pet.worker.today.bonusClaimed);
+  return state.pet.worker;
+}
+
+function moodCoinMultiplier(mood) {
+  const map = { excited: 1.3, tenang: 1.15, sedih: 1.05, galau: 1.05, stres: 1, marah: 0.95 };
+  return map[mood] || 1;
+}
+
+function petWorkerPower(state, mood = 'tenang') {
+  ensurePetWorker(state);
+  const level = Math.max(1, Number(state.pet.level || 1));
+  const bond = clamp(state.pet.bond || 0, 0, 100);
+  const happy = clamp(state.pet.happy || 0, 0, 100);
+  const energy = clamp(state.pet.energy || 0, 0, 100);
+  const base = 1 + level * 0.35 + bond * 0.025;
+  const condition = 0.55 + ((happy + energy) / 200) * 0.65;
+  return Math.max(1, base * condition * moodCoinMultiplier(mood));
+}
+
+function addPetWorkerReward(state, opts = {}) {
+  ensurePetWorker(state);
+  const mood = ALLOWED_MOODS.includes(opts.mood) ? opts.mood : getDominantMood(state.emotions);
+  const type = String(opts.type || 'activity');
+  const amount = Math.max(1, Math.floor(Number(opts.amount || 1)));
+  const exp = Math.max(0, Math.floor(Number(opts.exp || 0)));
+  const essence = Math.max(0, Math.floor(Number(opts.essence || 0)));
+  const bond = Math.max(0, Math.floor(Number(opts.bond || 0)));
+
+  const dailyCaps = { chat: 8, vent: 6, garden: 20, care: 12, activity: 20 };
+  const todayKey = dailyCaps[type] !== undefined ? type : 'activity';
+  if (todayKey !== 'activity') {
+    const used = Math.max(0, Math.floor(Number(state.pet.worker.today[todayKey] || 0)));
+    if (used >= dailyCaps[todayKey]) {
+      return { coins: 0, exp: 0, essence: 0, leveledUp: false, message: 'Limit reward harian aktivitas ini sudah tercapai.' };
+    }
+    state.pet.worker.today[todayKey] = used + 1;
+  }
+
+  const coins = Math.max(1, Math.floor(amount * petWorkerPower(state, mood)));
+  state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + coins);
+  state.pet.worker.essence[mood] = Math.max(0, Math.floor(Number(state.pet.worker.essence[mood] || 0)) + essence);
+  state.pet.worker.totalEarned = Math.max(0, Math.floor(Number(state.pet.worker.totalEarned || 0)) + coins);
+  state.pet.bond = clamp((state.pet.bond || 0) + bond, 0, 100);
+  state.pet.energy = clamp((state.pet.energy || 0) - Math.max(0, Math.floor(coins / 5)), 0, 100);
+  state.pet.happy = clamp((state.pet.happy || 0) + Math.min(4, bond + 1), 0, 100);
+  const leveledUp = addPetExp(state, exp);
+  return { coins, exp, essence, mood, leveledUp };
+}
+
+function calculatePetPassive(state) {
+  ensurePetWorker(state);
+  const now = Date.now();
+  const last = state.pet.worker.lastClaimAt ? Date.parse(state.pet.worker.lastClaimAt) : now;
+  const diffMs = Math.max(0, now - (Number.isFinite(last) ? last : now));
+  const capMs = Number(process.env.PET_PASSIVE_CAP_MS || 8 * 60 * 60 * 1000);
+  const minutes = Math.floor(Math.min(diffMs, capMs) / 60000);
+  if (minutes < 10) return { coins: 0, minutes, rate: 0 };
+  const mood = getDominantMood(state.emotions);
+  const hourly = Math.max(1, Math.floor(petWorkerPower(state, mood) * 0.9));
+  const coins = Math.floor((minutes / 60) * hourly);
+  return { coins: Math.max(0, coins), minutes, rate: hourly, mood };
+}
+
+function convertEssenceToCoins(state, mood = 'all') {
+  ensurePetWorker(state);
+  const moods = mood === 'all' ? ALLOWED_MOODS : [mood].filter((m) => ALLOWED_MOODS.includes(m));
+  let used = 0;
+  let coins = 0;
+  for (const m of moods) {
+    const amount = Math.max(0, Math.floor(Number(state.pet.worker.essence[m] || 0)));
+    if (!amount) continue;
+    used += amount;
+    coins += Math.floor(amount * petWorkerPower(state, m));
+    state.pet.worker.essence[m] = 0;
+  }
+  state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + coins);
+  state.pet.worker.totalEarned = Math.max(0, Math.floor(Number(state.pet.worker.totalEarned || 0)) + coins);
+  const leveledUp = addPetExp(state, Math.min(80, used * 3));
+  state.pet.energy = clamp((state.pet.energy || 0) - Math.min(18, used), 0, 100);
+  return { used, coins, leveledUp };
+}
+
 
 function getDominantMood(emotions = {}) {
   const entries = Object.entries(emotions).filter(([, v]) => Number(v) > 0);
@@ -1011,12 +1127,20 @@ app.post('/api/vent/analyze', requireAuth, async (req, res) => {
     const coins = Math.floor(clamp(result.coins, 5, 20));
     const exp = Math.floor(clamp(result.exp, 6, 16));
 
-    state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + coins);
     state.emotions[mood] = Math.max(0, Number(state.emotions[mood] || 0)) + 1;
     state.pet.hunger = clamp((state.pet.hunger || 0) + result.hungerDelta, 0, 100);
     state.pet.happy = clamp((state.pet.happy || 0) + result.happyDelta, 0, 100);
+    state.pet.energy = clamp((state.pet.energy || 70) + 3, 0, 100);
     state.pet.lastCareAt = new Date().toISOString();
-    const leveledUp = addPetExp(state, exp);
+    const workerReward = addPetWorkerReward(state, {
+      type: 'vent',
+      mood,
+      amount: Math.max(3, Math.floor(coins / 2)),
+      exp,
+      essence: Math.max(1, Math.floor(durationSeconds / 20) + 1),
+      bond: 1
+    });
+    const leveledUp = workerReward.leveledUp;
 
     const vent = {
       id: Date.now().toString(36),
@@ -1027,8 +1151,9 @@ app.post('/api/vent/analyze', requireAuth, async (req, res) => {
       summary: result.summary,
       insight: result.insight,
       suggestion: result.suggestion,
-      coins,
-      exp,
+      coins: workerReward.coins,
+      exp: workerReward.exp,
+      essence: workerReward.essence,
       durationSeconds,
       createdAt: new Date().toISOString()
     };
@@ -1194,6 +1319,7 @@ app.post('/api/garden/water', requireAuth, async (req, res) => {
     state.pet.happy = clamp((state.pet.happy || 0) + 2, 0, 100);
     state.pet.lastCareAt = new Date().toISOString();
     addGardenExp(state.garden, plot.ready ? 6 : 2);
+    addPetWorkerReward(state, { type: 'garden', mood: 'tenang', amount: plot.ready ? 2 : 1, exp: plot.ready ? 4 : 2, essence: 0, bond: 0 });
 
     state.garden.history.unshift({
       id: Date.now().toString(36),
@@ -1233,6 +1359,7 @@ app.post('/api/garden/harvest', requireAuth, async (req, res) => {
     state.garden.inventory[plot.seed] = Math.max(0, Number(state.garden.inventory[plot.seed] || 0)) + qty;
     state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + coinReward);
     addGardenExp(state.garden, 8 + qty);
+    addPetWorkerReward(state, { type: 'garden', mood: 'tenang', amount: 2 + qty, exp: 5 + qty, essence: 1, bond: 1 });
 
     state.garden.history.unshift({
       id: Date.now().toString(36),
@@ -1270,7 +1397,8 @@ app.post('/api/garden/feed', requireAuth, async (req, res) => {
     state.pet.hunger = clamp((state.pet.hunger || 0) + veggie.hunger, 0, 100);
     state.pet.happy = clamp((state.pet.happy || 0) + veggie.happy, 0, 100);
     state.pet.lastCareAt = new Date().toISOString();
-    const leveledUp = addPetExp(state, veggie.exp);
+    const reward = addPetWorkerReward(state, { type: 'care', mood: 'tenang', amount: 1, exp: veggie.exp, essence: 0, bond: 1 });
+    const leveledUp = reward.leveledUp;
     state.garden.history.unshift({ id: Date.now().toString(36), type: 'feed', seed: veggieId, text: `Plong makan ${veggie.name}.`, createdAt: new Date().toISOString() });
     state.garden.history = state.garden.history.slice(0, 30);
     await saveStateForUser(req.user.id, state);
@@ -1415,51 +1543,119 @@ app.put('/api/pet/avatar', requireAuth, async (req, res) => {
   }
 });
 
+
+app.get('/api/pet/worker', requireAuth, async (req, res) => {
+  try {
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    const passive = calculatePetPassive(state);
+    res.json({
+      ok: true,
+      state,
+      worker: {
+        ...state.pet.worker,
+        passive,
+        power: petWorkerPower(state, getDominantMood(state.emotions)),
+        dominantMood: getDominantMood(state.emotions)
+      }
+    });
+  } catch (error) {
+    console.error('Pet worker get error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat Pet Worker.' });
+  }
+});
+
+app.post('/api/pet/claim-passive', requireAuth, async (req, res) => {
+  try {
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    const passive = calculatePetPassive(state);
+    if (passive.coins <= 0) {
+      return res.json({ ok: true, state, reward: passive, message: 'Belum ada passive coins yang bisa diklaim. Tunggu minimal sekitar 10 menit.' });
+    }
+    state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + passive.coins);
+    state.pet.worker.totalEarned = Math.max(0, Math.floor(Number(state.pet.worker.totalEarned || 0)) + passive.coins);
+    state.pet.worker.lastClaimAt = new Date().toISOString();
+    state.pet.energy = clamp((state.pet.energy || 70) - Math.min(15, Math.floor(passive.coins / 3)), 0, 100);
+    const leveledUp = addPetExp(state, Math.min(40, Math.max(2, Math.floor(passive.coins / 2))));
+    await saveStateForUser(req.user.id, state);
+    res.json({ ok: true, state, reward: { ...passive, leveledUp }, message: `Plong menghasilkan +${passive.coins} Soul Coins selama kamu pergi.` });
+  } catch (error) {
+    console.error('Pet passive claim error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal klaim passive coins.' });
+  }
+});
+
+app.post('/api/pet/convert-essence', requireAuth, async (req, res) => {
+  try {
+    const mood = String(req.body.mood || 'all').trim().toLowerCase();
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    const result = convertEssenceToCoins(state, mood);
+    if (result.used <= 0) {
+      return res.json({ ok: true, state, reward: result, message: 'Essence masih kosong. Dapatkan dari vent/curhat dulu.' });
+    }
+    await saveStateForUser(req.user.id, state);
+    res.json({ ok: true, state, reward: result, message: `${result.used} Essence berhasil diolah Plong jadi +${result.coins} Soul Coins.` });
+  } catch (error) {
+    console.error('Pet essence convert error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal convert essence.' });
+  }
+});
+
+app.post('/api/pet/daily-bonus', requireAuth, async (req, res) => {
+  try {
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    ensurePetWorker(state);
+    const today = state.pet.worker.today;
+    if (today.bonusClaimed) {
+      return res.status(400).json({ ok: false, error: 'Bonus harian Pet Worker sudah diklaim.' });
+    }
+    const completed = [
+      today.vent >= 1,
+      today.chat >= 3,
+      today.garden >= 2,
+      today.care >= 1
+    ].filter(Boolean).length;
+    if (completed < 2) {
+      return res.status(400).json({ ok: false, error: 'Selesaikan minimal 2 aktivitas harian dulu.' });
+    }
+    const coins = 5 + completed * 4 + Math.floor((state.pet.level || 1) / 2);
+    const exp = 10 + completed * 5;
+    state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + coins);
+    const leveledUp = addPetExp(state, exp);
+    state.pet.bond = clamp((state.pet.bond || 0) + completed, 0, 100);
+    today.bonusClaimed = true;
+    await saveStateForUser(req.user.id, state);
+    res.json({ ok: true, state, reward: { coins, exp, completed, leveledUp }, message: `Bonus harian diklaim: +${coins} coins dan +${exp} EXP.` });
+  } catch (error) {
+    console.error('Pet daily bonus error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal klaim bonus harian pet.' });
+  }
+});
+
 app.post('/api/pet/action', requireAuth, async (req, res) => {
   try {
     const action = String(req.body.action || '').trim();
     const state = ensureGameState(await getStateForUser(req.user), req.user);
     let message = 'Plong merasa ditemani.';
-
-    state.pet.energy = clamp(state.pet.energy ?? 70, 0, 100);
-    state.pet.clean = clamp(state.pet.clean ?? 70, 0, 100);
-    state.pet.careHistory = Array.isArray(state.pet.careHistory) ? state.pet.careHistory : [];
+    let reward = null;
 
     if (action === 'play') {
-      state.pet.happy = clamp((state.pet.happy || 0) + 14, 0, 100);
-      state.pet.energy = clamp((state.pet.energy || 0) - 10, 0, 100);
-      state.pet.clean = clamp((state.pet.clean || 0) - 5, 0, 100);
-      state.pet.reaction = 'play';
-      addPetExp(state, 4);
+      state.pet.happy = clamp((state.pet.happy || 0) + 10, 0, 100);
+      state.pet.hunger = clamp((state.pet.hunger || 0) - 4, 0, 100);
+      state.pet.energy = clamp((state.pet.energy || 70) - 5, 0, 100);
+      reward = addPetWorkerReward(state, { type: 'care', mood: getDominantMood(state.emotions), amount: 1, exp: 4, essence: 0, bond: 1 });
       message = 'Kamu bermain sebentar dengan Plong. Mood-nya naik.';
     } else if (action === 'calm') {
-      state.pet.happy = clamp((state.pet.happy || 0) + 7, 0, 100);
-      state.pet.energy = clamp((state.pet.energy || 0) + 3, 0, 100);
-      state.pet.reaction = 'calm';
-      addPetExp(state, 3);
+      state.pet.happy = clamp((state.pet.happy || 0) + 6, 0, 100);
+      state.pet.energy = clamp((state.pet.energy || 70) + 4, 0, 100);
+      reward = addPetWorkerReward(state, { type: 'care', mood: 'tenang', amount: 1, exp: 3, essence: 0, bond: 1 });
       message = 'Plong ikut tenang bareng kamu.';
-    } else if (action === 'bath') {
-      state.pet.clean = clamp((state.pet.clean || 0) + 32, 0, 100);
-      state.pet.happy = clamp((state.pet.happy || 0) + 4, 0, 100);
-      state.pet.reaction = 'bath';
-      addPetExp(state, 3);
-      message = 'Plong sudah mandi dan jadi lebih fresh.';
-    } else if (action === 'sleep') {
-      state.pet.sleeping = !state.pet.sleeping;
-      state.pet.reaction = state.pet.sleeping ? 'sleep' : 'wake';
-      if (!state.pet.sleeping) state.pet.energy = clamp((state.pet.energy || 0) + 10, 0, 100);
-      message = state.pet.sleeping ? 'Plong tidur dulu untuk memulihkan energi.' : 'Plong bangun lagi.';
     } else {
       return res.status(400).json({ ok: false, error: 'Aksi pet tidak valid.' });
     }
 
     state.pet.lastCareAt = new Date().toISOString();
-    state.pet.lastDecayAt = new Date().toISOString();
-    state.pet.careHistory.unshift({ text: message, createdAt: new Date().toISOString() });
-    state.pet.careHistory = state.pet.careHistory.slice(0, 20);
-
     await saveStateForUser(req.user.id, state);
-    res.json({ ok: true, state, message });
+    res.json({ ok: true, state, reward, message });
   } catch (error) {
     console.error('Pet action error:', error);
     res.status(500).json({ ok: false, error: 'Gagal menjalankan aksi pet.' });
@@ -1598,7 +1794,12 @@ app.post('/api/chat', requireAuth, async (req, res) => {
       });
     }
 
-    res.json({ reply: data.message?.content || 'Aku belum bisa jawab sekarang.' });
+    const reply = data.message?.content || 'Aku belum bisa jawab sekarang.';
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    const mood = getDominantMood(state.emotions);
+    const reward = addPetWorkerReward(state, { type: 'chat', mood, amount: 1, exp: 3, essence: 0, bond: 1 });
+    await saveStateForUser(req.user.id, state);
+    res.json({ reply, reward, state });
   } catch (error) {
     console.error('Chat error:', error);
 
