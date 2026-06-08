@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="id">
     <head>
@@ -933,7 +934,115 @@
                 .garden-emoji{font-size:84px}
             }
 
-            /* ═══════ ACCOUNT PAGE ═══════ */
+            
+            /* HIFAMI-LIKE GARDEN TYCOON PANEL */
+            .garden-tycoon{
+                display:grid;
+                grid-template-columns:repeat(3,1fr);
+                gap:7px;
+                margin-bottom:10px;
+            }
+            .garden-tycoon-stat{
+                background:linear-gradient(180deg,#fff,#F8FAFC);
+                border:1px solid rgba(212,212,216,.82);
+                border-radius:16px;
+                padding:9px 8px;
+                box-shadow:0 8px 18px rgba(15,23,42,.045);
+                min-width:0;
+            }
+            .garden-tycoon-stat span{
+                display:flex;
+                align-items:center;
+                gap:5px;
+                font-size:9px;
+                font-weight:900;
+                color:var(--t4);
+                text-transform:uppercase;
+                letter-spacing:.45px;
+                white-space:nowrap;
+            }
+            .garden-tycoon-stat strong{
+                display:block;
+                font-family:'Syne',sans-serif;
+                font-size:17px;
+                font-weight:800;
+                color:var(--t1);
+                line-height:1.15;
+                margin-top:3px;
+                overflow:hidden;
+                text-overflow:ellipsis;
+                white-space:nowrap;
+            }
+            .garden-tycoon-actions{
+                display:grid;
+                grid-template-columns:1fr;
+                gap:7px;
+            }
+            .garden-claim-card{
+                background:linear-gradient(135deg,#FFFBEB,#ECFDF5);
+                border-color:#FDE68A;
+            }
+            .garden-claim-head{
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:10px;
+                margin-bottom:10px;
+            }
+            .garden-claim-title{
+                display:flex;
+                align-items:center;
+                gap:8px;
+                min-width:0;
+            }
+            .garden-claim-icon{
+                width:38px;height:38px;
+                border-radius:14px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:linear-gradient(135deg,#F59E0B,#FB923C);
+                color:#fff;
+                box-shadow:0 8px 18px rgba(245,158,11,.18);
+                flex-shrink:0;
+            }
+            .garden-claim-title strong{
+                display:block;
+                font-size:13px;
+                color:var(--t1);
+                line-height:1.2;
+            }
+            .garden-claim-title small{
+                display:block;
+                font-size:10px;
+                color:var(--t3);
+                line-height:1.35;
+                margin-top:2px;
+            }
+            .garden-mini-progress{
+                height:7px;
+                border-radius:999px;
+                background:rgba(229,231,235,.9);
+                overflow:hidden;
+                margin-top:7px;
+            }
+            .garden-mini-progress span{
+                display:block;
+                height:100%;
+                border-radius:999px;
+                background:linear-gradient(90deg,#F59E0B,#84CC16);
+                transition:width .25s;
+            }
+            @media(min-width:900px){
+                .garden-tycoon-actions{grid-template-columns:1fr 1fr}
+                .garden-claim-card{grid-column:1/-1}
+            }
+            @media(max-width:420px){
+                .garden-tycoon{grid-template-columns:1fr 1fr}
+                .garden-tycoon-stat:last-child{grid-column:1/-1}
+            }
+
+/* ═══════ ACCOUNT PAGE ═══════ */
             #pg-account{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
             .acct-card{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
             .acct-hero{display:flex;align-items:center;gap:12px}
@@ -1147,6 +1256,29 @@
                             </div>
                         </div>
                         <div style="display:flex;flex-direction:column;gap:12px">
+                            <div class="garden-card garden-claim-card">
+                                <div class="garden-claim-head">
+                                    <div class="garden-claim-title">
+                                        <div class="garden-claim-icon"><i class="fas fa-coins"></i></div>
+                                        <div>
+                                            <strong>Kebun Tycoon</strong>
+                                            <small>Klaim hasil idle, upgrade level, dan ambil bonus kunjungan.</small>
+                                        </div>
+                                    </div>
+                                    <span class="garden-pill" id="garden-idle-rate">+1/mnt</span>
+                                </div>
+                                <div class="garden-tycoon">
+                                    <div class="garden-tycoon-stat"><span><i class="fas fa-arrow-up"></i> Level</span><strong id="garden-level">1</strong></div>
+                                    <div class="garden-tycoon-stat"><span><i class="fas fa-droplet"></i> Daya siram</span><strong id="garden-water-power">x1</strong></div>
+                                    <div class="garden-tycoon-stat"><span><i class="fas fa-clock"></i> Idle</span><strong id="garden-idle-coins">0</strong></div>
+                                </div>
+                                <div class="garden-mini-progress"><span id="garden-level-progress" style="width:0%"></span></div>
+                                <div class="garden-actions garden-tycoon-actions">
+                                    <button class="garden-btn primary" id="garden-claim" type="button"><i class="fas fa-sack-dollar"></i> Klaim hasil</button>
+                                    <button class="garden-btn" id="garden-upgrade" type="button"><i class="fas fa-angles-up"></i> Upgrade</button>
+                                    <button class="garden-btn warn" id="garden-bonus" type="button"><i class="fas fa-gift"></i> Bonus kunjungan</button>
+                                </div>
+                            </div>
                             <div class="garden-card">
                                 <div class="garden-section-title">
                                     <div class="acct-title">Pilih bibit</div>
@@ -1511,7 +1643,7 @@
                 if(el)el.textContent="Hai, "+getStoredUserName();
             }
 
-            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[]},gm:"qwen2.5:3b",al:"id"};
+            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null},gm:"qwen2.5:3b",al:"id"};
             function save(){try{localStorage.setItem("vkm",JSON.stringify(state))}catch(e){}; if(window.__vkmAuthReady&&typeof queueSyncState==="function")queueSyncState()}
             function load(){try{var d=JSON.parse(localStorage.getItem("vkm"));if(d)for(var k in d)if(d.hasOwnProperty(k))state[k]=d[k]}catch(e){}}
             load();
@@ -1529,7 +1661,7 @@
             window.__vkmAuthReady=false;
 
             function defaultStateForUser(user){
-                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[]},gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
+                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null},gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
             }
             function ensureDefaults(){
                 if(!state.pet)state.pet={name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50};
@@ -2068,7 +2200,7 @@
                 };
             }
             function ensureGardenLocal(){
-                if(!state.garden)state.garden={activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[]};
+                if(!state.garden)state.garden={activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null};
                 if(!Array.isArray(state.garden.plots))state.garden.plots=[];
                 while(state.garden.plots.length<4)state.garden.plots.push(null);
                 state.garden.plots=state.garden.plots.slice(0,4).map(normalizeGardenPlotLocal);
@@ -2079,6 +2211,11 @@
                 if(!state.garden.inventory)state.garden.inventory={carrot:0,lettuce:0,tomato:0};
                 Object.keys(VEGGIES).forEach(function(k){state.garden.inventory[k]=Math.max(0,Number(state.garden.inventory[k]||0));});
                 if(!Array.isArray(state.garden.history))state.garden.history=[];
+                state.garden.level=Math.max(1,Math.floor(Number(state.garden.level||1)));
+                state.garden.exp=Math.max(0,Math.floor(Number(state.garden.exp||0)));
+                state.garden.expMax=Math.max(40,Math.floor(Number(state.garden.expMax||40)));
+                state.garden.lastIdleAt=state.garden.lastIdleAt||new Date().toISOString();
+                state.garden.lastBonusAt=state.garden.lastBonusAt||null;
                 return state.garden;
             }
             function getActivePlotIndex(){
@@ -2100,6 +2237,28 @@
                 if(p<35)return '🌱';
                 if(p<75)return '🌿';
                 return '🪴';
+            }
+            function gardenActivePlantCountLocal(g){
+                return (g&&Array.isArray(g.plots)?g.plots:[]).filter(Boolean).length;
+            }
+            function gardenIdleRateLocal(g){
+                var level=Math.max(1,Math.floor(Number(g&&g.level||1)));
+                return Math.max(1,gardenActivePlantCountLocal(g)+Math.floor(level/2));
+            }
+            function gardenIdleCoinsLocal(g){
+                if(!g)return 0;
+                var last=g.lastIdleAt?Date.parse(g.lastIdleAt):Date.now();
+                if(!Number.isFinite(last))last=Date.now();
+                var mins=Math.floor(Math.min(Date.now()-last,12*60*60*1000)/60000);
+                return Math.max(0,Math.floor(mins*gardenIdleRateLocal(g)));
+            }
+            function gardenWaterPowerLocal(g){
+                var level=Math.max(1,Math.floor(Number(g&&g.level||1)));
+                return Math.max(1,1+Math.floor((level-1)/3));
+            }
+            function gardenUpgradeCostLocal(g){
+                var level=Math.max(1,Math.floor(Number(g&&g.level||1)));
+                return 24+level*18;
             }
             function renderGarden(){
                 var g=ensureGardenLocal(), active=getActivePlotIndex(), plot=g.plots[active]||null;
@@ -2155,11 +2314,20 @@
                 if(hist){
                     hist.innerHTML=(g.history&&g.history.length?g.history.slice(0,8).map(function(h){return '<div class="garden-history-item">'+escH(h.text||'Aktivitas kebun')+'</div>'}).join(''):'<div class="garden-empty-mini">Belum ada aktivitas kebun. Tanam bibit pertama dulu 🌱</div>');
                 }
+                var lvl=document.getElementById('garden-level'), wp=document.getElementById('garden-water-power'), ic=document.getElementById('garden-idle-coins'), rate=document.getElementById('garden-idle-rate'), gp=document.getElementById('garden-level-progress'), up=document.getElementById('garden-upgrade'), claim=document.getElementById('garden-claim');
+                var idleCoins=gardenIdleCoinsLocal(g), idleRate=gardenIdleRateLocal(g), waterPower=gardenWaterPowerLocal(g), cost=gardenUpgradeCostLocal(g);
+                if(lvl)lvl.textContent='Lv '+(g.level||1);
+                if(wp)wp.textContent='x'+waterPower;
+                if(ic)ic.textContent='+'+idleCoins;
+                if(rate)rate.textContent='+'+idleRate+'/mnt';
+                if(gp)gp.style.width=Math.max(0,Math.min(100,Math.round((Number(g.exp||0)/Math.max(40,Number(g.expMax||40)))*100)))+'%';
+                if(up)up.innerHTML='<i class="fas fa-angles-up"></i> Upgrade '+cost+' 🪙';
+                if(claim)claim.disabled=idleCoins<=0;
             }
 var gardenBusy=false;
             function setGardenBusy(on){
                 gardenBusy=!!on;
-                document.querySelectorAll('.garden-seed,.garden-feed,#garden-water,#garden-harvest').forEach(function(btn){
+                document.querySelectorAll('.garden-seed,.garden-feed,#garden-water,#garden-harvest,#garden-claim,#garden-upgrade,#garden-bonus').forEach(function(btn){
                     if(!btn)return;
                     if(on){
                         btn.dataset.prevDisabled=btn.disabled?'1':'0';
@@ -2224,9 +2392,15 @@ var gardenBusy=false;
             }
             function gardenHarvest(){gardenRequest('/api/garden/harvest',{plotIndex:getActivePlotIndex()});}
             function gardenFeed(veggie){gardenRequest('/api/garden/feed',{veggie:veggie});}
-            var gardenWaterBtn=document.getElementById('garden-water'),gardenHarvestBtn=document.getElementById('garden-harvest');
+            function gardenClaim(){gardenRequest('/api/garden/claim',{});}
+            function gardenUpgrade(){gardenRequest('/api/garden/upgrade',{});}
+            function gardenBonus(){gardenRequest('/api/garden/bonus',{});}
+            var gardenWaterBtn=document.getElementById('garden-water'),gardenHarvestBtn=document.getElementById('garden-harvest'),gardenClaimBtn=document.getElementById('garden-claim'),gardenUpgradeBtn=document.getElementById('garden-upgrade'),gardenBonusBtn=document.getElementById('garden-bonus');
             if(gardenWaterBtn)gardenWaterBtn.addEventListener('click',gardenWater);
             if(gardenHarvestBtn)gardenHarvestBtn.addEventListener('click',gardenHarvest);
+            if(gardenClaimBtn)gardenClaimBtn.addEventListener('click',gardenClaim);
+            if(gardenUpgradeBtn)gardenUpgradeBtn.addEventListener('click',gardenUpgrade);
+            if(gardenBonusBtn)gardenBonusBtn.addEventListener('click',gardenBonus);
 
             /* PET AVATAR CUSTOMIZER */
             var AVATAR_DEFAULT={body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"};
