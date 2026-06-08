@@ -132,15 +132,7 @@ function defaultAppState(user = {}) {
     inventory: [],
     redeemHistory: [],
     lastCrystal: null,
-    garden: {
-      plot: null,
-      inventory: {
-        carrot: 0,
-        lettuce: 0,
-        tomato: 0
-      },
-      history: []
-    },
+    garden: defaultGarden(),
     gm: 'qwen2.5:3b',
     al: 'id',
     account: {
@@ -365,7 +357,14 @@ function defaultGarden() {
     plot: null,
     plots: Array.from({ length: 4 }, () => null),
     inventory: { carrot: 0, lettuce: 0, tomato: 0 },
-    history: []
+    history: [],
+
+    // Hifami-like garden tycoon system
+    level: 1,
+    exp: 0,
+    expMax: 40,
+    lastIdleAt: new Date().toISOString(),
+    lastBonusAt: null
   };
 }
 
@@ -373,6 +372,55 @@ function plotIndexFrom(value) {
   const n = Math.floor(Number(value));
   if (!Number.isFinite(n)) return 0;
   return Math.max(0, Math.min(3, n));
+}
+
+function gardenActivePlantCount(garden) {
+  if (!garden || !Array.isArray(garden.plots)) return 0;
+  return garden.plots.filter(Boolean).length;
+}
+
+function gardenWaterPower(garden) {
+  const level = Math.max(1, Math.floor(Number(garden?.level || 1)));
+  return Math.max(1, 1 + Math.floor((level - 1) / 3));
+}
+
+function gardenIdleRate(garden) {
+  const level = Math.max(1, Math.floor(Number(garden?.level || 1)));
+  const active = gardenActivePlantCount(garden);
+  // Similar to idle mining, but softer: active plots + garden level determine idle coins.
+  return Math.max(1, active + Math.floor(level / 2));
+}
+
+function gardenUpgradeCost(garden) {
+  const level = Math.max(1, Math.floor(Number(garden?.level || 1)));
+  return 24 + level * 18;
+}
+
+function addGardenExp(garden, amount) {
+  garden.level = Math.max(1, Math.floor(Number(garden.level || 1)));
+  garden.exp = Math.max(0, Math.floor(Number(garden.exp || 0))) + Math.max(0, Math.floor(Number(amount || 0)));
+  garden.expMax = Math.max(40, Math.floor(Number(garden.expMax || 40)));
+  let leveled = false;
+  while (garden.exp >= garden.expMax) {
+    garden.exp -= garden.expMax;
+    garden.level += 1;
+    garden.expMax = Math.max(40, Math.floor(garden.expMax * 1.35));
+    leveled = true;
+  }
+  return leveled;
+}
+
+function calculateGardenIdle(garden) {
+  ensureGarden({ garden });
+  const now = Date.now();
+  const last = garden.lastIdleAt ? Date.parse(garden.lastIdleAt) : now;
+  const diffMs = Math.max(0, now - (Number.isFinite(last) ? last : now));
+  const capMs = Number(process.env.GARDEN_IDLE_CAP_MS || 12 * 60 * 60 * 1000); // max 12 hours
+  const effectiveMs = Math.min(diffMs, capMs);
+  const minutes = Math.floor(effectiveMs / 60000);
+  const rate = gardenIdleRate(garden);
+  const coins = Math.floor(minutes * rate);
+  return { coins, minutes, rate };
 }
 
 function normalizeGardenPlot(plot) {
@@ -429,6 +477,11 @@ function ensureGarden(state) {
     state.garden.inventory[key] = Math.max(0, Math.floor(Number(state.garden.inventory[key] || 0)));
   }
 
+  state.garden.level = Math.max(1, Math.floor(Number(state.garden.level || 1)));
+  state.garden.exp = Math.max(0, Math.floor(Number(state.garden.exp || 0)));
+  state.garden.expMax = Math.max(40, Math.floor(Number(state.garden.expMax || 40)));
+  state.garden.lastIdleAt = state.garden.lastIdleAt || new Date().toISOString();
+  state.garden.lastBonusAt = state.garden.lastBonusAt || null;
   state.garden.history = state.garden.history.slice(0, 30);
   return state.garden;
 }
@@ -442,7 +495,14 @@ function gardenPublic(garden) {
     plots: g.plots,
     inventory: { ...defaultGarden().inventory, ...g.inventory },
     history: Array.isArray(g.history) ? g.history.slice(0, 30) : [],
-    seeds: Object.values(VEGGIE_CATALOG)
+    seeds: Object.values(VEGGIE_CATALOG),
+    level: g.level,
+    exp: g.exp,
+    expMax: g.expMax,
+    idle: calculateGardenIdle(g),
+    waterPower: gardenWaterPower(g),
+    upgradeCost: gardenUpgradeCost(g),
+    nextBonusAt: g.lastBonusAt ? new Date(Date.parse(g.lastBonusAt) + Number(process.env.GARDEN_BONUS_COOLDOWN_MS || 6 * 60 * 60 * 1000)).toISOString() : null
   };
 }
 
@@ -1067,6 +1127,7 @@ app.post('/api/garden/plant', requireAuth, async (req, res) => {
       text: `${veggie.name} ditanam di Plot ${plotIndex + 1}.`,
       createdAt: new Date().toISOString()
     });
+    addGardenExp(state.garden, 3);
     state.garden.history = state.garden.history.slice(0, 30);
 
     await saveStateForUser(req.user.id, state);
@@ -1103,7 +1164,8 @@ app.post('/api/garden/water', requireAuth, async (req, res) => {
       return res.status(429).json({ ok: false, error: `Tunggu ${wait} detik lagi sebelum menyiram Plot ${plotIndex + 1}.` });
     }
 
-    plot.waterCount = Math.max(0, Number(plot.waterCount || 0)) + 1;
+    const waterPower = gardenWaterPower(state.garden);
+    plot.waterCount = Math.max(0, Number(plot.waterCount || 0)) + waterPower;
     plot.growNeed = veggie.growNeed;
     plot.stage = Math.min(veggie.growNeed, plot.waterCount);
     plot.progress = clamp(Math.round((plot.waterCount / veggie.growNeed) * 100), 0, 100);
@@ -1119,6 +1181,7 @@ app.post('/api/garden/water', requireAuth, async (req, res) => {
 
     state.pet.happy = clamp((state.pet.happy || 0) + 2, 0, 100);
     state.pet.lastCareAt = new Date().toISOString();
+    addGardenExp(state.garden, plot.ready ? 6 : 2);
 
     state.garden.history.unshift({
       id: Date.now().toString(36),
@@ -1153,9 +1216,11 @@ app.post('/api/garden/harvest', requireAuth, async (req, res) => {
     if (!veggie) return res.status(400).json({ ok: false, error: 'Tanaman tidak valid.' });
     if (!plot.ready) return res.status(400).json({ ok: false, error: `Plot ${plotIndex + 1} belum siap panen.` });
 
-    const qty = state.pet.level >= 5 ? 2 : 1;
+    const qty = 1 + Math.floor(Math.max(1, Number(state.garden.level || 1)) / 4);
+    const coinReward = 2 + Math.floor(Math.max(1, Number(state.garden.level || 1)) / 2);
     state.garden.inventory[plot.seed] = Math.max(0, Number(state.garden.inventory[plot.seed] || 0)) + qty;
-    state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + 2);
+    state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + coinReward);
+    addGardenExp(state.garden, 8 + qty);
 
     state.garden.history.unshift({
       id: Date.now().toString(36),
@@ -1201,6 +1266,104 @@ app.post('/api/garden/feed', requireAuth, async (req, res) => {
   } catch (error) {
     console.error('Garden feed error:', error);
     res.status(500).json({ ok: false, error: 'Gagal memberi makan Plong.', detail: process.env.NODE_ENV === 'production' ? undefined : error.message });
+  }
+});
+
+
+app.post('/api/garden/claim', requireAuth, async (req, res) => {
+  try {
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    ensureGarden(state);
+
+    const idle = calculateGardenIdle(state.garden);
+    if (idle.coins <= 0) {
+      return res.json({ ok: true, state, garden: gardenPublic(state.garden), message: 'Belum ada hasil idle yang bisa diklaim. Tunggu sebentar lagi ya.' });
+    }
+
+    state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + idle.coins);
+    state.garden.lastIdleAt = new Date().toISOString();
+    addGardenExp(state.garden, Math.min(30, Math.max(1, Math.floor(idle.coins / 3))));
+
+    state.garden.history.unshift({
+      id: Date.now().toString(36),
+      type: 'idle_claim',
+      text: `Klaim hasil kebun idle +${idle.coins} Soul Coins (${idle.minutes} menit).`,
+      createdAt: new Date().toISOString()
+    });
+    state.garden.history = state.garden.history.slice(0, 30);
+
+    await saveStateForUser(req.user.id, state);
+    res.json({ ok: true, state, garden: gardenPublic(state.garden), message: `Kamu klaim +${idle.coins} Soul Coins dari kebun idle.` });
+  } catch (error) {
+    console.error('Garden claim error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal klaim hasil idle.', detail: process.env.NODE_ENV === 'production' ? undefined : error.message });
+  }
+});
+
+app.post('/api/garden/upgrade', requireAuth, async (req, res) => {
+  try {
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    ensureGarden(state);
+
+    const cost = gardenUpgradeCost(state.garden);
+    if (Number(state.coins || 0) < cost) {
+      return res.status(400).json({ ok: false, error: `Soul Coins belum cukup. Butuh ${cost} coins untuk upgrade kebun.` });
+    }
+
+    state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) - cost);
+    state.garden.level = Math.max(1, Math.floor(Number(state.garden.level || 1))) + 1;
+    state.garden.exp = 0;
+    state.garden.expMax = Math.max(40, Math.floor(Number(state.garden.expMax || 40) * 1.28));
+    state.pet.happy = clamp((state.pet.happy || 0) + 5, 0, 100);
+
+    state.garden.history.unshift({
+      id: Date.now().toString(36),
+      type: 'upgrade',
+      text: `Kebun naik ke level ${state.garden.level}. Daya siram & hasil idle makin bagus.`,
+      createdAt: new Date().toISOString()
+    });
+    state.garden.history = state.garden.history.slice(0, 30);
+
+    await saveStateForUser(req.user.id, state);
+    res.json({ ok: true, state, garden: gardenPublic(state.garden), message: `Kebun naik ke level ${state.garden.level}!` });
+  } catch (error) {
+    console.error('Garden upgrade error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal upgrade kebun.', detail: process.env.NODE_ENV === 'production' ? undefined : error.message });
+  }
+});
+
+app.post('/api/garden/bonus', requireAuth, async (req, res) => {
+  try {
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    ensureGarden(state);
+
+    const cooldownMs = Number(process.env.GARDEN_BONUS_COOLDOWN_MS || 6 * 60 * 60 * 1000);
+    const now = Date.now();
+    const last = state.garden.lastBonusAt ? Date.parse(state.garden.lastBonusAt) : 0;
+    if (last && now - last < cooldownMs) {
+      const waitMin = Math.ceil((cooldownMs - (now - last)) / 60000);
+      return res.status(429).json({ ok: false, error: `Bonus kunjungan belum siap. Tunggu sekitar ${waitMin} menit lagi.` });
+    }
+
+    const level = Math.max(1, Math.floor(Number(state.garden.level || 1)));
+    const bonus = 6 + Math.floor(Math.random() * 9) + Math.floor(level / 2);
+    state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + bonus);
+    state.garden.lastBonusAt = new Date().toISOString();
+    addGardenExp(state.garden, 8);
+
+    state.garden.history.unshift({
+      id: Date.now().toString(36),
+      type: 'bonus',
+      text: `Bonus kunjungan kebun +${bonus} Soul Coins.`,
+      createdAt: new Date().toISOString()
+    });
+    state.garden.history = state.garden.history.slice(0, 30);
+
+    await saveStateForUser(req.user.id, state);
+    res.json({ ok: true, state, garden: gardenPublic(state.garden), message: `Bonus kunjungan berhasil: +${bonus} Soul Coins.` });
+  } catch (error) {
+    console.error('Garden bonus error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal mengambil bonus kunjungan.', detail: process.env.NODE_ENV === 'production' ? undefined : error.message });
   }
 });
 
