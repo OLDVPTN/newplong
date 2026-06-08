@@ -110,10 +110,16 @@ function defaultAppState(user = {}) {
       expMax: 30,
       hunger: 50,
       happy: 50,
+      energy: 70,
+      clean: 70,
+      sleeping: false,
+      reaction: 'idle',
       accessory: '',
       background: '',
       wings: false,
       lastCareAt: new Date().toISOString(),
+      lastDecayAt: new Date().toISOString(),
+      careHistory: [],
       avatar: {
         body: 'orange',
         shape: 'round',
@@ -527,6 +533,12 @@ function ensureGameState(state, user) {
   ensureGarden(next);
   next.pet.hunger = clamp(next.pet.hunger, 0, 100);
   next.pet.happy = clamp(next.pet.happy, 0, 100);
+  next.pet.energy = clamp(next.pet.energy ?? 70, 0, 100);
+  next.pet.clean = clamp(next.pet.clean ?? 70, 0, 100);
+  next.pet.sleeping = Boolean(next.pet.sleeping);
+  next.pet.reaction = String(next.pet.reaction || 'idle').slice(0, 20);
+  next.pet.lastDecayAt = next.pet.lastDecayAt || new Date().toISOString();
+  next.pet.careHistory = Array.isArray(next.pet.careHistory) ? next.pet.careHistory.slice(0, 20) : [];
   next.pet.level = Math.max(1, Number(next.pet.level || 1));
   next.pet.exp = Math.max(0, Number(next.pet.exp || 0));
   next.pet.expMax = Math.max(30, Number(next.pet.expMax || 30));
@@ -1409,20 +1421,43 @@ app.post('/api/pet/action', requireAuth, async (req, res) => {
     const state = ensureGameState(await getStateForUser(req.user), req.user);
     let message = 'Plong merasa ditemani.';
 
+    state.pet.energy = clamp(state.pet.energy ?? 70, 0, 100);
+    state.pet.clean = clamp(state.pet.clean ?? 70, 0, 100);
+    state.pet.careHistory = Array.isArray(state.pet.careHistory) ? state.pet.careHistory : [];
+
     if (action === 'play') {
-      state.pet.happy = clamp((state.pet.happy || 0) + 10, 0, 100);
-      state.pet.hunger = clamp((state.pet.hunger || 0) - 4, 0, 100);
+      state.pet.happy = clamp((state.pet.happy || 0) + 14, 0, 100);
+      state.pet.energy = clamp((state.pet.energy || 0) - 10, 0, 100);
+      state.pet.clean = clamp((state.pet.clean || 0) - 5, 0, 100);
+      state.pet.reaction = 'play';
       addPetExp(state, 4);
       message = 'Kamu bermain sebentar dengan Plong. Mood-nya naik.';
     } else if (action === 'calm') {
-      state.pet.happy = clamp((state.pet.happy || 0) + 6, 0, 100);
+      state.pet.happy = clamp((state.pet.happy || 0) + 7, 0, 100);
+      state.pet.energy = clamp((state.pet.energy || 0) + 3, 0, 100);
+      state.pet.reaction = 'calm';
       addPetExp(state, 3);
       message = 'Plong ikut tenang bareng kamu.';
+    } else if (action === 'bath') {
+      state.pet.clean = clamp((state.pet.clean || 0) + 32, 0, 100);
+      state.pet.happy = clamp((state.pet.happy || 0) + 4, 0, 100);
+      state.pet.reaction = 'bath';
+      addPetExp(state, 3);
+      message = 'Plong sudah mandi dan jadi lebih fresh.';
+    } else if (action === 'sleep') {
+      state.pet.sleeping = !state.pet.sleeping;
+      state.pet.reaction = state.pet.sleeping ? 'sleep' : 'wake';
+      if (!state.pet.sleeping) state.pet.energy = clamp((state.pet.energy || 0) + 10, 0, 100);
+      message = state.pet.sleeping ? 'Plong tidur dulu untuk memulihkan energi.' : 'Plong bangun lagi.';
     } else {
       return res.status(400).json({ ok: false, error: 'Aksi pet tidak valid.' });
     }
 
     state.pet.lastCareAt = new Date().toISOString();
+    state.pet.lastDecayAt = new Date().toISOString();
+    state.pet.careHistory.unshift({ text: message, createdAt: new Date().toISOString() });
+    state.pet.careHistory = state.pet.careHistory.slice(0, 20);
+
     await saveStateForUser(req.user.id, state);
     res.json({ ok: true, state, message });
   } catch (error) {
