@@ -399,114 +399,114 @@
             }
 
             
-            /* ═══════ TALKING-TOM-LIKE PET CARE ═══════ */
-            .pet-needs{grid-template-columns:repeat(2,1fr)}
-            .pet-need-card .sl{justify-content:space-between}
-            .pet-need-card .sl strong{font-size:10px;color:var(--t2);font-weight:800;margin-left:auto}
-            .pet-care-card{
-                background:var(--bg2);
+            /* ═══════ PET SOUL WORKER ═══════ */
+            .pet-worker-card{
+                margin-top:10px;
                 border:1px solid var(--bd1);
-                border-radius:var(--r);
-                padding:12px;
-                box-shadow:0 1px 3px rgba(0,0,0,.035);
+                background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,251,235,.72));
+                border-radius:18px;
+                padding:11px;
+                width:min(440px,100%);
+                box-shadow:0 10px 28px rgba(245,158,11,.08);
             }
-            .pet-care-head{
+            .pet-worker-head{
                 display:flex;
                 align-items:flex-start;
                 justify-content:space-between;
                 gap:10px;
-                margin-bottom:10px;
+                margin-bottom:9px;
             }
-            .pet-care-head strong{
+            .pet-worker-head strong{
                 display:block;
                 font-size:13px;
                 font-weight:900;
                 color:var(--t1);
                 line-height:1.2;
             }
-            .pet-care-head span{
+            .pet-worker-head span{
                 display:block;
                 font-size:10px;
                 color:var(--t3);
                 margin-top:2px;
-                line-height:1.4;
+                line-height:1.35;
             }
-            .pet-care-mini{
-                flex-shrink:0;
+            .pet-worker-btn,.pet-worker-small{
                 display:inline-flex;
                 align-items:center;
-                gap:5px;
-                min-height:32px;
-                border-radius:12px;
-                padding:6px 9px;
-                background:var(--ac-bg);
-                border:1px solid var(--ac-bd);
-                color:var(--ac);
+                justify-content:center;
+                gap:6px;
+                border-radius:13px;
+                min-height:34px;
+                padding:7px 10px;
                 font-size:10px;
                 font-weight:900;
+                border:1px solid var(--ac-bd);
+                background:var(--ac-bg);
+                color:var(--ac);
+                transition:all .12s;
+                white-space:nowrap;
             }
-            .pet-care-grid{
+            .pet-worker-btn:hover,.pet-worker-small:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(232,77,26,.10)}
+            .pet-worker-btn:disabled,.pet-worker-small:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+            .pet-worker-stats{
                 display:grid;
                 grid-template-columns:repeat(4,1fr);
-                gap:7px;
+                gap:6px;
             }
-            .pet-care-btn{
-                min-height:78px;
-                border-radius:16px;
-                background:linear-gradient(180deg,#fff,#F8FAFC);
-                border:1px solid var(--bd1);
-                display:flex;
-                flex-direction:column;
-                align-items:center;
-                justify-content:center;
-                gap:3px;
-                padding:8px 6px;
-                box-shadow:0 7px 16px rgba(15,23,42,.045);
-                transition:transform .12s,box-shadow .12s,border-color .12s;
+            .pet-worker-stats div{
+                border:1px solid rgba(212,212,216,.8);
+                background:rgba(255,255,255,.74);
+                border-radius:14px;
+                padding:7px 6px;
                 text-align:center;
             }
-            .pet-care-btn:hover:not(:disabled){
-                transform:translateY(-2px);
-                box-shadow:0 12px 22px rgba(15,23,42,.08);
-                border-color:var(--ac-bd);
+            .pet-worker-stats span{
+                display:block;
+                font-size:8px;
+                color:var(--t4);
+                font-weight:900;
+                text-transform:uppercase;
+                letter-spacing:.4px;
+                line-height:1.2;
             }
-            .pet-care-btn:active:not(:disabled){transform:scale(.97)}
-            .pet-care-btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
-            .pet-care-btn span{font-size:22px;line-height:1}
-            .pet-care-btn strong{font-size:11px;font-weight:900;color:var(--t2);line-height:1.2}
-            .pet-care-btn small{font-size:8px;color:var(--t4);line-height:1.15}
-            .pet-care-wide{grid-column:span 2}
-            .pet-care-log{
-                margin-top:9px;
-                min-height:32px;
-                border-radius:14px;
-                padding:8px 10px;
-                background:var(--bg3);
-                border:1px solid var(--bd1);
-                font-size:11px;
+            .pet-worker-stats strong{
+                display:block;
+                margin-top:2px;
+                font-size:13px;
+                color:var(--t1);
+                font-family:'Syne',sans-serif;
+                line-height:1.15;
+            }
+            .pet-worker-actions{
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:6px;
+                margin-top:8px;
+            }
+            .pet-worker-missions{
+                display:flex;
+                gap:5px;
+                flex-wrap:wrap;
+                margin-top:8px;
+            }
+            .pet-worker-mission{
+                font-size:9px;
+                font-weight:800;
                 color:var(--t3);
-                line-height:1.45;
+                background:rgba(255,255,255,.72);
+                border:1px solid var(--bd1);
+                border-radius:999px;
+                padding:4px 7px;
             }
-            .pet-care-particle{
-                position:fixed;
-                z-index:9998;
-                pointer-events:none;
-                animation:petFloat .9s ease forwards;
-                font-size:18px;
-            }
-            @keyframes petFloat{
-                0%{opacity:1;transform:translateY(0) scale(.9)}
-                100%{opacity:0;transform:translateY(-46px) scale(1.35)}
+            .pet-worker-mission.done{
+                color:#047857;
+                background:#ECFDF5;
+                border-color:#A7F3D0;
             }
             @media(max-width:520px){
-                .pet-care-grid{grid-template-columns:repeat(3,1fr)}
-                .pet-care-btn{min-height:72px;border-radius:15px}
-                .pet-care-wide{grid-column:span 3}
-                .pet-care-head span{display:none}
-                .pet-care-mini{font-size:9px;padding:6px 8px}
-            }
-            @media(min-width:900px){
-                .pet-needs{grid-template-columns:repeat(4,1fr)}
+                .pet-worker-card{width:100%;padding:10px;border-radius:16px}
+                .pet-worker-head span{display:none}
+                .pet-worker-stats{grid-template-columns:repeat(2,1fr)}
             }
 
 
@@ -1684,42 +1684,41 @@
                                 <button class="pet-act" type="button" data-page="pg-garden"><i class="fas fa-seedling"></i> Kebun</button>
                                 <button class="pet-act pet-act-primary" type="button" data-page="pg-avatar"><i class="fas fa-user-astronaut"></i> Kustom</button>
                             </div>
+                            <div class="pet-worker-card">
+                                <div class="pet-worker-head">
+                                    <div>
+                                        <strong>Pet Soul Worker</strong>
+                                        <span>Plong mengolah emosi jadi Soul Coins.</span>
+                                    </div>
+                                    <button class="pet-worker-btn" id="pet-worker-claim" type="button"><i class="fas fa-coins"></i> Klaim</button>
+                                </div>
+                                <div class="pet-worker-stats">
+                                    <div><span>Bond</span><strong id="pet-bond-display">0%</strong></div>
+                                    <div><span>Energi</span><strong id="pet-energy-display">70%</strong></div>
+                                    <div><span>Essence</span><strong id="pet-essence-display">0</strong></div>
+                                    <div><span>Passive</span><strong id="pet-passive-display">+0</strong></div>
+                                </div>
+                                <div class="pet-worker-actions">
+                                    <button class="pet-worker-small" id="pet-worker-convert" type="button"><i class="fas fa-wand-magic-sparkles"></i> Olah Essence</button>
+                                    <button class="pet-worker-small" id="pet-worker-daily" type="button"><i class="fas fa-gift"></i> Bonus Harian</button>
+                                </div>
+                                <div class="pet-worker-missions" id="pet-worker-missions"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="sr pet-needs">
-                        <div class="sc pet-need-card">
-                            <div class="sl"><i class="fas fa-drumstick-bite" style="color:var(--ac);font-size:10px"></i> Kenyang <strong id="hunger-val">50%</strong></div>
+                    <div class="sr">
+                        <div class="sc">
+                            <div class="sl"><i class="fas fa-drumstick-bite" style="color:var(--ac);font-size:10px"></i> Kenyang</div>
                             <div class="sb2"><div id="hunger-bar" class="sf" style="width:50%;background:var(--ac)"></div></div>
                         </div>
-                        <div class="sc pet-need-card">
-                            <div class="sl"><i class="fas fa-heart" style="color:#e11d48;font-size:10px"></i> Bahagia <strong id="happy-val">50%</strong></div>
+                        <div class="sc">
+                            <div class="sl"><i class="fas fa-heart" style="color:#e11d48;font-size:10px"></i> Bahagia</div>
                             <div class="sb2"><div id="happy-bar" class="sf" style="width:50%;background:#e11d48"></div></div>
                         </div>
-                        <div class="sc pet-need-card">
-                            <div class="sl"><i class="fas fa-bolt" style="color:#F59E0B;font-size:10px"></i> Energi <strong id="energy-val">70%</strong></div>
-                            <div class="sb2"><div id="energy-bar" class="sf" style="width:70%;background:#F59E0B"></div></div>
+                        <div class="sc">
+                            <div class="sl"><i class="fas fa-bolt" style="color:#F59E0B;font-size:10px"></i> Energi Pet</div>
+                            <div class="sb2"><div id="pet-energy-bar" class="sf" style="width:70%;background:#F59E0B"></div></div>
                         </div>
-                        <div class="sc pet-need-card">
-                            <div class="sl"><i class="fas fa-soap" style="color:#0EA5E9;font-size:10px"></i> Bersih <strong id="clean-val">70%</strong></div>
-                            <div class="sb2"><div id="clean-bar" class="sf" style="width:70%;background:#0EA5E9"></div></div>
-                        </div>
-                    </div>
-                    <div class="pet-care-card">
-                        <div class="pet-care-head">
-                            <div>
-                                <strong>Rawat Plong</strong>
-                                <span>Seperti virtual pet: makan, main, mandi, tidur, dan ajak ngomong.</span>
-                            </div>
-                            <button class="pet-care-mini" id="pet-care-quick" type="button"><i class="fas fa-wand-magic-sparkles"></i> Auto care</button>
-                        </div>
-                        <div class="pet-care-grid">
-                            <button class="pet-care-btn" id="pet-feed" type="button"><span>🍽️</span><strong>Makan</strong><small>Pakai stok sayur</small></button>
-                            <button class="pet-care-btn" id="pet-play2" type="button"><span>🧸</span><strong>Main</strong><small>Tambah bahagia</small></button>
-                            <button class="pet-care-btn" id="pet-bath" type="button"><span>🫧</span><strong>Mandi</strong><small>Biar bersih</small></button>
-                            <button class="pet-care-btn" id="pet-sleep" type="button"><span>🌙</span><strong>Tidur</strong><small>Pulihkan energi</small></button>
-                            <button class="pet-care-btn pet-care-wide" id="pet-talk" type="button"><span>🎙️</span><strong>Ajak ngomong</strong><small>Plong coba ulang ucapanmu</small></button>
-                        </div>
-                        <div class="pet-care-log" id="pet-care-log">Plong lagi santai. Coba rawat dia pelan-pelan.</div>
                     </div>
                     <div class="es">
                         <div class="et">Komposisi Emosi</div>
@@ -2179,7 +2178,7 @@
                 if(el)el.textContent="Hai, "+getStoredUserName();
             }
 
-            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,clean:70,sleeping:false,reaction:"idle",lastCareAt:new Date().toISOString(),lastDecayAt:new Date().toISOString(),careHistory:[],accessory:"",background:"",wings:false,avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null},gm:"qwen2.5:3b",al:"id"};
+            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,bond:0,worker:{lastClaimAt:new Date().toISOString(),essence:{marah:0,sedih:0,galau:0,stres:0,excited:0,tenang:0},totalEarned:0,today:{date:new Date().toISOString().slice(0,10),vent:0,chat:0,garden:0,care:0,bonusClaimed:false}},accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null},gm:"qwen2.5:3b",al:"id"};
             function save(){try{localStorage.setItem("vkm",JSON.stringify(state))}catch(e){}; if(window.__vkmAuthReady&&typeof queueSyncState==="function")queueSyncState()}
             function load(){try{var d=JSON.parse(localStorage.getItem("vkm"));if(d)for(var k in d)if(d.hasOwnProperty(k))state[k]=d[k]}catch(e){}}
             load();
@@ -2197,10 +2196,10 @@
             window.__vkmAuthReady=false;
 
             function defaultStateForUser(user){
-                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,clean:70,sleeping:false,reaction:"idle",lastCareAt:new Date().toISOString(),lastDecayAt:new Date().toISOString(),careHistory:[],accessory:"",background:"",wings:false,avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null},gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
+                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,bond:0,worker:{lastClaimAt:new Date().toISOString(),essence:{marah:0,sedih:0,galau:0,stres:0,excited:0,tenang:0},totalEarned:0,today:{date:new Date().toISOString().slice(0,10),vent:0,chat:0,garden:0,care:0,bonusClaimed:false}},accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null},gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
             }
             function ensureDefaults(){
-                if(!state.pet)state.pet={name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,clean:70,sleeping:false,reaction:"idle",lastDecayAt:new Date().toISOString(),careHistory:[]};
+                if(!state.pet)state.pet={name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50};
                 if(!state.emotions)state.emotions={tenang:0};
                 if(!state.art)state.art=[];
                 if(!state.ch)state.ch=[];
@@ -2215,12 +2214,9 @@
                 if(!state.pet.background)state.pet.background="";
                 if(typeof state.pet.wings!=="boolean")state.pet.wings=false;
                 if(!state.pet.lastCareAt)state.pet.lastCareAt=new Date().toISOString();
-                if(!state.pet.lastDecayAt)state.pet.lastDecayAt=new Date().toISOString();
                 if(typeof state.pet.energy!=="number")state.pet.energy=70;
-                if(typeof state.pet.clean!=="number")state.pet.clean=70;
-                if(typeof state.pet.sleeping!=="boolean")state.pet.sleeping=false;
-                if(!state.pet.reaction)state.pet.reaction="idle";
-                if(!Array.isArray(state.pet.careHistory))state.pet.careHistory=[];
+                if(typeof state.pet.bond!=="number")state.pet.bond=0;
+                ensurePetWorkerLocal();
                 if(!state.pet.avatar)state.pet.avatar={body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"};
                 var avd={body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"};
                 Object.keys(avd).forEach(function(k){if(!state.pet.avatar[k])state.pet.avatar[k]=avd[k];});
@@ -2425,12 +2421,6 @@
                 if(mood==='sedih'||mood==='stres')mode='rest';
                 if(mood==='galau')mode='confused';
                 if(mood==='marah')mode='annoyed';
-                var reaction=(state.pet&&state.pet.reaction)||'';
-                if(state.pet&&state.pet.sleeping)mode='rest';
-                if(reaction==='play'||reaction==='eat'||reaction==='bath'||reaction==='wake'||reaction==='talk')mode='happy';
-                if(reaction==='sleep'||reaction==='tired')mode='rest';
-                if(reaction==='listen'||reaction==='confused')mode='confused';
-                if(reaction==='calm')mode='idle';
 
                 var bob=Math.sin(t*.055)*5;
                 var breathe=1+Math.sin(t*.035)*.028;
@@ -2740,193 +2730,81 @@
             /* REFRESH */
             function productOwned(p){return !!(p.key&&state.inventory&&state.inventory.indexOf(p.key)>-1)}
             function productButtonLabel(p,can,owned){if(owned)return "Pakai";if(can)return p.type==="consumable"?"Redeem":"Unlock";return "Kurang"}
-            function clampPet(v){v=Number(v);if(!Number.isFinite(v))v=0;return Math.max(0,Math.min(100,Math.round(v)))}
-            function addPetExpLocal(exp){
-                var p=state.pet;
-                p.exp=Math.max(0,Number(p.exp||0))+Math.max(0,Math.floor(Number(exp||0)));
-                while(p.exp>=p.expMax){
-                    p.exp-=p.expMax;
-                    p.level=Math.max(1,Number(p.level||1))+1;
-                    p.expMax=Math.max(30,Math.floor(Number(p.expMax||30)*1.35));
-                    p.happy=clampPet((p.happy||0)+8);
-                    petCareLog("Yeay! Plong naik level jadi "+p.level+" ✨");
+            function clampLocal(v,min,max){v=Number(v);if(!Number.isFinite(v))v=min;return Math.max(min,Math.min(max,v))}
+            function ensurePetWorkerLocal(){
+                var p=state.pet||(state.pet={});
+                var today=new Date().toISOString().slice(0,10);
+                if(!p.worker)p.worker={};
+                if(!p.worker.essence)p.worker.essence={};
+                ["marah","sedih","galau","stres","excited","tenang"].forEach(function(m){p.worker.essence[m]=Math.max(0,Math.floor(Number(p.worker.essence[m]||0)))});
+                p.worker.lastClaimAt=p.worker.lastClaimAt||new Date().toISOString();
+                p.worker.totalEarned=Math.max(0,Math.floor(Number(p.worker.totalEarned||0)));
+                if(!p.worker.today||p.worker.today.date!==today)p.worker.today={date:today,vent:0,chat:0,garden:0,care:0,bonusClaimed:false};
+                ["vent","chat","garden","care"].forEach(function(k){p.worker.today[k]=Math.max(0,Math.floor(Number(p.worker.today[k]||0)))});
+                p.worker.today.bonusClaimed=!!p.worker.today.bonusClaimed;
+                p.energy=clampLocal(p.energy==null?70:p.energy,0,100);
+                p.bond=clampLocal(p.bond==null?0:p.bond,0,100);
+                return p.worker;
+            }
+            function petWorkerEssenceTotal(){
+                var w=ensurePetWorkerLocal();
+                return Object.keys(w.essence).reduce(function(a,k){return a+Number(w.essence[k]||0)},0);
+            }
+            function petPassiveEstimate(){
+                var p=state.pet,w=ensurePetWorkerLocal(),last=Date.parse(w.lastClaimAt||new Date().toISOString());
+                if(!Number.isFinite(last))last=Date.now();
+                var mins=Math.floor(Math.min(Date.now()-last,8*60*60*1000)/60000);
+                if(mins<10)return 0;
+                var lvl=Math.max(1,Number(p.level||1)), bond=Number(p.bond||0), energy=Number(p.energy||70), happy=Number(p.happy||50);
+                var hourly=Math.max(1,Math.floor((1+lvl*.35+bond*.025)*(0.55+((happy+energy)/200)*.65)*.9));
+                return Math.max(0,Math.floor((mins/60)*hourly));
+            }
+            function renderPetWorker(){
+                ensurePetWorkerLocal();
+                var p=state.pet,w=p.worker;
+                var set=function(id,txt){var e=document.getElementById(id);if(e)e.textContent=txt};
+                set("pet-bond-display",Math.round(p.bond||0)+"%");
+                set("pet-energy-display",Math.round(p.energy||0)+"%");
+                set("pet-essence-display",petWorkerEssenceTotal());
+                set("pet-passive-display","+"+petPassiveEstimate());
+                var eb=document.getElementById("pet-energy-bar");if(eb)eb.style.width=Math.round(p.energy||0)+"%";
+                var missions=document.getElementById("pet-worker-missions");
+                if(missions){
+                    var list=[
+                        ["Curhat",w.today.vent>=1,w.today.vent+"/1"],
+                        ["Chat",w.today.chat>=3,w.today.chat+"/3"],
+                        ["Kebun",w.today.garden>=2,w.today.garden+"/2"],
+                        ["Rawat",w.today.care>=1,w.today.care+"/1"]
+                    ];
+                    missions.innerHTML=list.map(function(x){return '<span class="pet-worker-mission '+(x[1]?'done':'')+'">'+x[0]+' '+x[2]+'</span>'}).join("");
                 }
+                var claim=document.getElementById("pet-worker-claim");if(claim)claim.disabled=petPassiveEstimate()<=0;
+                var convert=document.getElementById("pet-worker-convert");if(convert)convert.disabled=petWorkerEssenceTotal()<=0;
+                var daily=document.getElementById("pet-worker-daily");if(daily)daily.disabled=!!w.today.bonusClaimed;
             }
-            function petCareLog(msg){
-                var p=state.pet;
-                p.careHistory=p.careHistory||[];
-                p.careHistory.unshift({text:String(msg||"Plong senang."),createdAt:new Date().toISOString()});
-                p.careHistory=p.careHistory.slice(0,20);
-                var el=document.getElementById("pet-care-log");
-                if(el)el.textContent=msg||"Plong senang.";
-            }
-            function decayPetNeeds(){
-                ensureDefaults();
-                var p=state.pet;
-                var now=Date.now();
-                var last=Date.parse(p.lastDecayAt||p.lastCareAt||new Date().toISOString());
-                if(!Number.isFinite(last)){p.lastDecayAt=new Date().toISOString();return}
-                var mins=Math.floor((now-last)/60000);
-                if(mins<=0)return;
-                var cap=Math.min(mins,12*60);
-                p.hunger=clampPet((p.hunger||0)-Math.floor(cap/18));
-                p.happy=clampPet((p.happy||0)-Math.floor(cap/24));
-                p.clean=clampPet((p.clean||0)-Math.floor(cap/22));
-                if(p.sleeping){
-                    p.energy=clampPet((p.energy||0)+Math.floor(cap/8));
-                    if(p.energy>=100){p.sleeping=false;petCareLog("Plong sudah bangun, energinya penuh 🌞")}
-                }else{
-                    p.energy=clampPet((p.energy||0)-Math.floor(cap/28));
-                }
-                p.lastDecayAt=new Date().toISOString();
-            }
-            function getPetConditionText(){
-                var p=state.pet, notes=[];
-                if(p.sleeping)notes.push("lagi tidur");
-                if(p.hunger<30)notes.push("lapar");
-                if(p.energy<30)notes.push("ngantuk");
-                if(p.clean<30)notes.push("butuh mandi");
-                if(p.happy<30)notes.push("butuh ditemani");
-                return notes.length?notes.join(" · "):"terawat";
-            }
-            function setPetReaction(type,duration){
-                ensureDefaults();
-                state.pet.reaction=type||"idle";
-                if(window.__petReactionTimer)clearTimeout(window.__petReactionTimer);
-                window.__petReactionTimer=setTimeout(function(){state.pet.reaction=state.pet.sleeping?"sleep":"idle";save();refreshUI();sP(getPetMood())},duration||2200);
-                save();refreshUI();sP(getPetMood());
-            }
-            function petParticle(emoji,btn){
+            async function petWorkerAction(url,body){
+                if(!authToken){showAuth("Silakan login dulu.");return null;}
                 try{
-                    var r=(btn&&btn.getBoundingClientRect)?btn.getBoundingClientRect():{left:window.innerWidth/2,top:window.innerHeight/2,width:0,height:0};
-                    var el=document.createElement("div");
-                    el.className="pet-care-particle";
-                    el.textContent=emoji;
-                    el.style.left=(r.left+r.width/2)+"px";
-                    el.style.top=(r.top+8)+"px";
-                    document.body.appendChild(el);
-                    setTimeout(function(){el.remove()},950);
-                }catch(e){}
+                    var r=await apiFetch(url,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(body||{})});
+                    var data=await r.json();
+                    if(!r.ok||!data.ok)throw new Error(data.error||"Aksi Pet Worker gagal.");
+                    if(data.state)applyStateFromServer(data.state);
+                    toast(data.message||"Pet Worker diperbarui");
+                    renderPetWorker();
+                    return data;
+                }catch(e){toast(e.message||"Pet Worker lagi bermasalah.");return null;}
             }
-            function bestFoodFromGarden(){
-                var inv=(state.garden&&state.garden.inventory)||{};
-                var keys=["tomato","carrot","lettuce"];
-                for(var i=0;i<keys.length;i++){if(Number(inv[keys[i]]||0)>0)return keys[i]}
-                return "";
-            }
-            function petCare(action,btn){
-                decayPetNeeds();
-                var p=state.pet;
-                if(action==="feed"){
-                    var food=bestFoodFromGarden();
-                    if(food){
-                        var v=VEGGIES[food]||VEGGIES.carrot;
-                        state.garden.inventory[food]=Math.max(0,Number(state.garden.inventory[food]||0)-1);
-                        p.hunger=clampPet((p.hunger||0)+(v.hunger||20));
-                        p.happy=clampPet((p.happy||0)+Math.max(5,(v.happy||5)));
-                        p.energy=clampPet((p.energy||0)+4);
-                        addPetExpLocal(v.exp||5);
-                        petCareLog("Plong makan "+v.name+". Kenyangnya naik 🍽️");
-                        setPetReaction("eat",2200);petParticle("🍽️",btn);
-                    }else{
-                        petCareLog("Stok makanan kosong. Panen sayur di kebun dulu ya 🌱");
-                        if(typeof openStockSheet==="function")openStockSheet();
-                        return;
-                    }
-                }else if(action==="play"){
-                    if(p.energy<12){petCareLog("Plong lagi capek. Tidurkan dulu sebentar ya 🌙");setPetReaction("tired",2000);return}
-                    p.happy=clampPet((p.happy||0)+14);
-                    p.energy=clampPet((p.energy||0)-10);
-                    p.clean=clampPet((p.clean||0)-5);
-                    addPetExpLocal(4);
-                    petCareLog("Kamu main bareng Plong. Dia kelihatan happy banget 🧸");
-                    setPetReaction("play",2200);petParticle("🧸",btn);
-                }else if(action==="bath"){
-                    p.clean=clampPet((p.clean||0)+32);
-                    p.happy=clampPet((p.happy||0)+4);
-                    addPetExpLocal(3);
-                    petCareLog("Plong sudah mandi. Sekarang lebih fresh 🫧");
-                    setPetReaction("bath",2200);petParticle("🫧",btn);
-                }else if(action==="sleep"){
-                    p.sleeping=!p.sleeping;
-                    if(p.sleeping){
-                        p.happy=clampPet((p.happy||0)+2);
-                        petCareLog("Plong tidur dulu. Energinya akan pulih pelan-pelan 🌙");
-                        setPetReaction("sleep",3600);
-                    }else{
-                        p.energy=clampPet((p.energy||0)+10);
-                        petCareLog("Plong bangun dan siap ditemani lagi 🌞");
-                        setPetReaction("wake",2200);
-                    }
-                    petParticle(p.sleeping?"🌙":"🌞",btn);
-                }else if(action==="calm"){
-                    p.happy=clampPet((p.happy||0)+7);
-                    p.energy=clampPet((p.energy||0)+3);
-                    addPetExpLocal(2);
-                    petCareLog("Kamu dan Plong tenang bareng. Rasanya lebih adem 🍃");
-                    setPetReaction("calm",2200);petParticle("🍃",btn);
-                }else if(action==="quick"){
-                    var did=false;
-                    if(p.clean<45){petCare("bath",btn);did=true}
-                    else if(p.hunger<45){petCare("feed",btn);did=true}
-                    else if(p.energy<40&&!p.sleeping){petCare("sleep",btn);did=true}
-                    else{petCare("play",btn);did=true}
-                    return;
-                }
-                p.lastCareAt=new Date().toISOString();
-                p.lastDecayAt=new Date().toISOString();
-                save();
-                refreshUI();
-                syncStateToPostgreSQL();
-            }
-            function petTalk(btn){
-                var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-                if(!SR){
-                    petCareLog("Browser ini belum support fitur dengar suara. Coba pakai Chrome/Edge ya 🎙️");
-                    return;
-                }
-                try{
-                    var rec=new SR();
-                    rec.lang=(state.al==="en"?"en-US":"id-ID");
-                    rec.interimResults=false;rec.continuous=false;
-                    petCareLog("Plong dengerin... coba ngomong sesuatu 🎙️");
-                    setPetReaction("listen",4000);
-                    rec.onresult=function(e){
-                        var text=(e.results&&e.results[0]&&e.results[0][0]&&e.results[0][0].transcript)||"";
-                        if(!text){petCareLog("Plong belum nangkep suaramu.");return}
-                        petCareLog('Plong ulang: "'+text+'"');
-                        setPetReaction("talk",2600);
-                        petParticle("💬",btn);
-                        try{
-                            var u=new SpeechSynthesisUtterance(text);
-                            u.lang=(state.al==="en"?"en-US":"id-ID");
-                            u.pitch=1.45;u.rate=1.12;
-                            speechSynthesis.cancel();
-                            speechSynthesis.speak(u);
-                        }catch(err){}
-                        state.pet.happy=clampPet((state.pet.happy||0)+5);
-                        addPetExpLocal(2);
-                        save();refreshUI();syncStateToPostgreSQL();
-                    };
-                    rec.onerror=function(){petCareLog("Plong gagal dengar suara. Coba izin mic/browsernya dicek ya.");setPetReaction("confused",2000)};
-                    rec.start();
-                }catch(e){petCareLog("Fitur ngomong belum bisa jalan di browser ini.");}
-            }
-            
-function refreshUI(){
+            function refreshUI(){
                 ensureDefaults();
-                decayPetNeeds();
                 var p=state.pet;
                 var em={"pet-name-display":p.name,"pet-level-display":p.level,"pet-exp-display":p.exp,"pet-exp-max":p.expMax};Object.keys(em).forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=em[id]});
                 var ep=Math.min(100,(p.exp/p.expMax)*100),eb=document.getElementById("exp-bar");if(eb)eb.style.width=ep+"%";
                 var hb=document.getElementById("hunger-bar");if(hb)hb.style.width=p.hunger+"%";
                 var hp=document.getElementById("happy-bar");if(hp)hp.style.width=p.happy+"%";
-                var enb=document.getElementById("energy-bar");if(enb)enb.style.width=(p.energy||0)+"%";
-                var clb=document.getElementById("clean-bar");if(clb)clb.style.width=(p.clean||0)+"%";
-                [["hunger-val",p.hunger],["happy-val",p.happy],["energy-val",p.energy||0],["clean-val",p.clean||0]].forEach(function(x){var el=document.getElementById(x[0]);if(el)el.textContent=clampPet(x[1])+"%"});
-                var pcl=document.getElementById("pet-care-log");if(pcl&&p.careHistory&&p.careHistory[0])pcl.textContent=p.careHistory[0].text;
+                var pe=document.getElementById("pet-energy-bar");if(pe)pe.style.width=(p.energy||70)+"%";
                 var dom=Object.entries(state.emotions).sort(function(a,b){return b[1]-a[1]})[0],me=document.getElementById("pet-mood-text");
-                if(me&&dom){var c=EMO[dom[0]];if(c){var extra=[];if(p.accessory==="crown")extra.push("👑");if(p.wings)extra.push("✨");if(p.background==="dream_garden")extra.push("🌸");me.textContent="Mood: "+c.label+" "+dom[1]+"x "+extra.join(" ")+" · "+getPetConditionText();}}
+                if(me&&dom){var c=EMO[dom[0]];if(c){var extra=[];if(p.accessory==="crown")extra.push("👑");if(p.wings)extra.push("✨");if(p.background==="dream_garden")extra.push("🌸");me.textContent="Mood: "+c.label+" "+dom[1]+"x "+extra.join(" ")+" · Bond "+Math.round(p.bond||0)+"%";}}
+                renderPetWorker();
                 var tg=document.getElementById("emo-tags");if(tg){var en=Object.entries(state.emotions).filter(function(e){return e[1]>0});tg.innerHTML=en.length?en.map(function(e){var c=EMO[e[0]];return c?'<span class="ei"><span class="ed" style="background:'+c.color+'"></span>'+c.label+" "+e[1]+"</span>":""}).join(""):'<span class="ei"><span class="ed" style="background:var(--tenang)"></span>Tenang 0</span>'}
                 var gr=document.getElementById("art-grid"),ae=document.getElementById("art-empty");if(gr){if(!state.art.length){gr.innerHTML="";if(ae)ae.style.display="flex"}else{if(ae)ae.style.display="none";gr.innerHTML=state.art.map(function(a){return'<div class="ac2" title="'+(EMO[a.mood]?EMO[a.mood].label:a.mood)+'"><img src="'+a.src+'" alt="Karya" loading="lazy"></div>'}).join("")}}
                 var pl=document.getElementById("plist");if(pl){pl.innerHTML=PRODS.map(function(prod){var owned=productOwned(prod),can=state.coins>=prod.price||owned;var disabled=!can;return'<div class="pc"><div class="pc-i">'+prod.icon+'</div><div class="pc-f"><div class="pc-n">'+prod.name+(owned?'<span class="pc-owned">DIMILIKI</span>':'')+'</div><div class="pc-d">'+prod.desc+'</div><div class="pc-p"><i class="fas fa-coins" style="font-size:9px"></i>'+prod.price+'</div></div><button class="rb '+(can?"ok":"no")+'" data-pid="'+prod.id+'" '+(disabled?"disabled":"")+'>'+productButtonLabel(prod,can,owned)+'</button></div>'}).join("");pl.querySelectorAll(".rb.ok").forEach(function(b){b.addEventListener("click",function(){rP(b.dataset.pid,b)})})}
@@ -2944,9 +2822,16 @@ function refreshUI(){
                 }catch(e){toast(e.message||"Gagal redeem")}
                 finally{if(btn){btn.disabled=false;}refreshUI();}
             }
-            function petAction(action){
-                var map={play:"play",calm:"calm"};
-                petCare(map[action]||"play",null);
+            async function petAction(action){
+                if(!authToken){showAuth("Silakan login dulu.");return;}
+                try{
+                    var res=await apiFetch("/api/pet/action",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:action})});
+                    var data=await res.json();
+                    if(!res.ok||!data.ok)throw new Error(data.error||"Gagal menjalankan aksi pet");
+                    applyStateFromServer(data.state);
+                    toast(data.message||"Plong senang");
+                    sP(Object.entries(state.emotions||{}).sort(function(a,b){return b[1]-a[1]})[0]?.[0]||"tenang");
+                }catch(e){toast(e.message||"Gagal menjalankan aksi pet")}
             }
 
 
@@ -3193,22 +3078,6 @@ var gardenBusy=false;
             document.querySelectorAll('[data-garden-sheet-close]').forEach(function(el){el.addEventListener('click',closeGardenSheets)});
             document.addEventListener('keydown',function(e){if(e.key==='Escape')closeGardenSheets()});
 
-            function bindPetCareButtons(){
-                var bind=function(id,fn){
-                    var b=document.getElementById(id);
-                    if(b&&!b.dataset.boundCare){b.dataset.boundCare="1";b.addEventListener("click",function(){fn(b)})}
-                };
-                bind("pet-feed",function(b){petCare("feed",b)});
-                bind("pet-play2",function(b){petCare("play",b)});
-                bind("pet-bath",function(b){petCare("bath",b)});
-                bind("pet-sleep",function(b){petCare("sleep",b)});
-                bind("pet-talk",function(b){petTalk(b)});
-                bind("pet-care-quick",function(b){petCare("quick",b)});
-                bind("pet-play",function(b){petCare("play",b)});
-                bind("pet-calm",function(b){petCare("calm",b)});
-            }
-            bindPetCareButtons();
-
             /* PET AVATAR CUSTOMIZER */
             var AVATAR_DEFAULT={body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"};
             var avatarDraft=null;
@@ -3427,9 +3296,11 @@ var gardenBusy=false;
                     tp.remove();
                     var reply=data.reply||"Aku belum bisa jawab sekarang.";
                     addMsg(reply,"bot");
+                    if(data.state)applyStateFromServer(data.state);
                     state.ch.push({role:"model",parts:[{text:reply}]});
                     state.ch=state.ch.slice(-10);
                     save();
+                    if(data.reward&&data.reward.coins)toast("Plong menghasilkan +"+data.reward.coins+" Soul Coins");
                     addFollowUps();
                 })
                 .catch(function(){
@@ -3473,9 +3344,15 @@ var gardenBusy=false;
             function escH(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
             function escA(s){return s.replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 
-            bindPetCareButtons();
+            var petPlayBtn=document.getElementById("pet-play"),petCalmBtn=document.getElementById("pet-calm");
+            if(petPlayBtn)petPlayBtn.addEventListener("click",function(){petAction("play")});
+            if(petCalmBtn)petCalmBtn.addEventListener("click",function(){petAction("calm")});
+            var pwClaim=document.getElementById("pet-worker-claim"),pwConvert=document.getElementById("pet-worker-convert"),pwDaily=document.getElementById("pet-worker-daily");
+            if(pwClaim)pwClaim.addEventListener("click",function(){petWorkerAction("/api/pet/claim-passive",{})});
+            if(pwConvert)pwConvert.addEventListener("click",function(){petWorkerAction("/api/pet/convert-essence",{mood:"all"})});
+            if(pwDaily)pwDaily.addEventListener("click",function(){petWorkerAction("/api/pet/daily-bonus",{})});
+            setInterval(function(){renderPetWorker()},30000);
             initAvatarCustomizer();initAccount();renderGarden();sP("tenang");wI();refreshUI();bootAuth();
-            setInterval(function(){decayPetNeeds();refreshUI();if(window.__vkmAuthReady)queueSyncState();},60000);
         </script>
     </body>
 </html>
