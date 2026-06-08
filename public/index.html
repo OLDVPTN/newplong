@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="id">
     <head>
@@ -1042,6 +1041,275 @@
                 .garden-tycoon-stat:last-child{grid-column:1/-1}
             }
 
+
+            /* ═══════ CLEAN MOBILE GARDEN UI ═══════ */
+            @media(max-width:640px){
+                #pg-garden{
+                    gap:8px!important;
+                    padding:12px 12px calc(var(--nav-h) + var(--s-b) + 14px)!important;
+                }
+                #pg-garden .ph{
+                    margin-bottom:4px!important;
+                }
+                #pg-garden .pt{
+                    font-size:19px!important;
+                }
+                #pg-garden .ps{
+                    font-size:10px!important;
+                    max-width:280px;
+                }
+                .garden-layout{
+                    gap:8px!important;
+                }
+                .garden-card{
+                    border-radius:18px!important;
+                    padding:11px!important;
+                    box-shadow:0 6px 18px rgba(15,23,42,.045)!important;
+                }
+                .garden-card::after{
+                    display:none!important;
+                }
+                .garden-hero-card{
+                    padding:0!important;
+                    border-radius:20px!important;
+                }
+                .garden-topbar{
+                    padding:10px 12px 0!important;
+                }
+                .garden-chip{
+                    padding:5px 8px!important;
+                    font-size:10px!important;
+                }
+                .garden-chip.coin{
+                    display:none!important;
+                }
+                .garden-stage{
+                    min-height:168px!important;
+                }
+                .garden-cloud{
+                    display:none!important;
+                }
+                .garden-stage::before{
+                    height:92px!important;
+                    bottom:-34px!important;
+                }
+                .garden-stage::after{
+                    bottom:18px!important;
+                    height:30px!important;
+                    opacity:.55!important;
+                }
+                .garden-plant{
+                    width:140px!important;
+                    height:112px!important;
+                    transform:translateY(8px)!important;
+                }
+                .garden-emoji{
+                    font-size:54px!important;
+                }
+                .garden-soil{
+                    width:112px!important;
+                    height:28px!important;
+                }
+                .garden-plots{
+                    padding:8px 10px!important;
+                    gap:6px!important;
+                    grid-template-columns:repeat(2,1fr)!important;
+                }
+                .garden-plot-btn{
+                    min-height:54px!important;
+                    border-radius:14px!important;
+                    padding:7px!important;
+                    gap:5px!important;
+                }
+                .garden-plot-emoji{
+                    width:28px!important;
+                    height:28px!important;
+                    font-size:18px!important;
+                    border-radius:10px!important;
+                }
+                .garden-plot-name{
+                    font-size:9px!important;
+                    line-height:1.25!important;
+                }
+                .garden-plot-bar{
+                    height:4px!important;
+                    margin-top:3px!important;
+                }
+                .garden-meter{
+                    padding:10px 12px 12px!important;
+                }
+                .garden-meta{
+                    margin-bottom:7px!important;
+                    align-items:center!important;
+                }
+                .garden-title-mini{
+                    font-size:9px!important;
+                }
+                #garden-status{
+                    font-size:11px!important;
+                    line-height:1.35!important;
+                    max-width:230px!important;
+                }
+                #garden-percent{
+                    font-size:18px!important;
+                    min-width:42px!important;
+                }
+                .garden-progress{
+                    height:9px!important;
+                }
+                .garden-actions{
+                    gap:7px!important;
+                    margin-top:9px!important;
+                }
+                .garden-btn{
+                    min-height:38px!important;
+                    border-radius:13px!important;
+                    padding:8px 9px!important;
+                    font-size:11px!important;
+                }
+                .garden-note{
+                    display:none!important;
+                }
+
+                /* Tycoon card lebih ringkas di mobile */
+                .garden-claim-card{
+                    padding:11px!important;
+                }
+                .garden-claim-head{
+                    margin-bottom:8px!important;
+                    align-items:center!important;
+                }
+                .garden-claim-icon{
+                    width:34px!important;
+                    height:34px!important;
+                    border-radius:12px!important;
+                }
+                .garden-claim-title strong{
+                    font-size:12px!important;
+                }
+                .garden-claim-title small{
+                    display:none!important;
+                }
+                .garden-tycoon{
+                    grid-template-columns:repeat(3,1fr)!important;
+                    gap:6px!important;
+                    margin-bottom:8px!important;
+                }
+                .garden-tycoon-stat{
+                    padding:7px 6px!important;
+                    border-radius:13px!important;
+                    box-shadow:none!important;
+                }
+                .garden-tycoon-stat span{
+                    font-size:8px!important;
+                    gap:3px!important;
+                    letter-spacing:.25px!important;
+                }
+                .garden-tycoon-stat strong{
+                    font-size:14px!important;
+                    margin-top:2px!important;
+                }
+                .garden-mini-progress{
+                    height:5px!important;
+                    margin-top:5px!important;
+                }
+                .garden-tycoon-actions{
+                    grid-template-columns:1fr 1fr!important;
+                    gap:6px!important;
+                    margin-top:8px!important;
+                }
+                #garden-bonus{
+                    grid-column:1/-1!important;
+                    min-height:36px!important;
+                }
+
+                /* Bibit & inventory dibuat horizontal chips supaya tidak penuh layar */
+                .garden-section-title{
+                    margin-bottom:7px!important;
+                }
+                .garden-section-title .acct-title{
+                    font-size:10px!important;
+                }
+                .garden-section-title .garden-pill{
+                    display:none!important;
+                }
+                .garden-grid,
+                .garden-inv{
+                    display:flex!important;
+                    overflow-x:auto!important;
+                    gap:7px!important;
+                    padding-bottom:2px!important;
+                    scroll-snap-type:x proximity;
+                    -webkit-overflow-scrolling:touch;
+                }
+                .garden-grid::-webkit-scrollbar,
+                .garden-inv::-webkit-scrollbar{
+                    height:0!important;
+                }
+                .garden-seed,
+                .garden-feed{
+                    min-width:96px!important;
+                    max-width:96px!important;
+                    min-height:82px!important;
+                    padding:8px 6px!important;
+                    border-radius:15px!important;
+                    flex:0 0 auto!important;
+                    scroll-snap-align:start;
+                    box-shadow:none!important;
+                }
+                .garden-seed span,
+                .garden-feed span{
+                    width:32px!important;
+                    height:32px!important;
+                    font-size:20px!important;
+                    border-radius:11px!important;
+                    margin-bottom:4px!important;
+                }
+                .garden-seed strong,
+                .garden-feed strong{
+                    font-size:10px!important;
+                    line-height:1.2!important;
+                }
+                .garden-seed small,
+                .garden-feed small{
+                    font-size:8px!important;
+                    line-height:1.2!important;
+                    margin-top:2px!important;
+                }
+                .garden-history{
+                    max-height:126px!important;
+                    gap:5px!important;
+                }
+                .garden-history-item{
+                    border-radius:12px!important;
+                    padding:7px 8px!important;
+                    font-size:10px!important;
+                    line-height:1.35!important;
+                }
+                .garden-empty-mini{
+                    padding:10px 8px!important;
+                    font-size:10px!important;
+                    border-radius:13px!important;
+                }
+            }
+
+            @media(max-width:370px){
+                .garden-tycoon{
+                    grid-template-columns:1fr 1fr!important;
+                }
+                .garden-tycoon-stat:last-child{
+                    grid-column:1/-1!important;
+                }
+                .garden-plot-name{
+                    font-size:8px!important;
+                }
+                .garden-seed,
+                .garden-feed{
+                    min-width:88px!important;
+                    max-width:88px!important;
+                }
+            }
+
 /* ═══════ ACCOUNT PAGE ═══════ */
             #pg-account{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
             .acct-card{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
@@ -1220,7 +1488,7 @@
                     <div class="ph">
                         <div>
                             <h1 class="pt">Kebun Plong</h1>
-                            <p class="ps">Rawat tanaman kecilmu, panen, lalu kasih makan Plong.</p>
+                            <p class="ps">Tanam, siram, panen, lalu rawat Plong.</p>
                         </div>
                     </div>
                     <div class="garden-layout">
@@ -1252,7 +1520,7 @@
                                     <button class="garden-btn primary" id="garden-water" type="button"><i class="fas fa-droplet"></i> Siram</button>
                                     <button class="garden-btn warn" id="garden-harvest" type="button"><i class="fas fa-basket-shopping"></i> Panen</button>
                                 </div>
-                                <p class="garden-note">Pilih bibit, siram sampai penuh, panen, lalu pakai sayurnya buat naikin mood Plong.</p>
+                                <p class="garden-note">Pilih bibit, siram sampai penuh, panen, lalu kasih makan Plong.</p>
                             </div>
                         </div>
                         <div style="display:flex;flex-direction:column;gap:12px">
@@ -1262,7 +1530,7 @@
                                         <div class="garden-claim-icon"><i class="fas fa-coins"></i></div>
                                         <div>
                                             <strong>Kebun Tycoon</strong>
-                                            <small>Klaim hasil idle, upgrade level, dan ambil bonus kunjungan.</small>
+                                            <small>Klaim hasil idle dan upgrade kebun.</small>
                                         </div>
                                     </div>
                                     <span class="garden-pill" id="garden-idle-rate">+1/mnt</span>
