@@ -361,46 +361,75 @@ const VEGGIE_CATALOG = {
 
 function defaultGarden() {
   return {
+    activePlot: 0,
     plot: null,
+    plots: Array.from({ length: 4 }, () => null),
     inventory: { carrot: 0, lettuce: 0, tomato: 0 },
     history: []
+  };
+}
+
+function plotIndexFrom(value) {
+  const n = Math.floor(Number(value));
+  if (!Number.isFinite(n)) return 0;
+  return Math.max(0, Math.min(3, n));
+}
+
+function normalizeGardenPlot(plot) {
+  if (!plot || typeof plot !== 'object') return null;
+  const seed = String(plot.seed || 'carrot').trim().toLowerCase();
+  const veggie = VEGGIE_CATALOG[seed];
+  if (!veggie) return null;
+
+  const growNeed = veggie.growNeed;
+  const waterCount = Math.max(0, Math.floor(Number(plot.waterCount || 0)));
+  const progressRaw = Number(plot.progress || 0);
+  const progress = clamp(Number.isFinite(progressRaw) ? progressRaw : 0, 0, 100);
+
+  return {
+    seed,
+    progress,
+    waterCount,
+    growNeed,
+    stage: Math.min(growNeed, Math.floor(Number(plot.stage || waterCount || 0))),
+    ready: Boolean(plot.ready) || waterCount >= growNeed || progress >= 100,
+    plantedAt: plot.plantedAt || new Date().toISOString(),
+    lastWaterAt: plot.lastWaterAt || null
   };
 }
 
 function ensureGarden(state) {
   const base = defaultGarden();
   const current = state.garden && typeof state.garden === 'object' ? state.garden : {};
+
+  const activePlot = plotIndexFrom(current.activePlot);
+  let plots = Array.isArray(current.plots) ? current.plots.slice(0, 4) : [];
+
+  while (plots.length < 4) plots.push(null);
+  plots = plots.map(normalizeGardenPlot);
+
+  // Backward compatibility: migrate old single-plot data into the active plot.
+  const oldPlot = normalizeGardenPlot(current.plot);
+  if (oldPlot && !plots[activePlot]) plots[activePlot] = oldPlot;
+
   state.garden = {
     ...base,
     ...current,
+    activePlot,
+    plots,
+    plot: plots[activePlot] || null,
     inventory: {
       ...base.inventory,
       ...(current.inventory || {})
     },
     history: Array.isArray(current.history) ? current.history : []
   };
+
   for (const key of Object.keys(state.garden.inventory)) {
     state.garden.inventory[key] = Math.max(0, Math.floor(Number(state.garden.inventory[key] || 0)));
   }
-  if (state.garden.plot && typeof state.garden.plot === 'object') {
-    const seed = String(state.garden.plot.seed || 'carrot');
-    if (!VEGGIE_CATALOG[seed]) {
-      state.garden.plot = null;
-    } else {
-      const growNeed = VEGGIE_CATALOG[seed].growNeed;
-      const waterCount = Math.max(0, Math.floor(Number(state.garden.plot.waterCount || 0)));
-      state.garden.plot = {
-        seed,
-        progress: clamp(state.garden.plot.progress || 0, 0, 100),
-        waterCount,
-        growNeed,
-        stage: Math.min(growNeed, Math.floor(Number(state.garden.plot.stage || waterCount || 0))),
-        ready: Boolean(state.garden.plot.ready) || waterCount >= growNeed || Number(state.garden.plot.progress || 0) >= 100,
-        plantedAt: state.garden.plot.plantedAt || new Date().toISOString(),
-        lastWaterAt: state.garden.plot.lastWaterAt || null
-      };
-    }
-  }
+
+  state.garden.history = state.garden.history.slice(0, 30);
   return state.garden;
 }
 
@@ -408,7 +437,9 @@ function gardenPublic(garden) {
   const wrapper = { garden: garden && typeof garden === 'object' ? garden : defaultGarden() };
   const g = ensureGarden(wrapper);
   return {
+    activePlot: g.activePlot,
     plot: g.plot,
+    plots: g.plots,
     inventory: { ...defaultGarden().inventory, ...g.inventory },
     history: Array.isArray(g.history) ? g.history.slice(0, 30) : [],
     seeds: Object.values(VEGGIE_CATALOG)
@@ -1004,14 +1035,19 @@ app.post('/api/garden/plant', requireAuth, async (req, res) => {
 
     const state = ensureGameState(await getStateForUser(req.user), req.user);
     ensureGarden(state);
-    if (state.garden.plot && !state.garden.plot.ready) {
-      return res.status(400).json({ ok: false, error: 'Masih ada tanaman yang sedang tumbuh.' });
+
+    const plotIndex = plotIndexFrom(req.body.plotIndex ?? state.garden.activePlot);
+    state.garden.activePlot = plotIndex;
+
+    const currentPlot = state.garden.plots[plotIndex] || null;
+    if (currentPlot && !currentPlot.ready) {
+      return res.status(400).json({ ok: false, error: `Plot ${plotIndex + 1} masih ada tanaman yang sedang tumbuh.` });
     }
-    if (state.garden.plot && state.garden.plot.ready) {
-      return res.status(400).json({ ok: false, error: 'Panen tanaman yang siap dulu ya.' });
+    if (currentPlot && currentPlot.ready) {
+      return res.status(400).json({ ok: false, error: `Plot ${plotIndex + 1} siap panen. Panen dulu ya.` });
     }
 
-    state.garden.plot = {
+    state.garden.plots[plotIndex] = {
       seed,
       progress: 0,
       waterCount: 0,
@@ -1021,10 +1057,20 @@ app.post('/api/garden/plant', requireAuth, async (req, res) => {
       plantedAt: new Date().toISOString(),
       lastWaterAt: null
     };
-    state.garden.history.unshift({ id: Date.now().toString(36), type: 'plant', seed, text: `${veggie.name} ditanam.`, createdAt: new Date().toISOString() });
+    state.garden.plot = state.garden.plots[plotIndex];
+
+    state.garden.history.unshift({
+      id: Date.now().toString(36),
+      type: 'plant',
+      seed,
+      plotIndex,
+      text: `${veggie.name} ditanam di Plot ${plotIndex + 1}.`,
+      createdAt: new Date().toISOString()
+    });
     state.garden.history = state.garden.history.slice(0, 30);
+
     await saveStateForUser(req.user.id, state);
-    res.json({ ok: true, state, garden: gardenPublic(state.garden), message: `${veggie.name} berhasil ditanam.` });
+    res.json({ ok: true, state, garden: gardenPublic(state.garden), message: `${veggie.name} berhasil ditanam di Plot ${plotIndex + 1}.` });
   } catch (error) {
     console.error('Garden plant error:', error);
     res.status(500).json({ ok: false, error: 'Gagal menanam sayur.', detail: process.env.NODE_ENV === 'production' ? undefined : error.message });
@@ -1035,18 +1081,26 @@ app.post('/api/garden/water', requireAuth, async (req, res) => {
   try {
     const state = ensureGameState(await getStateForUser(req.user), req.user);
     ensureGarden(state);
-    const plot = state.garden.plot;
-    if (!plot) return res.status(400).json({ ok: false, error: 'Belum ada tanaman. Pilih bibit dulu.' });
+
+    const plotIndex = plotIndexFrom(req.body.plotIndex ?? state.garden.activePlot);
+    state.garden.activePlot = plotIndex;
+
+    const plot = state.garden.plots[plotIndex] || null;
+    if (!plot) return res.status(400).json({ ok: false, error: `Plot ${plotIndex + 1} belum ada tanaman. Pilih bibit dulu.` });
+
     const veggie = VEGGIE_CATALOG[plot.seed];
     if (!veggie) return res.status(400).json({ ok: false, error: 'Tanaman tidak valid.' });
-    if (plot.ready) return res.json({ ok: true, state, garden: gardenPublic(state.garden), message: 'Tanaman sudah siap panen.' });
+    if (plot.ready) {
+      state.garden.plot = plot;
+      return res.json({ ok: true, state, garden: gardenPublic(state.garden), message: `Plot ${plotIndex + 1} sudah siap panen.` });
+    }
 
     const cooldownMs = Number(process.env.GARDEN_WATER_COOLDOWN_MS || 8000);
     const now = Date.now();
     const last = plot.lastWaterAt ? Date.parse(plot.lastWaterAt) : 0;
     if (cooldownMs > 0 && last && now - last < cooldownMs) {
       const wait = Math.ceil((cooldownMs - (now - last)) / 1000);
-      return res.status(429).json({ ok: false, error: `Tunggu ${wait} detik lagi sebelum menyiram lagi.` });
+      return res.status(429).json({ ok: false, error: `Tunggu ${wait} detik lagi sebelum menyiram Plot ${plotIndex + 1}.` });
     }
 
     plot.waterCount = Math.max(0, Number(plot.waterCount || 0)) + 1;
@@ -1054,16 +1108,30 @@ app.post('/api/garden/water', requireAuth, async (req, res) => {
     plot.stage = Math.min(veggie.growNeed, plot.waterCount);
     plot.progress = clamp(Math.round((plot.waterCount / veggie.growNeed) * 100), 0, 100);
     plot.lastWaterAt = new Date().toISOString();
+
     if (plot.waterCount >= veggie.growNeed) {
       plot.ready = true;
       plot.progress = 100;
     }
+
+    state.garden.plots[plotIndex] = plot;
+    state.garden.plot = plot;
+
     state.pet.happy = clamp((state.pet.happy || 0) + 2, 0, 100);
     state.pet.lastCareAt = new Date().toISOString();
-    state.garden.history.unshift({ id: Date.now().toString(36), type: 'water', seed: plot.seed, text: plot.ready ? `${veggie.name} siap dipanen.` : `${veggie.name} disiram.`, createdAt: new Date().toISOString() });
+
+    state.garden.history.unshift({
+      id: Date.now().toString(36),
+      type: 'water',
+      seed: plot.seed,
+      plotIndex,
+      text: plot.ready ? `Plot ${plotIndex + 1}: ${veggie.name} siap dipanen!` : `Plot ${plotIndex + 1}: ${veggie.name} disiram.`,
+      createdAt: new Date().toISOString()
+    });
     state.garden.history = state.garden.history.slice(0, 30);
+
     await saveStateForUser(req.user.id, state);
-    res.json({ ok: true, state, garden: gardenPublic(state.garden), message: plot.ready ? `${veggie.name} sudah siap panen!` : `${veggie.name} tumbuh ${plot.progress}%.` });
+    res.json({ ok: true, state, garden: gardenPublic(state.garden), message: plot.ready ? `${veggie.name} di Plot ${plotIndex + 1} siap dipanen!` : `Plot ${plotIndex + 1} disiram.` });
   } catch (error) {
     console.error('Garden water error:', error);
     res.status(500).json({ ok: false, error: 'Gagal menyiram tanaman.', detail: process.env.NODE_ENV === 'production' ? undefined : error.message });
@@ -1074,20 +1142,36 @@ app.post('/api/garden/harvest', requireAuth, async (req, res) => {
   try {
     const state = ensureGameState(await getStateForUser(req.user), req.user);
     ensureGarden(state);
-    const plot = state.garden.plot;
-    if (!plot) return res.status(400).json({ ok: false, error: 'Belum ada tanaman untuk dipanen.' });
+
+    const plotIndex = plotIndexFrom(req.body.plotIndex ?? state.garden.activePlot);
+    state.garden.activePlot = plotIndex;
+
+    const plot = state.garden.plots[plotIndex] || null;
+    if (!plot) return res.status(400).json({ ok: false, error: `Plot ${plotIndex + 1} belum ada tanaman untuk dipanen.` });
+
     const veggie = VEGGIE_CATALOG[plot.seed];
     if (!veggie) return res.status(400).json({ ok: false, error: 'Tanaman tidak valid.' });
-    if (!plot.ready) return res.status(400).json({ ok: false, error: 'Tanaman belum siap panen.' });
+    if (!plot.ready) return res.status(400).json({ ok: false, error: `Plot ${plotIndex + 1} belum siap panen.` });
 
     const qty = state.pet.level >= 5 ? 2 : 1;
     state.garden.inventory[plot.seed] = Math.max(0, Number(state.garden.inventory[plot.seed] || 0)) + qty;
     state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + 2);
-    state.garden.history.unshift({ id: Date.now().toString(36), type: 'harvest', seed: plot.seed, text: `Panen ${qty} ${veggie.name}.`, createdAt: new Date().toISOString() });
+
+    state.garden.history.unshift({
+      id: Date.now().toString(36),
+      type: 'harvest',
+      seed: plot.seed,
+      plotIndex,
+      text: `Plot ${plotIndex + 1}: panen ${qty} ${veggie.name}.`,
+      createdAt: new Date().toISOString()
+    });
     state.garden.history = state.garden.history.slice(0, 30);
+
+    state.garden.plots[plotIndex] = null;
     state.garden.plot = null;
+
     await saveStateForUser(req.user.id, state);
-    res.json({ ok: true, state, garden: gardenPublic(state.garden), message: `Kamu panen ${qty} ${veggie.name}.` });
+    res.json({ ok: true, state, garden: gardenPublic(state.garden), message: `Kamu panen ${qty} ${veggie.name} dari Plot ${plotIndex + 1}.` });
   } catch (error) {
     console.error('Garden harvest error:', error);
     res.status(500).json({ ok: false, error: 'Gagal panen sayur.', detail: process.env.NODE_ENV === 'production' ? undefined : error.message });
