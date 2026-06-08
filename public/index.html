@@ -1310,6 +1310,117 @@
                 }
             }
 
+
+            /* SEPARATE GARDEN SHEETS + CLEANER GARDEN */
+            .garden-sheet{
+                position:fixed;
+                inset:0;
+                z-index:9500;
+                display:none;
+                align-items:flex-end;
+                justify-content:center;
+            }
+            .garden-sheet.show{display:flex}
+            .garden-sheet-backdrop{
+                position:absolute;
+                inset:0;
+                background:rgba(17,17,19,.34);
+                -webkit-backdrop-filter:blur(8px);
+                backdrop-filter:blur(8px);
+            }
+            .garden-sheet-panel{
+                position:relative;
+                z-index:1;
+                width:min(720px,100%);
+                max-height:min(78dvh,620px);
+                overflow:auto;
+                -webkit-overflow-scrolling:touch;
+                background:var(--bg2);
+                border:1px solid var(--bd1);
+                border-radius:24px 24px 0 0;
+                padding:14px;
+                box-shadow:0 -18px 60px rgba(15,23,42,.18);
+                animation:gSheetIn .18s ease both;
+            }
+            @keyframes gSheetIn{from{transform:translateY(18px);opacity:.8}to{transform:translateY(0);opacity:1}}
+            .garden-sheet-head{
+                display:flex;
+                align-items:flex-start;
+                justify-content:space-between;
+                gap:12px;
+                margin-bottom:12px;
+            }
+            .garden-sheet-head strong{
+                display:block;
+                font-size:14px;
+                font-weight:900;
+                color:var(--t1);
+            }
+            .garden-sheet-head span{
+                display:block;
+                font-size:11px;
+                color:var(--t3);
+                margin-top:2px;
+            }
+            .garden-sheet-close{
+                width:36px;height:36px;
+                border-radius:12px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:var(--bg3);
+                border:1px solid var(--bd1);
+                color:var(--t3);
+                flex-shrink:0;
+            }
+            .garden-sheet-grid{
+                grid-template-columns:repeat(3,1fr)!important;
+            }
+            .garden-tycoon-actions{
+                grid-template-columns:1fr 1fr!important;
+            }
+            @media(min-width:900px){
+                .garden-sheet{
+                    align-items:center;
+                    padding-left:var(--side-w);
+                }
+                .garden-sheet-panel{
+                    border-radius:24px;
+                    max-width:620px;
+                }
+            }
+            @media(max-width:640px){
+                .garden-sheet-panel{
+                    max-height:74dvh;
+                    padding:12px;
+                    border-radius:20px 20px 0 0;
+                }
+                .garden-sheet-grid{
+                    display:grid!important;
+                    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+                    overflow:visible!important;
+                    gap:7px!important;
+                }
+                .garden-sheet-grid .garden-seed,
+                .garden-sheet-grid .garden-feed{
+                    min-width:0!important;
+                    max-width:none!important;
+                    width:100%!important;
+                }
+                .garden-actions{
+                    grid-template-columns:repeat(3,1fr)!important;
+                }
+                .garden-tycoon-actions{
+                    grid-template-columns:1fr 1fr!important;
+                }
+            }
+            @media(max-width:370px){
+                .garden-sheet-grid{
+                    grid-template-columns:1fr 1fr!important;
+                }
+            }
+
+
 /* ═══════ ACCOUNT PAGE ═══════ */
             #pg-account{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
             .acct-card{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
@@ -1517,6 +1628,7 @@
                                 </div>
                                 <div class="garden-progress"><span id="garden-progress-fill"></span></div>
                                 <div class="garden-actions">
+                                    <button class="garden-btn" id="garden-open-seeds" type="button"><i class="fas fa-seedling"></i> Bibit</button>
                                     <button class="garden-btn primary" id="garden-water" type="button"><i class="fas fa-droplet"></i> Siram</button>
                                     <button class="garden-btn warn" id="garden-harvest" type="button"><i class="fas fa-basket-shopping"></i> Panen</button>
                                 </div>
@@ -1544,23 +1656,11 @@
                                 <div class="garden-actions garden-tycoon-actions">
                                     <button class="garden-btn primary" id="garden-claim" type="button"><i class="fas fa-sack-dollar"></i> Klaim hasil</button>
                                     <button class="garden-btn" id="garden-upgrade" type="button"><i class="fas fa-angles-up"></i> Upgrade</button>
-                                    <button class="garden-btn warn" id="garden-bonus" type="button"><i class="fas fa-gift"></i> Bonus kunjungan</button>
+                                    <button class="garden-btn" id="garden-open-stock" type="button"><i class="fas fa-bowl-food"></i> Stok</button>
+                                    <button class="garden-btn warn" id="garden-bonus" type="button"><i class="fas fa-gift"></i> Bonus</button>
                                 </div>
                             </div>
-                            <div class="garden-card">
-                                <div class="garden-section-title">
-                                    <div class="acct-title">Pilih bibit</div>
-                                    <span class="garden-pill">Tap untuk tanam</span>
-                                </div>
-                                <div class="garden-grid" id="garden-seeds"></div>
-                            </div>
-                            <div class="garden-card">
-                                <div class="garden-section-title">
-                                    <div class="acct-title">Stok makanan pet</div>
-                                    <span class="garden-pill">Feed Plong</span>
-                                </div>
-                                <div class="garden-inv" id="garden-inventory"></div>
-                            </div>
+
                             <div class="garden-card">
                                 <div class="garden-section-title">
                                     <div class="acct-title">Riwayat kebun</div>
@@ -1572,7 +1672,37 @@
                     </div>
                 </section>
 
-                <!-- AVATAR CUSTOMIZER -->
+                
+                <!-- GARDEN SEPARATE SHEETS -->
+                <div class="garden-sheet" id="garden-seed-sheet" aria-hidden="true">
+                    <div class="garden-sheet-backdrop" data-garden-sheet-close></div>
+                    <div class="garden-sheet-panel" role="dialog" aria-label="Pilih bibit">
+                        <div class="garden-sheet-head">
+                            <div>
+                                <strong>Pilih Bibit</strong>
+                                <span>Tanam di plot aktif yang kosong.</span>
+                            </div>
+                            <button class="garden-sheet-close" type="button" data-garden-sheet-close aria-label="Tutup"><i class="fas fa-xmark"></i></button>
+                        </div>
+                        <div class="garden-grid garden-sheet-grid" id="garden-seeds"></div>
+                    </div>
+                </div>
+
+                <div class="garden-sheet" id="garden-stock-sheet" aria-hidden="true">
+                    <div class="garden-sheet-backdrop" data-garden-sheet-close></div>
+                    <div class="garden-sheet-panel" role="dialog" aria-label="Stok makanan pet">
+                        <div class="garden-sheet-head">
+                            <div>
+                                <strong>Stok Makanan Pet</strong>
+                                <span>Pakai hasil panen buat rawat Plong.</span>
+                            </div>
+                            <button class="garden-sheet-close" type="button" data-garden-sheet-close aria-label="Tutup"><i class="fas fa-xmark"></i></button>
+                        </div>
+                        <div class="garden-inv garden-sheet-grid" id="garden-inventory"></div>
+                    </div>
+                </div>
+
+<!-- AVATAR CUSTOMIZER -->
                 <section id="pg-avatar" class="pg" aria-label="Kustom Avatar">
                     <div class="ph">
                         <div>
@@ -1992,9 +2122,55 @@
             function queueSyncState(){if(!authToken||!window.__vkmAuthReady)return;clearTimeout(syncTimer);syncTimer=setTimeout(syncStateToPostgreSQL,900)}
             function syncStateToPostgreSQL(){
                 if(!authToken)return Promise.resolve();
-                return apiFetch("/api/user/state",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({state:state})}).then(function(r){if(r.status===401){logout(true);throw new Error("Unauthorized")}return r.json()}).catch(function(e){console.warn("Sync PostgreSQL gagal:",e.message)})
+                return apiFetch("/api/user/state",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({state:state})})
+                    .then(function(r){if(r.status===401){logout(true);throw new Error("Unauthorized")}return r.json()})
+                    .then(function(data){if(data&&data.state)applyStateFromServer(data.state); return data;})
+                    .catch(function(e){console.warn("Sync PostgreSQL gagal:",e.message)})
             }
-            function logout(silent){authToken="";authUser=null;window.__vkmAuthReady=false;localStorage.removeItem("vkm_token");if(!silent)toast("Logout berhasil");showAuth("Silakan login untuk menggunakan VokaMon.")}
+
+            var liveSyncTimer=null, liveSyncBusy=false, liveSyncLast=0;
+            async function pullRemoteState(silent){
+                if(!authToken||!window.__vkmAuthReady||liveSyncBusy)return;
+                if(document.hidden&&silent)return;
+                liveSyncBusy=true;
+                try{
+                    var r=await apiFetch("/api/user/state",{headers:{"Accept":"application/json"}});
+                    if(r.status===401){logout(true);return;}
+                    var data=await r.json();
+                    if(r.ok&&data&&data.state){
+                        applyStateFromServer(data.state);
+                        liveSyncLast=Date.now();
+                    }
+                }catch(e){
+                    if(!silent)console.warn("Live sync gagal:",e.message||e);
+                }finally{
+                    liveSyncBusy=false;
+                }
+            }
+            function startLiveSync(){
+                clearInterval(liveSyncTimer);
+                if(!authToken)return;
+                liveSyncTimer=setInterval(function(){pullRemoteState(true)},9000);
+            }
+            document.addEventListener("visibilitychange",function(){
+                if(!document.hidden)pullRemoteState(true);
+            });
+            window.addEventListener("focus",function(){pullRemoteState(true)});
+            window.addEventListener("storage",function(e){
+                if(e.key==="vkm"&&e.newValue){
+                    try{
+                        var next=JSON.parse(e.newValue);
+                        if(next&&typeof next==="object"){
+                            state=Object.assign(defaultStateForUser(authUser),next);
+                            ensureDefaults();
+                            refreshUI();
+                            renderAccount();
+                            if(typeof renderGarden==="function")renderGarden();
+                        }
+                    }catch(err){}
+                }
+            });
+            function logout(silent){clearInterval(liveSyncTimer);authToken="";authUser=null;window.__vkmAuthReady=false;localStorage.removeItem("vkm_token");if(!silent)toast("Logout berhasil");showAuth("Silakan login untuk menggunakan VokaMon.")}
             async function submitAuth(e){
                 e.preventDefault();
                 setAuthLoading(true);authAlert("");
@@ -2011,6 +2187,8 @@
                     window.__vkmAuthReady=true;
                     applyRemoteState(data.state||defaultStateForUser(authUser));
                     hideAuth();
+                    startLiveSync();
+                    pullRemoteState(true);
                     toast(authMode==="register"?"Akun berhasil dibuat":"Login berhasil");
                     syncStateToPostgreSQL();
                 }catch(err){authAlert(err.message||"Gagal login/daftar.")}
@@ -2029,6 +2207,8 @@
                     window.__vkmAuthReady=true;
                     applyRemoteState(st.state||defaultStateForUser(authUser));
                     hideAuth();
+                    startLiveSync();
+                    pullRemoteState(true);
                 }catch(e){logout(true);showAuth("Sesi habis. Silakan login ulang.")}
             }
 
@@ -2539,7 +2719,7 @@
                 if(fill)fill.style.width=progress+'%';
                 if(stage)stage.classList.toggle('ready',!!plot&&!!plot.ready);
                 if(status){
-                    if(!plot)status.textContent='Plot '+(active+1)+' kosong. Pilih bibit untuk mulai tanam.';
+                    if(!plot)status.textContent='Plot '+(active+1)+' kosong. Tap tombol Bibit untuk mulai tanam.';
                     else{
                         var v=VEGGIES[plot.seed]||VEGGIES.carrot;
                         status.textContent=plot.ready?('Plot '+(active+1)+': '+v.name+' siap dipanen!'):('Plot '+(active+1)+': '+v.name+' tumbuh · siram '+(plot.waterCount||0)+'/'+(plot.growNeed||v.growNeed));
@@ -2565,7 +2745,7 @@
                     seeds.innerHTML=Object.keys(VEGGIES).map(function(k){
                         var v=VEGGIES[k];
                         var dis=plot?' disabled':'';
-                        var hint=plot?(plot.ready?'Panen plot aktif dulu':'Pilih plot kosong lain'):(v.growNeed+'x siram');
+                        var hint=plot?(plot.ready?'Panen plot aktif dulu':'Plot aktif terisi'):(v.growNeed+'x siram');
                         return '<button class="garden-seed" data-seed="'+k+'"'+dis+'><span>'+v.icon+'</span><strong>'+escH(v.name)+'</strong><small>'+escH(hint)+'</small></button>';
                     }).join('');
                     seeds.querySelectorAll('[data-seed]').forEach(function(b){b.addEventListener('click',function(){gardenPlant(b.dataset.seed)})});
@@ -2595,7 +2775,7 @@
 var gardenBusy=false;
             function setGardenBusy(on){
                 gardenBusy=!!on;
-                document.querySelectorAll('.garden-seed,.garden-feed,#garden-water,#garden-harvest,#garden-claim,#garden-upgrade,#garden-bonus').forEach(function(btn){
+                document.querySelectorAll('.garden-seed,.garden-feed,#garden-water,#garden-harvest,#garden-claim,#garden-upgrade,#garden-bonus,#garden-open-seeds,#garden-open-stock').forEach(function(btn){
                     if(!btn)return;
                     if(on){
                         btn.dataset.prevDisabled=btn.disabled?'1':'0';
@@ -2636,9 +2816,10 @@ var gardenBusy=false;
                         throw new Error(data.error||('Aksi kebun gagal. Status '+res.status));
                     }
                     if(data.state)applyStateFromServer(data.state);
-                    else if(data.garden){state.garden=data.garden;ensureDefaults();renderGarden();}
+                    else if(data.garden){state.garden=data.garden;ensureDefaults();refreshUI();renderGarden();}
                     toast(data.message||'Kebun diperbarui');
                     sP(getPetMood());
+                    setTimeout(function(){pullRemoteState(true)},250);
                     return data;
                 }catch(e){
                     toast(e.message||'Kebun lagi bermasalah');
@@ -2651,7 +2832,7 @@ var gardenBusy=false;
                 var g=ensureGardenLocal(), idx=getActivePlotIndex(), plot=g.plots[idx]||null;
                 if(plot&&!plot.ready){toast('Plot '+(idx+1)+' masih tumbuh. Pilih plot kosong lain atau siram dulu ya.');return;}
                 if(plot&&plot.ready){toast('Plot '+(idx+1)+' siap panen. Panen dulu ya.');return;}
-                gardenRequest('/api/garden/plant',{seed:seed,plotIndex:idx});
+                gardenRequest('/api/garden/plant',{seed:seed,plotIndex:idx}).then(function(d){if(d)closeGardenSheets();});
             }
             function gardenWater(){
                 var stage=document.getElementById('garden-stage');
@@ -2659,16 +2840,37 @@ var gardenBusy=false;
                 gardenRequest('/api/garden/water',{plotIndex:getActivePlotIndex()});
             }
             function gardenHarvest(){gardenRequest('/api/garden/harvest',{plotIndex:getActivePlotIndex()});}
-            function gardenFeed(veggie){gardenRequest('/api/garden/feed',{veggie:veggie});}
+            function gardenFeed(veggie){gardenRequest('/api/garden/feed',{veggie:veggie}).then(function(d){if(d)closeGardenSheets();});}
             function gardenClaim(){gardenRequest('/api/garden/claim',{});}
             function gardenUpgrade(){gardenRequest('/api/garden/upgrade',{});}
             function gardenBonus(){gardenRequest('/api/garden/bonus',{});}
-            var gardenWaterBtn=document.getElementById('garden-water'),gardenHarvestBtn=document.getElementById('garden-harvest'),gardenClaimBtn=document.getElementById('garden-claim'),gardenUpgradeBtn=document.getElementById('garden-upgrade'),gardenBonusBtn=document.getElementById('garden-bonus');
+            function openGardenSheet(id){
+                var el=document.getElementById(id);
+                if(!el)return;
+                renderGarden();
+                el.classList.add('show');
+                el.setAttribute('aria-hidden','false');
+                document.body.style.overflow='hidden';
+            }
+            function closeGardenSheets(){
+                document.querySelectorAll('.garden-sheet.show').forEach(function(el){
+                    el.classList.remove('show');
+                    el.setAttribute('aria-hidden','true');
+                });
+                document.body.style.overflow='';
+            }
+            function openSeedSheet(){openGardenSheet('garden-seed-sheet')}
+            function openStockSheet(){openGardenSheet('garden-stock-sheet')}
+            var gardenWaterBtn=document.getElementById('garden-water'),gardenHarvestBtn=document.getElementById('garden-harvest'),gardenClaimBtn=document.getElementById('garden-claim'),gardenUpgradeBtn=document.getElementById('garden-upgrade'),gardenBonusBtn=document.getElementById('garden-bonus'),gardenSeedOpenBtn=document.getElementById('garden-open-seeds'),gardenStockOpenBtn=document.getElementById('garden-open-stock');
             if(gardenWaterBtn)gardenWaterBtn.addEventListener('click',gardenWater);
             if(gardenHarvestBtn)gardenHarvestBtn.addEventListener('click',gardenHarvest);
             if(gardenClaimBtn)gardenClaimBtn.addEventListener('click',gardenClaim);
             if(gardenUpgradeBtn)gardenUpgradeBtn.addEventListener('click',gardenUpgrade);
             if(gardenBonusBtn)gardenBonusBtn.addEventListener('click',gardenBonus);
+            if(gardenSeedOpenBtn)gardenSeedOpenBtn.addEventListener('click',openSeedSheet);
+            if(gardenStockOpenBtn)gardenStockOpenBtn.addEventListener('click',openStockSheet);
+            document.querySelectorAll('[data-garden-sheet-close]').forEach(function(el){el.addEventListener('click',closeGardenSheets)});
+            document.addEventListener('keydown',function(e){if(e.key==='Escape')closeGardenSheets()});
 
             /* PET AVATAR CUSTOMIZER */
             var AVATAR_DEFAULT={body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"};
