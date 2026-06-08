@@ -835,11 +835,90 @@
                 border-radius:16px;
                 background:rgba(255,255,255,.55);
             }
+            .garden-plots{
+                display:grid;
+                grid-template-columns:repeat(4,1fr);
+                gap:8px;
+                padding:0 14px 14px;
+                position:relative;
+                z-index:5;
+                background:rgba(255,255,255,.74);
+                border-top:1px solid rgba(255,255,255,.55);
+            }
+            .garden-plot-btn{
+                min-height:82px;
+                border-radius:18px;
+                border:1.5px solid rgba(212,212,216,.86);
+                background:linear-gradient(180deg,#fff,#F9FAFB);
+                box-shadow:0 8px 18px rgba(15,23,42,.05);
+                padding:8px 6px;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                justify-content:center;
+                gap:3px;
+                transition:transform .12s,box-shadow .12s,border-color .12s,background .12s;
+                position:relative;
+                overflow:hidden;
+            }
+            .garden-plot-btn::before{
+                content:'';
+                position:absolute;
+                inset:auto 10px 8px 10px;
+                height:15px;
+                border-radius:50%;
+                background:linear-gradient(180deg,#B45309,#78350F);
+                opacity:.72;
+            }
+            .garden-plot-btn:hover{transform:translateY(-1px);box-shadow:0 12px 22px rgba(22,163,74,.10)}
+            .garden-plot-btn.on{
+                border-color:#10B981;
+                background:linear-gradient(180deg,#ECFDF5,#fff);
+                box-shadow:0 0 0 3px rgba(16,185,129,.12),0 12px 24px rgba(22,163,74,.12);
+            }
+            .garden-plot-btn.ready{
+                border-color:#F59E0B;
+                background:linear-gradient(180deg,#FFFBEB,#fff);
+                animation:gReadyPulse 1.4s ease-in-out infinite;
+            }
+            @keyframes gReadyPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.16)}50%{box-shadow:0 0 0 5px rgba(245,158,11,.08)}}
+            .garden-plot-emoji{
+                position:relative;
+                z-index:1;
+                font-size:26px;
+                line-height:1;
+                filter:drop-shadow(0 5px 7px rgba(22,101,52,.18));
+            }
+            .garden-plot-name{
+                position:relative;
+                z-index:1;
+                font-size:9px;
+                font-weight:900;
+                color:var(--t3);
+                line-height:1;
+            }
+            .garden-plot-bar{
+                position:relative;
+                z-index:1;
+                width:100%;
+                height:5px;
+                border-radius:999px;
+                background:#E5E7EB;
+                overflow:hidden;
+                margin-top:3px;
+            }
+            .garden-plot-bar span{
+                display:block;
+                height:100%;
+                width:0;
+                border-radius:999px;
+                background:linear-gradient(90deg,#10B981,#84CC16,#FACC15);
+            }
             @media(max-width:480px){
                 .avatar-preview-card{align-items:center;flex-direction:column;text-align:center}
                 .avatar-preview-stage{width:150px;height:150px}
                 #avatar-preview-canvas{width:146px;height:146px}
-                .garden-grid,.garden-inv{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+                .garden-grid,.garden-inv{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.garden-plots{grid-template-columns:repeat(2,1fr)}.garden-plot-btn{min-height:76px}
                 .garden-seed,.garden-feed{padding:8px 5px;min-height:88px;border-radius:16px}
                 .garden-seed span,.garden-feed span{width:34px;height:34px;font-size:21px}
                 .garden-actions{grid-template-columns:1fr 1fr}
@@ -1050,6 +1129,7 @@
                                     <div class="garden-soil"></div>
                                 </div>
                             </div>
+                            <div class="garden-plots" id="garden-plots" aria-label="Plot kebun"></div>
                             <div class="garden-meter">
                                 <div class="garden-meta">
                                     <div>
@@ -1431,7 +1511,7 @@
                 if(el)el.textContent="Hai, "+getStoredUserName();
             }
 
-            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{plot:null,inventory:{carrot:0,lettuce:0,tomato:0},history:[]},gm:"qwen2.5:3b",al:"id"};
+            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[]},gm:"qwen2.5:3b",al:"id"};
             function save(){try{localStorage.setItem("vkm",JSON.stringify(state))}catch(e){}; if(window.__vkmAuthReady&&typeof queueSyncState==="function")queueSyncState()}
             function load(){try{var d=JSON.parse(localStorage.getItem("vkm"));if(d)for(var k in d)if(d.hasOwnProperty(k))state[k]=d[k]}catch(e){}}
             load();
@@ -1449,7 +1529,7 @@
             window.__vkmAuthReady=false;
 
             function defaultStateForUser(user){
-                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{plot:null,inventory:{carrot:0,lettuce:0,tomato:0},history:[]},gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
+                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[]},gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
             }
             function ensureDefaults(){
                 if(!state.pet)state.pet={name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50};
@@ -1970,12 +2050,47 @@
 
 
             /* GARDEN / TANAM SAYUR */
+            function normalizeGardenPlotLocal(plot){
+                if(!plot||typeof plot!=="object")return null;
+                var seed=String(plot.seed||"carrot").toLowerCase();
+                if(!VEGGIES[seed])return null;
+                var v=VEGGIES[seed], wc=Math.max(0,Number(plot.waterCount||0));
+                var progress=Math.max(0,Math.min(100,Number(plot.progress||0)));
+                return {
+                    seed:seed,
+                    progress:progress,
+                    waterCount:wc,
+                    growNeed:v.growNeed,
+                    stage:Math.min(v.growNeed,Number(plot.stage||wc||0)),
+                    ready:!!plot.ready||wc>=v.growNeed||progress>=100,
+                    plantedAt:plot.plantedAt||new Date().toISOString(),
+                    lastWaterAt:plot.lastWaterAt||null
+                };
+            }
             function ensureGardenLocal(){
-                if(!state.garden)state.garden={plot:null,inventory:{carrot:0,lettuce:0,tomato:0},history:[]};
+                if(!state.garden)state.garden={activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[]};
+                if(!Array.isArray(state.garden.plots))state.garden.plots=[];
+                while(state.garden.plots.length<4)state.garden.plots.push(null);
+                state.garden.plots=state.garden.plots.slice(0,4).map(normalizeGardenPlotLocal);
+                state.garden.activePlot=Math.max(0,Math.min(3,Math.floor(Number(state.garden.activePlot||0))));
+                var oldPlot=normalizeGardenPlotLocal(state.garden.plot);
+                if(oldPlot&&!state.garden.plots[state.garden.activePlot])state.garden.plots[state.garden.activePlot]=oldPlot;
+                state.garden.plot=state.garden.plots[state.garden.activePlot]||null;
                 if(!state.garden.inventory)state.garden.inventory={carrot:0,lettuce:0,tomato:0};
                 Object.keys(VEGGIES).forEach(function(k){state.garden.inventory[k]=Math.max(0,Number(state.garden.inventory[k]||0));});
                 if(!Array.isArray(state.garden.history))state.garden.history=[];
                 return state.garden;
+            }
+            function getActivePlotIndex(){
+                var g=ensureGardenLocal();
+                return Math.max(0,Math.min(3,Math.floor(Number(g.activePlot||0))));
+            }
+            function selectGardenPlot(i){
+                var g=ensureGardenLocal();
+                g.activePlot=Math.max(0,Math.min(3,Math.floor(Number(i||0))));
+                g.plot=g.plots[g.activePlot]||null;
+                save();
+                renderGarden();
             }
             function gardenEmojiFor(plot){
                 if(!plot)return '🌱';
@@ -1987,7 +2102,8 @@
                 return '🪴';
             }
             function renderGarden(){
-                var g=ensureGardenLocal(), plot=g.plot;
+                var g=ensureGardenLocal(), active=getActivePlotIndex(), plot=g.plots[active]||null;
+                g.plot=plot;
                 var emoji=document.getElementById('garden-emoji'), status=document.getElementById('garden-status'), pct=document.getElementById('garden-percent'), fill=document.getElementById('garden-progress-fill');
                 var stage=document.getElementById('garden-stage');
                 if(emoji){emoji.textContent=gardenEmojiFor(plot);emoji.classList.toggle('grow',!!plot&&Number(plot.progress||0)>0)}
@@ -1996,12 +2112,24 @@
                 if(fill)fill.style.width=progress+'%';
                 if(stage)stage.classList.toggle('ready',!!plot&&!!plot.ready);
                 if(status){
-                    if(!plot)status.textContent='Belum ada tanaman. Pilih bibit dulu.';
+                    if(!plot)status.textContent='Plot '+(active+1)+' kosong. Pilih bibit untuk mulai tanam.';
                     else{
                         var v=VEGGIES[plot.seed]||VEGGIES.carrot;
-                        status.textContent=plot.ready?('Yeay, '+v.name+' siap dipanen!'):('Sedang menumbuhkan '+v.name+' · siram '+(plot.waterCount||0)+'/'+(plot.growNeed||v.growNeed));
+                        status.textContent=plot.ready?('Plot '+(active+1)+': '+v.name+' siap dipanen!'):('Plot '+(active+1)+': '+v.name+' tumbuh · siram '+(plot.waterCount||0)+'/'+(plot.growNeed||v.growNeed));
                     }
                 }
+
+                var plotWrap=document.getElementById('garden-plots');
+                if(plotWrap){
+                    plotWrap.innerHTML=g.plots.map(function(p,i){
+                        var pp=p?Math.max(0,Math.min(100,Number(p.progress||0))):0;
+                        var cls='garden-plot-btn'+(i===active?' on':'')+(p&&p.ready?' ready':'');
+                        var label=p?(p.ready?'Siap panen':'Tumbuh '+pp+'%'):'Kosong';
+                        return '<button type="button" class="'+cls+'" data-plot="'+i+'"><span class="garden-plot-emoji">'+gardenEmojiFor(p)+'</span><span class="garden-plot-name">Plot '+(i+1)+' · '+escH(label)+'</span><span class="garden-plot-bar"><span style="width:'+pp+'%"></span></span></button>';
+                    }).join('');
+                    plotWrap.querySelectorAll('[data-plot]').forEach(function(b){b.addEventListener('click',function(){selectGardenPlot(b.dataset.plot)})});
+                }
+
                 var water=document.getElementById('garden-water'), harvest=document.getElementById('garden-harvest');
                 if(water)water.disabled=!plot||plot.ready;
                 if(harvest)harvest.disabled=!plot||!plot.ready;
@@ -2010,7 +2138,7 @@
                     seeds.innerHTML=Object.keys(VEGGIES).map(function(k){
                         var v=VEGGIES[k];
                         var dis=plot?' disabled':'';
-                        var hint=plot?(plot.ready?'Panen dulu':'Plot masih terisi'):(v.growNeed+'x siram');
+                        var hint=plot?(plot.ready?'Panen plot aktif dulu':'Pilih plot kosong lain'):(v.growNeed+'x siram');
                         return '<button class="garden-seed" data-seed="'+k+'"'+dis+'><span>'+v.icon+'</span><strong>'+escH(v.name)+'</strong><small>'+escH(hint)+'</small></button>';
                     }).join('');
                     seeds.querySelectorAll('[data-seed]').forEach(function(b){b.addEventListener('click',function(){gardenPlant(b.dataset.seed)})});
@@ -2028,7 +2156,7 @@
                     hist.innerHTML=(g.history&&g.history.length?g.history.slice(0,8).map(function(h){return '<div class="garden-history-item">'+escH(h.text||'Aktivitas kebun')+'</div>'}).join(''):'<div class="garden-empty-mini">Belum ada aktivitas kebun. Tanam bibit pertama dulu 🌱</div>');
                 }
             }
-            var gardenBusy=false;
+var gardenBusy=false;
             function setGardenBusy(on){
                 gardenBusy=!!on;
                 document.querySelectorAll('.garden-seed,.garden-feed,#garden-water,#garden-harvest').forEach(function(btn){
@@ -2084,17 +2212,17 @@
                 }
             }
             function gardenPlant(seed){
-                var g=ensureGardenLocal();
-                if(g.plot&&!g.plot.ready){toast('Masih ada tanaman yang sedang tumbuh. Siram dulu ya.');return;}
-                if(g.plot&&g.plot.ready){toast('Panen tanaman yang siap dulu ya.');return;}
-                gardenRequest('/api/garden/plant',{seed:seed});
+                var g=ensureGardenLocal(), idx=getActivePlotIndex(), plot=g.plots[idx]||null;
+                if(plot&&!plot.ready){toast('Plot '+(idx+1)+' masih tumbuh. Pilih plot kosong lain atau siram dulu ya.');return;}
+                if(plot&&plot.ready){toast('Plot '+(idx+1)+' siap panen. Panen dulu ya.');return;}
+                gardenRequest('/api/garden/plant',{seed:seed,plotIndex:idx});
             }
             function gardenWater(){
                 var stage=document.getElementById('garden-stage');
                 if(stage){stage.classList.remove('watering');void stage.offsetWidth;stage.classList.add('watering');setTimeout(function(){stage&&stage.classList.remove('watering')},950);}
-                gardenRequest('/api/garden/water',{});
+                gardenRequest('/api/garden/water',{plotIndex:getActivePlotIndex()});
             }
-            function gardenHarvest(){gardenRequest('/api/garden/harvest',{});}
+            function gardenHarvest(){gardenRequest('/api/garden/harvest',{plotIndex:getActivePlotIndex()});}
             function gardenFeed(veggie){gardenRequest('/api/garden/feed',{veggie:veggie});}
             var gardenWaterBtn=document.getElementById('garden-water'),gardenHarvestBtn=document.getElementById('garden-harvest');
             if(gardenWaterBtn)gardenWaterBtn.addEventListener('click',gardenWater);
