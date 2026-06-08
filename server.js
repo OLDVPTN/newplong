@@ -405,11 +405,12 @@ function ensureGarden(state) {
 }
 
 function gardenPublic(garden) {
-  const g = ensureGarden({ garden }).garden;
+  const wrapper = { garden: garden && typeof garden === 'object' ? garden : defaultGarden() };
+  const g = ensureGarden(wrapper);
   return {
     plot: g.plot,
-    inventory: g.inventory,
-    history: g.history.slice(0, 30),
+    inventory: { ...defaultGarden().inventory, ...g.inventory },
+    history: Array.isArray(g.history) ? g.history.slice(0, 30) : [],
     seeds: Object.values(VEGGIE_CATALOG)
   };
 }
@@ -997,7 +998,7 @@ app.get('/api/garden', requireAuth, async (req, res) => {
 
 app.post('/api/garden/plant', requireAuth, async (req, res) => {
   try {
-    const seed = String(req.body.seed || 'carrot').trim();
+    const seed = String(req.body.seed || 'carrot').trim().toLowerCase();
     const veggie = VEGGIE_CATALOG[seed];
     if (!veggie) return res.status(400).json({ ok: false, error: 'Bibit sayur tidak valid.' });
 
@@ -1026,7 +1027,7 @@ app.post('/api/garden/plant', requireAuth, async (req, res) => {
     res.json({ ok: true, state, garden: gardenPublic(state.garden), message: `${veggie.name} berhasil ditanam.` });
   } catch (error) {
     console.error('Garden plant error:', error);
-    res.status(500).json({ ok: false, error: 'Gagal menanam sayur.' });
+    res.status(500).json({ ok: false, error: 'Gagal menanam sayur.', detail: process.env.NODE_ENV === 'production' ? undefined : error.message });
   }
 });
 
@@ -1065,7 +1066,7 @@ app.post('/api/garden/water', requireAuth, async (req, res) => {
     res.json({ ok: true, state, garden: gardenPublic(state.garden), message: plot.ready ? `${veggie.name} sudah siap panen!` : `${veggie.name} tumbuh ${plot.progress}%.` });
   } catch (error) {
     console.error('Garden water error:', error);
-    res.status(500).json({ ok: false, error: 'Gagal menyiram tanaman.' });
+    res.status(500).json({ ok: false, error: 'Gagal menyiram tanaman.', detail: process.env.NODE_ENV === 'production' ? undefined : error.message });
   }
 });
 
@@ -1089,13 +1090,13 @@ app.post('/api/garden/harvest', requireAuth, async (req, res) => {
     res.json({ ok: true, state, garden: gardenPublic(state.garden), message: `Kamu panen ${qty} ${veggie.name}.` });
   } catch (error) {
     console.error('Garden harvest error:', error);
-    res.status(500).json({ ok: false, error: 'Gagal panen sayur.' });
+    res.status(500).json({ ok: false, error: 'Gagal panen sayur.', detail: process.env.NODE_ENV === 'production' ? undefined : error.message });
   }
 });
 
 app.post('/api/garden/feed', requireAuth, async (req, res) => {
   try {
-    const veggieId = String(req.body.veggie || '').trim();
+    const veggieId = String(req.body.veggie || '').trim().toLowerCase();
     const veggie = VEGGIE_CATALOG[veggieId];
     if (!veggie) return res.status(400).json({ ok: false, error: 'Sayur tidak valid.' });
 
@@ -1115,7 +1116,7 @@ app.post('/api/garden/feed', requireAuth, async (req, res) => {
     res.json({ ok: true, state, garden: gardenPublic(state.garden), leveledUp, message: `Plong makan ${veggie.name}. Kenyangnya naik!` });
   } catch (error) {
     console.error('Garden feed error:', error);
-    res.status(500).json({ ok: false, error: 'Gagal memberi makan Plong.' });
+    res.status(500).json({ ok: false, error: 'Gagal memberi makan Plong.', detail: process.env.NODE_ENV === 'production' ? undefined : error.message });
   }
 });
 
