@@ -386,7 +386,18 @@ function defaultGarden() {
     exp: 0,
     expMax: 40,
     lastIdleAt: new Date().toISOString(),
-    lastBonusAt: null
+    lastBonusAt: null,
+
+    // Shopee-Tanam-like water bank + daily tasks
+    waterDrops: 20,
+    lastWaterClaimAt: null,
+    daily: {
+      date: new Date().toISOString().slice(0, 10),
+      planted: 0,
+      watered: 0,
+      harvested: 0,
+      claimed: false
+    }
   };
 }
 
@@ -504,6 +515,16 @@ function ensureGarden(state) {
   state.garden.expMax = Math.max(40, Math.floor(Number(state.garden.expMax || 40)));
   state.garden.lastIdleAt = state.garden.lastIdleAt || new Date().toISOString();
   state.garden.lastBonusAt = state.garden.lastBonusAt || null;
+  state.garden.waterDrops = Math.max(0, Math.floor(Number(state.garden.waterDrops ?? 20)));
+  state.garden.lastWaterClaimAt = state.garden.lastWaterClaimAt || null;
+  const today = new Date().toISOString().slice(0, 10);
+  if (!state.garden.daily || state.garden.daily.date !== today) {
+    state.garden.daily = { date: today, planted: 0, watered: 0, harvested: 0, claimed: false };
+  }
+  state.garden.daily.planted = Math.max(0, Math.floor(Number(state.garden.daily.planted || 0)));
+  state.garden.daily.watered = Math.max(0, Math.floor(Number(state.garden.daily.watered || 0)));
+  state.garden.daily.harvested = Math.max(0, Math.floor(Number(state.garden.daily.harvested || 0)));
+  state.garden.daily.claimed = Boolean(state.garden.daily.claimed);
   state.garden.history = state.garden.history.slice(0, 30);
   return state.garden;
 }
@@ -524,6 +545,9 @@ function gardenPublic(garden) {
     idle: calculateGardenIdle(g),
     waterPower: gardenWaterPower(g),
     upgradeCost: gardenUpgradeCost(g),
+    waterDrops: g.waterDrops,
+    daily: g.daily,
+    nextWaterClaimAt: g.lastWaterClaimAt ? new Date(Date.parse(g.lastWaterClaimAt) + Number(process.env.GARDEN_WATER_CLAIM_COOLDOWN_MS || 6 * 60 * 60 * 1000)).toISOString() : null,
     nextBonusAt: g.lastBonusAt ? new Date(Date.parse(g.lastBonusAt) + Number(process.env.GARDEN_BONUS_COOLDOWN_MS || 6 * 60 * 60 * 1000)).toISOString() : null
   };
 }
@@ -1265,6 +1289,7 @@ app.post('/api/garden/plant', requireAuth, async (req, res) => {
       createdAt: new Date().toISOString()
     });
     addGardenExp(state.garden, 3);
+    state.garden.daily.planted = Math.max(0, Math.floor(Number(state.garden.daily.planted || 0))) + 1;
     state.garden.history = state.garden.history.slice(0, 30);
 
     await saveStateForUser(req.user.id, state);
@@ -1301,7 +1326,12 @@ app.post('/api/garden/water', requireAuth, async (req, res) => {
       return res.status(429).json({ ok: false, error: `Tunggu ${wait} detik lagi sebelum menyiram Plot ${plotIndex + 1}.` });
     }
 
+    if (state.garden.waterDrops <= 0) {
+      return res.status(400).json({ ok: false, error: 'Air habis. Klaim air dulu atau ambil bonus harian.' });
+    }
+
     const waterPower = gardenWaterPower(state.garden);
+    state.garden.waterDrops = Math.max(0, Math.floor(Number(state.garden.waterDrops || 0)) - 1);
     plot.waterCount = Math.max(0, Number(plot.waterCount || 0)) + waterPower;
     plot.growNeed = veggie.growNeed;
     plot.stage = Math.min(veggie.growNeed, plot.waterCount);
@@ -1319,6 +1349,7 @@ app.post('/api/garden/water', requireAuth, async (req, res) => {
     state.pet.happy = clamp((state.pet.happy || 0) + 2, 0, 100);
     state.pet.lastCareAt = new Date().toISOString();
     addGardenExp(state.garden, plot.ready ? 6 : 2);
+    state.garden.daily.watered = Math.max(0, Math.floor(Number(state.garden.daily.watered || 0))) + 1;
     addPetWorkerReward(state, { type: 'garden', mood: 'tenang', amount: plot.ready ? 2 : 1, exp: plot.ready ? 4 : 2, essence: 0, bond: 0 });
 
     state.garden.history.unshift({
@@ -1359,6 +1390,7 @@ app.post('/api/garden/harvest', requireAuth, async (req, res) => {
     state.garden.inventory[plot.seed] = Math.max(0, Number(state.garden.inventory[plot.seed] || 0)) + qty;
     state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + coinReward);
     addGardenExp(state.garden, 8 + qty);
+    state.garden.daily.harvested = Math.max(0, Math.floor(Number(state.garden.daily.harvested || 0))) + 1;
     addPetWorkerReward(state, { type: 'garden', mood: 'tenang', amount: 2 + qty, exp: 5 + qty, essence: 1, bond: 1 });
 
     state.garden.history.unshift({
@@ -1469,6 +1501,82 @@ app.post('/api/garden/upgrade', requireAuth, async (req, res) => {
   } catch (error) {
     console.error('Garden upgrade error:', error);
     res.status(500).json({ ok: false, error: 'Gagal upgrade kebun.', detail: process.env.NODE_ENV === 'production' ? undefined : error.message });
+  }
+});
+
+
+app.post('/api/garden/claim-water', requireAuth, async (req, res) => {
+  try {
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    ensureGarden(state);
+
+    const cooldownMs = Number(process.env.GARDEN_WATER_CLAIM_COOLDOWN_MS || 6 * 60 * 60 * 1000);
+    const now = Date.now();
+    const last = state.garden.lastWaterClaimAt ? Date.parse(state.garden.lastWaterClaimAt) : 0;
+    if (last && now - last < cooldownMs) {
+      const waitMin = Math.ceil((cooldownMs - (now - last)) / 60000);
+      return res.status(429).json({ ok: false, error: `Air gratis belum siap. Tunggu sekitar ${waitMin} menit lagi.` });
+    }
+
+    const amount = 12 + Math.floor(Math.random() * 7) + Math.floor((state.garden.level || 1) / 2);
+    state.garden.waterDrops = Math.max(0, Math.floor(Number(state.garden.waterDrops || 0)) + amount);
+    state.garden.lastWaterClaimAt = new Date().toISOString();
+    addGardenExp(state.garden, 5);
+
+    state.garden.history.unshift({
+      id: Date.now().toString(36),
+      type: 'water-claim',
+      text: `Klaim air gratis +${amount} tetes.`,
+      createdAt: new Date().toISOString()
+    });
+    state.garden.history = state.garden.history.slice(0, 30);
+
+    await saveStateForUser(req.user.id, state);
+    res.json({ ok: true, state, garden: gardenPublic(state.garden), message: `Air gratis berhasil diklaim: +${amount} tetes.` });
+  } catch (error) {
+    console.error('Garden claim water error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal klaim air gratis.' });
+  }
+});
+
+app.post('/api/garden/daily-reward', requireAuth, async (req, res) => {
+  try {
+    const state = ensureGameState(await getStateForUser(req.user), req.user);
+    ensureGarden(state);
+
+    const d = state.garden.daily;
+    if (d.claimed) return res.status(400).json({ ok: false, error: 'Hadiah misi hari ini sudah diklaim.' });
+
+    const completed = [
+      d.planted >= 1,
+      d.watered >= 3,
+      d.harvested >= 1
+    ].filter(Boolean).length;
+
+    if (completed < 2) {
+      return res.status(400).json({ ok: false, error: 'Selesaikan minimal 2 misi dulu ya.' });
+    }
+
+    const coins = 8 + completed * 6 + Math.floor((state.garden.level || 1) / 2);
+    const water = 8 + completed * 4;
+    state.coins = Math.max(0, Math.floor(Number(state.coins || 0)) + coins);
+    state.garden.waterDrops = Math.max(0, Math.floor(Number(state.garden.waterDrops || 0)) + water);
+    d.claimed = true;
+    addGardenExp(state.garden, 10 + completed * 4);
+
+    state.garden.history.unshift({
+      id: Date.now().toString(36),
+      type: 'daily',
+      text: `Hadiah misi harian: +${coins} coins dan +${water} air.`,
+      createdAt: new Date().toISOString()
+    });
+    state.garden.history = state.garden.history.slice(0, 30);
+
+    await saveStateForUser(req.user.id, state);
+    res.json({ ok: true, state, garden: gardenPublic(state.garden), message: `Hadiah misi diklaim: +${coins} coins, +${water} air.` });
+  } catch (error) {
+    console.error('Garden daily reward error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal klaim hadiah misi.' });
   }
 });
 
