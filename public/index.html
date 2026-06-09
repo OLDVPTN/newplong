@@ -1749,6 +1749,380 @@
             }
 
 
+
+            /* ═══════ LEMO-LIKE FARM PAGE (original assets not copied) ═══════ */
+            #pg-garden.lemo-farm-page{
+                padding:0!important;
+                max-width:none!important;
+                overflow-y:auto;
+                background:linear-gradient(180deg,#9FDC67 0%,#77C553 54%,#52A943 100%);
+                min-height:100dvh;
+                position:relative;
+                -webkit-overflow-scrolling:touch;
+                padding-bottom:calc(var(--nav-h) + var(--s-b) + 104px)!important;
+            }
+            .lemo-farm{
+                min-height:calc(100dvh - var(--nav-h));
+                position:relative;
+                overflow:hidden;
+                background:
+                    radial-gradient(circle at 20% 72%,rgba(255,255,255,.25) 0 5px,transparent 6px),
+                    radial-gradient(circle at 28% 82%,rgba(255,255,255,.18) 0 4px,transparent 5px),
+                    radial-gradient(circle at 58% 76%,rgba(255,255,255,.18) 0 4px,transparent 5px),
+                    linear-gradient(145deg,#B7E87B 0%,#85CF57 50%,#4EA742 100%);
+            }
+            .lemo-top-hud{
+                position:sticky;
+                top:0;
+                z-index:20;
+                display:flex;
+                align-items:center;
+                gap:7px;
+                padding:calc(var(--s-t) + 8px) 10px 8px;
+                background:linear-gradient(180deg,rgba(93,157,61,.75),rgba(93,157,61,0));
+            }
+            .lemo-pill{
+                display:inline-flex;
+                align-items:center;
+                gap:5px;
+                height:28px;
+                padding:0 9px;
+                border-radius:999px;
+                color:#fff;
+                font-size:11px;
+                font-weight:900;
+                box-shadow:0 3px 8px rgba(48,84,31,.18),inset 0 1px 0 rgba(255,255,255,.25);
+                border:1px solid rgba(255,255,255,.25);
+            }
+            .lemo-pill.red{background:linear-gradient(180deg,#EF4444,#B91C1C)}
+            .lemo-pill.blue{background:linear-gradient(180deg,#38BDF8,#2563EB)}
+            .lemo-pill.gold{background:linear-gradient(180deg,#FACC15,#F59E0B)}
+            .lemo-tips{
+                margin-left:auto;
+                width:42px;height:42px;
+                border-radius:15px;
+                border:2px solid rgba(255,255,255,.65);
+                background:linear-gradient(180deg,#9DD7FF,#6AA9FF);
+                color:#fff;
+                box-shadow:0 8px 16px rgba(37,99,235,.22);
+                display:flex;flex-direction:column;align-items:center;justify-content:center;
+                gap:1px;font-size:8px;font-weight:900;
+            }
+            .lemo-house-scene{
+                position:absolute;
+                top:52px;right:-18px;
+                width:240px;height:180px;
+                z-index:1;
+                pointer-events:none;
+            }
+            .lemo-house{
+                position:absolute;
+                right:25px;top:15px;width:150px;height:120px;
+                transform:rotate(-2deg);
+            }
+            .lemo-roof{
+                position:absolute;left:5px;top:0;width:138px;height:58px;
+                background:linear-gradient(135deg,#8744BC,#B27AE9);
+                clip-path:polygon(50% 0,100% 70%,92% 78%,50% 20%,8% 78%,0 70%);
+                filter:drop-shadow(0 5px 0 rgba(66,31,107,.28));
+            }
+            .lemo-home-body{
+                position:absolute;left:22px;top:48px;width:105px;height:76px;
+                border-radius:10px 10px 8px 8px;
+                background:linear-gradient(180deg,#FFD58B,#F4A64E);
+                border:3px solid rgba(255,255,255,.9);
+                box-shadow:0 10px 18px rgba(78,74,39,.14);
+            }
+            .lemo-window{
+                position:absolute;left:13px;top:13px;width:31px;height:32px;border-radius:11px 11px 6px 6px;
+                background:linear-gradient(180deg,#C9F0FF,#5BB8E9);
+                border:3px solid #fff;
+            }
+            .lemo-door{
+                position:absolute;right:15px;bottom:0;width:30px;height:50px;border-radius:10px 10px 4px 4px;
+                background:linear-gradient(180deg,#85D7E8,#42AFC7);
+                border:3px solid #fff;
+            }
+            .lemo-fence{
+                position:absolute;right:0;top:115px;width:245px;height:42px;
+                background:repeating-linear-gradient(90deg,#A4622B 0 10px,#7A411E 10px 13px);
+                transform:skewY(-14deg);
+                border-top:5px solid #7A411E;
+                opacity:.95;
+            }
+            .lemo-tree{
+                position:absolute;width:70px;height:94px;
+                background:
+                    radial-gradient(circle at 50% 25%,#227C44 0 25px,transparent 26px),
+                    radial-gradient(circle at 35% 45%,#2C9953 0 25px,transparent 26px),
+                    radial-gradient(circle at 65% 48%,#1F7A43 0 28px,transparent 29px),
+                    linear-gradient(#854A22,#854A22);
+                background-size:100% 78%,100% 78%,100% 78%,12px 40px;
+                background-position:center top,center top,center top,center bottom;
+                background-repeat:no-repeat;
+            }
+            .lemo-tree.t1{right:150px;top:-12px}
+            .lemo-tree.t2{right:4px;top:-20px;transform:scale(1.15)}
+            .lemo-cashbag{
+                position:absolute;
+                z-index:5;
+                top:118px;left:50%;
+                transform:translateX(-50%);
+                display:flex;flex-direction:column;align-items:center;
+            }
+            .lemo-cash-label{
+                background:#31412A;color:#fff;border-radius:999px;padding:4px 10px;
+                font-size:11px;font-weight:900;margin-bottom:-2px;
+                box-shadow:0 3px 5px rgba(0,0,0,.18);
+            }
+            .lemo-bag{
+                font-size:56px;
+                filter:drop-shadow(0 8px 9px rgba(80,62,19,.28));
+                animation:lemoBag 2.2s ease-in-out infinite;
+            }
+            @keyframes lemoBag{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+            .lemo-cashbag button{
+                margin-top:-6px;
+                border:0;border-radius:11px;
+                background:linear-gradient(180deg,#FFC46A,#E7842F);
+                color:#7A2F12;
+                font-size:12px;font-weight:900;
+                padding:7px 14px;
+                box-shadow:0 3px 0 #B95D24,0 8px 14px rgba(117,71,20,.18);
+            }
+            .lemo-machine{
+                position:absolute;z-index:4;left:18px;top:160px;
+            }
+            .lemo-machine-box{
+                width:68px;height:78px;border-radius:13px;
+                display:flex;align-items:center;justify-content:center;
+                font-size:30px;
+                background:linear-gradient(180deg,#90A8B9,#64748B);
+                border:4px solid #40606F;
+                box-shadow:6px 8px 0 rgba(43,69,58,.18);
+                transform:rotate(-10deg);
+            }
+            .lemo-field-wrap{
+                position:absolute;
+                left:50%;top:312px;
+                transform:translateX(-50%);
+                width:min(360px,96vw);
+                height:330px;
+                z-index:4;
+            }
+            .lemo-field{
+                position:absolute;
+                inset:0;
+                display:grid;
+                grid-template-columns:repeat(3,1fr);
+                grid-auto-rows:88px;
+                gap:3px 6px;
+                transform:rotate(-45deg) skew(9deg,9deg) scale(.92);
+                transform-origin:50% 48%;
+            }
+            .lemo-plot{
+                position:relative;
+                border:0;
+                background:transparent;
+                min-height:88px;
+                padding:0;
+                transform:translateZ(0);
+            }
+            .lemo-soil{
+                position:absolute;inset:10px;
+                border-radius:8px;
+                background:linear-gradient(135deg,#D88C42,#B7642C);
+                border:7px solid #44652F;
+                box-shadow:inset 0 3px 0 rgba(255,219,133,.32),7px 9px 0 rgba(32,82,32,.18);
+                transform:translateZ(0);
+            }
+            .lemo-plot.on .lemo-soil{
+                outline:4px solid rgba(255,240,97,.9);
+                box-shadow:inset 0 3px 0 rgba(255,219,133,.32),7px 9px 0 rgba(32,82,32,.18),0 0 0 7px rgba(255,255,255,.22);
+            }
+            .lemo-plot.ready .lemo-soil{
+                background:linear-gradient(135deg,#F6C55B,#CE7B32);
+            }
+            .lemo-plant-ico{
+                position:absolute;left:50%;top:45%;
+                transform:translate(-50%,-50%) rotate(45deg) skew(-9deg,-9deg) scale(1.22);
+                font-size:31px;
+                filter:drop-shadow(0 5px 4px rgba(57,75,22,.28));
+                z-index:3;
+            }
+            .lemo-progress{
+                position:absolute;left:50%;top:19%;
+                transform:translate(-50%,-50%) rotate(45deg) skew(-9deg,-9deg);
+                background:#263A24;color:#fff;border-radius:999px;
+                font-size:9px;font-weight:900;padding:3px 7px;
+                z-index:4;white-space:nowrap;
+                box-shadow:0 4px 8px rgba(0,0,0,.18);
+            }
+            .lemo-unlock{
+                position:absolute;left:50%;top:22%;
+                transform:translate(-50%,-50%) rotate(45deg) skew(-9deg,-9deg);
+                background:#263A24;color:#fff;border-radius:6px;
+                font-size:9px;font-weight:900;padding:4px 7px;
+                z-index:4;white-space:nowrap;
+                box-shadow:0 4px 8px rgba(0,0,0,.18);
+            }
+            .lemo-lock{
+                position:absolute;left:50%;top:55%;
+                transform:translate(-50%,-50%) rotate(45deg) skew(-9deg,-9deg);
+                color:#fff;font-size:16px;z-index:4;text-shadow:0 2px 3px rgba(0,0,0,.25);
+            }
+            .lemo-plant-main{
+                position:absolute;left:50%;top:54%;
+                transform:translate(-50%,-50%);
+                z-index:8;
+                width:84px;height:84px;border-radius:50%;
+                border:6px solid rgba(255,209,92,.88);
+                background:linear-gradient(180deg,#7EDB34,#32A529);
+                color:#fff;
+                font-weight:900;
+                font-size:13px;
+                line-height:1.15;
+                box-shadow:0 7px 0 #287F28,0 12px 20px rgba(24,91,28,.28);
+                text-shadow:0 2px 2px rgba(20,91,25,.28);
+            }
+            .lemo-farm-tools{
+                position:absolute;right:8px;top:270px;z-index:7;
+                display:flex;flex-direction:column;gap:12px;
+            }
+            .lemo-farm-tools button{
+                border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;
+                color:#fff;font-size:10px;font-weight:900;text-shadow:0 1px 2px rgba(0,0,0,.4);
+            }
+            .lemo-farm-tools span{
+                width:46px;height:46px;border-radius:50%;
+                display:flex;align-items:center;justify-content:center;
+                font-size:27px;
+                background:linear-gradient(180deg,#FFE7B4,#EAA768);
+                border:3px solid #FFF4D1;
+                box-shadow:0 5px 0 rgba(134,82,38,.45),0 9px 12px rgba(52,91,36,.24);
+            }
+            .lemo-status-card{
+                position:absolute;left:10px;right:10px;bottom:108px;z-index:9;
+                border-radius:18px;
+                background:rgba(255,255,255,.82);
+                border:1px solid rgba(255,255,255,.85);
+                display:flex;align-items:center;justify-content:space-between;gap:10px;
+                padding:10px 11px;
+                box-shadow:0 10px 28px rgba(48,95,35,.16);
+                -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+            }
+            .lemo-status-card strong{
+                display:block;font-size:12px;color:#23421F;line-height:1.25;
+            }
+            .lemo-status-card span{
+                display:block;font-size:10px;color:#557050;margin-top:2px;line-height:1.35;
+            }
+            .lemo-status-card button{
+                flex-shrink:0;border:0;border-radius:12px;background:linear-gradient(180deg,#FFCE61,#F59E0B);
+                color:#7A3400;font-size:11px;font-weight:900;min-height:36px;padding:8px 10px;
+                box-shadow:0 4px 0 #B96A10;
+            }
+            .lemo-bottom-actions{
+                position:absolute;left:0;right:0;bottom:0;z-index:9;
+                height:96px;
+                display:grid;
+                grid-template-columns:repeat(4,1fr);
+                gap:8px;
+                padding:8px 10px calc(var(--s-b) + 8px);
+                background:linear-gradient(180deg,rgba(74,126,46,0),rgba(54,112,43,.95) 20%,#34702D 100%);
+            }
+            .lemo-bottom-actions button{
+                border:0;background:transparent;
+                color:#fff;font-size:10px;font-weight:900;
+                display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+                text-shadow:0 1px 2px rgba(0,0,0,.35);
+            }
+            .lemo-bottom-actions span{
+                width:46px;height:46px;border-radius:15px;
+                display:flex;align-items:center;justify-content:center;
+                font-size:25px;
+                background:linear-gradient(180deg,#FFE0A0,#E88A37);
+                border:3px solid #FFF1C5;
+                box-shadow:0 4px 0 #A85824;
+            }
+            .lemo-history-panel{
+                margin:10px;
+                border-radius:18px;
+                background:rgba(255,255,255,.78);
+                border:1px solid rgba(255,255,255,.78);
+                padding:12px;
+                box-shadow:0 8px 22px rgba(30,92,34,.15);
+            }
+            .lemo-crop-sheet .garden-sheet-panel{}
+            .lemo-sort-tabs{
+                display:flex;gap:8px;margin-bottom:10px;
+                overflow-x:auto;
+            }
+            .lemo-sort-tabs button{
+                border:0;border-radius:999px;padding:8px 12px;
+                background:#659E47;color:#EAF9D8;font-size:11px;font-weight:900;white-space:nowrap;
+            }
+            .lemo-sort-tabs button.on{
+                background:linear-gradient(180deg,#FFB84E,#F59E0B);
+                color:#fff;
+            }
+            .lemo-crop-grid{
+                display:flex!important;
+                gap:8px!important;
+                overflow-x:auto!important;
+                padding-bottom:4px!important;
+                scroll-snap-type:x proximity;
+            }
+            .lemo-crop-grid .garden-seed,
+            .lemo-crop-grid .garden-feed{
+                min-width:124px!important;
+                max-width:124px!important;
+                min-height:170px!important;
+                border-radius:14px!important;
+                background:linear-gradient(180deg,#FFF8D9,#FFE0A1)!important;
+                border:2px solid #F1B853!important;
+                padding:9px 7px!important;
+                flex:0 0 auto!important;
+                box-shadow:0 5px 0 #C9802E,0 9px 16px rgba(96,66,21,.14)!important;
+            }
+            .lemo-crop-grid .garden-seed span,
+            .lemo-crop-grid .garden-feed span{
+                width:58px!important;height:58px!important;border-radius:50%!important;
+                font-size:36px!important;margin:4px auto 8px!important;
+                background:#F9FFF0!important;border:2px solid #D9EDB6!important;
+            }
+            .lemo-crop-grid .garden-seed strong,
+            .lemo-crop-grid .garden-feed strong{
+                font-size:12px!important;color:#7A4617!important;line-height:1.2!important;
+            }
+            .lemo-crop-grid .garden-seed small,
+            .lemo-crop-grid .garden-feed small{
+                font-size:9px!important;color:#8A622B!important;line-height:1.3!important;
+            }
+            .lemo-crop-grid .garden-seed::after{
+                content:'Gratis';
+                display:block;
+                margin:8px auto 0;
+                width:max-content;
+                padding:4px 10px;border-radius:999px;
+                background:#FBC64D;color:#854915;font-size:10px;font-weight:900;
+            }
+            @media(min-width:760px){
+                #pg-garden.lemo-farm-page{
+                    max-width:430px!important;
+                    margin:0 auto;
+                    border-left:1px solid rgba(0,0,0,.05);
+                    border-right:1px solid rgba(0,0,0,.05);
+                }
+                .lemo-farm{min-height:760px}
+            }
+            @media(max-width:380px){
+                .lemo-field-wrap{width:350px;transform:translateX(-50%) scale(.94)}
+                .lemo-farm-tools{right:2px}
+                .lemo-status-card{bottom:100px}
+            }
+
+
 /* ═══════ ACCOUNT PAGE ═══════ */
             #pg-account{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
             .acct-card{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
@@ -1947,114 +2321,108 @@
 
 
                 <!-- GARDEN -->
-                <section id="pg-garden" class="pg" aria-label="Kebun Plong">
-                    <div class="ph">
-                        <div>
-                            <h1 class="pt">Kebun Plong</h1>
-                            <p class="ps">Tanam, siram, panen, lalu rawat Plong.</p>
+                <section id="pg-garden" class="pg lemo-farm-page" aria-label="Kebun Plong">
+                    <div class="lemo-farm">
+                        <div class="lemo-top-hud">
+                            <div class="lemo-pill red"><i class="fas fa-ticket"></i><span>112</span></div>
+                            <div class="lemo-pill blue"><i class="fas fa-star"></i><span id="lemo-star-display">0</span></div>
+                            <div class="lemo-pill gold"><i class="fas fa-coins"></i><span id="lemo-coin-display">0</span></div>
+                            <button class="lemo-tips" type="button"><i class="fas fa-lightbulb"></i><span>Tips</span></button>
+                        </div>
+
+                        <div class="lemo-house-scene" aria-hidden="true">
+                            <div class="lemo-tree t1"></div>
+                            <div class="lemo-tree t2"></div>
+                            <div class="lemo-house">
+                                <div class="lemo-roof"></div>
+                                <div class="lemo-home-body">
+                                    <div class="lemo-window"></div>
+                                    <div class="lemo-door"></div>
+                                </div>
+                            </div>
+                            <div class="lemo-fence"></div>
+                        </div>
+
+                        <div class="lemo-cashbag">
+                            <div class="lemo-cash-label">RP 0</div>
+                            <div class="lemo-bag">💰</div>
+                            <button id="lemo-claim-top" type="button">Tarik Tunai</button>
+                        </div>
+
+                        <div class="lemo-machine" aria-hidden="true">
+                            <div class="lemo-machine-box">⚙️</div>
+                        </div>
+
+                        <div class="lemo-farm-tools">
+                            <button id="lemo-fertilizer" type="button"><span>🪣</span><strong>Pupuk</strong></button>
+                            <button id="lemo-pesticide" type="button"><span>🧪</span><strong>Insektisida</strong></button>
+                            <button id="lemo-clean" type="button"><span>🧹</span><strong>Basmi</strong></button>
+                        </div>
+
+                        <div class="lemo-field-wrap">
+                            <div class="lemo-field" id="garden-plots" aria-label="Plot kebun"></div>
+                            <button class="lemo-plant-main" id="garden-primary-action" type="button">Tanaman</button>
+                        </div>
+
+                        <div class="lemo-status-card">
+                            <div>
+                                <strong id="garden-status">Plot 1 kosong. Tap Tanaman untuk mulai tanam.</strong>
+                                <span>Level kebun <b id="garden-level">1</b> · Daya siram <b id="garden-water-power">x1</b> · Idle <b id="garden-idle-coins">+0</b></span>
+                            </div>
+                            <button id="garden-claim" type="button"><i class="fas fa-sack-dollar"></i> Klaim</button>
+                        </div>
+
+                        <div class="lemo-bottom-actions">
+                            <button id="garden-open-seeds" type="button"><span>🌱</span><strong>Tanaman</strong></button>
+                            <button id="garden-open-stock" type="button"><span>🎒</span><strong>Ransel</strong></button>
+                            <button id="garden-upgrade" type="button"><span>⬆️</span><strong>Upgrade</strong></button>
+                            <button id="garden-bonus" type="button"><span>🎁</span><strong>Bonus</strong></button>
                         </div>
                     </div>
-                    <div class="garden-layout">
-                        <div class="garden-card garden-hero-card">
-                            <div class="garden-topbar">
-                                <span class="garden-chip"><i class="fas fa-seedling"></i> Cozy Garden</span>
-                                <span class="garden-chip coin"><i class="fas fa-basket-shopping"></i> Panen harian</span>
-                            </div>
-                            <div class="garden-stage" id="garden-stage">
-                                <div class="garden-cloud c1"></div>
-                                <div class="garden-cloud c2"></div>
-                                <div class="garden-water-drop"><i class="fas fa-droplet"></i></div>
-                                <div class="garden-plant">
-                                    <div class="garden-emoji" id="garden-emoji">🌱</div>
-                                    <div class="garden-soil"></div>
-                                </div>
-                            </div>
-                            <div class="garden-plots" id="garden-plots" aria-label="Plot kebun"></div>
-                            <div class="garden-meter">
-                                <div class="garden-meta">
-                                    <div>
-                                        <div class="garden-title-mini">Plot utama</div>
-                                        <div id="garden-status">Belum ada tanaman. Pilih bibit dulu.</div>
-                                    </div>
-                                    <strong id="garden-percent">0%</strong>
-                                </div>
-                                <div class="garden-progress"><span id="garden-progress-fill"></span></div>
-                                <div class="garden-actions">
-                                    <button class="garden-btn" id="garden-open-seeds" type="button"><i class="fas fa-seedling"></i> Bibit</button>
-                                    <button class="garden-btn primary" id="garden-water" type="button"><i class="fas fa-droplet"></i> Siram</button>
-                                    <button class="garden-btn warn" id="garden-harvest" type="button"><i class="fas fa-basket-shopping"></i> Panen</button>
-                                </div>
-                                <p class="garden-note">Pilih bibit, siram sampai penuh, panen, lalu kasih makan Plong.</p>
-                            </div>
-                        </div>
-                        <div style="display:flex;flex-direction:column;gap:12px">
-                            <div class="garden-card garden-claim-card">
-                                <div class="garden-claim-head">
-                                    <div class="garden-claim-title">
-                                        <div class="garden-claim-icon"><i class="fas fa-coins"></i></div>
-                                        <div>
-                                            <strong>Kebun Tycoon</strong>
-                                            <small>Klaim hasil idle dan upgrade kebun.</small>
-                                        </div>
-                                    </div>
-                                    <span class="garden-pill" id="garden-idle-rate">+1/mnt</span>
-                                </div>
-                                <div class="garden-tycoon">
-                                    <div class="garden-tycoon-stat"><span><i class="fas fa-arrow-up"></i> Level</span><strong id="garden-level">1</strong></div>
-                                    <div class="garden-tycoon-stat"><span><i class="fas fa-droplet"></i> Daya siram</span><strong id="garden-water-power">x1</strong></div>
-                                    <div class="garden-tycoon-stat"><span><i class="fas fa-clock"></i> Idle</span><strong id="garden-idle-coins">0</strong></div>
-                                </div>
-                                <div class="garden-mini-progress"><span id="garden-level-progress" style="width:0%"></span></div>
-                                <div class="garden-actions garden-tycoon-actions">
-                                    <button class="garden-btn primary" id="garden-claim" type="button"><i class="fas fa-sack-dollar"></i> Klaim hasil</button>
-                                    <button class="garden-btn" id="garden-upgrade" type="button"><i class="fas fa-angles-up"></i> Upgrade</button>
-                                    <button class="garden-btn" id="garden-open-stock" type="button"><i class="fas fa-bowl-food"></i> Stok</button>
-                                    <button class="garden-btn warn" id="garden-bonus" type="button"><i class="fas fa-gift"></i> Bonus</button>
-                                </div>
-                            </div>
 
-                            <div class="garden-card">
-                                <div class="garden-section-title">
-                                    <div class="acct-title">Riwayat kebun</div>
-                                    <span class="garden-pill">Aktivitas</span>
-                                </div>
-                                <div class="garden-history" id="garden-history"><div class="garden-history-item">Belum ada aktivitas kebun.</div></div>
-                            </div>
+                    <div class="lemo-history-panel">
+                        <div class="garden-section-title">
+                            <div class="acct-title">Riwayat Kebun</div>
+                            <span class="garden-pill">Aktivitas</span>
                         </div>
+                        <div class="garden-history" id="garden-history"><div class="garden-history-item">Belum ada aktivitas kebun.</div></div>
                     </div>
                 </section>
 
-                
                 <!-- GARDEN SEPARATE SHEETS -->
                 <div class="garden-sheet" id="garden-seed-sheet" aria-hidden="true">
                     <div class="garden-sheet-backdrop" data-garden-sheet-close></div>
-                    <div class="garden-sheet-panel" role="dialog" aria-label="Pilih bibit">
+                    <div class="garden-sheet-panel lemo-crop-sheet" role="dialog" aria-label="Pilih bibit">
                         <div class="garden-sheet-head">
                             <div>
-                                <strong>Pilih Bibit</strong>
-                                <span>Tanam di plot aktif yang kosong.</span>
+                                <strong>Pilih Tanaman</strong>
+                                <span>Urut berdasarkan level · tanam di plot aktif.</span>
                             </div>
                             <button class="garden-sheet-close" type="button" data-garden-sheet-close aria-label="Tutup"><i class="fas fa-xmark"></i></button>
                         </div>
-                        <div class="garden-grid garden-sheet-grid" id="garden-seeds"></div>
+                        <div class="lemo-sort-tabs">
+                            <button class="on" type="button">Urut berdasarkan level</button>
+                            <button type="button">Urut berdasarkan efisiensi</button>
+                        </div>
+                        <div class="garden-grid garden-sheet-grid lemo-crop-grid" id="garden-seeds"></div>
                     </div>
                 </div>
 
                 <div class="garden-sheet" id="garden-stock-sheet" aria-hidden="true">
                     <div class="garden-sheet-backdrop" data-garden-sheet-close></div>
-                    <div class="garden-sheet-panel" role="dialog" aria-label="Stok makanan pet">
+                    <div class="garden-sheet-panel lemo-crop-sheet" role="dialog" aria-label="Stok makanan pet">
                         <div class="garden-sheet-head">
                             <div>
-                                <strong>Stok Makanan Pet</strong>
-                                <span>Pakai hasil panen buat rawat Plong.</span>
+                                <strong>Ransel Makanan Pet</strong>
+                                <span>Hasil panen bisa dipakai buat rawat Plong.</span>
                             </div>
                             <button class="garden-sheet-close" type="button" data-garden-sheet-close aria-label="Tutup"><i class="fas fa-xmark"></i></button>
                         </div>
-                        <div class="garden-inv garden-sheet-grid" id="garden-inventory"></div>
+                        <div class="garden-inv garden-sheet-grid lemo-crop-grid" id="garden-inventory"></div>
                     </div>
                 </div>
 
-<!-- AVATAR CUSTOMIZER -->
+                <!-- AVATAR CUSTOMIZER -->
                 <section id="pg-avatar" class="pg" aria-label="Kustom Avatar">
                     <div class="ph">
                         <div>
@@ -3183,57 +3551,78 @@
             function renderGarden(){
                 var g=ensureGardenLocal(), active=getActivePlotIndex(), plot=g.plots[active]||null;
                 g.plot=plot;
-                var emoji=document.getElementById('garden-emoji'), status=document.getElementById('garden-status'), pct=document.getElementById('garden-percent'), fill=document.getElementById('garden-progress-fill');
-                var stage=document.getElementById('garden-stage');
-                if(emoji){emoji.textContent=gardenEmojiFor(plot);emoji.classList.toggle('grow',!!plot&&Number(plot.progress||0)>0)}
-                var progress=plot?Math.max(0,Math.min(100,Number(plot.progress||0))):0;
-                if(pct)pct.textContent=progress+'%';
-                if(fill)fill.style.width=progress+'%';
-                if(stage)stage.classList.toggle('ready',!!plot&&!!plot.ready);
+                var status=document.getElementById('garden-status');
+                var star=document.getElementById('lemo-star-display'), coin=document.getElementById('lemo-coin-display');
+                if(star)star.textContent=(state.pet&&state.pet.exp)?Math.floor(state.pet.exp):0;
+                if(coin)coin.textContent=state.coins||0;
                 if(status){
-                    if(!plot)status.textContent='Plot '+(active+1)+' kosong. Tap tombol Bibit untuk mulai tanam.';
+                    if(!plot)status.textContent='Plot '+(active+1)+' kosong. Tap Tanaman untuk mulai tanam.';
                     else{
                         var v=VEGGIES[plot.seed]||VEGGIES.carrot;
-                        status.textContent=plot.ready?('Plot '+(active+1)+': '+v.name+' siap dipanen!'):('Plot '+(active+1)+': '+v.name+' tumbuh · siram '+(plot.waterCount||0)+'/'+(plot.growNeed||v.growNeed));
+                        status.textContent=plot.ready?('Plot '+(active+1)+': '+v.name+' siap dipanen!'):('Plot '+(active+1)+': '+v.name+' tumbuh · '+Math.max(0,Math.min(100,Number(plot.progress||0)))+'%');
                     }
                 }
 
                 var plotWrap=document.getElementById('garden-plots');
                 if(plotWrap){
-                    plotWrap.innerHTML=g.plots.map(function(p,i){
-                        var pp=p?Math.max(0,Math.min(100,Number(p.progress||0))):0;
-                        var cls='garden-plot-btn'+(i===active?' on':'')+(p&&p.ready?' ready':'');
-                        var label=p?(p.ready?'Siap panen':'Tumbuh '+pp+'%'):'Kosong';
-                        return '<button type="button" class="'+cls+'" data-plot="'+i+'"><span class="garden-plot-emoji">'+gardenEmojiFor(p)+'</span><span class="garden-plot-name">Plot '+(i+1)+' · '+escH(label)+'</span><span class="garden-plot-bar"><span style="width:'+pp+'%"></span></span></button>';
-                    }).join('');
+                    var unlocks=['LV25','LV32','LV50','LV75','LV100'];
+                    var slots=[];
+                    for(var i=0;i<9;i++){
+                        if(i<4){
+                            var p=g.plots[i]||null;
+                            var pp=p?Math.max(0,Math.min(100,Number(p.progress||0))):0;
+                            var cls='lemo-plot'+(i===active?' on':'')+(p&&p.ready?' ready':'');
+                            var label=p?(p.ready?'Panen':pp+'%'):'';
+                            slots.push('<button type="button" class="'+cls+'" data-plot="'+i+'"><span class="lemo-soil"></span><span class="lemo-plant-ico">'+gardenEmojiFor(p)+'</span>'+(p?'<span class="lemo-progress">'+label+'</span>':'')+'</button>');
+                        }else{
+                            var u=unlocks[i-4]||'LV'+((i+1)*20);
+                            slots.push('<button type="button" class="lemo-plot locked" disabled><span class="lemo-soil"></span><span class="lemo-unlock">Buka '+u+'</span><span class="lemo-lock"><i class="fas fa-lock"></i></span></button>');
+                        }
+                    }
+                    plotWrap.innerHTML=slots.join('');
                     plotWrap.querySelectorAll('[data-plot]').forEach(function(b){b.addEventListener('click',function(){selectGardenPlot(b.dataset.plot)})});
                 }
 
                 var water=document.getElementById('garden-water'), harvest=document.getElementById('garden-harvest');
                 if(water)water.disabled=!plot||plot.ready;
                 if(harvest)harvest.disabled=!plot||!plot.ready;
+
+                var primary=document.getElementById('garden-primary-action');
+                if(primary){
+                    primary.textContent=plot?(plot.ready?'Panen':'Siram'):'Tanaman';
+                    primary.onclick=function(){
+                        var g2=ensureGardenLocal(), p2=g2.plots[getActivePlotIndex()]||null;
+                        if(!p2)openSeedSheet();
+                        else if(p2.ready)gardenHarvest();
+                        else gardenWater();
+                    };
+                }
+
                 var seeds=document.getElementById('garden-seeds');
                 if(seeds){
                     seeds.innerHTML=Object.keys(VEGGIES).map(function(k){
                         var v=VEGGIES[k];
                         var dis=plot?' disabled':'';
                         var hint=plot?(plot.ready?'Panen plot aktif dulu':'Plot aktif terisi'):(v.growNeed+'x siram');
-                        return '<button class="garden-seed" data-seed="'+k+'"'+dis+'><span>'+v.icon+'</span><strong>'+escH(v.name)+'</strong><small>'+escH(hint)+'</small></button>';
+                        return '<button class="garden-seed" data-seed="'+k+'"'+dis+'><span>'+v.icon+'</span><strong>'+escH(v.name)+'</strong><small>Waktu tumbuh: '+escH(hint)+'<br>Bonus koin<br>Hasil EXP pet</small></button>';
                     }).join('');
                     seeds.querySelectorAll('[data-seed]').forEach(function(b){b.addEventListener('click',function(){gardenPlant(b.dataset.seed)})});
                 }
+
                 var inv=document.getElementById('garden-inventory');
                 if(inv){
                     inv.innerHTML=Object.keys(VEGGIES).map(function(k){
                         var v=VEGGIES[k],n=Number(g.inventory[k]||0);
-                        return '<button class="garden-feed" data-feed="'+k+'" '+(n>0?'':'disabled')+'><span>'+v.icon+'</span><strong>x'+n+'</strong><small>'+escH(v.name)+'<br>'+escH(v.desc)+'</small></button>';
+                        return '<button class="garden-feed" data-feed="'+k+'" '+(n>0?'':'disabled')+'><span>'+v.icon+'</span><strong>'+escH(v.name)+' x'+n+'</strong><small>'+escH(v.desc)+'<br>Kasih makan Plong</small></button>';
                     }).join('');
                     inv.querySelectorAll('[data-feed]').forEach(function(b){b.addEventListener('click',function(){gardenFeed(b.dataset.feed)})});
                 }
+
                 var hist=document.getElementById('garden-history');
                 if(hist){
                     hist.innerHTML=(g.history&&g.history.length?g.history.slice(0,8).map(function(h){return '<div class="garden-history-item">'+escH(h.text||'Aktivitas kebun')+'</div>'}).join(''):'<div class="garden-empty-mini">Belum ada aktivitas kebun. Tanam bibit pertama dulu 🌱</div>');
                 }
+
                 var lvl=document.getElementById('garden-level'), wp=document.getElementById('garden-water-power'), ic=document.getElementById('garden-idle-coins'), rate=document.getElementById('garden-idle-rate'), gp=document.getElementById('garden-level-progress'), up=document.getElementById('garden-upgrade'), claim=document.getElementById('garden-claim');
                 var idleCoins=gardenIdleCoinsLocal(g), idleRate=gardenIdleRateLocal(g), waterPower=gardenWaterPowerLocal(g), cost=gardenUpgradeCostLocal(g);
                 if(lvl)lvl.textContent='Lv '+(g.level||1);
@@ -3241,7 +3630,7 @@
                 if(ic)ic.textContent='+'+idleCoins;
                 if(rate)rate.textContent='+'+idleRate+'/mnt';
                 if(gp)gp.style.width=Math.max(0,Math.min(100,Math.round((Number(g.exp||0)/Math.max(40,Number(g.expMax||40)))*100)))+'%';
-                if(up)up.innerHTML='<i class="fas fa-angles-up"></i> Upgrade '+cost+' 🪙';
+                if(up)up.title='Upgrade '+cost+' coins';
                 if(claim)claim.disabled=idleCoins<=0;
             }
 var gardenBusy=false;
@@ -3343,6 +3732,12 @@ var gardenBusy=false;
             if(gardenStockOpenBtn)gardenStockOpenBtn.addEventListener('click',openStockSheet);
             document.querySelectorAll('[data-garden-sheet-close]').forEach(function(el){el.addEventListener('click',closeGardenSheets)});
             document.addEventListener('keydown',function(e){if(e.key==='Escape')closeGardenSheets()});
+            var lemoClaimTop=document.getElementById('lemo-claim-top'),lemoFertilizer=document.getElementById('lemo-fertilizer'),lemoPesticide=document.getElementById('lemo-pesticide'),lemoClean=document.getElementById('lemo-clean');
+            if(lemoClaimTop)lemoClaimTop.addEventListener('click',gardenClaim);
+            if(lemoFertilizer)lemoFertilizer.addEventListener('click',gardenWater);
+            if(lemoPesticide)lemoPesticide.addEventListener('click',function(){toast('Insektisida siap dipakai saat event hama dibuka')});
+            if(lemoClean)lemoClean.addEventListener('click',function(){var g=ensureGardenLocal(),p=g.plots[getActivePlotIndex()]||null;if(p&&p.ready)gardenHarvest();else toast('Belum ada yang perlu dibasmi/panen')});
+
 
             /* PET AVATAR CUSTOMIZER */
             var AVATAR_DEFAULT={body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"};
