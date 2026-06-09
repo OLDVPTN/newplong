@@ -2270,6 +2270,19 @@
             }
 
 
+
+            /* Garden assets implementation */
+            .st-tree-emoji{display:block;width:112px;height:112px;object-fit:contain;line-height:0;filter:drop-shadow(0 10px 10px rgba(77,103,35,.23));animation:stTree 2.4s ease-in-out infinite}
+            .st-plot-media{display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+            .st-plot-art{width:56px;height:56px;object-fit:contain;display:block;filter:drop-shadow(0 6px 8px rgba(77,103,35,.14))}
+            .st-seed-media{display:flex!important;align-items:center;justify-content:center;width:100%!important;height:auto!important;background:none!important;margin-bottom:8px!important}
+            .st-seed-media img{display:block;width:72px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(130,72,29,.10))}
+            .st-seed-media.small img{width:60px;height:60px}
+            .st-seed-grid .garden-seed,.st-seed-grid .garden-feed{align-items:center}
+            .st-seed-grid .garden-seed strong,.st-seed-grid .garden-feed strong{text-align:center}
+            .st-seed-grid .garden-seed small,.st-seed-grid .garden-feed small{text-align:center;line-height:1.35}
+            @media(max-width:599px){.st-tree-emoji{width:96px;height:96px}.st-plot-art{width:48px;height:48px}.st-seed-media img{width:62px;height:80px}.st-seed-media.small img{width:52px;height:52px}}
+            @media(max-width:360px){.st-tree-emoji{width:84px;height:84px}.st-plot-art{width:42px;height:42px}.st-seed-media img{width:56px;height:72px}}
 /* ═══════ ACCOUNT PAGE ═══════ */
             #pg-account{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
             .acct-card{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
@@ -2521,7 +2534,7 @@
                                         <circle id="st-ring-fill" cx="60" cy="60" r="52"></circle>
                                     </svg>
                                     <div class="st-tree">
-                                        <div class="st-tree-emoji" id="garden-emoji">🌱</div>
+                                        <img class="st-tree-emoji" id="garden-emoji" src="assets/garden/plot-seedling.svg" alt="Tanaman kebun">
                                         <div class="st-tree-pot"></div>
                                     </div>
                                 </div>
@@ -3728,6 +3741,25 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 if(p<75)return '🌿';
                 return '🪴';
             }
+            var GARDEN_ASSETS={
+                empty:'assets/garden/plot-empty.svg',
+                seedling:'assets/garden/plot-seedling.svg',
+                growing:'assets/garden/plot-growing.svg',
+                pot:'assets/garden/plot-pot.svg',
+                ready:{carrot:'assets/garden/carrot-ready.svg',lettuce:'assets/garden/lettuce-ready.svg',tomato:'assets/garden/tomato-ready.svg'},
+                seed:{carrot:'assets/garden/seed-carrot.svg',lettuce:'assets/garden/seed-lettuce.svg',tomato:'assets/garden/seed-tomato.svg',empty:'assets/garden/seed-empty.svg'}
+            };
+            function gardenStageAsset(plot){
+                if(!plot)return GARDEN_ASSETS.seedling;
+                var p=Number(plot.progress||0), key=(plot&&plot.seed)||'carrot';
+                if(plot.ready)return GARDEN_ASSETS.ready[key]||GARDEN_ASSETS.ready.carrot;
+                if(p<35)return GARDEN_ASSETS.seedling;
+                if(p<75)return GARDEN_ASSETS.growing;
+                return GARDEN_ASSETS.pot;
+            }
+            function gardenSeedPacket(seed){
+                return GARDEN_ASSETS.seed[seed]||GARDEN_ASSETS.seed.empty;
+            }
             function gardenActivePlantCountLocal(g){
                 return (g&&Array.isArray(g.plots)?g.plots:[]).filter(Boolean).length;
             }
@@ -3758,7 +3790,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
 
                 var emoji=document.getElementById('garden-emoji'), status=document.getElementById('garden-status'), pct=document.getElementById('garden-percent'), ring=document.getElementById('st-ring-fill');
                 var progress=plot?Math.max(0,Math.min(100,Number(plot.progress||0))):0;
-                if(emoji){emoji.textContent=gardenEmojiFor(plot);emoji.classList.toggle('grow',!!plot&&Number(plot.progress||0)>0)}
+                if(emoji){emoji.src=gardenStageAsset(plot);emoji.alt=(plot?(VEGGIES[plot.seed]||VEGGIES.carrot).name:'Tanaman kebun');emoji.classList.toggle('grow',!!plot&&Number(plot.progress||0)>0)}
                 if(pct)pct.textContent=progress+'%';
                 if(ring){
                     var circ=326.7;
@@ -3784,7 +3816,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                         var pp=p?Math.max(0,Math.min(100,Number(p.progress||0))):0;
                         var cls='st-plot-btn'+(i===active?' on':'')+(p&&p.ready?' ready':'');
                         var label=p?(p.ready?'Siap panen':pp+'%'):'Kosong';
-                        return '<button type="button" class="'+cls+'" data-plot="'+i+'"><span class="st-plot-emoji">'+gardenEmojiFor(p)+'</span><span class="st-plot-name">Plot '+(i+1)+'<br>'+escH(label)+'</span><span class="st-plot-bar"><span style="width:'+pp+'%"></span></span></button>';
+                        return '<button type="button" class="'+cls+'" data-plot="'+i+'"><span class="st-plot-media"><img class="st-plot-art" src="'+gardenStageAsset(p)+'" alt="Plot '+(i+1)+'"></span><span class="st-plot-name">Plot '+(i+1)+'<br>'+escH(label)+'</span><span class="st-plot-bar"><span style="width:'+pp+'%"></span></span></button>';
                     }).join('');
                     plotWrap.querySelectorAll('[data-plot]').forEach(function(b){b.addEventListener('click',function(){selectGardenPlot(b.dataset.plot)})});
                 }
@@ -3799,7 +3831,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                         var v=VEGGIES[k];
                         var dis=plot?' disabled':'';
                         var hint=plot?(plot.ready?'Panen plot aktif dulu':'Plot aktif terisi'):(v.growNeed+'x siram');
-                        return '<button class="garden-seed" data-seed="'+k+'"'+dis+'><span>'+v.icon+'</span><strong>'+escH(v.name)+'</strong><small>'+escH(hint)+'<br>Reward coins + makanan pet</small></button>';
+                        return '<button class="garden-seed" data-seed="'+k+'"'+dis+'><span class="st-seed-media"><img src="'+gardenSeedPacket(k)+'" alt="'+escH(v.name)+'"></span><strong>'+escH(v.name)+'</strong><small>'+escH(hint)+'<br>Reward coins + makanan pet</small></button>';
                     }).join('');
                     seeds.querySelectorAll('[data-seed]').forEach(function(b){b.addEventListener('click',function(){gardenPlant(b.dataset.seed)})});
                 }
@@ -3808,7 +3840,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 if(inv){
                     inv.innerHTML=Object.keys(VEGGIES).map(function(k){
                         var v=VEGGIES[k],n=Number(g.inventory[k]||0);
-                        return '<button class="garden-feed" data-feed="'+k+'" '+(n>0?'':'disabled')+'><span>'+v.icon+'</span><strong>x'+n+'</strong><small>'+escH(v.name)+'<br>'+escH(v.desc)+'</small></button>';
+                        return '<button class="garden-feed" data-feed="'+k+'" '+(n>0?'':'disabled')+'><span class="st-seed-media small"><img src="'+gardenStageAsset({seed:k,progress:100,ready:true})+'" alt="'+escH(v.name)+'"></span><strong>x'+n+'</strong><small>'+escH(v.name)+'<br>'+escH(v.desc)+'</small></button>';
                     }).join('');
                     inv.querySelectorAll('[data-feed]').forEach(function(b){b.addEventListener('click',function(){gardenFeed(b.dataset.feed)})});
                 }
@@ -3816,11 +3848,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 var daily=document.getElementById('st-daily-tasks');
                 if(daily){
                     var d=g.daily||{};
-                    var tasks=[
-                        ['Tanam 1 bibit',Number(d.planted||0),1],
-                        ['Siram 3x',Number(d.watered||0),3],
-                        ['Panen 1x',Number(d.harvested||0),1]
-                    ];
+                    var tasks=[['Tanam 1 bibit',Number(d.planted||0),1],['Siram 3x',Number(d.watered||0),3],['Panen 1x',Number(d.harvested||0),1]];
                     daily.innerHTML=tasks.map(function(t){
                         var done=t[1]>=t[2];
                         return '<div class="st-task '+(done?'done':'')+'"><div><strong>'+t[0]+'</strong><span>'+Math.min(t[1],t[2])+'/'+t[2]+' selesai</span></div><b>'+(done?'Selesai':'Proses')+'</b></div>';
@@ -3831,7 +3859,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
 
                 var hist=document.getElementById('garden-history');
                 if(hist){
-                    hist.innerHTML=(g.history&&g.history.length?g.history.slice(0,8).map(function(h){return '<div class="garden-history-item">'+escH(h.text||'Aktivitas kebun')+'</div>'}).join(''):'<div class="garden-empty-mini">Belum ada aktivitas tanam. Tanam bibit pertama dulu 🌱</div>');
+                    hist.innerHTML=(g.history&&g.history.length?g.history.slice(0,8).map(function(h){return '<div class="garden-history-item">'+escH(h.text||'Aktivitas kebun')+'</div>';}).join(''):'<div class="garden-empty-mini">Belum ada aktivitas tanam. Tanam bibit pertama dulu 🌱</div>');
                 }
 
                 var lvl=document.getElementById('garden-level'), wp=document.getElementById('garden-water-power'), ic=document.getElementById('garden-idle-coins'), rate=document.getElementById('garden-idle-rate'), gp=document.getElementById('garden-level-progress'), up=document.getElementById('garden-upgrade'), claim=document.getElementById('garden-claim'), upTxt=document.getElementById('pf-upgrade-text');
