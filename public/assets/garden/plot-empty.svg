@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c9f38c"/><stop offset="1" stop-color="#6fc94a"/></linearGradient>
+    <linearGradient id="soil" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#cf7d3a"/><stop offset="1" stop-color="#925026"/></linearGradient>
+  </defs>
+  <polygon points="64,10 118,64 64,118 10,64" fill="url(#g1)" stroke="#4b8e37" stroke-width="6"/>
+  <polygon points="64,28 100,64 64,100 28,64" fill="url(#soil)" stroke="#6c3b1e" stroke-width="4"/>
+  <path d="M38 64c8-7 16-7 24 0M66 64c8-7 16-7 24 0" stroke="#774122" stroke-width="3" fill="none" opacity=".55"/>
+</svg>
