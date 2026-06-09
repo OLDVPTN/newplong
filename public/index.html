@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="id">
     <head>
@@ -1598,7 +1597,7 @@
     <body class="auth-lock">
         <div id="toast" role="alert" aria-live="polite"></div>
 
-        <div id="auth-screen" role="dialog" aria-modal="true" aria-label="Masuk VokaMon">
+        <div id="auth-screen" class="hide" role="dialog" aria-modal="true" aria-label="Masuk VokaMon">
             <div class="auth-card">
                 <div class="auth-logo">
                     <div class="auth-logo-mark"><i class="fas fa-waveform-lines"></i></div>
@@ -2246,7 +2245,15 @@
                 if(pass)pass.autocomplete=isReg?"new-password":"current-password";
                 authAlert("");
             }
-            function showAuth(msg){document.body.classList.add("auth-lock");var s=document.getElementById("auth-screen");if(s)s.classList.remove("hide");if(msg)authAlert(msg)}
+            function authNextUrl(){
+                return encodeURIComponent((location.pathname||"/")+(location.search||""));
+            }
+            function showAuth(msg){
+                try{
+                    if(msg)sessionStorage.setItem("vkm_auth_message",msg);
+                }catch(e){}
+                window.location.href="/login.html?next="+authNextUrl();
+            }
             function hideAuth(){document.body.classList.remove("auth-lock");var s=document.getElementById("auth-screen");if(s)s.classList.add("hide");authAlert("")}
             function applyRemoteState(remote){
                 if(remote&&typeof remote==="object"){
@@ -2310,7 +2317,15 @@
                     }catch(err){}
                 }
             });
-            function logout(silent){clearInterval(liveSyncTimer);authToken="";authUser=null;window.__vkmAuthReady=false;localStorage.removeItem("vkm_token");if(!silent)toast("Logout berhasil");showAuth("Silakan login untuk menggunakan VokaMon.")}
+            function logout(silent){
+                clearInterval(liveSyncTimer);
+                authToken="";
+                authUser=null;
+                window.__vkmAuthReady=false;
+                localStorage.removeItem("vkm_token");
+                try{sessionStorage.setItem("vkm_auth_message",silent?"Sesi habis. Silakan login ulang.":"Logout berhasil.");}catch(e){}
+                window.location.href="/login.html";
+            }
             async function submitAuth(e){
                 e.preventDefault();
                 setAuthLoading(true);authAlert("");
@@ -2335,11 +2350,10 @@
                 finally{setAuthLoading(false)}
             }
             async function bootAuth(){
-                setAuthMode("login");
-                var form=document.getElementById("auth-form"),toggle=document.getElementById("auth-toggle");
-                if(form)form.addEventListener("submit",submitAuth);
-                if(toggle)toggle.addEventListener("click",function(){setAuthMode(authMode==="login"?"register":"login")});
-                if(!authToken){showAuth();return;}
+                if(!authToken){
+                    window.location.href="/login.html?next="+authNextUrl();
+                    return;
+                }
                 try{
                     var me=await apiFetch("/api/auth/me").then(function(r){if(!r.ok)throw new Error("Sesi habis");return r.json()});
                     authUser=me.user;
@@ -2349,7 +2363,9 @@
                     hideAuth();
                     startLiveSync();
                     pullRemoteState(true);
-                }catch(e){logout(true);showAuth("Sesi habis. Silakan login ulang.")}
+                }catch(e){
+                    logout(true);
+                }
             }
 
             function go(id){
