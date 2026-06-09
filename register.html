@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Register — VokaMon</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --bg:#F8FAFC;--card:#FFFFFF;--text:#111827;--muted:#6B7280;--border:#E5E7EB;
+  --accent:#E84D1A;--accent2:#FF7A45;--green:#0D9488;--danger:#DC2626;
+  --shadow:0 24px 70px rgba(15,23,42,.12);--radius:24px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;font-family:'Outfit',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:
+    radial-gradient(circle at 16% 12%,rgba(232,77,26,.13),transparent 34%),
+    radial-gradient(circle at 86% 84%,rgba(13,148,136,.12),transparent 35%),
+    linear-gradient(180deg,#FFF7ED 0%,#F8FAFC 45%,#ECFDF5 100%);
+  color:var(--text);
+  display:flex;align-items:center;justify-content:center;
+  padding:18px;overflow-x:hidden;
+}
+.auth-shell{width:min(1060px,100%);display:grid;grid-template-columns:1fr 440px;gap:22px;align-items:center}
+.auth-visual{
+  min-height:560px;border:1px solid rgba(255,255,255,.7);border-radius:32px;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.78),rgba(255,255,255,.38)),
+    radial-gradient(circle at 35% 30%,rgba(232,77,26,.18),transparent 35%),
+    radial-gradient(circle at 70% 72%,rgba(13,148,136,.18),transparent 32%);
+  box-shadow:var(--shadow);padding:34px;position:relative;overflow:hidden;
+}
+.auth-visual::after{
+  content:'';position:absolute;right:-110px;bottom:-120px;width:330px;height:330px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(232,77,26,.20),rgba(13,148,136,.18));
+}
+.brand{display:flex;align-items:center;gap:12px;position:relative;z-index:2}
+.logo{
+  width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(232,77,26,.26);
+}
+.brand strong{display:block;font-family:'Syne',sans-serif;font-size:22px;line-height:1}
+.brand span{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.hero-copy{position:relative;z-index:2;margin-top:92px;max-width:520px}
+.hero-copy h1{font-family:'Syne',sans-serif;font-size:54px;line-height:.95;letter-spacing:-2px;margin:0 0 16px}
+.hero-copy p{font-size:15px;color:#4B5563;line-height:1.7;margin:0;max-width:430px}
+.mini-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:34px;max-width:500px}
+.mini-card{background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.8);border-radius:18px;padding:14px}
+.mini-card i{color:var(--accent);font-size:17px;margin-bottom:10px}
+.mini-card strong{display:block;font-size:13px}
+.mini-card span{display:block;font-size:11px;color:var(--muted);margin-top:4px;line-height:1.35}
+.auth-card{
+  background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.86);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:26px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+.auth-title{font-family:'Syne',sans-serif;font-size:30px;line-height:1.05;margin:0 0 8px;letter-spacing:-.7px}
+.auth-desc{font-size:13px;color:var(--muted);line-height:1.55;margin:0 0 18px}
+.alert{display:none;border-radius:14px;padding:10px 12px;font-size:12px;line-height:1.4;margin-bottom:12px}
+.alert.show{display:block}
+.alert.error{background:#FEF2F2;color:#991B1B;border:1px solid #FECACA}
+.alert.ok{background:#ECFDF5;color:#047857;border:1px solid #A7F3D0}
+.form{display:flex;flex-direction:column;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:11px;font-weight:800;color:#4B5563}
+.field input{
+  width:100%;border:1px solid var(--border);background:#fff;color:var(--text);border-radius:15px;
+  min-height:44px;padding:11px 13px;font-size:14px;outline:none;transition:border .15s,box-shadow .15s;
+}
+.field input:focus{border-color:#FDBA74;box-shadow:0 0 0 4px rgba(232,77,26,.10)}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:46px}
+.pass-toggle{
+  position:absolute;right:7px;top:7px;width:32px;height:30px;border:0;border-radius:10px;background:#F3F4F6;color:#6B7280;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.btn{
+  margin-top:4px;border:0;border-radius:16px;min-height:46px;padding:12px 14px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:900;font-size:14px;
+  display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 14px 28px rgba(232,77,26,.22);
+}
+.btn:disabled{opacity:.65;cursor:not-allowed}
+.switch{margin-top:16px;text-align:center;color:var(--muted);font-size:13px}
+.switch a{color:var(--accent);font-weight:900;text-decoration:none}
+.back{margin-top:12px;text-align:center}
+.back a{font-size:12px;color:#6B7280;text-decoration:none}
+@media(max-width:860px){
+  body{align-items:flex-start;padding:14px}
+  .auth-shell{grid-template-columns:1fr;gap:12px}
+  .auth-visual{min-height:auto;padding:20px;border-radius:24px}
+  .hero-copy{margin-top:26px}
+  .hero-copy h1{font-size:34px;letter-spacing:-1px}
+  .hero-copy p{font-size:13px}
+  .mini-grid{grid-template-columns:1fr 1fr;margin-top:18px}
+  .mini-card:last-child{grid-column:1/-1}
+  .auth-card{padding:20px;border-radius:22px}
+}
+@media(max-width:420px){
+  .mini-grid{display:none}
+  .brand strong{font-size:19px}
+  .hero-copy h1{font-size:30px}
+}
+</style>
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="auth-visual">
+      <div class="brand">
+        <div class="logo"><i class="fas fa-waveform-lines"></i></div>
+        <div><strong>VokaMon</strong><span>Emotion companion app</span></div>
+      </div>
+      <div class="hero-copy">
+        <h1>Buat akun dan mulai perjalananmu.</h1>
+        <p>Daftar supaya progress pet, kebun, Soul Coins, dan riwayat refleksi kamu tersimpan.</p>
+      </div>
+      <div class="mini-grid">
+        <div class="mini-card"><i class="fas fa-heart"></i><strong>Bond Pet</strong><span>Kedekatan naik dari aktivitas.</span></div>
+        <div class="mini-card"><i class="fas fa-coins"></i><strong>Soul Coins</strong><span>Reward dari emosi dan misi.</span></div>
+        <div class="mini-card"><i class="fas fa-shield-heart"></i><strong>Private</strong><span>Data tersimpan di akunmu.</span></div>
+      </div>
+    </section>
+    <section class="auth-card">
+      <h1 class="auth-title">Daftar akun</h1>
+      <p class="auth-desc">Buat akun baru untuk mulai menggunakan VokaMon.</p>
+      <div id="alert" class="alert"></div>
+      <form id="form" class="form">
+        <div class="field">
+          <label for="name">Nama tampilan</label>
+          <input id="name" type="text" maxlength="40" autocomplete="name" placeholder="Contoh: Ammar" required>
+        </div>
+        <div class="field">
+          <label for="username">Username</label>
+          <input id="username" type="text" maxlength="28" autocomplete="username" placeholder="contoh: ammar" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" autocomplete="email" placeholder="nama@email.com" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="password-wrap">
+            <input id="password" type="password" autocomplete="new-password" placeholder="Minimal 6 karakter" minlength="6" required>
+            <button class="pass-toggle" type="button" data-toggle-pass="password"><i class="fas fa-eye"></i></button>
+          </div>
+        </div>
+        <button id="submit" class="btn" type="submit" data-normal="Daftar"><i class="fas fa-user-plus"></i><span>Daftar</span></button>
+      </form>
+      <div class="switch">Sudah punya akun? <a id="login-link" href="/login.html">Masuk</a></div>
+    </section>
+  </main>
+<script>
+
+function getNext(){
+  const params = new URLSearchParams(location.search);
+  const next = params.get('next') || '/';
+  if (!next.startsWith('/') || next.startsWith('/login') || next.startsWith('/register')) return '/';
+  return next;
+}
+function setAlert(msg,type='error'){
+  const el=document.getElementById('alert');
+  if(!el)return;
+  el.textContent=msg||'';
+  el.className='alert '+type+(msg?' show':'');
+}
+function setLoading(on, text){
+  const btn=document.getElementById('submit');
+  if(!btn)return;
+  btn.disabled=!!on;
+  btn.querySelector('span').textContent=on?text:btn.dataset.normal;
+}
+async function checkAlreadyLogin(){
+  const token=localStorage.getItem('vkm_token');
+  if(!token)return;
+  try{
+    const r=await fetch('/api/auth/me',{headers:{Authorization:'Bearer '+token}});
+    if(r.ok) location.href=getNext();
+    else localStorage.removeItem('vkm_token');
+  }catch(e){}
+}
+function saveSession(data){
+  localStorage.setItem('vkm_token',data.token);
+  if(data.state)localStorage.setItem('vkm',JSON.stringify(data.state));
+}
+document.querySelectorAll('[data-toggle-pass]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const input=document.getElementById(btn.dataset.togglePass);
+    if(!input)return;
+    input.type=input.type==='password'?'text':'password';
+    btn.innerHTML=input.type==='password'?'<i class="fas fa-eye"></i>':'<i class="fas fa-eye-slash"></i>';
+  });
+});
+try{
+  const msg=sessionStorage.getItem('vkm_auth_message');
+  if(msg){setAlert(msg, msg.toLowerCase().includes('berhasil')?'ok':'error'); sessionStorage.removeItem('vkm_auth_message');}
+}catch(e){}
+checkAlreadyLogin();
+
+document.getElementById('login-link').href='/login.html?next='+encodeURIComponent(getNext());
+document.getElementById('form').addEventListener('submit',async(e)=>{
+  e.preventDefault();
+  setAlert('');
+  setLoading(true,'Membuat akun...');
+  try{
+    const payload={
+      name:document.getElementById('name').value.trim(),
+      username:document.getElementById('username').value.trim(),
+      email:document.getElementById('email').value.trim(),
+      password:document.getElementById('password').value
+    };
+    const r=await fetch('/api/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const data=await r.json();
+    if(!r.ok||!data.ok)throw new Error(data.error||'Gagal daftar.');
+    saveSession(data);
+    location.href=getNext();
+  }catch(err){setAlert(err.message||'Gagal daftar.');}
+  finally{setLoading(false);}
+});
+</script>
+</body>
+</html>
