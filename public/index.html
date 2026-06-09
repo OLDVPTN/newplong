@@ -1750,378 +1750,56 @@
 
 
 
-            /* ═══════ LEMO-LIKE FARM PAGE (original assets not copied) ═══════ */
-            #pg-garden.lemo-farm-page{
-                padding:0!important;
+            /* ═══════ SHOPEE-TANAM-LIKE ORIGINAL UI ═══════ */
+            #pg-garden.st-farm-page{
                 max-width:none!important;
-                overflow-y:auto;
-                background:linear-gradient(180deg,#9FDC67 0%,#77C553 54%,#52A943 100%);
+                padding:0!important;
                 min-height:100dvh;
-                position:relative;
+                overflow-y:auto;
                 -webkit-overflow-scrolling:touch;
-                padding-bottom:calc(var(--nav-h) + var(--s-b) + 104px)!important;
-            }
-            .lemo-farm{
-                min-height:calc(100dvh - var(--nav-h));
+                background:#fff7ed;
                 position:relative;
-                overflow:hidden;
-                background:
-                    radial-gradient(circle at 20% 72%,rgba(255,255,255,.25) 0 5px,transparent 6px),
-                    radial-gradient(circle at 28% 82%,rgba(255,255,255,.18) 0 4px,transparent 5px),
-                    radial-gradient(circle at 58% 76%,rgba(255,255,255,.18) 0 4px,transparent 5px),
-                    linear-gradient(145deg,#B7E87B 0%,#85CF57 50%,#4EA742 100%);
+                padding-bottom:calc(var(--nav-h) + var(--s-b) + 18px)!important;
             }
-            .lemo-top-hud{
-                position:sticky;
-                top:0;
-                z-index:20;
-                display:flex;
-                align-items:center;
-                gap:7px;
-                padding:calc(var(--s-t) + 8px) 10px 8px;
-                background:linear-gradient(180deg,rgba(93,157,61,.75),rgba(93,157,61,0));
-            }
-            .lemo-pill{
-                display:inline-flex;
-                align-items:center;
-                gap:5px;
-                height:28px;
-                padding:0 9px;
-                border-radius:999px;
-                color:#fff;
-                font-size:11px;
-                font-weight:900;
-                box-shadow:0 3px 8px rgba(48,84,31,.18),inset 0 1px 0 rgba(255,255,255,.25);
-                border:1px solid rgba(255,255,255,.25);
-            }
-            .lemo-pill.red{background:linear-gradient(180deg,#EF4444,#B91C1C)}
-            .lemo-pill.blue{background:linear-gradient(180deg,#38BDF8,#2563EB)}
-            .lemo-pill.gold{background:linear-gradient(180deg,#FACC15,#F59E0B)}
-            .lemo-tips{
-                margin-left:auto;
-                width:42px;height:42px;
-                border-radius:15px;
-                border:2px solid rgba(255,255,255,.65);
-                background:linear-gradient(180deg,#9DD7FF,#6AA9FF);
-                color:#fff;
-                box-shadow:0 8px 16px rgba(37,99,235,.22);
-                display:flex;flex-direction:column;align-items:center;justify-content:center;
-                gap:1px;font-size:8px;font-weight:900;
-            }
-            .lemo-house-scene{
-                position:absolute;
-                top:52px;right:-18px;
-                width:240px;height:180px;
-                z-index:1;
-                pointer-events:none;
-            }
-            .lemo-house{
-                position:absolute;
-                right:25px;top:15px;width:150px;height:120px;
-                transform:rotate(-2deg);
-            }
-            .lemo-roof{
-                position:absolute;left:5px;top:0;width:138px;height:58px;
-                background:linear-gradient(135deg,#8744BC,#B27AE9);
-                clip-path:polygon(50% 0,100% 70%,92% 78%,50% 20%,8% 78%,0 70%);
-                filter:drop-shadow(0 5px 0 rgba(66,31,107,.28));
-            }
-            .lemo-home-body{
-                position:absolute;left:22px;top:48px;width:105px;height:76px;
-                border-radius:10px 10px 8px 8px;
-                background:linear-gradient(180deg,#FFD58B,#F4A64E);
-                border:3px solid rgba(255,255,255,.9);
-                box-shadow:0 10px 18px rgba(78,74,39,.14);
-            }
-            .lemo-window{
-                position:absolute;left:13px;top:13px;width:31px;height:32px;border-radius:11px 11px 6px 6px;
-                background:linear-gradient(180deg,#C9F0FF,#5BB8E9);
-                border:3px solid #fff;
-            }
-            .lemo-door{
-                position:absolute;right:15px;bottom:0;width:30px;height:50px;border-radius:10px 10px 4px 4px;
-                background:linear-gradient(180deg,#85D7E8,#42AFC7);
-                border:3px solid #fff;
-            }
-            .lemo-fence{
-                position:absolute;right:0;top:115px;width:245px;height:42px;
-                background:repeating-linear-gradient(90deg,#A4622B 0 10px,#7A411E 10px 13px);
-                transform:skewY(-14deg);
-                border-top:5px solid #7A411E;
-                opacity:.95;
-            }
-            .lemo-tree{
-                position:absolute;width:70px;height:94px;
-                background:
-                    radial-gradient(circle at 50% 25%,#227C44 0 25px,transparent 26px),
-                    radial-gradient(circle at 35% 45%,#2C9953 0 25px,transparent 26px),
-                    radial-gradient(circle at 65% 48%,#1F7A43 0 28px,transparent 29px),
-                    linear-gradient(#854A22,#854A22);
-                background-size:100% 78%,100% 78%,100% 78%,12px 40px;
-                background-position:center top,center top,center top,center bottom;
-                background-repeat:no-repeat;
-            }
-            .lemo-tree.t1{right:150px;top:-12px}
-            .lemo-tree.t2{right:4px;top:-20px;transform:scale(1.15)}
-            .lemo-cashbag{
-                position:absolute;
-                z-index:5;
-                top:118px;left:50%;
-                transform:translateX(-50%);
-                display:flex;flex-direction:column;align-items:center;
-            }
-            .lemo-cash-label{
-                background:#31412A;color:#fff;border-radius:999px;padding:4px 10px;
-                font-size:11px;font-weight:900;margin-bottom:-2px;
-                box-shadow:0 3px 5px rgba(0,0,0,.18);
-            }
-            .lemo-bag{
-                font-size:56px;
-                filter:drop-shadow(0 8px 9px rgba(80,62,19,.28));
-                animation:lemoBag 2.2s ease-in-out infinite;
-            }
-            @keyframes lemoBag{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-            .lemo-cashbag button{
-                margin-top:-6px;
-                border:0;border-radius:11px;
-                background:linear-gradient(180deg,#FFC46A,#E7842F);
-                color:#7A2F12;
-                font-size:12px;font-weight:900;
-                padding:7px 14px;
-                box-shadow:0 3px 0 #B95D24,0 8px 14px rgba(117,71,20,.18);
-            }
-            .lemo-machine{
-                position:absolute;z-index:4;left:18px;top:160px;
-            }
-            .lemo-machine-box{
-                width:68px;height:78px;border-radius:13px;
-                display:flex;align-items:center;justify-content:center;
-                font-size:30px;
-                background:linear-gradient(180deg,#90A8B9,#64748B);
-                border:4px solid #40606F;
-                box-shadow:6px 8px 0 rgba(43,69,58,.18);
-                transform:rotate(-10deg);
-            }
-            .lemo-field-wrap{
-                position:absolute;
-                left:50%;top:312px;
-                transform:translateX(-50%);
-                width:min(360px,96vw);
-                height:330px;
-                z-index:4;
-            }
-            .lemo-field{
-                position:absolute;
-                inset:0;
-                display:grid;
-                grid-template-columns:repeat(3,1fr);
-                grid-auto-rows:88px;
-                gap:3px 6px;
-                transform:rotate(-45deg) skew(9deg,9deg) scale(.92);
-                transform-origin:50% 48%;
-            }
-            .lemo-plot{
-                position:relative;
-                border:0;
-                background:transparent;
-                min-height:88px;
-                padding:0;
-                transform:translateZ(0);
-            }
-            .lemo-soil{
-                position:absolute;inset:10px;
-                border-radius:8px;
-                background:linear-gradient(135deg,#D88C42,#B7642C);
-                border:7px solid #44652F;
-                box-shadow:inset 0 3px 0 rgba(255,219,133,.32),7px 9px 0 rgba(32,82,32,.18);
-                transform:translateZ(0);
-            }
-            .lemo-plot.on .lemo-soil{
-                outline:4px solid rgba(255,240,97,.9);
-                box-shadow:inset 0 3px 0 rgba(255,219,133,.32),7px 9px 0 rgba(32,82,32,.18),0 0 0 7px rgba(255,255,255,.22);
-            }
-            .lemo-plot.ready .lemo-soil{
-                background:linear-gradient(135deg,#F6C55B,#CE7B32);
-            }
-            .lemo-plant-ico{
-                position:absolute;left:50%;top:45%;
-                transform:translate(-50%,-50%) rotate(45deg) skew(-9deg,-9deg) scale(1.22);
-                font-size:31px;
-                filter:drop-shadow(0 5px 4px rgba(57,75,22,.28));
-                z-index:3;
-            }
-            .lemo-progress{
-                position:absolute;left:50%;top:19%;
-                transform:translate(-50%,-50%) rotate(45deg) skew(-9deg,-9deg);
-                background:#263A24;color:#fff;border-radius:999px;
-                font-size:9px;font-weight:900;padding:3px 7px;
-                z-index:4;white-space:nowrap;
-                box-shadow:0 4px 8px rgba(0,0,0,.18);
-            }
-            .lemo-unlock{
-                position:absolute;left:50%;top:22%;
-                transform:translate(-50%,-50%) rotate(45deg) skew(-9deg,-9deg);
-                background:#263A24;color:#fff;border-radius:6px;
-                font-size:9px;font-weight:900;padding:4px 7px;
-                z-index:4;white-space:nowrap;
-                box-shadow:0 4px 8px rgba(0,0,0,.18);
-            }
-            .lemo-lock{
-                position:absolute;left:50%;top:55%;
-                transform:translate(-50%,-50%) rotate(45deg) skew(-9deg,-9deg);
-                color:#fff;font-size:16px;z-index:4;text-shadow:0 2px 3px rgba(0,0,0,.25);
-            }
-            .lemo-plant-main{
-                position:absolute;left:50%;top:54%;
-                transform:translate(-50%,-50%);
-                z-index:8;
-                width:84px;height:84px;border-radius:50%;
-                border:6px solid rgba(255,209,92,.88);
-                background:linear-gradient(180deg,#7EDB34,#32A529);
-                color:#fff;
-                font-weight:900;
-                font-size:13px;
-                line-height:1.15;
-                box-shadow:0 7px 0 #287F28,0 12px 20px rgba(24,91,28,.28);
-                text-shadow:0 2px 2px rgba(20,91,25,.28);
-            }
-            .lemo-farm-tools{
-                position:absolute;right:8px;top:270px;z-index:7;
-                display:flex;flex-direction:column;gap:12px;
-            }
-            .lemo-farm-tools button{
-                border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;
-                color:#fff;font-size:10px;font-weight:900;text-shadow:0 1px 2px rgba(0,0,0,.4);
-            }
-            .lemo-farm-tools span{
-                width:46px;height:46px;border-radius:50%;
-                display:flex;align-items:center;justify-content:center;
-                font-size:27px;
-                background:linear-gradient(180deg,#FFE7B4,#EAA768);
-                border:3px solid #FFF4D1;
-                box-shadow:0 5px 0 rgba(134,82,38,.45),0 9px 12px rgba(52,91,36,.24);
-            }
-            .lemo-status-card{
-                position:absolute;left:10px;right:10px;bottom:108px;z-index:9;
-                border-radius:18px;
-                background:rgba(255,255,255,.82);
-                border:1px solid rgba(255,255,255,.85);
-                display:flex;align-items:center;justify-content:space-between;gap:10px;
-                padding:10px 11px;
-                box-shadow:0 10px 28px rgba(48,95,35,.16);
-                -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-            }
-            .lemo-status-card strong{
-                display:block;font-size:12px;color:#23421F;line-height:1.25;
-            }
-            .lemo-status-card span{
-                display:block;font-size:10px;color:#557050;margin-top:2px;line-height:1.35;
-            }
-            .lemo-status-card button{
-                flex-shrink:0;border:0;border-radius:12px;background:linear-gradient(180deg,#FFCE61,#F59E0B);
-                color:#7A3400;font-size:11px;font-weight:900;min-height:36px;padding:8px 10px;
-                box-shadow:0 4px 0 #B96A10;
-            }
-            .lemo-bottom-actions{
-                position:absolute;left:0;right:0;bottom:0;z-index:9;
-                height:96px;
-                display:grid;
-                grid-template-columns:repeat(4,1fr);
-                gap:8px;
-                padding:8px 10px calc(var(--s-b) + 8px);
-                background:linear-gradient(180deg,rgba(74,126,46,0),rgba(54,112,43,.95) 20%,#34702D 100%);
-            }
-            .lemo-bottom-actions button{
-                border:0;background:transparent;
-                color:#fff;font-size:10px;font-weight:900;
-                display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
-                text-shadow:0 1px 2px rgba(0,0,0,.35);
-            }
-            .lemo-bottom-actions span{
-                width:46px;height:46px;border-radius:15px;
-                display:flex;align-items:center;justify-content:center;
-                font-size:25px;
-                background:linear-gradient(180deg,#FFE0A0,#E88A37);
-                border:3px solid #FFF1C5;
-                box-shadow:0 4px 0 #A85824;
-            }
-            .lemo-history-panel{
-                margin:10px;
-                border-radius:18px;
-                background:rgba(255,255,255,.78);
-                border:1px solid rgba(255,255,255,.78);
-                padding:12px;
-                box-shadow:0 8px 22px rgba(30,92,34,.15);
-            }
-            .lemo-crop-sheet .garden-sheet-panel{}
-            .lemo-sort-tabs{
-                display:flex;gap:8px;margin-bottom:10px;
-                overflow-x:auto;
-            }
-            .lemo-sort-tabs button{
-                border:0;border-radius:999px;padding:8px 12px;
-                background:#659E47;color:#EAF9D8;font-size:11px;font-weight:900;white-space:nowrap;
-            }
-            .lemo-sort-tabs button.on{
-                background:linear-gradient(180deg,#FFB84E,#F59E0B);
-                color:#fff;
-            }
-            .lemo-crop-grid{
-                display:flex!important;
-                gap:8px!important;
-                overflow-x:auto!important;
-                padding-bottom:4px!important;
-                scroll-snap-type:x proximity;
-            }
-            .lemo-crop-grid .garden-seed,
-            .lemo-crop-grid .garden-feed{
-                min-width:124px!important;
-                max-width:124px!important;
-                min-height:170px!important;
-                border-radius:14px!important;
-                background:linear-gradient(180deg,#FFF8D9,#FFE0A1)!important;
-                border:2px solid #F1B853!important;
-                padding:9px 7px!important;
-                flex:0 0 auto!important;
-                box-shadow:0 5px 0 #C9802E,0 9px 16px rgba(96,66,21,.14)!important;
-            }
-            .lemo-crop-grid .garden-seed span,
-            .lemo-crop-grid .garden-feed span{
-                width:58px!important;height:58px!important;border-radius:50%!important;
-                font-size:36px!important;margin:4px auto 8px!important;
-                background:#F9FFF0!important;border:2px solid #D9EDB6!important;
-            }
-            .lemo-crop-grid .garden-seed strong,
-            .lemo-crop-grid .garden-feed strong{
-                font-size:12px!important;color:#7A4617!important;line-height:1.2!important;
-            }
-            .lemo-crop-grid .garden-seed small,
-            .lemo-crop-grid .garden-feed small{
-                font-size:9px!important;color:#8A622B!important;line-height:1.3!important;
-            }
-            .lemo-crop-grid .garden-seed::after{
-                content:'Gratis';
-                display:block;
-                margin:8px auto 0;
-                width:max-content;
-                padding:4px 10px;border-radius:999px;
-                background:#FBC64D;color:#854915;font-size:10px;font-weight:900;
-            }
-            @media(min-width:760px){
-                #pg-garden.lemo-farm-page{
-                    max-width:430px!important;
-                    margin:0 auto;
-                    border-left:1px solid rgba(0,0,0,.05);
-                    border-right:1px solid rgba(0,0,0,.05);
-                }
-                .lemo-farm{min-height:760px}
-            }
-            @media(max-width:380px){
-                .lemo-field-wrap{width:350px;transform:translateX(-50%) scale(.94)}
-                .lemo-farm-tools{right:2px}
-                .lemo-status-card{bottom:100px}
-            }
-
+            .st-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;background:linear-gradient(180deg,#FF7A32 0%,#FF9A54 22%,#FFE3B8 48%,#F4FFE8 100%)}
+            .st-sky{position:absolute;inset:0;background:radial-gradient(circle at 80% 9%,rgba(255,255,255,.65) 0 42px,transparent 43px),radial-gradient(circle at 18% 19%,rgba(255,255,255,.18),transparent 150px)}
+            .st-hill{position:absolute;left:-15%;right:-15%;height:170px;border-radius:50% 50% 0 0}
+            .st-hill.h1{bottom:128px;background:#B7EC78;transform:rotate(-3deg)}
+            .st-hill.h2{bottom:10px;background:#75CC4E;transform:rotate(3deg)}
+            .st-cloud{position:absolute;background:rgba(255,255,255,.75);border-radius:999px}
+            .st-cloud::before,.st-cloud::after{content:'';position:absolute;background:inherit;border-radius:50%}
+            .st-cloud.c1{width:104px;height:30px;left:18px;top:110px}.st-cloud.c1::before{width:44px;height:44px;left:14px;top:-20px}.st-cloud.c1::after{width:36px;height:36px;right:14px;top:-14px}
+            .st-cloud.c2{width:120px;height:32px;right:-32px;top:155px;opacity:.55}.st-cloud.c2::before{width:48px;height:48px;left:28px;top:-22px}.st-cloud.c2::after{width:38px;height:38px;right:24px;top:-13px}
+            .st-app{position:relative;z-index:2;width:min(460px,100%);margin:0 auto;padding:calc(var(--s-t) + 10px) 14px calc(var(--nav-h) + var(--s-b) + 28px)}
+            .st-header{display:flex;align-items:center;gap:10px;color:#fff;margin-bottom:10px}
+            .st-back,.st-help{width:40px;height:40px;border:0;border-radius:16px;background:rgba(255,255,255,.22);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
+            .st-title{flex:1}.st-title strong{display:block;font-family:'Syne',sans-serif;font-size:21px;line-height:1;text-shadow:0 2px 5px rgba(139,48,10,.18)}.st-title span{display:block;font-size:11px;font-weight:800;opacity:.9;margin-top:3px}
+            .st-wallet{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+            .st-wallet-item{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.9);border-radius:18px;padding:9px;box-shadow:0 10px 24px rgba(174,73,14,.14)}
+            .st-wallet-item i{width:30px;height:30px;border-radius:12px;background:linear-gradient(180deg,#FFBB58,#FF6A1E);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 5px 10px rgba(255,106,30,.22)}
+            .st-wallet-item:nth-child(2) i{background:linear-gradient(180deg,#7DD3FC,#2387EB)}.st-wallet-item:nth-child(3) i{background:linear-gradient(180deg,#FFE66A,#F59E0B)}
+            .st-wallet-item span{display:block;font-size:8px;font-weight:900;color:#9A6750;text-transform:uppercase;letter-spacing:.35px}.st-wallet-item strong{display:block;color:#71340F;font-size:15px;font-weight:900;line-height:1.05}
+            .st-reward-banner{display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(135deg,#FFF,#FFF4DF);border:1px solid rgba(255,255,255,.9);border-radius:22px;padding:12px;margin-bottom:12px;box-shadow:0 13px 26px rgba(146,76,20,.13)}
+            .st-voucher{display:flex;align-items:center;gap:10px}.st-voucher-icon{width:44px;height:44px;border-radius:16px;background:linear-gradient(180deg,#FF8B4B,#EE4D2D);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 8px 16px rgba(238,77,45,.22)}
+            .st-voucher strong{display:block;font-size:13px;color:#71340F;font-weight:900}.st-voucher span{display:block;font-size:10px;color:#98684A;line-height:1.35;margin-top:2px}.st-reward-banner button{border:0;border-radius:14px;background:linear-gradient(180deg,#FF7A32,#EE4D2D);color:#fff;font-size:11px;font-weight:900;min-height:38px;padding:8px 12px;box-shadow:0 5px 0 #B7371E;white-space:nowrap}
+            .st-main-card{background:rgba(255,255,255,.93);border:1px solid rgba(255,255,255,.9);border-radius:30px;padding:14px;box-shadow:0 18px 42px rgba(69,106,33,.17);margin-bottom:12px;position:relative;overflow:hidden}
+            .st-main-card::before{content:'';position:absolute;left:-30px;right:-30px;bottom:-85px;height:180px;background:radial-gradient(ellipse at center,#C9F38C,#82CE58 62%,transparent 63%);opacity:.72}
+            .st-tree-zone{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;padding:8px 0 6px}
+            .st-progress-ring{position:relative;width:190px;height:190px;display:flex;align-items:center;justify-content:center}
+            .st-progress-ring svg{position:absolute;inset:0;transform:rotate(-90deg)}.st-progress-ring circle{fill:none;stroke-width:9;stroke-linecap:round}.st-progress-ring circle:first-child{stroke:#FFE1C6}.st-progress-ring #st-ring-fill{stroke:url(#none);stroke:#EE4D2D;stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset .25s}
+            .st-tree{position:relative;display:flex;flex-direction:column;align-items:center}.st-tree-emoji{font-size:72px;line-height:1;filter:drop-shadow(0 10px 10px rgba(77,103,35,.23));animation:stTree 2.4s ease-in-out infinite}.st-tree-pot{width:76px;height:38px;background:linear-gradient(180deg,#D98A4A,#A75023);border-radius:10px 10px 24px 24px;border:5px solid #7E3F20;box-shadow:0 9px 0 rgba(74,84,25,.16);margin-top:-8px}
+            @keyframes stTree{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-4px) rotate(1deg)}}
+            .st-growth{text-align:center;position:relative;z-index:1;margin-top:-2px}.st-growth strong{display:block;font-family:'Syne',sans-serif;font-size:30px;color:#EE4D2D;line-height:1}.st-growth span{display:block;font-size:12px;color:#704B35;line-height:1.4;margin-top:4px;font-weight:700}
+            .st-action-row{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:8px;margin-top:12px}.st-action{border:0;border-radius:18px;min-height:52px;color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 6px 0 rgba(0,0,0,.16)}.st-action.secondary{background:linear-gradient(180deg,#FFA75B,#F97316)}.st-action.primary{background:linear-gradient(180deg,#46C7FF,#0EA5E9)}.st-action.accent{background:linear-gradient(180deg,#FF7A32,#EE4D2D)}.st-action:disabled{opacity:.45;filter:grayscale(.2)}
+            .st-plot-card,.st-task-card,.st-history{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.9);border-radius:24px;padding:12px;margin-bottom:12px;box-shadow:0 12px 28px rgba(68,111,38,.13)}
+            .st-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}.st-card-head strong{display:block;font-size:13px;color:#71340F;font-weight:900}.st-card-head span{display:block;font-size:10px;color:#98684A;line-height:1.35;margin-top:2px}.st-card-head button{border:0;border-radius:14px;background:#FFF1E8;color:#EE4D2D;border:1px solid #FFD5BF;min-height:34px;padding:7px 10px;font-size:10px;font-weight:900;white-space:nowrap}
+            .st-plots{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.st-plot-btn{position:relative;border:1px solid #F1C9A5;background:linear-gradient(180deg,#FFF8ED,#FFE3BE);border-radius:18px;min-height:94px;padding:8px 6px;box-shadow:0 6px 14px rgba(130,72,29,.08);transition:all .15s}.st-plot-btn.on{border-color:#EE4D2D;box-shadow:0 0 0 4px rgba(238,77,45,.12),0 8px 16px rgba(130,72,29,.10);transform:translateY(-2px)}.st-plot-emoji{display:block;font-size:31px;margin-bottom:4px}.st-plot-name{display:block;font-size:9px;font-weight:900;color:#704B35;line-height:1.15}.st-plot-bar{display:block;height:6px;border-radius:999px;background:#FAD8BE;margin-top:6px;overflow:hidden}.st-plot-bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#FF8B4B,#EE4D2D)}
+            .st-tasks{display:grid;gap:7px}.st-task{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#FFF8ED;border:1px solid #FFE1C6;border-radius:16px;padding:8px 9px}.st-task strong{font-size:11px;color:#704B35}.st-task span{font-size:10px;color:#98684A}.st-task b{font-size:10px;color:#EE4D2D;background:#FFE7DA;padding:4px 7px;border-radius:999px}.st-task.done b{background:#DCFCE7;color:#15803D}
+            .st-boost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.st-boost-grid button{border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.92);border-radius:20px;min-height:86px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;box-shadow:0 10px 22px rgba(68,111,38,.11)}.st-boost-grid span{font-size:25px}.st-boost-grid strong{font-size:11px;color:#71340F;font-weight:900}.st-boost-grid small{font-size:9px;color:#98684A}
+            .st-sheet{background:linear-gradient(180deg,#FFF7ED,#fff)!important;border-color:#FFE1C6!important}.st-seed-tabs{display:flex;gap:7px;margin-bottom:10px;overflow-x:auto}.st-seed-tabs button{border:0;border-radius:999px;background:#FFF1E8;color:#EE4D2D;font-size:10px;font-weight:900;padding:8px 11px;white-space:nowrap}.st-seed-tabs button.on{background:linear-gradient(180deg,#FF7A32,#EE4D2D);color:#fff}
+            .st-seed-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:9px!important;overflow:visible!important}.st-seed-grid .garden-seed,.st-seed-grid .garden-feed{min-width:0!important;max-width:none!important;min-height:132px!important;border-radius:20px!important;background:linear-gradient(180deg,#fff,#FFF3E5)!important;border:1px solid #FFD5BF!important;box-shadow:0 8px 18px rgba(130,72,29,.09)!important}.st-seed-grid .garden-seed span,.st-seed-grid .garden-feed span{width:52px!important;height:52px!important;font-size:32px!important;border-radius:18px!important;background:#FFF7ED!important;margin-bottom:8px!important}.st-seed-grid .garden-seed strong,.st-seed-grid .garden-feed strong{font-size:12px!important;color:#71340F!important}.st-seed-grid .garden-seed small,.st-seed-grid .garden-feed small{font-size:9px!important;color:#98684A!important}
+            @media(min-width:900px){#pg-garden.st-farm-page{max-width:460px!important;margin:0 auto;border-left:1px solid rgba(0,0,0,.05);border-right:1px solid rgba(0,0,0,.05)}}
+            @media(max-width:380px){.st-app{padding-left:10px;padding-right:10px}.st-wallet-item{padding:7px;gap:5px}.st-wallet-item i{width:27px;height:27px}.st-progress-ring{width:170px;height:170px}.st-tree-emoji{font-size:64px}.st-plots{gap:5px}.st-plot-btn{min-height:86px;padding:7px 4px}.st-action-row{gap:6px}.st-action{font-size:11px}}
 
 /* ═══════ ACCOUNT PAGE ═══════ */
             #pg-account{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
@@ -2321,104 +1999,145 @@
 
 
                 <!-- GARDEN -->
-                <section id="pg-garden" class="pg lemo-farm-page" aria-label="Kebun Plong">
-                    <div class="lemo-farm">
-                        <div class="lemo-top-hud">
-                            <div class="lemo-pill red"><i class="fas fa-ticket"></i><span>112</span></div>
-                            <div class="lemo-pill blue"><i class="fas fa-star"></i><span id="lemo-star-display">0</span></div>
-                            <div class="lemo-pill gold"><i class="fas fa-coins"></i><span id="lemo-coin-display">0</span></div>
-                            <button class="lemo-tips" type="button"><i class="fas fa-lightbulb"></i><span>Tips</span></button>
-                        </div>
-
-                        <div class="lemo-house-scene" aria-hidden="true">
-                            <div class="lemo-tree t1"></div>
-                            <div class="lemo-tree t2"></div>
-                            <div class="lemo-house">
-                                <div class="lemo-roof"></div>
-                                <div class="lemo-home-body">
-                                    <div class="lemo-window"></div>
-                                    <div class="lemo-door"></div>
-                                </div>
-                            </div>
-                            <div class="lemo-fence"></div>
-                        </div>
-
-                        <div class="lemo-cashbag">
-                            <div class="lemo-cash-label">RP 0</div>
-                            <div class="lemo-bag">💰</div>
-                            <button id="lemo-claim-top" type="button">Tarik Tunai</button>
-                        </div>
-
-                        <div class="lemo-machine" aria-hidden="true">
-                            <div class="lemo-machine-box">⚙️</div>
-                        </div>
-
-                        <div class="lemo-farm-tools">
-                            <button id="lemo-fertilizer" type="button"><span>🪣</span><strong>Pupuk</strong></button>
-                            <button id="lemo-pesticide" type="button"><span>🧪</span><strong>Insektisida</strong></button>
-                            <button id="lemo-clean" type="button"><span>🧹</span><strong>Basmi</strong></button>
-                        </div>
-
-                        <div class="lemo-field-wrap">
-                            <div class="lemo-field" id="garden-plots" aria-label="Plot kebun"></div>
-                            <button class="lemo-plant-main" id="garden-primary-action" type="button">Tanaman</button>
-                        </div>
-
-                        <div class="lemo-status-card">
-                            <div>
-                                <strong id="garden-status">Plot 1 kosong. Tap Tanaman untuk mulai tanam.</strong>
-                                <span>Level kebun <b id="garden-level">1</b> · Daya siram <b id="garden-water-power">x1</b> · Idle <b id="garden-idle-coins">+0</b></span>
-                            </div>
-                            <button id="garden-claim" type="button"><i class="fas fa-sack-dollar"></i> Klaim</button>
-                        </div>
-
-                        <div class="lemo-bottom-actions">
-                            <button id="garden-open-seeds" type="button"><span>🌱</span><strong>Tanaman</strong></button>
-                            <button id="garden-open-stock" type="button"><span>🎒</span><strong>Ransel</strong></button>
-                            <button id="garden-upgrade" type="button"><span>⬆️</span><strong>Upgrade</strong></button>
-                            <button id="garden-bonus" type="button"><span>🎁</span><strong>Bonus</strong></button>
-                        </div>
+                <section id="pg-garden" class="pg st-farm-page" aria-label="Plong Tanam">
+                    <div class="st-bg">
+                        <div class="st-sky"></div>
+                        <div class="st-hill h1"></div>
+                        <div class="st-hill h2"></div>
+                        <div class="st-cloud c1"></div>
+                        <div class="st-cloud c2"></div>
                     </div>
 
-                    <div class="lemo-history-panel">
-                        <div class="garden-section-title">
-                            <div class="acct-title">Riwayat Kebun</div>
-                            <span class="garden-pill">Aktivitas</span>
+                    <div class="st-app">
+                        <div class="st-header">
+                            <button type="button" class="st-back" data-page="pg-home"><i class="fas fa-chevron-left"></i></button>
+                            <div class="st-title">
+                                <strong>Plong Tanam</strong>
+                                <span>Tanam, siram, panen reward</span>
+                            </div>
+                            <button type="button" class="st-help" id="st-help"><i class="fas fa-question"></i></button>
                         </div>
-                        <div class="garden-history" id="garden-history"><div class="garden-history-item">Belum ada aktivitas kebun.</div></div>
+
+                        <div class="st-wallet">
+                            <div class="st-wallet-item">
+                                <i class="fas fa-coins"></i>
+                                <div><span>Soul Coins</span><strong id="lemo-coin-display">0</strong></div>
+                            </div>
+                            <div class="st-wallet-item">
+                                <i class="fas fa-droplet"></i>
+                                <div><span>Air</span><strong id="st-water-display">20</strong></div>
+                            </div>
+                            <div class="st-wallet-item">
+                                <i class="fas fa-star"></i>
+                                <div><span>Level</span><strong id="garden-level">Lv 1</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="st-reward-banner">
+                            <div class="st-voucher">
+                                <div class="st-voucher-icon"><i class="fas fa-ticket"></i></div>
+                                <div>
+                                    <strong>Voucher Panen</strong>
+                                    <span>Kumpulkan progress sampai 100% untuk panen hadiah.</span>
+                                </div>
+                            </div>
+                            <button id="garden-claim" type="button">Klaim idle</button>
+                        </div>
+
+                        <div class="st-main-card">
+                            <div class="st-tree-zone">
+                                <div class="st-progress-ring">
+                                    <svg viewBox="0 0 120 120">
+                                        <circle cx="60" cy="60" r="52"></circle>
+                                        <circle id="st-ring-fill" cx="60" cy="60" r="52"></circle>
+                                    </svg>
+                                    <div class="st-tree">
+                                        <div class="st-tree-emoji" id="garden-emoji">🌱</div>
+                                        <div class="st-tree-pot"></div>
+                                    </div>
+                                </div>
+                                <div class="st-growth">
+                                    <strong id="garden-percent">0%</strong>
+                                    <span id="garden-status">Pilih bibit dulu untuk mulai tanam.</span>
+                                </div>
+                            </div>
+
+                            <div class="st-action-row">
+                                <button id="garden-open-seeds" type="button" class="st-action secondary"><i class="fas fa-seedling"></i><span>Bibit</span></button>
+                                <button id="garden-water" type="button" class="st-action primary"><i class="fas fa-droplet"></i><span>Siram</span></button>
+                                <button id="garden-harvest" type="button" class="st-action accent"><i class="fas fa-basket-shopping"></i><span>Panen</span></button>
+                            </div>
+                        </div>
+
+                        <div class="st-plot-card">
+                            <div class="st-card-head">
+                                <div>
+                                    <strong>Plot Tanaman</strong>
+                                    <span>Pilih plot aktif seperti Shopee Tanam style.</span>
+                                </div>
+                                <button type="button" id="st-claim-water"><i class="fas fa-plus"></i> Air gratis</button>
+                            </div>
+                            <div class="st-plots" id="garden-plots" aria-label="Plot kebun"></div>
+                        </div>
+
+                        <div class="st-task-card">
+                            <div class="st-card-head">
+                                <div>
+                                    <strong>Misi Harian</strong>
+                                    <span>Selesaikan misi untuk ambil air dan coins.</span>
+                                </div>
+                                <button type="button" id="st-daily-reward"><i class="fas fa-gift"></i> Klaim</button>
+                            </div>
+                            <div class="st-tasks" id="st-daily-tasks"></div>
+                        </div>
+
+                        <div class="st-boost-grid">
+                            <button type="button" id="garden-upgrade"><span>⚡</span><strong>Upgrade</strong><small id="pf-upgrade-text">Naikkan hasil</small></button>
+                            <button type="button" id="garden-bonus"><span>🎁</span><strong>Bonus</strong><small>Hadiah kunjungan</small></button>
+                            <button type="button" id="garden-open-stock"><span>🎒</span><strong>Stok</strong><small>Makanan pet</small></button>
+                        </div>
+
+                        <div class="st-history">
+                            <div class="garden-section-title">
+                                <div class="acct-title">Riwayat Tanam</div>
+                                <span class="garden-pill">Aktivitas</span>
+                            </div>
+                            <div class="garden-history" id="garden-history"><div class="garden-history-item">Belum ada aktivitas kebun.</div></div>
+                        </div>
                     </div>
                 </section>
 
                 <!-- GARDEN SEPARATE SHEETS -->
                 <div class="garden-sheet" id="garden-seed-sheet" aria-hidden="true">
                     <div class="garden-sheet-backdrop" data-garden-sheet-close></div>
-                    <div class="garden-sheet-panel lemo-crop-sheet" role="dialog" aria-label="Pilih bibit">
+                    <div class="garden-sheet-panel st-sheet" role="dialog" aria-label="Pilih bibit">
                         <div class="garden-sheet-head">
                             <div>
-                                <strong>Pilih Tanaman</strong>
-                                <span>Urut berdasarkan level · tanam di plot aktif.</span>
+                                <strong>Pilih Bibit</strong>
+                                <span>Tanam di plot aktif yang kosong.</span>
                             </div>
                             <button class="garden-sheet-close" type="button" data-garden-sheet-close aria-label="Tutup"><i class="fas fa-xmark"></i></button>
                         </div>
-                        <div class="lemo-sort-tabs">
-                            <button class="on" type="button">Urut berdasarkan level</button>
-                            <button type="button">Urut berdasarkan efisiensi</button>
+                        <div class="st-seed-tabs">
+                            <button class="on" type="button">Rekomendasi</button>
+                            <button type="button">Cepat panen</button>
+                            <button type="button">Reward besar</button>
                         </div>
-                        <div class="garden-grid garden-sheet-grid lemo-crop-grid" id="garden-seeds"></div>
+                        <div class="garden-grid garden-sheet-grid st-seed-grid" id="garden-seeds"></div>
                     </div>
                 </div>
 
                 <div class="garden-sheet" id="garden-stock-sheet" aria-hidden="true">
                     <div class="garden-sheet-backdrop" data-garden-sheet-close></div>
-                    <div class="garden-sheet-panel lemo-crop-sheet" role="dialog" aria-label="Stok makanan pet">
+                    <div class="garden-sheet-panel st-sheet" role="dialog" aria-label="Stok makanan pet">
                         <div class="garden-sheet-head">
                             <div>
-                                <strong>Ransel Makanan Pet</strong>
+                                <strong>Stok Makanan Pet</strong>
                                 <span>Hasil panen bisa dipakai buat rawat Plong.</span>
                             </div>
                             <button class="garden-sheet-close" type="button" data-garden-sheet-close aria-label="Tutup"><i class="fas fa-xmark"></i></button>
                         </div>
-                        <div class="garden-inv garden-sheet-grid lemo-crop-grid" id="garden-inventory"></div>
+                        <div class="garden-inv garden-sheet-grid st-seed-grid" id="garden-inventory"></div>
                     </div>
                 </div>
 
@@ -3504,6 +3223,13 @@
                 state.garden.expMax=Math.max(40,Math.floor(Number(state.garden.expMax||40)));
                 state.garden.lastIdleAt=state.garden.lastIdleAt||new Date().toISOString();
                 state.garden.lastBonusAt=state.garden.lastBonusAt||null;
+                state.garden.waterDrops=Math.max(0,Math.floor(Number(state.garden.waterDrops==null?20:state.garden.waterDrops)));
+                var today=new Date().toISOString().slice(0,10);
+                if(!state.garden.daily||state.garden.daily.date!==today)state.garden.daily={date:today,planted:0,watered:0,harvested:0,claimed:false};
+                state.garden.daily.planted=Math.max(0,Math.floor(Number(state.garden.daily.planted||0)));
+                state.garden.daily.watered=Math.max(0,Math.floor(Number(state.garden.daily.watered||0)));
+                state.garden.daily.harvested=Math.max(0,Math.floor(Number(state.garden.daily.harvested||0)));
+                state.garden.daily.claimed=!!state.garden.daily.claimed;
                 return state.garden;
             }
             function getActivePlotIndex(){
@@ -3551,52 +3277,45 @@
             function renderGarden(){
                 var g=ensureGardenLocal(), active=getActivePlotIndex(), plot=g.plots[active]||null;
                 g.plot=plot;
-                var status=document.getElementById('garden-status');
-                var star=document.getElementById('lemo-star-display'), coin=document.getElementById('lemo-coin-display');
-                if(star)star.textContent=(state.pet&&state.pet.exp)?Math.floor(state.pet.exp):0;
+                if(typeof g.waterDrops!=="number")g.waterDrops=20;
+                if(!g.daily)g.daily={date:new Date().toISOString().slice(0,10),planted:0,watered:0,harvested:0,claimed:false};
+
+                var emoji=document.getElementById('garden-emoji'), status=document.getElementById('garden-status'), pct=document.getElementById('garden-percent'), ring=document.getElementById('st-ring-fill');
+                var progress=plot?Math.max(0,Math.min(100,Number(plot.progress||0))):0;
+                if(emoji){emoji.textContent=gardenEmojiFor(plot);emoji.classList.toggle('grow',!!plot&&Number(plot.progress||0)>0)}
+                if(pct)pct.textContent=progress+'%';
+                if(ring){
+                    var circ=326.7;
+                    ring.style.strokeDasharray=circ;
+                    ring.style.strokeDashoffset=(circ-(circ*progress/100));
+                }
+
+                var coin=document.getElementById('lemo-coin-display'), waterDisplay=document.getElementById('st-water-display');
                 if(coin)coin.textContent=state.coins||0;
+                if(waterDisplay)waterDisplay.textContent=g.waterDrops;
+
                 if(status){
-                    if(!plot)status.textContent='Plot '+(active+1)+' kosong. Tap Tanaman untuk mulai tanam.';
+                    if(!plot)status.textContent='Plot '+(active+1)+' kosong. Pilih bibit untuk mulai tanam.';
                     else{
                         var v=VEGGIES[plot.seed]||VEGGIES.carrot;
-                        status.textContent=plot.ready?('Plot '+(active+1)+': '+v.name+' siap dipanen!'):('Plot '+(active+1)+': '+v.name+' tumbuh · '+Math.max(0,Math.min(100,Number(plot.progress||0)))+'%');
+                        status.textContent=plot.ready?(v.name+' siap dipanen!'):('Siram '+(plot.waterCount||0)+'/'+(plot.growNeed||v.growNeed)+'x sampai panen.');
                     }
                 }
 
                 var plotWrap=document.getElementById('garden-plots');
                 if(plotWrap){
-                    var unlocks=['LV25','LV32','LV50','LV75','LV100'];
-                    var slots=[];
-                    for(var i=0;i<9;i++){
-                        if(i<4){
-                            var p=g.plots[i]||null;
-                            var pp=p?Math.max(0,Math.min(100,Number(p.progress||0))):0;
-                            var cls='lemo-plot'+(i===active?' on':'')+(p&&p.ready?' ready':'');
-                            var label=p?(p.ready?'Panen':pp+'%'):'';
-                            slots.push('<button type="button" class="'+cls+'" data-plot="'+i+'"><span class="lemo-soil"></span><span class="lemo-plant-ico">'+gardenEmojiFor(p)+'</span>'+(p?'<span class="lemo-progress">'+label+'</span>':'')+'</button>');
-                        }else{
-                            var u=unlocks[i-4]||'LV'+((i+1)*20);
-                            slots.push('<button type="button" class="lemo-plot locked" disabled><span class="lemo-soil"></span><span class="lemo-unlock">Buka '+u+'</span><span class="lemo-lock"><i class="fas fa-lock"></i></span></button>');
-                        }
-                    }
-                    plotWrap.innerHTML=slots.join('');
+                    plotWrap.innerHTML=g.plots.map(function(p,i){
+                        var pp=p?Math.max(0,Math.min(100,Number(p.progress||0))):0;
+                        var cls='st-plot-btn'+(i===active?' on':'')+(p&&p.ready?' ready':'');
+                        var label=p?(p.ready?'Siap panen':pp+'%'):'Kosong';
+                        return '<button type="button" class="'+cls+'" data-plot="'+i+'"><span class="st-plot-emoji">'+gardenEmojiFor(p)+'</span><span class="st-plot-name">Plot '+(i+1)+'<br>'+escH(label)+'</span><span class="st-plot-bar"><span style="width:'+pp+'%"></span></span></button>';
+                    }).join('');
                     plotWrap.querySelectorAll('[data-plot]').forEach(function(b){b.addEventListener('click',function(){selectGardenPlot(b.dataset.plot)})});
                 }
 
                 var water=document.getElementById('garden-water'), harvest=document.getElementById('garden-harvest');
-                if(water)water.disabled=!plot||plot.ready;
+                if(water)water.disabled=!plot||plot.ready||g.waterDrops<=0;
                 if(harvest)harvest.disabled=!plot||!plot.ready;
-
-                var primary=document.getElementById('garden-primary-action');
-                if(primary){
-                    primary.textContent=plot?(plot.ready?'Panen':'Siram'):'Tanaman';
-                    primary.onclick=function(){
-                        var g2=ensureGardenLocal(), p2=g2.plots[getActivePlotIndex()]||null;
-                        if(!p2)openSeedSheet();
-                        else if(p2.ready)gardenHarvest();
-                        else gardenWater();
-                    };
-                }
 
                 var seeds=document.getElementById('garden-seeds');
                 if(seeds){
@@ -3604,7 +3323,7 @@
                         var v=VEGGIES[k];
                         var dis=plot?' disabled':'';
                         var hint=plot?(plot.ready?'Panen plot aktif dulu':'Plot aktif terisi'):(v.growNeed+'x siram');
-                        return '<button class="garden-seed" data-seed="'+k+'"'+dis+'><span>'+v.icon+'</span><strong>'+escH(v.name)+'</strong><small>Waktu tumbuh: '+escH(hint)+'<br>Bonus koin<br>Hasil EXP pet</small></button>';
+                        return '<button class="garden-seed" data-seed="'+k+'"'+dis+'><span>'+v.icon+'</span><strong>'+escH(v.name)+'</strong><small>'+escH(hint)+'<br>Reward coins + makanan pet</small></button>';
                     }).join('');
                     seeds.querySelectorAll('[data-seed]').forEach(function(b){b.addEventListener('click',function(){gardenPlant(b.dataset.seed)})});
                 }
@@ -3613,17 +3332,33 @@
                 if(inv){
                     inv.innerHTML=Object.keys(VEGGIES).map(function(k){
                         var v=VEGGIES[k],n=Number(g.inventory[k]||0);
-                        return '<button class="garden-feed" data-feed="'+k+'" '+(n>0?'':'disabled')+'><span>'+v.icon+'</span><strong>'+escH(v.name)+' x'+n+'</strong><small>'+escH(v.desc)+'<br>Kasih makan Plong</small></button>';
+                        return '<button class="garden-feed" data-feed="'+k+'" '+(n>0?'':'disabled')+'><span>'+v.icon+'</span><strong>x'+n+'</strong><small>'+escH(v.name)+'<br>'+escH(v.desc)+'</small></button>';
                     }).join('');
                     inv.querySelectorAll('[data-feed]').forEach(function(b){b.addEventListener('click',function(){gardenFeed(b.dataset.feed)})});
                 }
 
-                var hist=document.getElementById('garden-history');
-                if(hist){
-                    hist.innerHTML=(g.history&&g.history.length?g.history.slice(0,8).map(function(h){return '<div class="garden-history-item">'+escH(h.text||'Aktivitas kebun')+'</div>'}).join(''):'<div class="garden-empty-mini">Belum ada aktivitas kebun. Tanam bibit pertama dulu 🌱</div>');
+                var daily=document.getElementById('st-daily-tasks');
+                if(daily){
+                    var d=g.daily||{};
+                    var tasks=[
+                        ['Tanam 1 bibit',Number(d.planted||0),1],
+                        ['Siram 3x',Number(d.watered||0),3],
+                        ['Panen 1x',Number(d.harvested||0),1]
+                    ];
+                    daily.innerHTML=tasks.map(function(t){
+                        var done=t[1]>=t[2];
+                        return '<div class="st-task '+(done?'done':'')+'"><div><strong>'+t[0]+'</strong><span>'+Math.min(t[1],t[2])+'/'+t[2]+' selesai</span></div><b>'+(done?'Selesai':'Proses')+'</b></div>';
+                    }).join('');
+                    var btn=document.getElementById('st-daily-reward');
+                    if(btn)btn.disabled=!!d.claimed||tasks.filter(function(t){return t[1]>=t[2]}).length<2;
                 }
 
-                var lvl=document.getElementById('garden-level'), wp=document.getElementById('garden-water-power'), ic=document.getElementById('garden-idle-coins'), rate=document.getElementById('garden-idle-rate'), gp=document.getElementById('garden-level-progress'), up=document.getElementById('garden-upgrade'), claim=document.getElementById('garden-claim');
+                var hist=document.getElementById('garden-history');
+                if(hist){
+                    hist.innerHTML=(g.history&&g.history.length?g.history.slice(0,8).map(function(h){return '<div class="garden-history-item">'+escH(h.text||'Aktivitas kebun')+'</div>'}).join(''):'<div class="garden-empty-mini">Belum ada aktivitas tanam. Tanam bibit pertama dulu 🌱</div>');
+                }
+
+                var lvl=document.getElementById('garden-level'), wp=document.getElementById('garden-water-power'), ic=document.getElementById('garden-idle-coins'), rate=document.getElementById('garden-idle-rate'), gp=document.getElementById('garden-level-progress'), up=document.getElementById('garden-upgrade'), claim=document.getElementById('garden-claim'), upTxt=document.getElementById('pf-upgrade-text');
                 var idleCoins=gardenIdleCoinsLocal(g), idleRate=gardenIdleRateLocal(g), waterPower=gardenWaterPowerLocal(g), cost=gardenUpgradeCostLocal(g);
                 if(lvl)lvl.textContent='Lv '+(g.level||1);
                 if(wp)wp.textContent='x'+waterPower;
@@ -3631,12 +3366,13 @@
                 if(rate)rate.textContent='+'+idleRate+'/mnt';
                 if(gp)gp.style.width=Math.max(0,Math.min(100,Math.round((Number(g.exp||0)/Math.max(40,Number(g.expMax||40)))*100)))+'%';
                 if(up)up.title='Upgrade '+cost+' coins';
+                if(upTxt)upTxt.textContent=cost+' coins';
                 if(claim)claim.disabled=idleCoins<=0;
             }
 var gardenBusy=false;
             function setGardenBusy(on){
                 gardenBusy=!!on;
-                document.querySelectorAll('.garden-seed,.garden-feed,#garden-water,#garden-harvest,#garden-claim,#garden-upgrade,#garden-bonus,#garden-open-seeds,#garden-open-stock').forEach(function(btn){
+                document.querySelectorAll('.garden-seed,.garden-feed,#garden-water,#garden-harvest,#garden-claim,#garden-upgrade,#garden-bonus,#garden-open-seeds,#garden-open-stock,#st-claim-water,#st-daily-reward').forEach(function(btn){
                     if(!btn)return;
                     if(on){
                         btn.dataset.prevDisabled=btn.disabled?'1':'0';
@@ -3696,8 +3432,8 @@ var gardenBusy=false;
                 gardenRequest('/api/garden/plant',{seed:seed,plotIndex:idx}).then(function(d){if(d)closeGardenSheets();});
             }
             function gardenWater(){
-                var stage=document.getElementById('garden-stage');
-                if(stage){stage.classList.remove('watering');void stage.offsetWidth;stage.classList.add('watering');setTimeout(function(){stage&&stage.classList.remove('watering')},950);}
+                var tree=document.querySelector('.st-tree-emoji');
+                if(tree){tree.classList.remove('grow');void tree.offsetWidth;tree.classList.add('grow');}
                 gardenRequest('/api/garden/water',{plotIndex:getActivePlotIndex()});
             }
             function gardenHarvest(){gardenRequest('/api/garden/harvest',{plotIndex:getActivePlotIndex()});}
@@ -3705,6 +3441,8 @@ var gardenBusy=false;
             function gardenClaim(){gardenRequest('/api/garden/claim',{});}
             function gardenUpgrade(){gardenRequest('/api/garden/upgrade',{});}
             function gardenBonus(){gardenRequest('/api/garden/bonus',{});}
+            function gardenClaimWater(){gardenRequest('/api/garden/claim-water',{});}
+            function gardenDailyReward(){gardenRequest('/api/garden/daily-reward',{});}
             function openGardenSheet(id){
                 var el=document.getElementById(id);
                 if(!el)return;
@@ -3722,7 +3460,7 @@ var gardenBusy=false;
             }
             function openSeedSheet(){openGardenSheet('garden-seed-sheet')}
             function openStockSheet(){openGardenSheet('garden-stock-sheet')}
-            var gardenWaterBtn=document.getElementById('garden-water'),gardenHarvestBtn=document.getElementById('garden-harvest'),gardenClaimBtn=document.getElementById('garden-claim'),gardenUpgradeBtn=document.getElementById('garden-upgrade'),gardenBonusBtn=document.getElementById('garden-bonus'),gardenSeedOpenBtn=document.getElementById('garden-open-seeds'),gardenStockOpenBtn=document.getElementById('garden-open-stock');
+            var gardenWaterBtn=document.getElementById('garden-water'),gardenHarvestBtn=document.getElementById('garden-harvest'),gardenClaimBtn=document.getElementById('garden-claim'),gardenUpgradeBtn=document.getElementById('garden-upgrade'),gardenBonusBtn=document.getElementById('garden-bonus'),gardenSeedOpenBtn=document.getElementById('garden-open-seeds'),gardenStockOpenBtn=document.getElementById('garden-open-stock'),gardenClaimWaterBtn=document.getElementById('st-claim-water'),gardenDailyRewardBtn=document.getElementById('st-daily-reward'),stHelpBtn=document.getElementById('st-help');
             if(gardenWaterBtn)gardenWaterBtn.addEventListener('click',gardenWater);
             if(gardenHarvestBtn)gardenHarvestBtn.addEventListener('click',gardenHarvest);
             if(gardenClaimBtn)gardenClaimBtn.addEventListener('click',gardenClaim);
@@ -3730,14 +3468,11 @@ var gardenBusy=false;
             if(gardenBonusBtn)gardenBonusBtn.addEventListener('click',gardenBonus);
             if(gardenSeedOpenBtn)gardenSeedOpenBtn.addEventListener('click',openSeedSheet);
             if(gardenStockOpenBtn)gardenStockOpenBtn.addEventListener('click',openStockSheet);
+            if(gardenClaimWaterBtn)gardenClaimWaterBtn.addEventListener('click',gardenClaimWater);
+            if(gardenDailyRewardBtn)gardenDailyRewardBtn.addEventListener('click',gardenDailyReward);
+            if(stHelpBtn)stHelpBtn.addEventListener('click',function(){toast('Tanam bibit → siram pakai air → panen saat 100%. Selesaikan misi buat hadiah.')});
             document.querySelectorAll('[data-garden-sheet-close]').forEach(function(el){el.addEventListener('click',closeGardenSheets)});
             document.addEventListener('keydown',function(e){if(e.key==='Escape')closeGardenSheets()});
-            var lemoClaimTop=document.getElementById('lemo-claim-top'),lemoFertilizer=document.getElementById('lemo-fertilizer'),lemoPesticide=document.getElementById('lemo-pesticide'),lemoClean=document.getElementById('lemo-clean');
-            if(lemoClaimTop)lemoClaimTop.addEventListener('click',gardenClaim);
-            if(lemoFertilizer)lemoFertilizer.addEventListener('click',gardenWater);
-            if(lemoPesticide)lemoPesticide.addEventListener('click',function(){toast('Insektisida siap dipakai saat event hama dibuka')});
-            if(lemoClean)lemoClean.addEventListener('click',function(){var g=ensureGardenLocal(),p=g.plots[getActivePlotIndex()]||null;if(p&&p.ready)gardenHarvest();else toast('Belum ada yang perlu dibasmi/panen')});
-
 
             /* PET AVATAR CUSTOMIZER */
             var AVATAR_DEFAULT={body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"};
