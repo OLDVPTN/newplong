@@ -1801,6 +1801,475 @@
             @media(min-width:900px){#pg-garden.st-farm-page{max-width:460px!important;margin:0 auto;border-left:1px solid rgba(0,0,0,.05);border-right:1px solid rgba(0,0,0,.05)}}
             @media(max-width:380px){.st-app{padding-left:10px;padding-right:10px}.st-wallet-item{padding:7px;gap:5px}.st-wallet-item i{width:27px;height:27px}.st-progress-ring{width:170px;height:170px}.st-tree-emoji{font-size:64px}.st-plots{gap:5px}.st-plot-btn{min-height:86px;padding:7px 4px}.st-action-row{gap:6px}.st-action{font-size:11px}}
 
+
+            /* ═══════ SHOPEE TANAM RESPONSIVE POLISH — DESKTOP / MOBILE / APPLE ═══════ */
+            #pg-garden.st-farm-page{
+                height:auto!important;
+                min-height:100dvh!important;min-height:calc(var(--real-vh,1vh)*100)!important;
+                overflow-x:hidden!important;
+                overscroll-behavior-y:contain;
+                scrollbar-gutter:stable both-edges;
+                padding-bottom:calc(var(--nav-h) + var(--s-b) + 22px)!important;
+            }
+            #pg-garden.st-farm-page *{
+                -webkit-tap-highlight-color:transparent;
+            }
+            #pg-garden.st-farm-page button{
+                touch-action:manipulation;
+                -webkit-user-select:none;
+                user-select:none;
+            }
+            .st-app{
+                width:min(100%, 480px);
+                min-height:100dvh;
+                margin-inline:auto;
+            }
+            .st-header,
+            .st-wallet,
+            .st-reward-banner,
+            .st-main-card,
+            .st-plot-card,
+            .st-task-card,
+            .st-boost-grid,
+            .st-history{
+                position:relative;
+                z-index:2;
+            }
+            .st-back,.st-help,
+            .st-wallet-item,
+            .st-reward-banner,
+            .st-main-card,
+            .st-plot-card,
+            .st-task-card,
+            .st-boost-grid button,
+            .st-history{
+                -webkit-backdrop-filter:blur(14px);
+                backdrop-filter:blur(14px);
+            }
+            .st-wallet-item,
+            .st-reward-banner,
+            .st-main-card,
+            .st-plot-card,
+            .st-task-card,
+            .st-boost-grid button,
+            .st-history{
+                border-color:rgba(255,255,255,.78)!important;
+            }
+            .st-growth span{
+                max-width:320px;
+                margin-inline:auto;
+            }
+            .st-action,
+            .st-card-head button,
+            .st-reward-banner button,
+            .st-boost-grid button{
+                transition:transform .14s ease, box-shadow .14s ease, opacity .14s ease;
+            }
+            .st-action:active,
+            .st-card-head button:active,
+            .st-reward-banner button:active,
+            .st-boost-grid button:active{
+                transform:translateY(2px) scale(.98);
+                box-shadow:none!important;
+            }
+            .st-plot-btn{
+                overflow:hidden;
+            }
+            .st-plot-btn::after{
+                content:'';
+                position:absolute;
+                inset:0;
+                background:linear-gradient(135deg,rgba(255,255,255,.34),transparent 48%);
+                pointer-events:none;
+            }
+            .st-plot-btn.ready{
+                animation:stReadyPulse 1.9s ease-in-out infinite;
+            }
+            @keyframes stReadyPulse{
+                0%,100%{box-shadow:0 0 0 4px rgba(238,77,45,.12),0 8px 16px rgba(130,72,29,.10)}
+                50%{box-shadow:0 0 0 7px rgba(238,77,45,.18),0 10px 22px rgba(130,72,29,.15)}
+            }
+
+            /* Desktop: make farm feel like a real dashboard, not a stretched mobile screen */
+            @media(min-width:900px){
+                #pg-garden.st-farm-page{
+                    max-width:none!important;
+                    width:100%!important;
+                    margin:0!important;
+                    border:0!important;
+                    background:
+                        radial-gradient(circle at 20% 12%,rgba(255,255,255,.24),transparent 280px),
+                        linear-gradient(180deg,#FF7A32 0%,#FF9A54 20%,#FFE3B8 48%,#F4FFE8 100%)!important;
+                }
+                .st-bg{
+                    position:fixed!important;
+                }
+                .st-app{
+                    width:min(1180px, calc(100vw - 56px));
+                    min-height:auto;
+                    display:grid;
+                    grid-template-columns:minmax(360px, 430px) minmax(460px, 1fr);
+                    grid-template-areas:
+                        "header header"
+                        "wallet wallet"
+                        "main side"
+                        "tasks side"
+                        "boost history";
+                    gap:16px;
+                    align-items:start;
+                    padding:calc(var(--s-t) + 22px) 28px 42px;
+                }
+                .st-header{grid-area:header;margin-bottom:0}
+                .st-wallet{grid-area:wallet;margin-bottom:0;grid-template-columns:repeat(3,minmax(160px,1fr));max-width:720px}
+                .st-main-card{grid-area:main;margin-bottom:0;border-radius:34px;min-height:420px;display:flex;flex-direction:column;justify-content:center}
+                .st-plot-card{grid-area:side;margin-bottom:0;border-radius:28px}
+                .st-task-card{grid-area:tasks;margin-bottom:0}
+                .st-boost-grid{grid-area:boost;margin-bottom:0}
+                .st-history{grid-area:history;margin-bottom:0}
+                .st-reward-banner{
+                    grid-area:side;
+                    align-self:end;
+                    margin:0 0 16px 0;
+                    transform:translateY(-100%);
+                    z-index:3;
+                    max-width:460px;
+                    margin-left:auto;
+                }
+                .st-plot-card{
+                    padding-top:92px;
+                }
+                .st-title strong{font-size:30px}
+                .st-title span{font-size:13px}
+                .st-back,.st-help{width:44px;height:44px;border-radius:16px}
+                .st-progress-ring{width:240px;height:240px}
+                .st-tree-emoji{font-size:94px}
+                .st-tree-pot{width:92px;height:44px}
+                .st-growth strong{font-size:40px}
+                .st-growth span{font-size:13px;max-width:360px}
+                .st-action-row{max-width:390px;margin-inline:auto;width:100%}
+                .st-action{min-height:58px;font-size:13px}
+                .st-plots{
+                    grid-template-columns:repeat(4,minmax(86px,1fr));
+                    gap:10px;
+                }
+                .st-plot-btn{min-height:118px}
+                .st-plot-emoji{font-size:38px}
+                .st-plot-name{font-size:10px}
+                .st-tasks{grid-template-columns:1fr}
+                .st-boost-grid{grid-template-columns:repeat(3,1fr)}
+                .st-boost-grid button{min-height:104px}
+                .st-history{
+                    max-height:260px;
+                    overflow:auto;
+                }
+                #bnav{
+                    left:50%!important;
+                    transform:translateX(-50%);
+                    max-width:720px;
+                    border-radius:24px 24px 0 0;
+                    box-shadow:0 -12px 28px rgba(15,23,42,.10);
+                }
+            }
+
+            /* Tablet */
+            @media(min-width:600px) and (max-width:899px){
+                .st-app{
+                    width:min(620px,100%);
+                    padding-left:22px;
+                    padding-right:22px;
+                }
+                .st-wallet{
+                    grid-template-columns:repeat(3,1fr);
+                }
+                .st-main-card{
+                    border-radius:34px;
+                    padding:18px;
+                }
+                .st-progress-ring{
+                    width:220px;
+                    height:220px;
+                }
+                .st-tree-emoji{
+                    font-size:86px;
+                }
+                .st-plots{
+                    grid-template-columns:repeat(4,1fr);
+                    gap:10px;
+                }
+                .st-plot-btn{
+                    min-height:110px;
+                }
+                .st-boost-grid button{
+                    min-height:100px;
+                }
+            }
+
+            /* Mobile polish */
+            @media(max-width:599px){
+                #pg-garden.st-farm-page{
+                    padding-bottom:calc(var(--nav-h) + var(--s-b) + 16px)!important;
+                }
+                .st-app{
+                    width:100%;
+                    padding:calc(var(--s-t) + 8px) 12px calc(var(--nav-h) + var(--s-b) + 20px);
+                }
+                .st-header{
+                    margin-bottom:8px;
+                }
+                .st-title strong{
+                    font-size:19px;
+                }
+                .st-title span{
+                    font-size:10px;
+                }
+                .st-back,.st-help{
+                    width:38px;
+                    height:38px;
+                    border-radius:14px;
+                }
+                .st-wallet{
+                    gap:6px;
+                    margin-bottom:9px;
+                }
+                .st-wallet-item{
+                    border-radius:15px;
+                    padding:7px 6px;
+                    gap:5px;
+                    min-width:0;
+                }
+                .st-wallet-item i{
+                    width:27px;
+                    height:27px;
+                    border-radius:10px;
+                    font-size:11px;
+                }
+                .st-wallet-item span{
+                    font-size:7px;
+                }
+                .st-wallet-item strong{
+                    font-size:13px;
+                    max-width:48px;
+                    overflow:hidden;
+                    text-overflow:ellipsis;
+                    white-space:nowrap;
+                }
+                .st-reward-banner{
+                    border-radius:20px;
+                    padding:10px;
+                    margin-bottom:9px;
+                }
+                .st-voucher-icon{
+                    width:38px;
+                    height:38px;
+                    border-radius:14px;
+                    font-size:15px;
+                }
+                .st-voucher strong{font-size:12px}
+                .st-voucher span{
+                    font-size:9px;
+                    display:-webkit-box;
+                    -webkit-line-clamp:2;
+                    -webkit-box-orient:vertical;
+                    overflow:hidden;
+                }
+                .st-reward-banner button{
+                    min-height:34px;
+                    padding:7px 9px;
+                    font-size:10px;
+                    border-radius:12px;
+                }
+                .st-main-card{
+                    border-radius:26px;
+                    padding:12px;
+                    margin-bottom:10px;
+                }
+                .st-progress-ring{
+                    width:174px;
+                    height:174px;
+                }
+                .st-progress-ring circle{
+                    stroke-width:8;
+                }
+                .st-tree-emoji{
+                    font-size:66px;
+                }
+                .st-tree-pot{
+                    width:68px;
+                    height:34px;
+                    border-width:4px;
+                }
+                .st-growth strong{
+                    font-size:28px;
+                }
+                .st-growth span{
+                    font-size:11px;
+                    max-width:280px;
+                }
+                .st-action-row{
+                    gap:7px;
+                    margin-top:10px;
+                }
+                .st-action{
+                    min-height:48px;
+                    border-radius:16px;
+                    font-size:11px;
+                    gap:5px;
+                }
+                .st-plot-card,.st-task-card,.st-history{
+                    border-radius:21px;
+                    padding:10px;
+                    margin-bottom:10px;
+                }
+                .st-card-head{
+                    margin-bottom:9px;
+                }
+                .st-card-head strong{
+                    font-size:12px;
+                }
+                .st-card-head span{
+                    font-size:9px;
+                }
+                .st-card-head button{
+                    min-height:32px;
+                    padding:6px 8px;
+                    font-size:9px;
+                    border-radius:12px;
+                }
+                .st-plots{
+                    grid-template-columns:repeat(4,minmax(0,1fr));
+                    gap:6px;
+                }
+                .st-plot-btn{
+                    min-height:88px;
+                    border-radius:16px;
+                    padding:7px 4px;
+                }
+                .st-plot-emoji{
+                    font-size:29px;
+                }
+                .st-plot-name{
+                    font-size:8px;
+                }
+                .st-plot-bar{
+                    height:5px;
+                    margin-top:5px;
+                }
+                .st-task{
+                    border-radius:14px;
+                    padding:8px;
+                }
+                .st-task strong{
+                    font-size:10px;
+                }
+                .st-task span{
+                    font-size:9px;
+                }
+                .st-boost-grid{
+                    gap:7px;
+                    margin-bottom:10px;
+                }
+                .st-boost-grid button{
+                    min-height:78px;
+                    border-radius:18px;
+                }
+                .st-boost-grid span{
+                    font-size:23px;
+                }
+                .st-boost-grid strong{
+                    font-size:10px;
+                }
+                .st-boost-grid small{
+                    font-size:8px;
+                }
+                .st-history .garden-history{
+                    max-height:180px;
+                    overflow:auto;
+                }
+            }
+
+            /* Tiny screens */
+            @media(max-width:360px){
+                .st-app{
+                    padding-left:9px;
+                    padding-right:9px;
+                }
+                .st-wallet{
+                    gap:5px;
+                }
+                .st-wallet-item{
+                    padding:6px 5px;
+                }
+                .st-wallet-item i{
+                    width:24px;
+                    height:24px;
+                    display:none;
+                }
+                .st-progress-ring{
+                    width:158px;
+                    height:158px;
+                }
+                .st-tree-emoji{
+                    font-size:58px;
+                }
+                .st-growth strong{
+                    font-size:25px;
+                }
+                .st-action{
+                    min-height:44px;
+                    font-size:10px;
+                    border-radius:14px;
+                }
+                .st-plots{
+                    gap:5px;
+                }
+                .st-plot-btn{
+                    min-height:78px;
+                }
+                .st-plot-emoji{
+                    font-size:24px;
+                }
+                .st-plot-name{
+                    font-size:7px;
+                }
+                .st-card-head{
+                    flex-direction:column;
+                    align-items:stretch;
+                }
+                .st-card-head button{
+                    width:100%;
+                }
+            }
+
+            /* iOS Safari fixes */
+            @supports(-webkit-touch-callout:none){
+                #pg-garden.st-farm-page{
+                    min-height:-webkit-fill-available!important;
+                    -webkit-overflow-scrolling:touch;
+                    transform:translateZ(0);
+                }
+                .st-app{
+                    padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 24px)!important;
+                }
+                .st-progress-ring,
+                .st-tree,
+                .st-main-card,
+                .st-plot-card{
+                    transform:translateZ(0);
+                    backface-visibility:hidden;
+                }
+                .st-bg{
+                    transform:translateZ(0);
+                }
+            }
+
+            @media(prefers-reduced-motion:reduce){
+                .st-tree-emoji,
+                .st-plot-btn.ready{
+                    animation:none!important;
+                }
+            }
+
+
 /* ═══════ ACCOUNT PAGE ═══════ */
             #pg-account{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
             .acct-card{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
@@ -2525,7 +2994,14 @@
 
             /* AUTH + POSTGRESQL SYNC */
             var authMode="login";
-            var authToken=localStorage.getItem("vkm_token")||"";
+            
+            function setRealViewportHeight(){
+                try{document.documentElement.style.setProperty('--real-vh',(window.innerHeight*.01)+'px')}catch(e){}
+            }
+            setRealViewportHeight();
+            window.addEventListener('resize',setRealViewportHeight,{passive:true});
+            window.addEventListener('orientationchange',function(){setTimeout(setRealViewportHeight,250)},{passive:true});
+var authToken=localStorage.getItem("vkm_token")||"";
             var authUser=null;
             var syncTimer=null;
             window.__vkmAuthReady=false;
