@@ -2872,7 +2872,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 try{
                     if(msg)sessionStorage.setItem("vkm_auth_message",msg);
                 }catch(e){}
-                window.location.href="/login.html?next="+authNextUrl();
+                window.location.href="/login?next="+authNextUrl();
             }
             function hideAuth(){document.body.classList.remove("auth-lock");var s=document.getElementById("auth-screen");if(s)s.classList.add("hide");authAlert("")}
             function applyRemoteState(remote){
@@ -2944,7 +2944,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 window.__vkmAuthReady=false;
                 localStorage.removeItem("vkm_token");
                 try{sessionStorage.setItem("vkm_auth_message",silent?"Sesi habis. Silakan login ulang.":"Logout berhasil.");}catch(e){}
-                window.location.href="/login.html";
+                window.location.href="/login";
             }
             async function submitAuth(e){
                 e.preventDefault();
@@ -2971,7 +2971,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
             }
             async function bootAuth(){
                 if(!authToken){
-                    window.location.href="/login.html?next="+authNextUrl();
+                    window.location.href="/login?next="+authNextUrl();
                     return;
                 }
                 try{
