@@ -1874,7 +1874,165 @@
             @media(prefers-reduced-motion:reduce){
                 .st-tree-emoji{animation:none!important}
             }
-            /* ═══════ ACCOUNT PAGE ═══════ */
+            
+            /* ═══════ VERSION 1 — CUTE / PLAYFUL GARDEN ═══════ */
+            #pg-garden.st-cute-page{
+                background:linear-gradient(180deg,#fff7fb 0%,#fff2df 48%,#edffe8 100%)!important;
+            }
+            .st-cute-page .st-bg{
+                background:
+                    radial-gradient(circle at 12% 18%,rgba(255,255,255,.55) 0 40px,transparent 41px),
+                    radial-gradient(circle at 86% 14%,rgba(255,255,255,.45) 0 52px,transparent 53px),
+                    linear-gradient(180deg,#ff9dcf 0%,#ffc58a 22%,#fff1c8 48%,#eaffdf 100%)!important;
+            }
+            .st-cute-page .st-hill.h1{background:linear-gradient(180deg,#d9ff95,#a9e969)!important}
+            .st-cute-page .st-hill.h2{background:linear-gradient(180deg,#9be276,#63be4b)!important}
+            .cute-spark{
+                position:absolute;
+                color:rgba(255,255,255,.86);
+                font-weight:900;
+                text-shadow:0 4px 12px rgba(175,77,58,.16);
+                animation:cuteFloat 4s ease-in-out infinite;
+            }
+            .cute-spark.s1{left:12%;top:180px;font-size:22px}
+            .cute-spark.s2{right:16%;top:240px;font-size:24px;animation-delay:.8s}
+            .cute-spark.s3{left:62%;top:112px;font-size:20px;animation-delay:1.4s}
+            @keyframes cuteFloat{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-10px) rotate(8deg)}}
+
+            .st-cute-page .st-title strong::after{
+                content:' ૮ ˶ᵔ ᵕ ᵔ˶ ა';
+                font-size:12px;
+                font-family:'Outfit',sans-serif;
+                margin-left:6px;
+                opacity:.9;
+            }
+            .st-cute-page .st-wallet-item,
+            .st-cute-page .st-main-card,
+            .st-cute-page .st-plot-card,
+            .st-cute-page .st-task-card,
+            .st-cute-page .st-history,
+            .st-cute-page .st-boost-grid button{
+                border-color:rgba(255,255,255,.92)!important;
+                box-shadow:0 18px 42px rgba(189,96,80,.12)!important;
+            }
+            .st-cute-page .st-main-card{
+                background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(255,248,253,.86))!important;
+                border-radius:36px!important;
+            }
+            .st-cute-page .st-main-card::before{
+                background:radial-gradient(ellipse at center,#dfffaa,#a7e86d 58%,transparent 60%)!important;
+            }
+            .st-cute-page .st-reward-banner{
+                background:linear-gradient(135deg,#fff,#fff0fa)!important;
+                border-color:#ffd8ee!important;
+            }
+            .st-cute-page .st-voucher-icon{
+                background:linear-gradient(180deg,#ff9dd2,#ff6aa3)!important;
+                box-shadow:0 8px 18px rgba(255,106,163,.20)!important;
+            }
+            .st-cute-page .st-voucher strong,
+            .st-cute-page .st-card-head strong,
+            .st-cute-page .st-boost-grid strong{
+                color:#7a3a4f!important;
+            }
+            .st-cute-page .st-voucher span,
+            .st-cute-page .st-progress-pill,
+            .st-cute-page .st-wallet-item:nth-child(1) strong{
+                color:#ff6aa3!important;
+            }
+            .st-cute-page .st-progress-ring #st-ring-fill{
+                stroke:#ff79b4!important;
+            }
+            .st-cute-page .st-progress-ring circle:first-child{
+                stroke:#ffe0f1!important;
+            }
+            .st-cute-page .st-progress-pill{
+                border-color:#ffd8ee!important;
+                background:#fff8fc!important;
+            }
+            .st-cute-page .st-tree::before{
+                content:'🌸';
+                position:absolute;
+                left:-34px;
+                top:12px;
+                font-size:24px;
+                animation:cuteFloat 3s ease-in-out infinite;
+            }
+            .st-cute-page .st-tree::after{
+                content:'🐾';
+                position:absolute;
+                right:-34px;
+                bottom:30px;
+                font-size:22px;
+                animation:cuteFloat 3.6s ease-in-out infinite .5s;
+            }
+            .st-cute-page .st-tree-emoji{
+                filter:drop-shadow(0 14px 12px rgba(127,85,55,.18)) saturate(1.08)!important;
+            }
+            .st-cute-page .st-tree-pot{
+                background:linear-gradient(180deg,#f7b6cf,#c66b8f)!important;
+                border-color:#934466!important;
+            }
+            .st-cute-page .st-level-card,
+            .st-cute-page .st-mini-stat{
+                background:linear-gradient(180deg,#fff,#fff5fb)!important;
+                border-color:#ffd8ee!important;
+            }
+            .st-cute-page .st-action{
+                border-radius:20px!important;
+                box-shadow:0 7px 0 rgba(123,55,46,.14),0 12px 22px rgba(183,94,88,.12)!important;
+            }
+            .st-cute-page .st-action.secondary{background:linear-gradient(180deg,#ffc26d,#ff9f43)!important}
+            .st-cute-page .st-action.primary{background:linear-gradient(180deg,#88dcff,#3db5f4)!important}
+            .st-cute-page .st-action.accent{background:linear-gradient(180deg,#ff8cc2,#ff5fa0)!important}
+            .st-cute-page .st-plot-card,
+            .st-cute-page .st-task-card,
+            .st-cute-page .st-history{
+                background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,252,246,.9))!important;
+            }
+            .st-cute-page .st-plot-btn{
+                background:linear-gradient(180deg,#fff,#fff2f8)!important;
+                border-color:#ffd8ee!important;
+                border-radius:26px!important;
+                box-shadow:0 12px 24px rgba(176,99,119,.10)!important;
+            }
+            .st-cute-page .st-plot-btn.on{
+                border-color:#ff7ab5!important;
+                box-shadow:0 0 0 5px rgba(255,122,181,.13),0 14px 26px rgba(176,99,119,.14)!important;
+            }
+            .st-cute-page .st-plot-emoji-wrap{
+                background:linear-gradient(180deg,#fff,#fff6fb)!important;
+                border-radius:22px!important;
+            }
+            .st-cute-page .st-plot-badge,
+            .st-cute-page .st-task b{
+                background:#fff4fa!important;
+                color:#ff6aa3!important;
+                border-color:#ffd8ee!important;
+            }
+            .st-cute-page .st-task.done b{
+                background:#eaffea!important;
+                color:#16934a!important;
+            }
+            .st-cute-page .st-task{
+                background:#fff8fc!important;
+                border-color:#ffd8ee!important;
+            }
+            .st-cute-page .st-boost-grid button{
+                background:linear-gradient(180deg,#fff,#fff8fc)!important;
+                border-radius:26px!important;
+            }
+            .st-cute-page .st-history .garden-history-item{
+                background:#fff8fc!important;
+                border-color:#ffd8ee!important;
+            }
+            @media(max-width:599px){
+                .st-cute-page .st-title strong::after{display:none}
+                .st-cute-page .st-tree::before{left:-20px}
+                .st-cute-page .st-tree::after{right:-20px}
+            }
+
+/* ═══════ ACCOUNT PAGE ═══════ */
 /* ═══════ ACCOUNT PAGE ═══════ */
             #pg-account{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
             .acct-card{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
@@ -2073,10 +2231,10 @@
 
 
                 <!-- GARDEN -->
-                <section id="pg-garden" class="pg st-farm-page" aria-label="Plong Tanam">
+                <section id="pg-garden" class="pg st-farm-page st-cute-page" aria-label="Plong Tanam">
                     <div class="st-bg">
                         <div class="st-sky"></div>
-                        <div class="st-glow"></div>
+                        <div class="st-glow"></div><div class="cute-spark s1">✦</div><div class="cute-spark s2">♡</div><div class="cute-spark s3">✿</div>
                         <div class="st-hill h1"></div>
                         <div class="st-hill h2"></div>
                         <div class="st-cloud c1"></div>
@@ -2087,8 +2245,8 @@
                         <div class="st-header">
                             <button type="button" class="st-back" data-page="pg-home"><i class="fas fa-chevron-left"></i></button>
                             <div class="st-title">
-                                <strong>Kebun Plong</strong>
-                                <span>Ruangan kecil buat tanam, rawat, dan panen reward</span>
+                                <strong>Kebun Imut Plong</strong>
+                                <span>Tanam santai, siram lucu, panen hadiah kecil</span>
                             </div>
                             <button type="button" class="st-help" id="st-help"><i class="fas fa-question"></i></button>
                         </div>
