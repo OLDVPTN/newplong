@@ -2075,6 +2075,94 @@
             @media(max-width:480px){.nb{padding:4px 7px;font-size:8px}.nb i{font-size:16px}.acct-grid{grid-template-columns:1fr 1fr}}
             @media(min-width:900px){#pg-account{padding-bottom:24px}.acct-grid{grid-template-columns:repeat(4,1fr)}#pg-avatar{padding-bottom:24px}}
 
+            .page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 50% 25%, rgba(255, 255, 255, .92), rgba(255, 247, 237, .96)),
+    linear-gradient(180deg, #fff7ed, #f0fdf4);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .22s ease, visibility .22s ease;
+}
+
+.page-loader.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.page-loader-card {
+  width: min(280px, calc(100vw - 48px));
+  padding: 26px 22px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, .88);
+  border: 1px solid rgba(255, 255, 255, .9);
+  box-shadow: 0 24px 70px rgba(120, 72, 32, .16);
+  text-align: center;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.page-loader-logo {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 14px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  font-size: 32px;
+  background: linear-gradient(180deg, #fff7ed, #dcfce7);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.9), 0 12px 26px rgba(34, 197, 94, .16);
+  animation: loaderFloat 1.4s ease-in-out infinite;
+}
+
+.page-loader-spinner {
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  border: 4px solid #fed7aa;
+  border-top-color: #f97316;
+  animation: loaderSpin .8s linear infinite;
+}
+
+.page-loader-card strong {
+  display: block;
+  font-size: 15px;
+  color: #7c2d12;
+  font-weight: 900;
+}
+
+.page-loader-card span {
+  display: block;
+  margin-top: 5px;
+  font-size: 11px;
+  color: #9a6d4b;
+  font-weight: 700;
+}
+
+@keyframes loaderSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes loaderFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.03); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader-logo,
+  .page-loader-spinner {
+    animation: none !important;
+  }
+}
+
 
             /* ═══════ AUTH / LOGIN REGISTER ═══════ */
             body.auth-lock #app-shell, body.auth-lock #bnav{display:none!important}
@@ -2101,44 +2189,18 @@
             .auth-alert.show{display:block}
             .auth-note{font-size:11px;color:var(--t4);line-height:1.5;margin-top:12px;text-align:center}
             @media(max-width:420px){.auth-card{padding:18px;border-radius:18px}.auth-title{font-size:23px}}
-            body.vkm-multipage {
-  opacity: 1;
-  transition: opacity .22s ease, transform .22s ease;
-}
-
-body.vkm-page-enter {
-  animation: pageEnter .28s ease both;
-}
-
-body.vkm-page-leave {
-  opacity: 0;
-  transform: translateY(8px) scale(.995);
-}
-
-@keyframes pageEnter {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(.995);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body.vkm-multipage,
-  body.vkm-page-enter,
-  body.vkm-page-leave {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-  }
-}
 
         </style>
     </head>
     <body class="auth-lock">
+    <div id="page-loader" class="page-loader">
+    <div class="page-loader-card">
+    <div class="page-loader-logo">🌱</div>
+    <div class="page-loader-spinner"></div>
+    <strong>Memuat halaman...</strong>
+    <span>Plong sedang menyiapkan ruangmu</span>
+    </div>
+     </div>
         <div id="toast" role="alert" aria-live="polite"></div>
 
         <div id="auth-screen" class="hide" role="dialog" aria-modal="true" aria-label="Masuk VokaMon">
@@ -2778,25 +2840,36 @@ body.vkm-page-leave {
         </nav>
 
         <script>
-document.addEventListener("DOMContentLoaded", function () {
-  document.body.classList.add("vkm-page-enter");
-});
+            function showPageLoader(text) {
+  var loader = document.getElementById("page-loader");
+  if (!loader) return;
 
-function smoothNavigate(url) {
-  if (!url) return;
+  var title = loader.querySelector("strong");
+  if (title && text) title.textContent = text;
 
-  var currentPath = window.location.pathname;
-  var targetPath = new URL(url, window.location.origin).pathname;
+  loader.classList.add("show");
+}
 
-  if (currentPath === targetPath) return;
-
-  document.body.classList.remove("vkm-page-enter");
-  document.body.classList.add("vkm-page-leave");
+function hidePageLoader() {
+  var loader = document.getElementById("page-loader");
+  if (!loader) return;
 
   setTimeout(function () {
-    window.location.href = url;
+    loader.classList.remove("show");
   }, 180);
 }
+
+window.addEventListener("load", function () {
+  hidePageLoader();
+});
+
+window.addEventListener("pageshow", function () {
+  hidePageLoader();
+});
+
+window.addEventListener("beforeunload", function () {
+  showPageLoader("Memuat halaman...");
+});
             window.__VKM_PAGE_ID="<%= pageId %>";
             var EMO={marah:{label:"Marah",color:"#DC2626",hue:0,icon:"fa-fire",desc:"Api Chaos"},sedih:{label:"Sedih",color:"#2563EB",hue:220,icon:"fa-droplet",desc:"Aqua Tears"},galau:{label:"Galau",color:"#9333EA",hue:280,icon:"fa-hurricane",desc:"Wind Void"},stres:{label:"Stres",color:"#D97706",hue:35,icon:"fa-bolt",desc:"Spark Friction"},excited:{label:"Excited",color:"#CA8A04",hue:50,icon:"fa-star",desc:"Solar Burst"},tenang:{label:"Tenang",color:"#0D9488",hue:170,icon:"fa-leaf",desc:"Calm Pulse"}};
             var PRODS=[{id:"p1",name:"Coklat Virtual",desc:"Naikkan kenyang dan bahagia Plong",price:50,icon:"🍫",type:"consumable"},{id:"p2",name:"Taman Mimpi",desc:"Background eksklusif baru",price:120,icon:"🌸",type:"unlock",key:"bg_dream_garden"},{id:"p3",name:"Mahkota Emosi",desc:"Aksesoris mahkota untuk Plong",price:80,icon:"👑",type:"unlock",key:"acc_crown"},{id:"p4",name:"Bola Kristal",desc:"Refleksi mood ringan",price:90,icon:"🔮",type:"consumable"},{id:"p5",name:"Sayap Emas",desc:"Evolusi visual karakter",price:350,icon:"✨",type:"unlock",key:"acc_wings"}];
@@ -2925,7 +2998,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 try{
                     if(msg)sessionStorage.setItem("vkm_auth_message",msg);
                 }catch(e){}
-                window.location.href="/login?next="+authNextUrl();
+                window.location.href="/login.html?next="+authNextUrl();
             }
             function hideAuth(){document.body.classList.remove("auth-lock");var s=document.getElementById("auth-screen");if(s)s.classList.add("hide");authAlert("")}
             function applyRemoteState(remote){
@@ -2997,7 +3070,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 window.__vkmAuthReady=false;
                 localStorage.removeItem("vkm_token");
                 try{sessionStorage.setItem("vkm_auth_message",silent?"Sesi habis. Silakan login ulang.":"Logout berhasil.");}catch(e){}
-                window.location.href="/login";
+                window.location.href="/login.html";
             }
             async function submitAuth(e){
                 e.preventDefault();
@@ -3024,7 +3097,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
             }
             async function bootAuth(){
                 if(!authToken){
-                    window.location.href="/login?next="+authNextUrl();
+                    window.location.href="/login.html?next="+authNextUrl();
                     return;
                 }
                 try{
@@ -3056,7 +3129,10 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 var target=VKM_PAGE_ROUTES[id];
                 var current=window.__VKM_PAGE_ID||"pg-home";
                 if(target&&id!==current){
-    smoothNavigate(target);
+    showPageLoader("Membuka halaman...");
+    setTimeout(function () {
+        window.location.href = target;
+    }, 220);
     return;
 }
                 document.querySelectorAll(".pg").forEach(function(p){
