@@ -1,5 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const hpp = require('hpp');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -33,10 +36,78 @@ if (sslMode === 'true' || sslMode === 'require') {
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.set('trust proxy', 1);
+app.disable('x-powered-by');
 
-app.use(cors());
-app.use(express.json({ limit: '15mb' }));
-app.use(express.static(path.join(__dirname, 'public')));
+const BODY_LIMIT = process.env.BODY_LIMIT || '2mb';
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const defaultDevOrigins = [
+  `http://localhost:${PORT}`,
+  `http://127.0.0.1:${PORT}`,
+  'http://localhost:3000',
+  'http://127.0.0.1:3000'
+];
+
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true;
+  if (allowedOrigins.includes(origin)) return true;
+  if (process.env.NODE_ENV !== 'production' && defaultDevOrigins.includes(origin)) return true;
+  return false;
+};
+
+app.use(cors({
+  origin(origin, callback) {
+    if (isAllowedOrigin(origin)) return callback(null, true);
+    return callback(new Error('CORS blocked'));
+  },
+  credentials: true
+}));
+
+app.use(helmet({
+  contentSecurityPolicy: false,
+  crossOriginEmbedderPolicy: false
+}));
+
+app.use(hpp());
+
+app.use(express.json({ limit: BODY_LIMIT }));
+app.use(express.urlencoded({ extended: false, limit: BODY_LIMIT }));
+
+const apiLimiter = rateLimit({
+  windowMs: Number(process.env.RATE_LIMIT_WINDOW_MS || 15 * 60 * 1000),
+  max: Number(process.env.RATE_LIMIT_API_MAX || 300),
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { ok: false, error: 'Terlalu banyak request. Coba lagi nanti.' }
+});
+
+const authLimiter = rateLimit({
+  windowMs: Number(process.env.RATE_LIMIT_WINDOW_MS || 15 * 60 * 1000),
+  max: Number(process.env.RATE_LIMIT_AUTH_MAX || 10),
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { ok: false, error: 'Terlalu banyak percobaan login/daftar. Coba lagi nanti.' }
+});
+
+const aiLimiter = rateLimit({
+  windowMs: Number(process.env.RATE_LIMIT_AI_WINDOW_MS || 5 * 60 * 1000),
+  max: Number(process.env.RATE_LIMIT_AI_MAX || 40),
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { ok: false, reply: 'Terlalu banyak request AI. Coba lagi sebentar ya.' }
+});
+
+app.use('/api', apiLimiter);
+
+app.use(express.static(path.join(__dirname, 'public'), {
+  dotfiles: 'deny',
+  index: false,
+  maxAge: process.env.NODE_ENV === 'production' ? '1d' : 0
+}));
 
 const pool = new Pool(poolConfig);
 
@@ -960,7 +1031,7 @@ function convertHistory(history = []) {
     .filter(Boolean);
 }
 
-app.post('/api/auth/register', async (req, res) => {
+app.post('/api/auth/register', authLimiter, async (req, res) => {
   try {
     const name = String(req.body.name || '').trim().slice(0, 40);
     const email = cleanEmail(req.body.email);
@@ -970,7 +1041,7 @@ app.post('/api/auth/register', async (req, res) => {
     if (!name) return res.status(400).json({ ok: false, error: 'Nama wajib diisi.' });
     if (!email || !email.includes('@')) return res.status(400).json({ ok: false, error: 'Email tidak valid.' });
     if (!username || username.length < 3) return res.status(400).json({ ok: false, error: 'Username minimal 3 karakter.' });
-    if (password.length < 6) return res.status(400).json({ ok: false, error: 'Password minimal 6 karakter.' });
+    if (password.length < 8) return res.status(400).json({ ok: false, error: 'Password minimal 8 karakter.' });
 
     const exists = await query('SELECT id FROM users WHERE email = $1 OR username = $2 LIMIT 1', [email, username]);
     if (exists.length) {
@@ -1008,7 +1079,7 @@ app.post('/api/auth/register', async (req, res) => {
   }
 });
 
-app.post('/api/auth/login', async (req, res) => {
+app.post('/api/auth/login', authLimiter, async (req, res) => {
   try {
     const email = cleanEmail(req.body.email);
     const password = String(req.body.password || '');
@@ -1838,7 +1909,7 @@ app.get('/api/models', requireAuth, async (req, res) => {
   }
 });
 
-app.post('/api/chat', requireAuth, async (req, res) => {
+app.post('/api/chat', aiLimiter, requireAuth, async (req, res) => {
   try {
     const model = req.body.model || 'qwen2.5:3b';
     const language = req.body.language || 'id';
@@ -1974,6 +2045,19 @@ app.get(['/register', '/register.html'], (req, res) => {
 
 app.use((req, res) => {
   res.status(404).render('home');
+});
+
+
+app.use((error, req, res, next) => {
+  if (error && error.message === 'CORS blocked') {
+    return res.status(403).json({ ok: false, error: 'Origin tidak diizinkan.' });
+  }
+
+  if (error && error.type === 'entity.too.large') {
+    return res.status(413).json({ ok: false, error: 'Ukuran request terlalu besar.' });
+  }
+
+  return next(error);
 });
 
 app.listen(PORT, '0.0.0.0', async () => {

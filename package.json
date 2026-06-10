@@ -14,7 +14,10 @@
     "express": "4.21.2",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1",
-    "ejs": "^3.1.10"
+    "ejs": "^3.1.10",
+    "helmet": "^8.0.0",
+    "express-rate-limit": "^7.5.0",
+    "hpp": "^0.2.3"
   },
   "engines": {
     "node": ">=18"
