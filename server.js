@@ -31,6 +31,9 @@ if (sslMode === 'true' || sslMode === 'require') {
   poolConfig.ssl = { rejectUnauthorized: false };
 }
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 app.use(cors());
 app.use(express.json({ limit: '15mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -1925,16 +1928,52 @@ app.post('/api/chat', requireAuth, async (req, res) => {
   }
 });
 
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+
+
+const APP_VIEWS = {
+  '/': 'home',
+  '/home': 'home',
+  '/index.html': 'home',
+
+  '/garden': 'garden',
+  '/garden.html': 'garden',
+
+  '/avatar': 'avatar',
+  '/avatar.html': 'avatar',
+
+  '/vent': 'vent',
+  '/vent.html': 'vent',
+
+  '/art': 'art',
+  '/art.html': 'art',
+
+  '/redeem': 'redeem',
+  '/redeem.html': 'redeem',
+
+  '/assist': 'assist',
+  '/assist.html': 'assist',
+  '/chat': 'assist',
+
+  '/account': 'account',
+  '/account.html': 'account'
+};
+
+Object.entries(APP_VIEWS).forEach(([route, view]) => {
+  app.get(route, (req, res) => {
+    res.render(view);
+  });
 });
 
-app.get('/register', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'register.html'));
+app.get(['/login', '/login.html'], (req, res) => {
+  res.render('login');
+});
+
+app.get(['/register', '/register.html'], (req, res) => {
+  res.render('register');
 });
 
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.status(404).render('home');
 });
 
 app.listen(PORT, '0.0.0.0', async () => {
