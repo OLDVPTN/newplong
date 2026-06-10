@@ -2101,6 +2101,40 @@
             .auth-alert.show{display:block}
             .auth-note{font-size:11px;color:var(--t4);line-height:1.5;margin-top:12px;text-align:center}
             @media(max-width:420px){.auth-card{padding:18px;border-radius:18px}.auth-title{font-size:23px}}
+            body.vkm-multipage {
+  opacity: 1;
+  transition: opacity .22s ease, transform .22s ease;
+}
+
+body.vkm-page-enter {
+  animation: pageEnter .28s ease both;
+}
+
+body.vkm-page-leave {
+  opacity: 0;
+  transform: translateY(8px) scale(.995);
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.vkm-multipage,
+  body.vkm-page-enter,
+  body.vkm-page-leave {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
 
         </style>
     </head>
@@ -2744,6 +2778,25 @@
         </nav>
 
         <script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.body.classList.add("vkm-page-enter");
+});
+
+function smoothNavigate(url) {
+  if (!url) return;
+
+  var currentPath = window.location.pathname;
+  var targetPath = new URL(url, window.location.origin).pathname;
+
+  if (currentPath === targetPath) return;
+
+  document.body.classList.remove("vkm-page-enter");
+  document.body.classList.add("vkm-page-leave");
+
+  setTimeout(function () {
+    window.location.href = url;
+  }, 180);
+}
             window.__VKM_PAGE_ID="<%= pageId %>";
             var EMO={marah:{label:"Marah",color:"#DC2626",hue:0,icon:"fa-fire",desc:"Api Chaos"},sedih:{label:"Sedih",color:"#2563EB",hue:220,icon:"fa-droplet",desc:"Aqua Tears"},galau:{label:"Galau",color:"#9333EA",hue:280,icon:"fa-hurricane",desc:"Wind Void"},stres:{label:"Stres",color:"#D97706",hue:35,icon:"fa-bolt",desc:"Spark Friction"},excited:{label:"Excited",color:"#CA8A04",hue:50,icon:"fa-star",desc:"Solar Burst"},tenang:{label:"Tenang",color:"#0D9488",hue:170,icon:"fa-leaf",desc:"Calm Pulse"}};
             var PRODS=[{id:"p1",name:"Coklat Virtual",desc:"Naikkan kenyang dan bahagia Plong",price:50,icon:"🍫",type:"consumable"},{id:"p2",name:"Taman Mimpi",desc:"Background eksklusif baru",price:120,icon:"🌸",type:"unlock",key:"bg_dream_garden"},{id:"p3",name:"Mahkota Emosi",desc:"Aksesoris mahkota untuk Plong",price:80,icon:"👑",type:"unlock",key:"acc_crown"},{id:"p4",name:"Bola Kristal",desc:"Refleksi mood ringan",price:90,icon:"🔮",type:"consumable"},{id:"p5",name:"Sayap Emas",desc:"Evolusi visual karakter",price:350,icon:"✨",type:"unlock",key:"acc_wings"}];
@@ -3003,9 +3056,9 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 var target=VKM_PAGE_ROUTES[id];
                 var current=window.__VKM_PAGE_ID||"pg-home";
                 if(target&&id!==current){
-                    window.location.href=target;
-                    return;
-                }
+    smoothNavigate(target);
+    return;
+}
                 document.querySelectorAll(".pg").forEach(function(p){
                     p.classList.remove("on");
                     p.style.display="";
