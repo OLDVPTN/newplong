@@ -1875,161 +1875,232 @@
                 .st-tree-emoji{animation:none!important}
             }
             
-            /* ═══════ VERSION 1 — CUTE / PLAYFUL GARDEN ═══════ */
-            #pg-garden.st-cute-page{
-                background:linear-gradient(180deg,#fff7fb 0%,#fff2df 48%,#edffe8 100%)!important;
+            /* ═══════ VERSION 3 — REAL FARMING GAME STYLE ═══════ */
+            #pg-garden.st-game-page{
+                background:linear-gradient(180deg,#dff5ff 0%,#f7e5bd 45%,#d9f3b8 100%)!important;
             }
-            .st-cute-page .st-bg{
+            .st-game-page .st-bg{
                 background:
-                    radial-gradient(circle at 12% 18%,rgba(255,255,255,.55) 0 40px,transparent 41px),
-                    radial-gradient(circle at 86% 14%,rgba(255,255,255,.45) 0 52px,transparent 53px),
-                    linear-gradient(180deg,#ff9dcf 0%,#ffc58a 22%,#fff1c8 48%,#eaffdf 100%)!important;
+                    radial-gradient(circle at 78% 10%,rgba(255,223,105,.95) 0 42px,rgba(255,223,105,.2) 43px,transparent 80px),
+                    linear-gradient(180deg,#86d9ff 0%,#b9edff 26%,#f4dfb2 55%,#80c85b 100%)!important;
             }
-            .st-cute-page .st-hill.h1{background:linear-gradient(180deg,#d9ff95,#a9e969)!important}
-            .st-cute-page .st-hill.h2{background:linear-gradient(180deg,#9be276,#63be4b)!important}
-            .cute-spark{
+            .st-game-page .st-hill.h1{
+                background:linear-gradient(180deg,#b7dc76,#85bd50)!important;
+                bottom:160px!important;
+            }
+            .st-game-page .st-hill.h2{
+                background:linear-gradient(180deg,#65b64b,#3c9136)!important;
+            }
+            .farm-bird{
                 position:absolute;
-                color:rgba(255,255,255,.86);
+                color:rgba(64,93,72,.35);
+                font-size:28px;
                 font-weight:900;
-                text-shadow:0 4px 12px rgba(175,77,58,.16);
-                animation:cuteFloat 4s ease-in-out infinite;
+                transform:rotate(8deg);
             }
-            .cute-spark.s1{left:12%;top:180px;font-size:22px}
-            .cute-spark.s2{right:16%;top:240px;font-size:24px;animation-delay:.8s}
-            .cute-spark.s3{left:62%;top:112px;font-size:20px;animation-delay:1.4s}
-            @keyframes cuteFloat{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-10px) rotate(8deg)}}
+            .farm-bird.b1{left:20%;top:118px}
+            .farm-bird.b2{left:32%;top:92px;font-size:21px;opacity:.65}
+            .farm-silo{
+                position:absolute;
+                right:34px;
+                bottom:170px;
+                width:54px;
+                height:86px;
+                border-radius:26px 26px 10px 10px;
+                background:linear-gradient(180deg,#e8f1f0,#b8cbc8);
+                border:4px solid rgba(255,255,255,.5);
+                box-shadow:0 18px 24px rgba(52,95,39,.13);
+            }
+            .farm-silo::before{
+                content:'';
+                position:absolute;
+                left:-6px;
+                right:-6px;
+                top:-20px;
+                height:34px;
+                border-radius:50% 50% 10px 10px;
+                background:linear-gradient(180deg,#b94732,#8f2f24);
+            }
+            .farm-silo::after{
+                content:'';
+                position:absolute;
+                left:12px;
+                right:12px;
+                bottom:14px;
+                height:24px;
+                border-radius:8px 8px 2px 2px;
+                background:#78918c;
+            }
 
-            .st-cute-page .st-title strong::after{
-                content:' ૮ ˶ᵔ ᵕ ᵔ˶ ა';
-                font-size:12px;
-                font-family:'Outfit',sans-serif;
-                margin-left:6px;
-                opacity:.9;
+            .st-game-page .st-header{
+                color:#2f5b34!important;
             }
-            .st-cute-page .st-wallet-item,
-            .st-cute-page .st-main-card,
-            .st-cute-page .st-plot-card,
-            .st-cute-page .st-task-card,
-            .st-cute-page .st-history,
-            .st-cute-page .st-boost-grid button{
+            .st-game-page .st-back,
+            .st-game-page .st-help{
+                background:rgba(255,255,255,.78)!important;
+                color:#2f5b34!important;
                 border-color:rgba(255,255,255,.92)!important;
-                box-shadow:0 18px 42px rgba(189,96,80,.12)!important;
             }
-            .st-cute-page .st-main-card{
-                background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(255,248,253,.86))!important;
-                border-radius:36px!important;
+            .st-game-page .st-title strong{
+                color:#2f5b34!important;
+                text-shadow:none!important;
             }
-            .st-cute-page .st-main-card::before{
-                background:radial-gradient(ellipse at center,#dfffaa,#a7e86d 58%,transparent 60%)!important;
+            .st-game-page .st-title span{
+                color:#477a43!important;
             }
-            .st-cute-page .st-reward-banner{
-                background:linear-gradient(135deg,#fff,#fff0fa)!important;
-                border-color:#ffd8ee!important;
+            .st-game-page .st-wallet-item,
+            .st-game-page .st-main-card,
+            .st-game-page .st-plot-card,
+            .st-game-page .st-task-card,
+            .st-game-page .st-history,
+            .st-game-page .st-boost-grid button{
+                box-shadow:0 18px 38px rgba(44,92,37,.14)!important;
+                border-color:rgba(255,255,255,.88)!important;
             }
-            .st-cute-page .st-voucher-icon{
-                background:linear-gradient(180deg,#ff9dd2,#ff6aa3)!important;
-                box-shadow:0 8px 18px rgba(255,106,163,.20)!important;
+            .st-game-page .st-main-card{
+                background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(243,255,232,.86))!important;
+                border-radius:28px!important;
             }
-            .st-cute-page .st-voucher strong,
-            .st-cute-page .st-card-head strong,
-            .st-cute-page .st-boost-grid strong{
-                color:#7a3a4f!important;
+            .st-game-page .st-main-card::before{
+                background:
+                    repeating-linear-gradient(90deg,rgba(105,164,73,.20) 0 18px,rgba(93,148,67,.16) 18px 36px),
+                    radial-gradient(ellipse at center,#d5ef9c,#7fc456 62%,transparent 63%)!important;
+                opacity:1!important;
             }
-            .st-cute-page .st-voucher span,
-            .st-cute-page .st-progress-pill,
-            .st-cute-page .st-wallet-item:nth-child(1) strong{
-                color:#ff6aa3!important;
+            .st-game-page .st-reward-banner{
+                background:linear-gradient(135deg,#fff,#f1ffe4)!important;
+                border-color:#d7edbd!important;
             }
-            .st-cute-page .st-progress-ring #st-ring-fill{
-                stroke:#ff79b4!important;
+            .st-game-page .st-voucher-icon{
+                background:linear-gradient(180deg,#8bd95d,#3fa43c)!important;
+                box-shadow:0 8px 16px rgba(63,164,60,.18)!important;
             }
-            .st-cute-page .st-progress-ring circle:first-child{
-                stroke:#ffe0f1!important;
+            .st-game-page .st-voucher strong,
+            .st-game-page .st-card-head strong,
+            .st-game-page .st-boost-grid strong,
+            .st-game-page .st-wallet-item strong{
+                color:#2f5b34!important;
             }
-            .st-cute-page .st-progress-pill{
-                border-color:#ffd8ee!important;
-                background:#fff8fc!important;
+            .st-game-page .st-voucher span,
+            .st-game-page .st-progress-pill{
+                color:#3fa43c!important;
             }
-            .st-cute-page .st-tree::before{
-                content:'🌸';
+            .st-game-page .st-progress-ring #st-ring-fill{
+                stroke:#3fa43c!important;
+            }
+            .st-game-page .st-progress-ring circle:first-child{
+                stroke:#d9edbd!important;
+            }
+            .st-game-page .st-progress-pill{
+                border-color:#d7edbd!important;
+                background:#f7fff0!important;
+            }
+            .st-game-page .st-tree-pot{
+                width:96px!important;
+                height:44px!important;
+                border-radius:12px 12px 8px 8px!important;
+                background:linear-gradient(180deg,#b36b33,#7f4624)!important;
+                border-color:#5f351d!important;
+                position:relative;
+            }
+            .st-game-page .st-tree-pot::before{
+                content:'';
                 position:absolute;
-                left:-34px;
-                top:12px;
-                font-size:24px;
-                animation:cuteFloat 3s ease-in-out infinite;
+                left:-20px;
+                right:-20px;
+                bottom:-12px;
+                height:20px;
+                border-radius:50%;
+                background:rgba(63,113,52,.18);
+                z-index:-1;
             }
-            .st-cute-page .st-tree::after{
-                content:'🐾';
-                position:absolute;
-                right:-34px;
-                bottom:30px;
-                font-size:22px;
-                animation:cuteFloat 3.6s ease-in-out infinite .5s;
+            .st-game-page .st-level-card,
+            .st-game-page .st-mini-stat{
+                background:linear-gradient(180deg,#fff,#f5ffed)!important;
+                border-color:#d7edbd!important;
             }
-            .st-cute-page .st-tree-emoji{
-                filter:drop-shadow(0 14px 12px rgba(127,85,55,.18)) saturate(1.08)!important;
+            .st-game-page .st-level-bar{
+                background:#d9edbd!important;
             }
-            .st-cute-page .st-tree-pot{
-                background:linear-gradient(180deg,#f7b6cf,#c66b8f)!important;
-                border-color:#934466!important;
+            .st-game-page .st-level-bar span{
+                background:linear-gradient(90deg,#91d85c,#3fa43c)!important;
             }
-            .st-cute-page .st-level-card,
-            .st-cute-page .st-mini-stat{
-                background:linear-gradient(180deg,#fff,#fff5fb)!important;
-                border-color:#ffd8ee!important;
+            .st-game-page .st-action{
+                border-radius:16px!important;
+                box-shadow:0 7px 0 rgba(41,91,38,.24),0 12px 22px rgba(44,92,37,.10)!important;
             }
-            .st-cute-page .st-action{
+            .st-game-page .st-action.secondary{background:linear-gradient(180deg,#e7a957,#b96f2b)!important}
+            .st-game-page .st-action.primary{background:linear-gradient(180deg,#56cbff,#1588d4)!important}
+            .st-game-page .st-action.accent{background:linear-gradient(180deg,#8bd95d,#3fa43c)!important}
+            .st-game-page .st-plot-card{
+                background:
+                    linear-gradient(180deg,rgba(255,255,255,.94),rgba(246,255,239,.88))!important;
+            }
+            .st-game-page .st-plots{
+                gap:9px!important;
+            }
+            .st-game-page .st-plot-btn{
+                background:
+                    linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.02)),
+                    linear-gradient(135deg,#a96a36,#7c4a27)!important;
+                border:5px solid #4f7c39!important;
+                border-radius:14px!important;
+                color:#fff!important;
+                box-shadow:8px 10px 0 rgba(42,91,35,.16),0 12px 20px rgba(42,91,35,.12)!important;
+            }
+            .st-game-page .st-plot-btn::before{
+                background:repeating-linear-gradient(45deg,rgba(255,232,171,.16) 0 8px,rgba(105,61,27,.08) 8px 16px)!important;
+            }
+            .st-game-page .st-plot-btn.on{
+                border-color:#f5e35d!important;
+                transform:translateY(-3px)!important;
+                box-shadow:8px 10px 0 rgba(42,91,35,.16),0 0 0 5px rgba(245,227,93,.25)!important;
+            }
+            .st-game-page .st-plot-badge{
+                background:rgba(42,75,35,.85)!important;
+                color:#fff!important;
+                border-color:rgba(255,255,255,.18)!important;
+            }
+            .st-game-page .st-plot-emoji-wrap{
+                background:rgba(255,255,255,.22)!important;
+                border:1px solid rgba(255,255,255,.18)!important;
+            }
+            .st-game-page .st-plot-label{
+                color:#fff7db!important;
+                text-shadow:0 2px 2px rgba(0,0,0,.2);
+            }
+            .st-game-page .st-plot-name{
+                color:rgba(255,255,255,.84)!important;
+            }
+            .st-game-page .st-plot-bar{
+                background:rgba(255,255,255,.25)!important;
+            }
+            .st-game-page .st-plot-bar span{
+                background:linear-gradient(90deg,#f5e35d,#9be75c)!important;
+            }
+            .st-game-page .st-task{
+                background:#f8fff1!important;
+                border-color:#d7edbd!important;
+            }
+            .st-game-page .st-task b{
+                background:#eaffdd!important;
+                color:#3fa43c!important;
+            }
+            .st-game-page .st-boost-grid button{
+                background:linear-gradient(180deg,#fff,#f6ffef)!important;
                 border-radius:20px!important;
-                box-shadow:0 7px 0 rgba(123,55,46,.14),0 12px 22px rgba(183,94,88,.12)!important;
             }
-            .st-cute-page .st-action.secondary{background:linear-gradient(180deg,#ffc26d,#ff9f43)!important}
-            .st-cute-page .st-action.primary{background:linear-gradient(180deg,#88dcff,#3db5f4)!important}
-            .st-cute-page .st-action.accent{background:linear-gradient(180deg,#ff8cc2,#ff5fa0)!important}
-            .st-cute-page .st-plot-card,
-            .st-cute-page .st-task-card,
-            .st-cute-page .st-history{
-                background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,252,246,.9))!important;
+            .st-game-page .st-history .garden-history-item{
+                background:#f8fff1!important;
+                border-color:#d7edbd!important;
             }
-            .st-cute-page .st-plot-btn{
-                background:linear-gradient(180deg,#fff,#fff2f8)!important;
-                border-color:#ffd8ee!important;
-                border-radius:26px!important;
-                box-shadow:0 12px 24px rgba(176,99,119,.10)!important;
-            }
-            .st-cute-page .st-plot-btn.on{
-                border-color:#ff7ab5!important;
-                box-shadow:0 0 0 5px rgba(255,122,181,.13),0 14px 26px rgba(176,99,119,.14)!important;
-            }
-            .st-cute-page .st-plot-emoji-wrap{
-                background:linear-gradient(180deg,#fff,#fff6fb)!important;
-                border-radius:22px!important;
-            }
-            .st-cute-page .st-plot-badge,
-            .st-cute-page .st-task b{
-                background:#fff4fa!important;
-                color:#ff6aa3!important;
-                border-color:#ffd8ee!important;
-            }
-            .st-cute-page .st-task.done b{
-                background:#eaffea!important;
-                color:#16934a!important;
-            }
-            .st-cute-page .st-task{
-                background:#fff8fc!important;
-                border-color:#ffd8ee!important;
-            }
-            .st-cute-page .st-boost-grid button{
-                background:linear-gradient(180deg,#fff,#fff8fc)!important;
-                border-radius:26px!important;
-            }
-            .st-cute-page .st-history .garden-history-item{
-                background:#fff8fc!important;
-                border-color:#ffd8ee!important;
-            }
-            @media(max-width:599px){
-                .st-cute-page .st-title strong::after{display:none}
-                .st-cute-page .st-tree::before{left:-20px}
-                .st-cute-page .st-tree::after{right:-20px}
+            @media(min-width:900px){
+                .st-game-page .st-plots{
+                    grid-template-columns:repeat(2,1fr)!important;
+                }
+                .st-game-page .st-plot-btn{
+                    min-height:150px!important;
+                }
             }
 
 /* ═══════ ACCOUNT PAGE ═══════ */
@@ -2231,10 +2302,10 @@
 
 
                 <!-- GARDEN -->
-                <section id="pg-garden" class="pg st-farm-page st-cute-page" aria-label="Plong Tanam">
+                <section id="pg-garden" class="pg st-farm-page st-game-page" aria-label="Plong Tanam">
                     <div class="st-bg">
                         <div class="st-sky"></div>
-                        <div class="st-glow"></div><div class="cute-spark s1">✦</div><div class="cute-spark s2">♡</div><div class="cute-spark s3">✿</div>
+                        <div class="st-glow"></div><div class="farm-bird b1">⌁</div><div class="farm-bird b2">⌁</div><div class="farm-silo"></div>
                         <div class="st-hill h1"></div>
                         <div class="st-hill h2"></div>
                         <div class="st-cloud c1"></div>
@@ -2245,8 +2316,8 @@
                         <div class="st-header">
                             <button type="button" class="st-back" data-page="pg-home"><i class="fas fa-chevron-left"></i></button>
                             <div class="st-title">
-                                <strong>Kebun Imut Plong</strong>
-                                <span>Tanam santai, siram lucu, panen hadiah kecil</span>
+                                <strong>Plong Farm</strong>
+                                <span>Bangun kebun, kelola air, panen hasil, upgrade lahan</span>
                             </div>
                             <button type="button" class="st-help" id="st-help"><i class="fas fa-question"></i></button>
                         </div>
