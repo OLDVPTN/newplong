@@ -1750,539 +1750,131 @@
 
 
 
-            /* ═══════ SHOPEE-TANAM-LIKE ORIGINAL UI ═══════ */
+            
+            /* ═══════ GARDEN UI REFINED — CALMER / CLEANER / PREMIUM ═══════ */
             #pg-garden.st-farm-page{
                 max-width:none!important;
                 padding:0!important;
                 min-height:100dvh;
                 overflow-y:auto;
                 -webkit-overflow-scrolling:touch;
-                background:#fff7ed;
                 position:relative;
+                background:linear-gradient(180deg,#fffaf2 0%,#f4ffe8 100%);
                 padding-bottom:calc(var(--nav-h) + var(--s-b) + 18px)!important;
+                isolation:isolate;
             }
-            .st-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;background:linear-gradient(180deg,#FF7A32 0%,#FF9A54 22%,#FFE3B8 48%,#F4FFE8 100%)}
-            .st-sky{position:absolute;inset:0;background:radial-gradient(circle at 80% 9%,rgba(255,255,255,.65) 0 42px,transparent 43px),radial-gradient(circle at 18% 19%,rgba(255,255,255,.18),transparent 150px)}
-            .st-hill{position:absolute;left:-15%;right:-15%;height:170px;border-radius:50% 50% 0 0}
-            .st-hill.h1{bottom:128px;background:#B7EC78;transform:rotate(-3deg)}
-            .st-hill.h2{bottom:10px;background:#75CC4E;transform:rotate(3deg)}
-            .st-cloud{position:absolute;background:rgba(255,255,255,.75);border-radius:999px}
+            .st-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;background:linear-gradient(180deg,#ff8f4d 0%,#ffbf7b 18%,#ffe9c6 44%,#f0ffde 100%)}
+            .st-sky{position:absolute;inset:0;background:radial-gradient(circle at 10% 8%,rgba(255,255,255,.16) 0,transparent 180px),radial-gradient(circle at 85% 9%,rgba(255,255,255,.68) 0 54px,transparent 55px)}
+            .st-glow{position:absolute;inset:auto auto 32% 50%;transform:translateX(-50%);width:480px;height:280px;background:radial-gradient(ellipse at center,rgba(255,255,255,.32),transparent 68%)}
+            .st-hill{position:absolute;left:-12%;right:-12%;height:220px;border-radius:50% 50% 0 0}
+            .st-hill.h1{bottom:140px;background:linear-gradient(180deg,#c8f27b,#a6df63);transform:rotate(-3deg)}
+            .st-hill.h2{bottom:-4px;background:linear-gradient(180deg,#86d55a,#58b340);transform:rotate(2.5deg)}
+            .st-cloud{position:absolute;background:rgba(255,255,255,.74);border-radius:999px;filter:blur(.2px)}
             .st-cloud::before,.st-cloud::after{content:'';position:absolute;background:inherit;border-radius:50%}
-            .st-cloud.c1{width:104px;height:30px;left:18px;top:110px}.st-cloud.c1::before{width:44px;height:44px;left:14px;top:-20px}.st-cloud.c1::after{width:36px;height:36px;right:14px;top:-14px}
-            .st-cloud.c2{width:120px;height:32px;right:-32px;top:155px;opacity:.55}.st-cloud.c2::before{width:48px;height:48px;left:28px;top:-22px}.st-cloud.c2::after{width:38px;height:38px;right:24px;top:-13px}
-            .st-app{position:relative;z-index:2;width:min(460px,100%);margin:0 auto;padding:calc(var(--s-t) + 10px) 14px calc(var(--nav-h) + var(--s-b) + 28px)}
-            .st-header{display:flex;align-items:center;gap:10px;color:#fff;margin-bottom:10px}
-            .st-back,.st-help{width:40px;height:40px;border:0;border-radius:16px;background:rgba(255,255,255,.22);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
-            .st-title{flex:1}.st-title strong{display:block;font-family:'Syne',sans-serif;font-size:21px;line-height:1;text-shadow:0 2px 5px rgba(139,48,10,.18)}.st-title span{display:block;font-size:11px;font-weight:800;opacity:.9;margin-top:3px}
-            .st-wallet{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
-            .st-wallet-item{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.9);border-radius:18px;padding:9px;box-shadow:0 10px 24px rgba(174,73,14,.14)}
-            .st-wallet-item i{width:30px;height:30px;border-radius:12px;background:linear-gradient(180deg,#FFBB58,#FF6A1E);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 5px 10px rgba(255,106,30,.22)}
-            .st-wallet-item:nth-child(2) i{background:linear-gradient(180deg,#7DD3FC,#2387EB)}.st-wallet-item:nth-child(3) i{background:linear-gradient(180deg,#FFE66A,#F59E0B)}
-            .st-wallet-item span{display:block;font-size:8px;font-weight:900;color:#9A6750;text-transform:uppercase;letter-spacing:.35px}.st-wallet-item strong{display:block;color:#71340F;font-size:15px;font-weight:900;line-height:1.05}
-            .st-reward-banner{display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(135deg,#FFF,#FFF4DF);border:1px solid rgba(255,255,255,.9);border-radius:22px;padding:12px;margin-bottom:12px;box-shadow:0 13px 26px rgba(146,76,20,.13)}
-            .st-voucher{display:flex;align-items:center;gap:10px}.st-voucher-icon{width:44px;height:44px;border-radius:16px;background:linear-gradient(180deg,#FF8B4B,#EE4D2D);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 8px 16px rgba(238,77,45,.22)}
-            .st-voucher strong{display:block;font-size:13px;color:#71340F;font-weight:900}.st-voucher span{display:block;font-size:10px;color:#98684A;line-height:1.35;margin-top:2px}.st-reward-banner button{border:0;border-radius:14px;background:linear-gradient(180deg,#FF7A32,#EE4D2D);color:#fff;font-size:11px;font-weight:900;min-height:38px;padding:8px 12px;box-shadow:0 5px 0 #B7371E;white-space:nowrap}
-            .st-main-card{background:rgba(255,255,255,.93);border:1px solid rgba(255,255,255,.9);border-radius:30px;padding:14px;box-shadow:0 18px 42px rgba(69,106,33,.17);margin-bottom:12px;position:relative;overflow:hidden}
-            .st-main-card::before{content:'';position:absolute;left:-30px;right:-30px;bottom:-85px;height:180px;background:radial-gradient(ellipse at center,#C9F38C,#82CE58 62%,transparent 63%);opacity:.72}
-            .st-tree-zone{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;padding:8px 0 6px}
-            .st-progress-ring{position:relative;width:190px;height:190px;display:flex;align-items:center;justify-content:center}
-            .st-progress-ring svg{position:absolute;inset:0;transform:rotate(-90deg)}.st-progress-ring circle{fill:none;stroke-width:9;stroke-linecap:round}.st-progress-ring circle:first-child{stroke:#FFE1C6}.st-progress-ring #st-ring-fill{stroke:url(#none);stroke:#EE4D2D;stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset .25s}
-            .st-tree{position:relative;display:flex;flex-direction:column;align-items:center}.st-tree-emoji{font-size:72px;line-height:1;filter:drop-shadow(0 10px 10px rgba(77,103,35,.23));animation:stTree 2.4s ease-in-out infinite}.st-tree-pot{width:76px;height:38px;background:linear-gradient(180deg,#D98A4A,#A75023);border-radius:10px 10px 24px 24px;border:5px solid #7E3F20;box-shadow:0 9px 0 rgba(74,84,25,.16);margin-top:-8px}
-            @keyframes stTree{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-4px) rotate(1deg)}}
-            .st-growth{text-align:center;position:relative;z-index:1;margin-top:-2px}.st-growth strong{display:block;font-family:'Syne',sans-serif;font-size:30px;color:#EE4D2D;line-height:1}.st-growth span{display:block;font-size:12px;color:#704B35;line-height:1.4;margin-top:4px;font-weight:700}
-            .st-action-row{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:8px;margin-top:12px}.st-action{border:0;border-radius:18px;min-height:52px;color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 6px 0 rgba(0,0,0,.16)}.st-action.secondary{background:linear-gradient(180deg,#FFA75B,#F97316)}.st-action.primary{background:linear-gradient(180deg,#46C7FF,#0EA5E9)}.st-action.accent{background:linear-gradient(180deg,#FF7A32,#EE4D2D)}.st-action:disabled{opacity:.45;filter:grayscale(.2)}
-            .st-plot-card,.st-task-card,.st-history{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.9);border-radius:24px;padding:12px;margin-bottom:12px;box-shadow:0 12px 28px rgba(68,111,38,.13)}
-            .st-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}.st-card-head strong{display:block;font-size:13px;color:#71340F;font-weight:900}.st-card-head span{display:block;font-size:10px;color:#98684A;line-height:1.35;margin-top:2px}.st-card-head button{border:0;border-radius:14px;background:#FFF1E8;color:#EE4D2D;border:1px solid #FFD5BF;min-height:34px;padding:7px 10px;font-size:10px;font-weight:900;white-space:nowrap}
-            .st-plots{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.st-plot-btn{position:relative;border:1px solid #F1C9A5;background:linear-gradient(180deg,#FFF8ED,#FFE3BE);border-radius:18px;min-height:94px;padding:8px 6px;box-shadow:0 6px 14px rgba(130,72,29,.08);transition:all .15s}.st-plot-btn.on{border-color:#EE4D2D;box-shadow:0 0 0 4px rgba(238,77,45,.12),0 8px 16px rgba(130,72,29,.10);transform:translateY(-2px)}.st-plot-emoji{display:block;font-size:31px;margin-bottom:4px}.st-plot-name{display:block;font-size:9px;font-weight:900;color:#704B35;line-height:1.15}.st-plot-bar{display:block;height:6px;border-radius:999px;background:#FAD8BE;margin-top:6px;overflow:hidden}.st-plot-bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#FF8B4B,#EE4D2D)}
-            .st-tasks{display:grid;gap:7px}.st-task{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#FFF8ED;border:1px solid #FFE1C6;border-radius:16px;padding:8px 9px}.st-task strong{font-size:11px;color:#704B35}.st-task span{font-size:10px;color:#98684A}.st-task b{font-size:10px;color:#EE4D2D;background:#FFE7DA;padding:4px 7px;border-radius:999px}.st-task.done b{background:#DCFCE7;color:#15803D}
-            .st-boost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.st-boost-grid button{border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.92);border-radius:20px;min-height:86px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;box-shadow:0 10px 22px rgba(68,111,38,.11)}.st-boost-grid span{font-size:25px}.st-boost-grid strong{font-size:11px;color:#71340F;font-weight:900}.st-boost-grid small{font-size:9px;color:#98684A}
-            .st-sheet{background:linear-gradient(180deg,#FFF7ED,#fff)!important;border-color:#FFE1C6!important}.st-seed-tabs{display:flex;gap:7px;margin-bottom:10px;overflow-x:auto}.st-seed-tabs button{border:0;border-radius:999px;background:#FFF1E8;color:#EE4D2D;font-size:10px;font-weight:900;padding:8px 11px;white-space:nowrap}.st-seed-tabs button.on{background:linear-gradient(180deg,#FF7A32,#EE4D2D);color:#fff}
-            .st-seed-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:9px!important;overflow:visible!important}.st-seed-grid .garden-seed,.st-seed-grid .garden-feed{min-width:0!important;max-width:none!important;min-height:132px!important;border-radius:20px!important;background:linear-gradient(180deg,#fff,#FFF3E5)!important;border:1px solid #FFD5BF!important;box-shadow:0 8px 18px rgba(130,72,29,.09)!important}.st-seed-grid .garden-seed span,.st-seed-grid .garden-feed span{width:52px!important;height:52px!important;font-size:32px!important;border-radius:18px!important;background:#FFF7ED!important;margin-bottom:8px!important}.st-seed-grid .garden-seed strong,.st-seed-grid .garden-feed strong{font-size:12px!important;color:#71340F!important}.st-seed-grid .garden-seed small,.st-seed-grid .garden-feed small{font-size:9px!important;color:#98684A!important}
-            @media(min-width:900px){#pg-garden.st-farm-page{max-width:460px!important;margin:0 auto;border-left:1px solid rgba(0,0,0,.05);border-right:1px solid rgba(0,0,0,.05)}}
-            @media(max-width:380px){.st-app{padding-left:10px;padding-right:10px}.st-wallet-item{padding:7px;gap:5px}.st-wallet-item i{width:27px;height:27px}.st-progress-ring{width:170px;height:170px}.st-tree-emoji{font-size:64px}.st-plots{gap:5px}.st-plot-btn{min-height:86px;padding:7px 4px}.st-action-row{gap:6px}.st-action{font-size:11px}}
+            .st-cloud.c1{width:108px;height:32px;left:20px;top:92px}.st-cloud.c1::before{width:44px;height:44px;left:16px;top:-19px}.st-cloud.c1::after{width:38px;height:38px;right:13px;top:-14px}
+            .st-cloud.c2{width:124px;height:34px;right:-24px;top:154px;opacity:.58}.st-cloud.c2::before{width:50px;height:50px;left:24px;top:-21px}.st-cloud.c2::after{width:42px;height:42px;right:24px;top:-13px}
+            .st-app{position:relative;z-index:1;width:min(100%,1180px);margin:0 auto;padding:calc(var(--s-t) + 14px) 14px calc(var(--nav-h) + var(--s-b) + 28px)}
+            .st-header,.st-wallet,.st-main-card,.st-garden-grid,.st-history{position:relative;z-index:2}
+            .st-header{display:flex;align-items:center;gap:12px;color:#fff;margin-bottom:14px}
+            .st-back,.st-help{width:42px;height:42px;border:1px solid rgba(255,255,255,.24);border-radius:16px;background:rgba(255,255,255,.18);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(127,59,15,.14)}
+            .st-title{flex:1;min-width:0}.st-title strong{display:block;font-family:'Syne',sans-serif;font-size:22px;line-height:1.05;text-shadow:0 2px 6px rgba(130,55,18,.18)}.st-title span{display:block;font-size:11px;font-weight:800;opacity:.96;margin-top:4px;max-width:360px}
+            .st-wallet{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+            .st-wallet-item{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.82);border-radius:20px;padding:10px 12px;box-shadow:0 14px 28px rgba(114,63,23,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+            .st-wallet-item i{width:34px;height:34px;border-radius:12px;background:linear-gradient(180deg,#ffb76b,#f97316);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 8px 16px rgba(249,115,22,.18)}
+            .st-wallet-item:nth-child(2) i{background:linear-gradient(180deg,#61d8ff,#1991f0)}
+            .st-wallet-item:nth-child(3) i{background:linear-gradient(180deg,#ffe77a,#f59e0b)}
+            .st-wallet-item span{display:block;font-size:8px;color:#9a6d4b;text-transform:uppercase;letter-spacing:.4px;font-weight:900}
+            .st-wallet-item strong{display:block;font-size:16px;line-height:1.05;color:#70320d;font-weight:900}
+            .st-main-card,.st-plot-card,.st-task-card,.st-history,.st-boost-grid button{background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.82);box-shadow:0 18px 40px rgba(85,109,45,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+            .st-main-card{border-radius:32px;padding:14px;position:relative;overflow:hidden;margin-bottom:14px}
+            .st-main-card::before{content:'';position:absolute;left:-40px;right:-40px;bottom:-110px;height:220px;background:radial-gradient(ellipse at center,#d2f29c,#89d25d 58%,transparent 60%);opacity:.92}
+            .st-main-card::after{content:'';position:absolute;right:-20px;top:-20px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.35),transparent 70%)}
+            .st-main-top{display:grid;grid-template-columns:1.2fr .9fr;gap:10px;position:relative;z-index:1;align-items:stretch;margin-bottom:8px}
+            .st-reward-banner{display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(135deg,#fff,#fff3e2);border:1px solid #ffe1c4;border-radius:22px;padding:12px;box-shadow:0 12px 20px rgba(140,82,33,.09)}
+            .st-voucher{display:flex;align-items:center;gap:10px}.st-voucher-icon{width:44px;height:44px;border-radius:16px;background:linear-gradient(180deg,#ff8d4e,#ef5b2d);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 8px 16px rgba(238,77,45,.18)}
+            .st-voucher strong{display:block;font-size:13px;color:#6a3112;font-weight:900}.st-voucher span{display:block;font-size:12px;color:#ef5b2d;line-height:1.2;margin-top:3px;font-weight:900}
+            .st-reward-banner button{border:0;border-radius:14px;background:linear-gradient(180deg,#ff8945,#ef5b2d);color:#fff;font-size:11px;font-weight:900;min-height:40px;padding:8px 13px;box-shadow:0 5px 0 #b43f22;white-space:nowrap}
+            .st-mini-stats{display:grid;grid-template-columns:1fr;gap:10px}
+            .st-mini-stat{display:flex;flex-direction:column;justify-content:center;border-radius:20px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,.88),rgba(255,245,233,.92));border:1px solid #ffe4cd;box-shadow:0 12px 20px rgba(140,82,33,.08)}
+            .st-mini-stat span{font-size:10px;color:#9a6d4b;font-weight:900;letter-spacing:.2px}.st-mini-stat strong{margin-top:4px;font-size:16px;color:#6a3112;font-weight:900}
+            .st-tree-zone{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;padding:10px 0 2px}
+            .st-progress-ring-shell{position:relative;display:flex;align-items:center;justify-content:center;width:230px;height:230px}
+            .st-ring-orbit{position:absolute;border-radius:50%;border:1px dashed rgba(255,255,255,.7)}
+            .st-ring-orbit.orbit-a{inset:8px;opacity:.6}.st-ring-orbit.orbit-b{inset:24px;opacity:.36}
+            .st-progress-ring{position:relative;width:198px;height:198px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.5),rgba(255,255,255,.12) 70%,transparent 71%)}
+            .st-progress-ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+            .st-progress-ring circle{fill:none;stroke-width:8.5;stroke-linecap:round}.st-progress-ring circle:first-child{stroke:#ffe6d0}.st-progress-ring #st-ring-fill{stroke:#ef5b2d;stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset .28s ease}
+            .st-tree{position:relative;display:flex;flex-direction:column;align-items:center}
+            .st-tree-shadow{width:90px;height:18px;border-radius:50%;background:rgba(71,112,46,.14);filter:blur(2px);position:absolute;bottom:14px;left:50%;transform:translateX(-50%)}
+            .st-tree-emoji{font-size:78px;line-height:1;filter:drop-shadow(0 12px 12px rgba(77,103,35,.24));animation:stTree 2.8s ease-in-out infinite;position:relative;z-index:1}
+            .st-tree-emoji.grow{animation:stGrow .7s ease}
+            .st-tree-pot{width:80px;height:40px;background:linear-gradient(180deg,#dfa15c,#a85b29);border-radius:12px 12px 26px 26px;border:5px solid #7b411d;box-shadow:0 10px 0 rgba(74,84,25,.14);margin-top:-10px;position:relative;z-index:1}
+            @keyframes stTree{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-5px) rotate(1deg)}}
+            @keyframes stGrow{0%{transform:scale(1)}35%{transform:scale(1.08)}100%{transform:scale(1)}}
+            .st-progress-pill{position:absolute;top:6px;right:10px;min-width:58px;height:32px;border-radius:999px;background:rgba(255,255,255,.94);border:1px solid #ffe1c6;color:#ef5b2d;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(123,61,22,.12)}
+            .st-growth{text-align:center;position:relative;z-index:1;margin-top:2px;max-width:340px}.st-growth strong{display:block;font-size:12px;color:#7d5a42;letter-spacing:.35px;text-transform:uppercase;font-weight:900}.st-growth span{display:block;font-size:13px;color:#704b35;line-height:1.42;margin-top:5px;font-weight:800}
+            .st-level-card{position:relative;z-index:1;border-radius:20px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,249,241,.92));border:1px solid #ffe4cd;margin-top:12px}
+            .st-level-copy span{display:block;font-size:10px;color:#8c694d;font-weight:900;text-transform:uppercase;letter-spacing:.3px}.st-level-copy strong{display:block;margin-top:4px;font-size:12px;line-height:1.35;color:#6d3410}
+            .st-level-bar{margin-top:10px;height:10px;border-radius:999px;background:#f6dbc3;overflow:hidden}.st-level-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff9f5c,#ef5b2d);border-radius:999px;transition:width .28s ease}
+            .st-action-row{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:9px;margin-top:12px}
+            .st-action{border:0;border-radius:18px;min-height:54px;color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 7px 0 rgba(0,0,0,.14);padding:0 10px}
+            .st-action.secondary{background:linear-gradient(180deg,#ffb35f,#f97316)}.st-action.primary{background:linear-gradient(180deg,#60d2ff,#1595ef)}.st-action.accent{background:linear-gradient(180deg,#ff8a47,#ef5b2d)}.st-action:disabled{opacity:.5;filter:grayscale(.18)}
+            .st-garden-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;align-items:start;margin-bottom:14px}
+            .st-side-stack{display:grid;gap:14px}
+            .st-plot-card,.st-task-card,.st-history{border-radius:28px;padding:14px}
+            .st-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}.st-card-head strong{display:block;font-size:14px;color:#6a3112;font-weight:900}.st-card-head span{display:block;font-size:11px;color:#9a6d4b;line-height:1.4;margin-top:4px}.st-card-head button{border:0;border-radius:14px;background:#fff2e8;color:#ef5b2d;border:1px solid #ffd8bf;min-height:36px;padding:7px 11px;font-size:10px;font-weight:900;white-space:nowrap;box-shadow:0 6px 12px rgba(239,91,45,.08)}
+            .st-plots{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+            .st-plot-btn{position:relative;border:1px solid #f5d5ba;background:linear-gradient(180deg,#fffaf4,#ffe8cb);border-radius:22px;min-height:136px;padding:10px 8px;box-shadow:0 10px 20px rgba(130,72,29,.07);transition:all .18s ease;overflow:hidden}
+            .st-plot-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.42),transparent 42%);pointer-events:none}
+            .st-plot-btn.on{border-color:#ef5b2d;box-shadow:0 0 0 4px rgba(239,91,45,.1),0 14px 22px rgba(130,72,29,.11);transform:translateY(-2px)}
+            .st-plot-btn.ready{background:linear-gradient(180deg,#fff6ef,#fff0d4)}
+            .st-plot-badge{display:inline-flex;align-items:center;justify-content:center;height:22px;padding:0 8px;border-radius:999px;background:#fff;color:#8e5b38;font-size:9px;font-weight:900;border:1px solid #f0dac8;box-shadow:0 4px 8px rgba(124,76,41,.06);margin-bottom:9px}
+            .st-plot-emoji-wrap{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:18px;background:linear-gradient(180deg,#fff,#fff4e7);margin:0 auto 8px;box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 7px 12px rgba(148,86,43,.08)}
+            .st-plot-emoji{display:block;font-size:30px;line-height:1}
+            .st-plot-meta{display:block;text-align:center;min-height:36px}.st-plot-label{display:block;font-size:11px;font-weight:900;color:#6f3815;line-height:1.2}.st-plot-name{display:block;font-size:9px;font-weight:800;color:#9a6d4b;line-height:1.25;margin-top:2px}
+            .st-plot-bar{display:block;height:7px;border-radius:999px;background:#f7dec8;margin-top:9px;overflow:hidden}.st-plot-bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#ff9b57,#ef5b2d)}
+            .st-task-card .st-card-head{margin-bottom:10px}
+            .st-tasks{display:grid;gap:8px}.st-task{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff9f2;border:1px solid #ffe4ce;border-radius:18px;padding:10px}.st-task strong{font-size:11px;color:#704b35}.st-task span{font-size:10px;color:#9a6d4b;margin-top:2px;display:block}.st-task b{font-size:10px;color:#ef5b2d;background:#ffe8dd;padding:5px 8px;border-radius:999px;white-space:nowrap}.st-task.done b{background:#dcfce7;color:#15803d}
+            .st-boost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.st-boost-grid button{border-radius:22px;min-height:98px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px;box-shadow:0 14px 30px rgba(68,111,38,.1)}.st-boost-grid span{font-size:26px}.st-boost-grid strong{font-size:11px;color:#6a3112;font-weight:900}.st-boost-grid small{font-size:9px;color:#9a6d4b;line-height:1.35;text-align:center}
+            .st-history .garden-history{display:grid;gap:8px}.st-history .garden-history-item{background:#fff8f1;border:1px solid #ffe6d0;border-radius:16px;padding:10px 12px;color:#704b35;font-size:11px;line-height:1.45}
+            .st-sheet{background:linear-gradient(180deg,#fffaf3,#fff)!important;border-color:#ffe2ca!important}.st-seed-tabs{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}.st-seed-tabs button{border:0;border-radius:999px;background:#fff2e8;color:#ef5b2d;font-size:10px;font-weight:900;padding:9px 12px;white-space:nowrap}.st-seed-tabs button.on{background:linear-gradient(180deg,#ff8b47,#ef5b2d);color:#fff}
+            .st-seed-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:10px!important;overflow:visible!important}.st-seed-grid .garden-seed,.st-seed-grid .garden-feed{min-width:0!important;max-width:none!important;min-height:150px!important;border-radius:22px!important;background:linear-gradient(180deg,#fff,#fff5e9)!important;border:1px solid #ffdcc3!important;box-shadow:0 10px 18px rgba(130,72,29,.08)!important;padding:12px 10px!important}.st-seed-grid .garden-seed span,.st-seed-grid .garden-feed span{width:54px!important;height:54px!important;font-size:32px!important;border-radius:18px!important;background:#fffaf4!important;margin-bottom:9px!important;box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 6px 12px rgba(148,86,43,.08)!important}.st-seed-grid .garden-seed strong,.st-seed-grid .garden-feed strong{font-size:12px!important;color:#6f3815!important}.st-seed-grid .garden-seed small,.st-seed-grid .garden-feed small{font-size:9px!important;color:#9a6d4b!important;line-height:1.35!important}
 
-
-            /* ═══════ SHOPEE TANAM RESPONSIVE POLISH — DESKTOP / MOBILE / APPLE ═══════ */
-            #pg-garden.st-farm-page{
-                height:auto!important;
-                min-height:100dvh!important;min-height:calc(var(--real-vh,1vh)*100)!important;
-                overflow-x:hidden!important;
-                overscroll-behavior-y:contain;
-                scrollbar-gutter:stable both-edges;
-                padding-bottom:calc(var(--nav-h) + var(--s-b) + 22px)!important;
-            }
-            #pg-garden.st-farm-page *{
-                -webkit-tap-highlight-color:transparent;
-            }
-            #pg-garden.st-farm-page button{
-                touch-action:manipulation;
-                -webkit-user-select:none;
-                user-select:none;
-            }
-            .st-app{
-                width:min(100%, 480px);
-                min-height:100dvh;
-                margin-inline:auto;
-            }
-            .st-header,
-            .st-wallet,
-            .st-reward-banner,
-            .st-main-card,
-            .st-plot-card,
-            .st-task-card,
-            .st-boost-grid,
-            .st-history{
-                position:relative;
-                z-index:2;
-            }
-            .st-back,.st-help,
-            .st-wallet-item,
-            .st-reward-banner,
-            .st-main-card,
-            .st-plot-card,
-            .st-task-card,
-            .st-boost-grid button,
-            .st-history{
-                -webkit-backdrop-filter:blur(14px);
-                backdrop-filter:blur(14px);
-            }
-            .st-wallet-item,
-            .st-reward-banner,
-            .st-main-card,
-            .st-plot-card,
-            .st-task-card,
-            .st-boost-grid button,
-            .st-history{
-                border-color:rgba(255,255,255,.78)!important;
-            }
-            .st-growth span{
-                max-width:320px;
-                margin-inline:auto;
-            }
-            .st-action,
-            .st-card-head button,
-            .st-reward-banner button,
-            .st-boost-grid button{
-                transition:transform .14s ease, box-shadow .14s ease, opacity .14s ease;
-            }
-            .st-action:active,
-            .st-card-head button:active,
-            .st-reward-banner button:active,
-            .st-boost-grid button:active{
-                transform:translateY(2px) scale(.98);
-                box-shadow:none!important;
-            }
-            .st-plot-btn{
-                overflow:hidden;
-            }
-            .st-plot-btn::after{
-                content:'';
-                position:absolute;
-                inset:0;
-                background:linear-gradient(135deg,rgba(255,255,255,.34),transparent 48%);
-                pointer-events:none;
-            }
-            .st-plot-btn.ready{
-                animation:stReadyPulse 1.9s ease-in-out infinite;
-            }
-            @keyframes stReadyPulse{
-                0%,100%{box-shadow:0 0 0 4px rgba(238,77,45,.12),0 8px 16px rgba(130,72,29,.10)}
-                50%{box-shadow:0 0 0 7px rgba(238,77,45,.18),0 10px 22px rgba(130,72,29,.15)}
-            }
-
-            /* Desktop: make farm feel like a real dashboard, not a stretched mobile screen */
             @media(min-width:900px){
-                #pg-garden.st-farm-page{
-                    max-width:none!important;
-                    width:100%!important;
-                    margin:0!important;
-                    border:0!important;
-                    background:
-                        radial-gradient(circle at 20% 12%,rgba(255,255,255,.24),transparent 280px),
-                        linear-gradient(180deg,#FF7A32 0%,#FF9A54 20%,#FFE3B8 48%,#F4FFE8 100%)!important;
-                }
-                .st-bg{
-                    position:fixed!important;
-                }
-                .st-app{
-                    width:min(1180px, calc(100vw - 56px));
-                    min-height:auto;
-                    display:grid;
-                    grid-template-columns:minmax(360px, 430px) minmax(460px, 1fr);
-                    grid-template-areas:
-                        "header header"
-                        "wallet wallet"
-                        "main side"
-                        "tasks side"
-                        "boost history";
-                    gap:16px;
-                    align-items:start;
-                    padding:calc(var(--s-t) + 22px) 28px 42px;
-                }
-                .st-header{grid-area:header;margin-bottom:0}
-                .st-wallet{grid-area:wallet;margin-bottom:0;grid-template-columns:repeat(3,minmax(160px,1fr));max-width:720px}
-                .st-main-card{grid-area:main;margin-bottom:0;border-radius:34px;min-height:420px;display:flex;flex-direction:column;justify-content:center}
-                .st-plot-card{grid-area:side;margin-bottom:0;border-radius:28px}
-                .st-task-card{grid-area:tasks;margin-bottom:0}
-                .st-boost-grid{grid-area:boost;margin-bottom:0}
-                .st-history{grid-area:history;margin-bottom:0}
-                .st-reward-banner{
-                    grid-area:side;
-                    align-self:end;
-                    margin:0 0 16px 0;
-                    transform:translateY(-100%);
-                    z-index:3;
-                    max-width:460px;
-                    margin-left:auto;
-                }
-                .st-plot-card{
-                    padding-top:92px;
-                }
-                .st-title strong{font-size:30px}
-                .st-title span{font-size:13px}
-                .st-back,.st-help{width:44px;height:44px;border-radius:16px}
-                .st-progress-ring{width:240px;height:240px}
-                .st-tree-emoji{font-size:94px}
-                .st-tree-pot{width:92px;height:44px}
-                .st-growth strong{font-size:40px}
-                .st-growth span{font-size:13px;max-width:360px}
-                .st-action-row{max-width:390px;margin-inline:auto;width:100%}
-                .st-action{min-height:58px;font-size:13px}
-                .st-plots{
-                    grid-template-columns:repeat(4,minmax(86px,1fr));
-                    gap:10px;
-                }
-                .st-plot-btn{min-height:118px}
-                .st-plot-emoji{font-size:38px}
-                .st-plot-name{font-size:10px}
-                .st-tasks{grid-template-columns:1fr}
-                .st-boost-grid{grid-template-columns:repeat(3,1fr)}
-                .st-boost-grid button{min-height:104px}
-                .st-history{
-                    max-height:260px;
-                    overflow:auto;
-                }
-                #bnav{
-                    left:50%!important;
-                    transform:translateX(-50%);
-                    max-width:720px;
-                    border-radius:24px 24px 0 0;
-                    box-shadow:0 -12px 28px rgba(15,23,42,.10);
-                }
+                .st-app{display:grid;grid-template-columns:1.1fr .95fr;grid-template-areas:'header header' 'wallet wallet' 'main plots' 'history history';gap:14px;padding:calc(var(--s-t) + 22px) 24px 42px}
+                .st-header{grid-area:header;margin-bottom:0}.st-wallet{grid-area:wallet;margin-bottom:0}.st-main-card{grid-area:main;margin-bottom:0}.st-garden-grid{grid-area:plots;margin-bottom:0;grid-template-columns:1fr;gap:14px}.st-history{grid-area:history}
+                .st-main-card{min-height:100%;display:flex;flex-direction:column;justify-content:flex-start}
+                .st-progress-ring-shell{width:260px;height:260px}.st-progress-ring{width:220px;height:220px}.st-tree-emoji{font-size:88px}.st-tree-pot{width:86px;height:42px}
             }
-
-            /* Tablet */
-            @media(min-width:600px) and (max-width:899px){
-                .st-app{
-                    width:min(620px,100%);
-                    padding-left:22px;
-                    padding-right:22px;
-                }
-                .st-wallet{
-                    grid-template-columns:repeat(3,1fr);
-                }
-                .st-main-card{
-                    border-radius:34px;
-                    padding:18px;
-                }
-                .st-progress-ring{
-                    width:220px;
-                    height:220px;
-                }
-                .st-tree-emoji{
-                    font-size:86px;
-                }
-                .st-plots{
-                    grid-template-columns:repeat(4,1fr);
-                    gap:10px;
-                }
-                .st-plot-btn{
-                    min-height:110px;
-                }
-                .st-boost-grid button{
-                    min-height:100px;
-                }
+            @media(min-width:1180px){
+                .st-app{padding-left:28px;padding-right:28px}
+                .st-garden-grid{grid-template-columns:1.2fr .9fr;align-items:start}
+                .st-side-stack{height:100%}
             }
-
-            /* Mobile polish */
+            @media(max-width:899px){
+                .st-garden-grid{grid-template-columns:1fr;gap:12px}.st-main-top{grid-template-columns:1fr;gap:10px}.st-mini-stats{grid-template-columns:repeat(2,1fr)}
+            }
             @media(max-width:599px){
-                #pg-garden.st-farm-page{
-                    padding-bottom:calc(var(--nav-h) + var(--s-b) + 16px)!important;
-                }
-                .st-app{
-                    width:100%;
-                    padding:calc(var(--s-t) + 8px) 12px calc(var(--nav-h) + var(--s-b) + 20px);
-                }
-                .st-header{
-                    margin-bottom:8px;
-                }
-                .st-title strong{
-                    font-size:19px;
-                }
-                .st-title span{
-                    font-size:10px;
-                }
-                .st-back,.st-help{
-                    width:38px;
-                    height:38px;
-                    border-radius:14px;
-                }
-                .st-wallet{
-                    gap:6px;
-                    margin-bottom:9px;
-                }
-                .st-wallet-item{
-                    border-radius:15px;
-                    padding:7px 6px;
-                    gap:5px;
-                    min-width:0;
-                }
-                .st-wallet-item i{
-                    width:27px;
-                    height:27px;
-                    border-radius:10px;
-                    font-size:11px;
-                }
-                .st-wallet-item span{
-                    font-size:7px;
-                }
-                .st-wallet-item strong{
-                    font-size:13px;
-                    max-width:48px;
-                    overflow:hidden;
-                    text-overflow:ellipsis;
-                    white-space:nowrap;
-                }
-                .st-reward-banner{
-                    border-radius:20px;
-                    padding:10px;
-                    margin-bottom:9px;
-                }
-                .st-voucher-icon{
-                    width:38px;
-                    height:38px;
-                    border-radius:14px;
-                    font-size:15px;
-                }
-                .st-voucher strong{font-size:12px}
-                .st-voucher span{
-                    font-size:9px;
-                    display:-webkit-box;
-                    -webkit-line-clamp:2;
-                    -webkit-box-orient:vertical;
-                    overflow:hidden;
-                }
-                .st-reward-banner button{
-                    min-height:34px;
-                    padding:7px 9px;
-                    font-size:10px;
-                    border-radius:12px;
-                }
-                .st-main-card{
-                    border-radius:26px;
-                    padding:12px;
-                    margin-bottom:10px;
-                }
-                .st-progress-ring{
-                    width:174px;
-                    height:174px;
-                }
-                .st-progress-ring circle{
-                    stroke-width:8;
-                }
-                .st-tree-emoji{
-                    font-size:66px;
-                }
-                .st-tree-pot{
-                    width:68px;
-                    height:34px;
-                    border-width:4px;
-                }
-                .st-growth strong{
-                    font-size:28px;
-                }
-                .st-growth span{
-                    font-size:11px;
-                    max-width:280px;
-                }
-                .st-action-row{
-                    gap:7px;
-                    margin-top:10px;
-                }
-                .st-action{
-                    min-height:48px;
-                    border-radius:16px;
-                    font-size:11px;
-                    gap:5px;
-                }
-                .st-plot-card,.st-task-card,.st-history{
-                    border-radius:21px;
-                    padding:10px;
-                    margin-bottom:10px;
-                }
-                .st-card-head{
-                    margin-bottom:9px;
-                }
-                .st-card-head strong{
-                    font-size:12px;
-                }
-                .st-card-head span{
-                    font-size:9px;
-                }
-                .st-card-head button{
-                    min-height:32px;
-                    padding:6px 8px;
-                    font-size:9px;
-                    border-radius:12px;
-                }
-                .st-plots{
-                    grid-template-columns:repeat(4,minmax(0,1fr));
-                    gap:6px;
-                }
-                .st-plot-btn{
-                    min-height:88px;
-                    border-radius:16px;
-                    padding:7px 4px;
-                }
-                .st-plot-emoji{
-                    font-size:29px;
-                }
-                .st-plot-name{
-                    font-size:8px;
-                }
-                .st-plot-bar{
-                    height:5px;
-                    margin-top:5px;
-                }
-                .st-task{
-                    border-radius:14px;
-                    padding:8px;
-                }
-                .st-task strong{
-                    font-size:10px;
-                }
-                .st-task span{
-                    font-size:9px;
-                }
-                .st-boost-grid{
-                    gap:7px;
-                    margin-bottom:10px;
-                }
-                .st-boost-grid button{
-                    min-height:78px;
-                    border-radius:18px;
-                }
-                .st-boost-grid span{
-                    font-size:23px;
-                }
-                .st-boost-grid strong{
-                    font-size:10px;
-                }
-                .st-boost-grid small{
-                    font-size:8px;
-                }
-                .st-history .garden-history{
-                    max-height:180px;
-                    overflow:auto;
-                }
+                #pg-garden.st-farm-page{padding-bottom:calc(var(--nav-h) + var(--s-b) + 16px)!important}
+                .st-app{padding:calc(var(--s-t) + 10px) 12px calc(var(--nav-h) + var(--s-b) + 22px)}
+                .st-header{margin-bottom:10px}.st-title strong{font-size:20px}.st-title span{font-size:10px;max-width:260px}.st-back,.st-help{width:40px;height:40px;border-radius:15px}
+                .st-wallet{gap:8px}.st-wallet-item{border-radius:18px;padding:9px 8px;gap:7px}.st-wallet-item i{width:30px;height:30px;font-size:13px}.st-wallet-item strong{font-size:14px}
+                .st-main-card,.st-plot-card,.st-task-card,.st-history{border-radius:24px;padding:12px}.st-main-top{gap:8px}.st-reward-banner{border-radius:20px;padding:10px}.st-voucher-icon{width:40px;height:40px;border-radius:14px}.st-voucher strong{font-size:12px}.st-voucher span{font-size:11px}
+                .st-progress-ring-shell{width:200px;height:200px}.st-progress-ring{width:174px;height:174px}.st-tree-emoji{font-size:66px}.st-tree-pot{width:72px;height:36px;border-width:4px}.st-progress-pill{height:30px;min-width:54px;font-size:12px}
+                .st-growth span{font-size:12px;max-width:280px}.st-level-copy strong{font-size:11px}.st-action-row{grid-template-columns:1fr;gap:8px}.st-action{min-height:50px;font-size:11px;border-radius:16px}
+                .st-card-head strong{font-size:13px}.st-card-head span{font-size:10px}.st-plots{grid-template-columns:repeat(2,1fr);gap:8px}.st-plot-btn{min-height:126px;border-radius:20px}.st-plot-emoji-wrap{width:52px;height:52px}.st-boost-grid{grid-template-columns:repeat(3,1fr);gap:8px}.st-boost-grid button{border-radius:18px;min-height:88px}.st-history .garden-history{max-height:200px;overflow:auto}
             }
-
-            /* Tiny screens */
             @media(max-width:360px){
-                .st-app{
-                    padding-left:9px;
-                    padding-right:9px;
-                }
-                .st-wallet{
-                    gap:5px;
-                }
-                .st-wallet-item{
-                    padding:6px 5px;
-                }
-                .st-wallet-item i{
-                    width:24px;
-                    height:24px;
-                    display:none;
-                }
-                .st-progress-ring{
-                    width:158px;
-                    height:158px;
-                }
-                .st-tree-emoji{
-                    font-size:58px;
-                }
-                .st-growth strong{
-                    font-size:25px;
-                }
-                .st-action{
-                    min-height:44px;
-                    font-size:10px;
-                    border-radius:14px;
-                }
-                .st-plots{
-                    gap:5px;
-                }
-                .st-plot-btn{
-                    min-height:78px;
-                }
-                .st-plot-emoji{
-                    font-size:24px;
-                }
-                .st-plot-name{
-                    font-size:7px;
-                }
-                .st-card-head{
-                    flex-direction:column;
-                    align-items:stretch;
-                }
-                .st-card-head button{
-                    width:100%;
-                }
+                .st-app{padding-left:10px;padding-right:10px}.st-wallet{grid-template-columns:1fr}.st-wallet-item strong{font-size:15px}.st-mini-stats{grid-template-columns:1fr}.st-progress-ring-shell{width:186px;height:186px}.st-progress-ring{width:162px;height:162px}.st-tree-emoji{font-size:58px}.st-plots{grid-template-columns:1fr 1fr}.st-plot-btn{min-height:118px;padding:9px 7px}.st-boost-grid{grid-template-columns:1fr 1fr 1fr}.st-card-head{flex-direction:column;align-items:stretch}.st-card-head button{width:100%}
             }
-
-            /* iOS Safari fixes */
             @supports(-webkit-touch-callout:none){
-                #pg-garden.st-farm-page{
-                    min-height:-webkit-fill-available!important;
-                    -webkit-overflow-scrolling:touch;
-                    transform:translateZ(0);
-                }
-                .st-app{
-                    padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 24px)!important;
-                }
-                .st-progress-ring,
-                .st-tree,
-                .st-main-card,
-                .st-plot-card{
-                    transform:translateZ(0);
-                    backface-visibility:hidden;
-                }
-                .st-bg{
-                    transform:translateZ(0);
-                }
+                #pg-garden.st-farm-page{min-height:-webkit-fill-available}
+                .st-app{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 24px)!important}
             }
-
             @media(prefers-reduced-motion:reduce){
-                .st-tree-emoji,
-                .st-plot-btn.ready{
-                    animation:none!important;
-                }
+                .st-tree-emoji{animation:none!important}
             }
-
-
-
-            /* Garden assets implementation */
-            .st-tree-emoji{display:block;width:112px;height:112px;object-fit:contain;line-height:0;filter:drop-shadow(0 10px 10px rgba(77,103,35,.23));animation:stTree 2.4s ease-in-out infinite}
-            .st-plot-media{display:flex;align-items:center;justify-content:center;margin-bottom:4px}
-            .st-plot-art{width:56px;height:56px;object-fit:contain;display:block;filter:drop-shadow(0 6px 8px rgba(77,103,35,.14))}
-            .st-seed-media{display:flex!important;align-items:center;justify-content:center;width:100%!important;height:auto!important;background:none!important;margin-bottom:8px!important}
-            .st-seed-media img{display:block;width:72px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(130,72,29,.10))}
-            .st-seed-media.small img{width:60px;height:60px}
-            .st-seed-grid .garden-seed,.st-seed-grid .garden-feed{align-items:center}
-            .st-seed-grid .garden-seed strong,.st-seed-grid .garden-feed strong{text-align:center}
-            .st-seed-grid .garden-seed small,.st-seed-grid .garden-feed small{text-align:center;line-height:1.35}
-            @media(max-width:599px){.st-tree-emoji{width:96px;height:96px}.st-plot-art{width:48px;height:48px}.st-seed-media img{width:62px;height:80px}.st-seed-media.small img{width:52px;height:52px}}
-            @media(max-width:360px){.st-tree-emoji{width:84px;height:84px}.st-plot-art{width:42px;height:42px}.st-seed-media img{width:56px;height:72px}}
+            /* ═══════ ACCOUNT PAGE ═══════ */
 /* ═══════ ACCOUNT PAGE ═══════ */
             #pg-account{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
             .acct-card{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
@@ -2484,6 +2076,7 @@
                 <section id="pg-garden" class="pg st-farm-page" aria-label="Plong Tanam">
                     <div class="st-bg">
                         <div class="st-sky"></div>
+                        <div class="st-glow"></div>
                         <div class="st-hill h1"></div>
                         <div class="st-hill h2"></div>
                         <div class="st-cloud c1"></div>
@@ -2494,8 +2087,8 @@
                         <div class="st-header">
                             <button type="button" class="st-back" data-page="pg-home"><i class="fas fa-chevron-left"></i></button>
                             <div class="st-title">
-                                <strong>Plong Tanam</strong>
-                                <span>Tanam, siram, panen reward</span>
+                                <strong>Kebun Plong</strong>
+                                <span>Ruangan kecil buat tanam, rawat, dan panen reward</span>
                             </div>
                             <button type="button" class="st-help" id="st-help"><i class="fas fa-question"></i></button>
                         </div>
@@ -2515,68 +2108,100 @@
                             </div>
                         </div>
 
-                        <div class="st-reward-banner">
-                            <div class="st-voucher">
-                                <div class="st-voucher-icon"><i class="fas fa-ticket"></i></div>
-                                <div>
-                                    <strong>Voucher Panen</strong>
-                                    <span>Kumpulkan progress sampai 100% untuk panen hadiah.</span>
-                                </div>
-                            </div>
-                            <button id="garden-claim" type="button">Klaim idle</button>
-                        </div>
-
                         <div class="st-main-card">
-                            <div class="st-tree-zone">
-                                <div class="st-progress-ring">
-                                    <svg viewBox="0 0 120 120">
-                                        <circle cx="60" cy="60" r="52"></circle>
-                                        <circle id="st-ring-fill" cx="60" cy="60" r="52"></circle>
-                                    </svg>
-                                    <div class="st-tree">
-                                        <img class="st-tree-emoji" id="garden-emoji" src="assets/garden/plot-seedling.svg" alt="Tanaman kebun">
-                                        <div class="st-tree-pot"></div>
+                            <div class="st-main-top">
+                                <div class="st-reward-banner">
+                                    <div class="st-voucher">
+                                        <div class="st-voucher-icon"><i class="fas fa-basket-shopping"></i></div>
+                                        <div>
+                                            <strong>Hasil Kebun</strong>
+                                            <span id="garden-idle-coins">+0</span>
+                                        </div>
+                                    </div>
+                                    <button id="garden-claim" type="button">Klaim</button>
+                                </div>
+                                <div class="st-mini-stats">
+                                    <div class="st-mini-stat">
+                                        <span>Daya siram</span>
+                                        <strong id="garden-water-power">x1</strong>
+                                    </div>
+                                    <div class="st-mini-stat">
+                                        <span>Idle rate</span>
+                                        <strong id="garden-idle-rate">+0/mnt</strong>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="st-tree-zone">
+                                <div class="st-progress-ring-shell">
+                                    <div class="st-ring-orbit orbit-a"></div>
+                                    <div class="st-ring-orbit orbit-b"></div>
+                                    <div class="st-progress-ring">
+                                        <svg viewBox="0 0 120 120" aria-hidden="true">
+                                            <circle cx="60" cy="60" r="52"></circle>
+                                            <circle id="st-ring-fill" cx="60" cy="60" r="52"></circle>
+                                        </svg>
+                                        <div class="st-tree">
+                                            <div class="st-tree-shadow"></div>
+                                            <div class="st-tree-emoji" id="garden-emoji">🌱</div>
+                                            <div class="st-tree-pot"></div>
+                                        </div>
+                                    </div>
+                                    <div class="st-progress-pill" id="garden-percent">0%</div>
+                                </div>
                                 <div class="st-growth">
-                                    <strong id="garden-percent">0%</strong>
+                                    <strong>Plot Aktif</strong>
                                     <span id="garden-status">Pilih bibit dulu untuk mulai tanam.</span>
                                 </div>
                             </div>
 
+                            <div class="st-level-card">
+                                <div class="st-level-copy">
+                                    <span>Progress level kebun</span>
+                                    <strong>Terus rawat kebunmu biar makin cepat berkembang</strong>
+                                </div>
+                                <div class="st-level-bar">
+                                    <span id="garden-level-progress"></span>
+                                </div>
+                            </div>
+
                             <div class="st-action-row">
-                                <button id="garden-open-seeds" type="button" class="st-action secondary"><i class="fas fa-seedling"></i><span>Bibit</span></button>
-                                <button id="garden-water" type="button" class="st-action primary"><i class="fas fa-droplet"></i><span>Siram</span></button>
-                                <button id="garden-harvest" type="button" class="st-action accent"><i class="fas fa-basket-shopping"></i><span>Panen</span></button>
+                                <button id="garden-open-seeds" type="button" class="st-action secondary"><i class="fas fa-seedling"></i><span>Pilih Bibit</span></button>
+                                <button id="garden-water" type="button" class="st-action primary"><i class="fas fa-droplet"></i><span>Siram Sekarang</span></button>
+                                <button id="garden-harvest" type="button" class="st-action accent"><i class="fas fa-basket-shopping"></i><span>Panen Hasil</span></button>
                             </div>
                         </div>
 
-                        <div class="st-plot-card">
-                            <div class="st-card-head">
-                                <div>
-                                    <strong>Plot Tanaman</strong>
-                                    <span>Pilih plot aktif seperti Shopee Tanam style.</span>
+                        <div class="st-garden-grid">
+                            <div class="st-plot-card">
+                                <div class="st-card-head">
+                                    <div>
+                                        <strong>Plot Tanaman</strong>
+                                        <span>Pilih plot yang mau kamu fokuskan lalu rawat sampai siap panen.</span>
+                                    </div>
+                                    <button type="button" id="st-claim-water"><i class="fas fa-plus"></i> Air gratis</button>
                                 </div>
-                                <button type="button" id="st-claim-water"><i class="fas fa-plus"></i> Air gratis</button>
+                                <div class="st-plots" id="garden-plots" aria-label="Plot kebun"></div>
                             </div>
-                            <div class="st-plots" id="garden-plots" aria-label="Plot kebun"></div>
-                        </div>
 
-                        <div class="st-task-card">
-                            <div class="st-card-head">
-                                <div>
-                                    <strong>Misi Harian</strong>
-                                    <span>Selesaikan misi untuk ambil air dan coins.</span>
+                            <div class="st-side-stack">
+                                <div class="st-task-card">
+                                    <div class="st-card-head">
+                                        <div>
+                                            <strong>Misi Harian</strong>
+                                            <span>Selesaikan misi kecil biar hadiahmu makin banyak.</span>
+                                        </div>
+                                        <button type="button" id="st-daily-reward"><i class="fas fa-gift"></i> Klaim</button>
+                                    </div>
+                                    <div class="st-tasks" id="st-daily-tasks"></div>
                                 </div>
-                                <button type="button" id="st-daily-reward"><i class="fas fa-gift"></i> Klaim</button>
-                            </div>
-                            <div class="st-tasks" id="st-daily-tasks"></div>
-                        </div>
 
-                        <div class="st-boost-grid">
-                            <button type="button" id="garden-upgrade"><span>⚡</span><strong>Upgrade</strong><small id="pf-upgrade-text">Naikkan hasil</small></button>
-                            <button type="button" id="garden-bonus"><span>🎁</span><strong>Bonus</strong><small>Hadiah kunjungan</small></button>
-                            <button type="button" id="garden-open-stock"><span>🎒</span><strong>Stok</strong><small>Makanan pet</small></button>
+                                <div class="st-boost-grid">
+                                    <button type="button" id="garden-upgrade"><span>⚡</span><strong>Upgrade</strong><small id="pf-upgrade-text">Naikkan hasil</small></button>
+                                    <button type="button" id="garden-bonus"><span>🎁</span><strong>Bonus</strong><small>Hadiah kunjungan</small></button>
+                                    <button type="button" id="garden-open-stock"><span>🎒</span><strong>Stok</strong><small>Makanan pet</small></button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="st-history">
@@ -3741,25 +3366,6 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 if(p<75)return '🌿';
                 return '🪴';
             }
-            var GARDEN_ASSETS={
-                empty:'assets/garden/plot-empty.svg',
-                seedling:'assets/garden/plot-seedling.svg',
-                growing:'assets/garden/plot-growing.svg',
-                pot:'assets/garden/plot-pot.svg',
-                ready:{carrot:'assets/garden/carrot-ready.svg',lettuce:'assets/garden/lettuce-ready.svg',tomato:'assets/garden/tomato-ready.svg'},
-                seed:{carrot:'assets/garden/seed-carrot.svg',lettuce:'assets/garden/seed-lettuce.svg',tomato:'assets/garden/seed-tomato.svg',empty:'assets/garden/seed-empty.svg'}
-            };
-            function gardenStageAsset(plot){
-                if(!plot)return GARDEN_ASSETS.seedling;
-                var p=Number(plot.progress||0), key=(plot&&plot.seed)||'carrot';
-                if(plot.ready)return GARDEN_ASSETS.ready[key]||GARDEN_ASSETS.ready.carrot;
-                if(p<35)return GARDEN_ASSETS.seedling;
-                if(p<75)return GARDEN_ASSETS.growing;
-                return GARDEN_ASSETS.pot;
-            }
-            function gardenSeedPacket(seed){
-                return GARDEN_ASSETS.seed[seed]||GARDEN_ASSETS.seed.empty;
-            }
             function gardenActivePlantCountLocal(g){
                 return (g&&Array.isArray(g.plots)?g.plots:[]).filter(Boolean).length;
             }
@@ -3790,7 +3396,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
 
                 var emoji=document.getElementById('garden-emoji'), status=document.getElementById('garden-status'), pct=document.getElementById('garden-percent'), ring=document.getElementById('st-ring-fill');
                 var progress=plot?Math.max(0,Math.min(100,Number(plot.progress||0))):0;
-                if(emoji){emoji.src=gardenStageAsset(plot);emoji.alt=(plot?(VEGGIES[plot.seed]||VEGGIES.carrot).name:'Tanaman kebun');emoji.classList.toggle('grow',!!plot&&Number(plot.progress||0)>0)}
+                if(emoji){emoji.textContent=gardenEmojiFor(plot);emoji.classList.toggle('grow',!!plot&&Number(plot.progress||0)>0)}
                 if(pct)pct.textContent=progress+'%';
                 if(ring){
                     var circ=326.7;
@@ -3816,7 +3422,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                         var pp=p?Math.max(0,Math.min(100,Number(p.progress||0))):0;
                         var cls='st-plot-btn'+(i===active?' on':'')+(p&&p.ready?' ready':'');
                         var label=p?(p.ready?'Siap panen':pp+'%'):'Kosong';
-                        return '<button type="button" class="'+cls+'" data-plot="'+i+'"><span class="st-plot-media"><img class="st-plot-art" src="'+gardenStageAsset(p)+'" alt="Plot '+(i+1)+'"></span><span class="st-plot-name">Plot '+(i+1)+'<br>'+escH(label)+'</span><span class="st-plot-bar"><span style="width:'+pp+'%"></span></span></button>';
+                        var plotTitle='Plot '+(i+1), cropLabel='Kosong'; if(p){ var veg=VEGGIES[p.seed]||VEGGIES.carrot; cropLabel=veg.name; } return '<button type="button" class="'+cls+'" data-plot="'+i+'"><span class="st-plot-badge">'+plotTitle+'</span><span class="st-plot-emoji-wrap"><span class="st-plot-emoji">'+gardenEmojiFor(p)+'</span></span><span class="st-plot-meta"><strong class="st-plot-label">'+escH(cropLabel)+'</strong><small class="st-plot-name">'+escH(label)+'</small></span><span class="st-plot-bar"><span style="width:'+pp+'%"></span></span></button>';
                     }).join('');
                     plotWrap.querySelectorAll('[data-plot]').forEach(function(b){b.addEventListener('click',function(){selectGardenPlot(b.dataset.plot)})});
                 }
@@ -3831,7 +3437,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                         var v=VEGGIES[k];
                         var dis=plot?' disabled':'';
                         var hint=plot?(plot.ready?'Panen plot aktif dulu':'Plot aktif terisi'):(v.growNeed+'x siram');
-                        return '<button class="garden-seed" data-seed="'+k+'"'+dis+'><span class="st-seed-media"><img src="'+gardenSeedPacket(k)+'" alt="'+escH(v.name)+'"></span><strong>'+escH(v.name)+'</strong><small>'+escH(hint)+'<br>Reward coins + makanan pet</small></button>';
+                        return '<button class="garden-seed" data-seed="'+k+'"'+dis+'><span>'+v.icon+'</span><strong>'+escH(v.name)+'</strong><small>'+escH(hint)+'<br>Reward coins + makanan pet</small></button>';
                     }).join('');
                     seeds.querySelectorAll('[data-seed]').forEach(function(b){b.addEventListener('click',function(){gardenPlant(b.dataset.seed)})});
                 }
@@ -3840,7 +3446,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 if(inv){
                     inv.innerHTML=Object.keys(VEGGIES).map(function(k){
                         var v=VEGGIES[k],n=Number(g.inventory[k]||0);
-                        return '<button class="garden-feed" data-feed="'+k+'" '+(n>0?'':'disabled')+'><span class="st-seed-media small"><img src="'+gardenStageAsset({seed:k,progress:100,ready:true})+'" alt="'+escH(v.name)+'"></span><strong>x'+n+'</strong><small>'+escH(v.name)+'<br>'+escH(v.desc)+'</small></button>';
+                        return '<button class="garden-feed" data-feed="'+k+'" '+(n>0?'':'disabled')+'><span>'+v.icon+'</span><strong>x'+n+'</strong><small>'+escH(v.name)+'<br>'+escH(v.desc)+'</small></button>';
                     }).join('');
                     inv.querySelectorAll('[data-feed]').forEach(function(b){b.addEventListener('click',function(){gardenFeed(b.dataset.feed)})});
                 }
@@ -3848,7 +3454,11 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 var daily=document.getElementById('st-daily-tasks');
                 if(daily){
                     var d=g.daily||{};
-                    var tasks=[['Tanam 1 bibit',Number(d.planted||0),1],['Siram 3x',Number(d.watered||0),3],['Panen 1x',Number(d.harvested||0),1]];
+                    var tasks=[
+                        ['Tanam 1 bibit',Number(d.planted||0),1],
+                        ['Siram 3x',Number(d.watered||0),3],
+                        ['Panen 1x',Number(d.harvested||0),1]
+                    ];
                     daily.innerHTML=tasks.map(function(t){
                         var done=t[1]>=t[2];
                         return '<div class="st-task '+(done?'done':'')+'"><div><strong>'+t[0]+'</strong><span>'+Math.min(t[1],t[2])+'/'+t[2]+' selesai</span></div><b>'+(done?'Selesai':'Proses')+'</b></div>';
@@ -3859,7 +3469,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
 
                 var hist=document.getElementById('garden-history');
                 if(hist){
-                    hist.innerHTML=(g.history&&g.history.length?g.history.slice(0,8).map(function(h){return '<div class="garden-history-item">'+escH(h.text||'Aktivitas kebun')+'</div>';}).join(''):'<div class="garden-empty-mini">Belum ada aktivitas tanam. Tanam bibit pertama dulu 🌱</div>');
+                    hist.innerHTML=(g.history&&g.history.length?g.history.slice(0,8).map(function(h){return '<div class="garden-history-item">'+escH(h.text||'Aktivitas kebun')+'</div>'}).join(''):'<div class="garden-empty-mini">Belum ada aktivitas tanam. Tanam bibit pertama dulu 🌱</div>');
                 }
 
                 var lvl=document.getElementById('garden-level'), wp=document.getElementById('garden-water-power'), ic=document.getElementById('garden-idle-coins'), rate=document.getElementById('garden-idle-rate'), gp=document.getElementById('garden-level-progress'), up=document.getElementById('garden-upgrade'), claim=document.getElementById('garden-claim'), upTxt=document.getElementById('pf-upgrade-text');
