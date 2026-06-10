@@ -2075,94 +2075,6 @@
             @media(max-width:480px){.nb{padding:4px 7px;font-size:8px}.nb i{font-size:16px}.acct-grid{grid-template-columns:1fr 1fr}}
             @media(min-width:900px){#pg-account{padding-bottom:24px}.acct-grid{grid-template-columns:repeat(4,1fr)}#pg-avatar{padding-bottom:24px}}
 
-            .page-loader {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    radial-gradient(circle at 50% 25%, rgba(255, 255, 255, .92), rgba(255, 247, 237, .96)),
-    linear-gradient(180deg, #fff7ed, #f0fdf4);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity .22s ease, visibility .22s ease;
-}
-
-.page-loader.show {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-.page-loader-card {
-  width: min(280px, calc(100vw - 48px));
-  padding: 26px 22px;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, .88);
-  border: 1px solid rgba(255, 255, 255, .9);
-  box-shadow: 0 24px 70px rgba(120, 72, 32, .16);
-  text-align: center;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-.page-loader-logo {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 14px;
-  border-radius: 22px;
-  display: grid;
-  place-items: center;
-  font-size: 32px;
-  background: linear-gradient(180deg, #fff7ed, #dcfce7);
-  box-shadow: inset 0 2px 0 rgba(255,255,255,.9), 0 12px 26px rgba(34, 197, 94, .16);
-  animation: loaderFloat 1.4s ease-in-out infinite;
-}
-
-.page-loader-spinner {
-  width: 34px;
-  height: 34px;
-  margin: 0 auto 14px;
-  border-radius: 50%;
-  border: 4px solid #fed7aa;
-  border-top-color: #f97316;
-  animation: loaderSpin .8s linear infinite;
-}
-
-.page-loader-card strong {
-  display: block;
-  font-size: 15px;
-  color: #7c2d12;
-  font-weight: 900;
-}
-
-.page-loader-card span {
-  display: block;
-  margin-top: 5px;
-  font-size: 11px;
-  color: #9a6d4b;
-  font-weight: 700;
-}
-
-@keyframes loaderSpin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes loaderFloat {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-5px) scale(1.03); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .page-loader-logo,
-  .page-loader-spinner {
-    animation: none !important;
-  }
-}
-
 
             /* ═══════ AUTH / LOGIN REGISTER ═══════ */
             body.auth-lock #app-shell, body.auth-lock #bnav{display:none!important}
@@ -2190,17 +2102,150 @@
             .auth-note{font-size:11px;color:var(--t4);line-height:1.5;margin-top:12px;text-align:center}
             @media(max-width:420px){.auth-card{padding:18px;border-radius:18px}.auth-title{font-size:23px}}
 
+        
+            /* ═══════ SMOOTH 5S PAGE LOADER ═══════ */
+            .page-loader{
+                position:fixed;
+                inset:0;
+                z-index:999999;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                padding:24px;
+                background:
+                    radial-gradient(circle at 50% 18%,rgba(255,255,255,.96) 0,rgba(255,247,237,.94) 34%,rgba(240,253,244,.96) 100%),
+                    linear-gradient(180deg,#fff7ed,#f0fdf4);
+                opacity:0;
+                visibility:hidden;
+                pointer-events:none;
+                transform:translateZ(0);
+                transition:opacity .38s ease,visibility .38s ease;
+            }
+            .page-loader.show{
+                opacity:1;
+                visibility:visible;
+                pointer-events:auto;
+            }
+            .page-loader.hide{
+                opacity:0;
+                visibility:hidden;
+                pointer-events:none;
+            }
+            .page-loader-card{
+                width:min(310px,calc(100vw - 48px));
+                padding:28px 24px 24px;
+                border-radius:32px;
+                background:rgba(255,255,255,.88);
+                border:1px solid rgba(255,255,255,.92);
+                box-shadow:0 28px 90px rgba(120,72,32,.18);
+                text-align:center;
+                backdrop-filter:blur(18px);
+                -webkit-backdrop-filter:blur(18px);
+                transform:translateY(10px) scale(.98);
+                animation:loaderCardIn .55s cubic-bezier(.22,1,.36,1) both;
+            }
+            .page-loader-logo{
+                width:68px;
+                height:68px;
+                margin:0 auto 14px;
+                border-radius:24px;
+                display:grid;
+                place-items:center;
+                font-size:34px;
+                background:linear-gradient(180deg,#fff7ed,#dcfce7);
+                box-shadow:inset 0 2px 0 rgba(255,255,255,.95),0 14px 30px rgba(34,197,94,.18);
+                animation:loaderFloat 1.45s ease-in-out infinite;
+            }
+            .page-loader-ring{
+                width:42px;
+                height:42px;
+                margin:0 auto 14px;
+                border-radius:50%;
+                position:relative;
+                background:conic-gradient(from 0deg,#f97316,#22c55e,#38bdf8,#f97316);
+                animation:loaderSpin 1s linear infinite;
+            }
+            .page-loader-ring::after{
+                content:'';
+                position:absolute;
+                inset:5px;
+                border-radius:50%;
+                background:rgba(255,255,255,.96);
+            }
+            .page-loader-ring span{
+                position:absolute;
+                inset:0;
+                border-radius:50%;
+                filter:blur(8px);
+                opacity:.38;
+                background:inherit;
+            }
+            .page-loader-card strong{
+                display:block;
+                font-size:16px;
+                color:#7c2d12;
+                font-weight:900;
+                letter-spacing:-.2px;
+            }
+            .page-loader-card > span{
+                display:block;
+                margin-top:6px;
+                font-size:11px;
+                line-height:1.45;
+                color:#9a6d4b;
+                font-weight:800;
+            }
+            .page-loader-progress{
+                height:10px;
+                margin-top:18px;
+                border-radius:999px;
+                background:#ffedd5;
+                overflow:hidden;
+                box-shadow:inset 0 1px 3px rgba(124,45,18,.08);
+            }
+            .page-loader-progress span{
+                display:block;
+                width:0%;
+                height:100%;
+                border-radius:999px;
+                background:linear-gradient(90deg,#f97316,#22c55e);
+                box-shadow:0 0 16px rgba(34,197,94,.28);
+                transition:width .25s ease;
+            }
+            .page-loader-card small{
+                display:block;
+                margin-top:9px;
+                font-size:10px;
+                color:#c05621;
+                font-weight:900;
+                letter-spacing:.35px;
+            }
+            @keyframes loaderSpin{to{transform:rotate(360deg)}}
+            @keyframes loaderFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-6px) scale(1.04)}}
+            @keyframes loaderCardIn{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+            @media(prefers-reduced-motion:reduce){
+                .page-loader-card,.page-loader-logo,.page-loader-ring{animation:none!important}
+                .page-loader,.page-loader-progress span{transition:none!important}
+            }
+
         </style>
     </head>
     <body class="auth-lock">
-    <div id="page-loader" class="page-loader">
-    <div class="page-loader-card">
-    <div class="page-loader-logo">🌱</div>
-    <div class="page-loader-spinner"></div>
-    <strong>Memuat halaman...</strong>
-    <span>Plong sedang menyiapkan ruangmu</span>
-    </div>
-     </div>
+        <div id="page-loader" class="page-loader show" aria-live="polite" aria-label="Memuat halaman">
+            <div class="page-loader-card">
+                <div class="page-loader-logo">🌱</div>
+                <div class="page-loader-ring" aria-hidden="true">
+                    <span></span>
+                </div>
+                <strong id="page-loader-title">Memuat halaman...</strong>
+                <span id="page-loader-subtitle">Plong sedang menyiapkan ruangmu</span>
+                <div class="page-loader-progress" aria-hidden="true">
+                    <span id="page-loader-bar"></span>
+                </div>
+                <small id="page-loader-percent">0%</small>
+            </div>
+        </div>
+
         <div id="toast" role="alert" aria-live="polite"></div>
 
         <div id="auth-screen" class="hide" role="dialog" aria-modal="true" aria-label="Masuk VokaMon">
@@ -2840,38 +2885,101 @@
         </nav>
 
         <script>
-            function showPageLoader(text) {
-  var loader = document.getElementById("page-loader");
-  if (!loader) return;
-
-  var title = loader.querySelector("strong");
-  if (title && text) title.textContent = text;
-
-  loader.classList.add("show");
-}
-
-function hidePageLoader() {
-  var loader = document.getElementById("page-loader");
-  if (!loader) return;
-
-  setTimeout(function () {
-    loader.classList.remove("show");
-  }, 180);
-}
-
-window.addEventListener("load", function () {
-  hidePageLoader();
-});
-
-window.addEventListener("pageshow", function () {
-  hidePageLoader();
-});
-
-window.addEventListener("beforeunload", function () {
-  showPageLoader("Memuat halaman...");
-});
             window.__VKM_PAGE_ID="<%= pageId %>";
-            var EMO={marah:{label:"Marah",color:"#DC2626",hue:0,icon:"fa-fire",desc:"Api Chaos"},sedih:{label:"Sedih",color:"#2563EB",hue:220,icon:"fa-droplet",desc:"Aqua Tears"},galau:{label:"Galau",color:"#9333EA",hue:280,icon:"fa-hurricane",desc:"Wind Void"},stres:{label:"Stres",color:"#D97706",hue:35,icon:"fa-bolt",desc:"Spark Friction"},excited:{label:"Excited",color:"#CA8A04",hue:50,icon:"fa-star",desc:"Solar Burst"},tenang:{label:"Tenang",color:"#0D9488",hue:170,icon:"fa-leaf",desc:"Calm Pulse"}};
+            
+
+            var PAGE_LOADER_MIN_MS=5000;
+            var pageLoaderStartedAt=Date.now();
+            var pageLoaderTimer=null;
+            var pageLoaderPercentTimer=null;
+            var pageLoaderMessages=[
+                "Menyiapkan ruang Plong...",
+                "Memuat pet companion...",
+                "Merapikan kebun emosimu...",
+                "Menyinkronkan progress...",
+                "Hampir selesai..."
+            ];
+
+            function updatePageLoaderProgress(percent){
+                percent=Math.max(0,Math.min(100,Math.round(percent||0)));
+                var bar=document.getElementById("page-loader-bar");
+                var pct=document.getElementById("page-loader-percent");
+                if(bar)bar.style.width=percent+"%";
+                if(pct)pct.textContent=percent+"%";
+            }
+
+            function startPageLoader(text){
+                var loader=document.getElementById("page-loader");
+                if(!loader)return;
+                pageLoaderStartedAt=Date.now();
+                clearTimeout(pageLoaderTimer);
+                clearInterval(pageLoaderPercentTimer);
+                loader.classList.remove("hide");
+                loader.classList.add("show");
+                var title=document.getElementById("page-loader-title");
+                var subtitle=document.getElementById("page-loader-subtitle");
+                if(title)title.textContent=text||"Memuat halaman...";
+                if(subtitle)subtitle.textContent="Plong sedang menyiapkan ruangmu";
+                updatePageLoaderProgress(0);
+
+                var start=Date.now();
+                var msgIndex=0;
+                pageLoaderPercentTimer=setInterval(function(){
+                    var elapsed=Date.now()-start;
+                    var fake=Math.min(96,(elapsed/PAGE_LOADER_MIN_MS)*96);
+                    updatePageLoaderProgress(fake);
+                    var nextIndex=Math.min(pageLoaderMessages.length-1,Math.floor(elapsed/1000));
+                    if(nextIndex!==msgIndex){
+                        msgIndex=nextIndex;
+                        if(subtitle)subtitle.textContent=pageLoaderMessages[msgIndex];
+                    }
+                },120);
+            }
+
+            function finishPageLoader(){
+                var loader=document.getElementById("page-loader");
+                if(!loader)return;
+                var elapsed=Date.now()-pageLoaderStartedAt;
+                var wait=Math.max(0,PAGE_LOADER_MIN_MS-elapsed);
+                clearTimeout(pageLoaderTimer);
+                pageLoaderTimer=setTimeout(function(){
+                    clearInterval(pageLoaderPercentTimer);
+                    updatePageLoaderProgress(100);
+                    var title=document.getElementById("page-loader-title");
+                    var subtitle=document.getElementById("page-loader-subtitle");
+                    if(title)title.textContent="Selesai!";
+                    if(subtitle)subtitle.textContent="Ruangmu sudah siap dibuka";
+                    setTimeout(function(){
+                        loader.classList.remove("show");
+                        loader.classList.add("hide");
+                    },360);
+                },wait);
+            }
+
+            function navigateWithLoader(url){
+                if(!url)return;
+                var targetPath=new URL(url,window.location.origin).pathname;
+                if(window.location.pathname===targetPath)return;
+                startPageLoader("Membuka halaman...");
+                setTimeout(function(){
+                    window.location.href=url;
+                },520);
+            }
+
+            window.addEventListener("load",finishPageLoader);
+            window.addEventListener("pageshow",function(event){
+                if(event.persisted){
+                    startPageLoader("Membuka halaman...");
+                    finishPageLoader();
+                }
+            });
+            window.addEventListener("beforeunload",function(){
+                startPageLoader("Membuka halaman...");
+            });
+
+            startPageLoader("Memuat halaman...");
+
+var EMO={marah:{label:"Marah",color:"#DC2626",hue:0,icon:"fa-fire",desc:"Api Chaos"},sedih:{label:"Sedih",color:"#2563EB",hue:220,icon:"fa-droplet",desc:"Aqua Tears"},galau:{label:"Galau",color:"#9333EA",hue:280,icon:"fa-hurricane",desc:"Wind Void"},stres:{label:"Stres",color:"#D97706",hue:35,icon:"fa-bolt",desc:"Spark Friction"},excited:{label:"Excited",color:"#CA8A04",hue:50,icon:"fa-star",desc:"Solar Burst"},tenang:{label:"Tenang",color:"#0D9488",hue:170,icon:"fa-leaf",desc:"Calm Pulse"}};
             var PRODS=[{id:"p1",name:"Coklat Virtual",desc:"Naikkan kenyang dan bahagia Plong",price:50,icon:"🍫",type:"consumable"},{id:"p2",name:"Taman Mimpi",desc:"Background eksklusif baru",price:120,icon:"🌸",type:"unlock",key:"bg_dream_garden"},{id:"p3",name:"Mahkota Emosi",desc:"Aksesoris mahkota untuk Plong",price:80,icon:"👑",type:"unlock",key:"acc_crown"},{id:"p4",name:"Bola Kristal",desc:"Refleksi mood ringan",price:90,icon:"🔮",type:"consumable"},{id:"p5",name:"Sayap Emas",desc:"Evolusi visual karakter",price:350,icon:"✨",type:"unlock",key:"acc_wings"}];
             var ML2={"qwen2.5:3b":"Curhat Santai","qwen2.5:0.5b":"PokoAI 1.2"};
             var AL={id:{label:"Indonesia santai",welcome:"Hei! Aku Plong 👋 Aku di sini buat nemenin kamu. Mau cerita apa hari ini?"},"id-formal":{label:"Indonesia formal",welcome:"Halo, aku Plong 👋 Aku siap menemanimu. Apa yang ingin kamu ceritakan?"},en:{label:"English",welcome:"Hey, I'm Plong 👋 I'm here with you. What would you like to talk about?"},"jv-ngoko":{label:"Jawa ngoko",welcome:"Hei, aku Plong 👋 Aku neng kene ngancani kowe."},"jv-krama":{label:"Jawa krama",welcome:"Sugeng rawuh, kula Plong 👋 Kula siap ngancani panjenangan."},su:{label:"Sunda",welcome:"Hai, abdi Plong 👋 Abdi aya di dieu kanggo ngadangu."},ms:{label:"Melayu",welcome:"Hai, saya Plong 👋 Saya ada di sini untuk menemani kamu."}};
@@ -3129,12 +3237,9 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 var target=VKM_PAGE_ROUTES[id];
                 var current=window.__VKM_PAGE_ID||"pg-home";
                 if(target&&id!==current){
-    showPageLoader("Membuka halaman...");
-    setTimeout(function () {
-        window.location.href = target;
-    }, 220);
-    return;
-}
+                    navigateWithLoader(target);
+                    return;
+                }
                 document.querySelectorAll(".pg").forEach(function(p){
                     p.classList.remove("on");
                     p.style.display="";
