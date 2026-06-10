@@ -2702,6 +2702,551 @@
                 }
             }
 
+
+
+            /* ═══════ HOME STYLE — BLUE SOFT ILLUSTRATION / FOKU INSPIRED ═══════ */
+            .home-foku{
+                max-width:1180px!important;
+                margin:0 auto;
+                padding-bottom:calc(var(--nav-h) + var(--s-b) + 26px)!important;
+                background:
+                    radial-gradient(circle at top left, rgba(74,144,255,.18), transparent 28%),
+                    linear-gradient(180deg,#5ea0ff 0%,#6ea8ff 24%,#edf4ff 24%,#f7faff 100%);
+                border-radius:38px;
+                overflow:hidden;
+            }
+            .foku-shell{
+                padding:20px;
+            }
+            .foku-topbar{
+                display:flex;
+                align-items:flex-start;
+                justify-content:space-between;
+                gap:14px;
+                margin-bottom:16px;
+            }
+            .foku-greet span{
+                display:block;
+                color:#24376b;
+                font-size:14px;
+                font-weight:900;
+                margin-bottom:4px;
+            }
+            .foku-greet strong{
+                display:block;
+                color:#0f172a;
+                font-size:24px;
+                line-height:1.1;
+                font-weight:900;
+                letter-spacing:-.4px;
+            }
+            .foku-greet small{
+                display:block;
+                margin-top:5px;
+                color:#6c7fa7;
+                font-size:12px;
+                font-weight:800;
+            }
+            .foku-points-pill{
+                min-width:58px;
+                height:40px;
+                padding:0 12px;
+                border-radius:16px;
+                background:rgba(255,255,255,.78);
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                gap:8px;
+                color:#54627f;
+                border:1px solid rgba(255,255,255,.88);
+                box-shadow:0 10px 28px rgba(53,88,161,.10);
+                font-weight:900;
+            }
+            .foku-points-pill i{color:#94a3b8}
+            .foku-main-grid{
+                display:grid;
+                grid-template-columns:minmax(0,1.06fr) 360px;
+                gap:18px;
+            }
+            .foku-hero-card,.foku-side-card,.foku-bottom-card{
+                background:rgba(255,255,255,.96);
+                border:1px solid rgba(255,255,255,.9);
+                border-radius:34px;
+                box-shadow:0 24px 70px rgba(39,79,156,.12);
+            }
+            .foku-hero-card{padding:16px}
+            .foku-pet-card{
+                padding:16px;
+                border-radius:28px;
+                background:linear-gradient(180deg,#f9fbff 0%,#f2f6ff 100%);
+                border:1px solid #edf2ff;
+            }
+            .foku-pet-card-top{
+                display:flex;
+                align-items:flex-start;
+                justify-content:space-between;
+                gap:14px;
+                margin-bottom:10px;
+            }
+            .foku-pet-card-top h2{
+                margin:0;
+                color:#15203b;
+                font-size:24px;
+                font-weight:900;
+            }
+            .foku-status{
+                margin:4px 0 0;
+                color:#6f7ea4!important;
+                font-size:12px;
+                font-weight:800;
+            }
+            .foku-message-bubble{
+                max-width:220px;
+                padding:12px 14px;
+                border-radius:16px 16px 16px 6px;
+                background:#fff;
+                box-shadow:0 12px 26px rgba(68,96,154,.10);
+            }
+            .foku-message-bubble span{
+                display:block;
+                color:#4e5c7a;
+                font-size:11px;
+                font-weight:700;
+            }
+            .foku-message-bubble strong{
+                display:block;
+                margin-top:2px;
+                color:#243b72;
+                font-size:13px;
+                line-height:1.35;
+                font-weight:900;
+            }
+            .foku-stage{
+                position:relative;
+                min-height:320px;
+                display:grid;
+                place-items:center;
+                overflow:hidden;
+                border-radius:28px;
+                background:
+                    radial-gradient(circle at 50% 20%, rgba(255,255,255,.98), rgba(255,255,255,.58) 26%, transparent 28%),
+                    linear-gradient(180deg,#b9d1ff 0%,#b6d0ff 18%,#d6e4ff 52%,#edf3ff 100%);
+            }
+            .foku-stage-circle{
+                position:absolute;
+                bottom:-46px;
+                width:280px;
+                height:280px;
+                border-radius:50%;
+                background:radial-gradient(circle,rgba(255,255,255,.98),rgba(255,255,255,.58) 48%,transparent 62%);
+            }
+            .foku-stage canvas{
+                position:relative;
+                z-index:2;
+                filter:drop-shadow(0 14px 18px rgba(42,72,141,.18));
+            }
+            .foku-stage-stars span{
+                position:absolute;
+                width:12px;height:12px;
+                background:rgba(255,255,255,.95);
+                transform:rotate(45deg);
+                border-radius:3px;
+                box-shadow:0 0 0 8px rgba(255,255,255,.08);
+                z-index:1;
+            }
+            .foku-stage-stars span:nth-child(1){top:54px;left:48px;width:10px;height:10px}
+            .foku-stage-stars span:nth-child(2){top:86px;right:62px}
+            .foku-stage-stars span:nth-child(3){bottom:88px;left:82px;width:8px;height:8px}
+            .foku-stage-stars span:nth-child(4){bottom:58px;right:78px;width:14px;height:14px}
+            .foku-pet-stats{
+                display:grid;
+                grid-template-columns:repeat(2,1fr);
+                gap:12px;
+                margin-top:14px;
+            }
+            .foku-pet-stat{
+                padding:12px;
+                border-radius:18px;
+                background:#fff;
+                border:1px solid #eef3ff;
+                box-shadow:0 8px 18px rgba(86,118,177,.08);
+            }
+            .foku-pet-stat label{
+                display:flex;
+                align-items:center;
+                gap:6px;
+                color:#6d7c9f;
+                font-size:11px;
+                font-weight:900;
+            }
+            .foku-pet-stat strong{
+                display:block;
+                margin-top:4px;
+                color:#15203b;
+                font-size:24px;
+                font-weight:900;
+            }
+            .foku-mini-bar{
+                height:7px;
+                border-radius:999px;
+                background:#ebf1ff;
+                overflow:hidden;
+                margin-top:8px;
+            }
+            .foku-mini-bar.large{height:10px}
+            .foku-mini-fill{
+                height:100%;
+                border-radius:999px;
+                transition:width .24s ease;
+            }
+            .foku-mini-fill.hunger{background:linear-gradient(90deg,#6cb4ff,#4f86ff)}
+            .foku-mini-fill.happy{background:linear-gradient(90deg,#7ea4ff,#3468f6)}
+            .foku-mini-fill.energy{background:linear-gradient(90deg,#4dc3ff,#2f61f3)}
+            .foku-primary-action{
+                padding:16px 6px 4px;
+                text-align:center;
+            }
+            .foku-primary-btn{
+                width:100%;
+                min-height:58px;
+                border:0;
+                border-radius:18px;
+                color:#fff;
+                background:linear-gradient(180deg,#0e2a74,#03174c);
+                box-shadow:0 12px 26px rgba(3,23,76,.24);
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                gap:8px;
+                font-size:15px;
+                font-weight:900;
+            }
+            .foku-primary-action small{
+                display:block;
+                margin-top:8px;
+                color:#7483a6;
+                font-size:12px;
+                font-weight:800;
+            }
+            .foku-side-panel{
+                display:grid;
+                gap:16px;
+            }
+            .foku-side-card{
+                padding:16px;
+            }
+            .foku-side-head,.foku-section-head{
+                display:flex;
+                align-items:flex-start;
+                justify-content:space-between;
+                gap:12px;
+                margin-bottom:14px;
+            }
+            .foku-side-head span,.foku-section-head span{
+                display:block;
+                color:#8a97b7;
+                font-size:10px;
+                text-transform:uppercase;
+                letter-spacing:.4px;
+                font-weight:900;
+            }
+            .foku-side-head strong,.foku-section-head strong{
+                display:block;
+                margin-top:3px;
+                color:#16203c;
+                font-size:18px;
+                line-height:1.18;
+                font-weight:900;
+            }
+            .foku-soft-icon{
+                background:#f5f8ff!important;
+                border-color:#e4ebff!important;
+                color:#4268df!important;
+                box-shadow:none!important;
+            }
+            .foku-exp-box{
+                padding:14px;
+                border-radius:22px;
+                background:linear-gradient(180deg,#f8fbff,#f3f7ff);
+                border:1px solid #e8efff;
+            }
+            .foku-exp-row{
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:12px;
+                color:#6e7ea3;
+                font-size:12px;
+                font-weight:900;
+                margin-bottom:8px;
+            }
+            .foku-exp-row strong{
+                color:#15203b;
+                font-size:13px;
+            }
+            .foku-exp-track{
+                height:10px;
+                border-radius:999px;
+                overflow:hidden;
+                background:#e9f0ff;
+            }
+            .foku-exp-fill{
+                height:100%;
+                background:linear-gradient(90deg,#76a9ff,#2f61f3);
+                border-radius:999px;
+                transition:width .25s ease;
+            }
+            .foku-quick-actions{
+                display:grid;
+                grid-template-columns:repeat(4,1fr);
+                gap:10px;
+                margin-top:14px;
+            }
+            .foku-quick-btn{
+                min-height:82px;
+                border:0;
+                border-radius:18px;
+                background:#f8fbff;
+                border:1px solid #e9efff;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                justify-content:center;
+                gap:8px;
+                color:#4268df;
+                font-size:11px;
+                font-weight:900;
+            }
+            .foku-quick-btn i{
+                width:34px;height:34px;
+                display:grid;place-items:center;
+                border-radius:12px;
+                background:#fff;
+                box-shadow:0 8px 16px rgba(80,111,180,.08);
+            }
+            .foku-inline-link{
+                border:0;
+                background:transparent;
+                color:#5a73c9;
+                font-size:12px;
+                font-weight:900;
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+            }
+            .foku-focus-list{
+                padding:14px;
+                border-radius:22px;
+                background:linear-gradient(180deg,#f9fbff,#f4f7ff);
+                border:1px solid #e8efff;
+            }
+            .foku-focus-item{
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:12px;
+            }
+            .foku-focus-left{
+                display:flex;
+                align-items:center;
+                gap:10px;
+            }
+            .foku-focus-icon{
+                width:42px;height:42px;
+                border-radius:15px;
+                display:grid;place-items:center;
+                color:#fff;
+                background:linear-gradient(180deg,#7ea4ff,#3468f6);
+            }
+            .foku-focus-left strong{
+                display:block;
+                color:#16203c;
+                font-size:14px;
+                font-weight:900;
+            }
+            .foku-focus-left span{
+                display:block;
+                margin-top:2px;
+                color:#7a87a6;
+                font-size:11px;
+                font-weight:700;
+            }
+            .foku-focus-item small{
+                color:#5b6c90;
+                font-size:12px;
+                font-weight:900;
+            }
+            .foku-focus-progress{
+                margin-top:12px;
+                height:7px;
+                border-radius:999px;
+                overflow:hidden;
+                background:#e9efff;
+            }
+            .foku-focus-progress span{
+                display:block;
+                height:100%;
+                width:40%;
+                background:linear-gradient(90deg,#7ea4ff,#3468f6);
+                border-radius:999px;
+            }
+            .foku-focus-chips{
+                display:flex;
+                flex-wrap:wrap;
+                gap:8px;
+                margin-top:12px;
+            }
+            .foku-focus-chips button{
+                border:0;
+                height:34px;
+                padding:0 12px;
+                border-radius:999px;
+                background:#fff;
+                border:1px solid #e7edff;
+                color:#52699f;
+                font-size:11px;
+                font-weight:900;
+            }
+            .foku-bottom-grid{
+                display:grid;
+                grid-template-columns:1fr 330px;
+                gap:16px;
+                margin-top:16px;
+            }
+            .foku-bottom-card{
+                padding:16px;
+            }
+            .foku-worker-stats{
+                display:grid;
+                grid-template-columns:repeat(4,1fr);
+                gap:10px;
+            }
+            .foku-worker-stats>div{
+                padding:12px;
+                border-radius:18px;
+                background:#f8fbff;
+                border:1px solid #e8efff;
+            }
+            .foku-worker-stats span{
+                display:block;
+                color:#7d89a8;
+                font-size:10px;
+                text-transform:uppercase;
+                letter-spacing:.35px;
+                font-weight:900;
+            }
+            .foku-worker-stats strong{
+                display:block;
+                margin-top:6px;
+                color:#16203c;
+                font-size:18px;
+                font-weight:900;
+            }
+            .foku-worker-actions{
+                display:flex;
+                flex-wrap:wrap;
+                gap:10px;
+                margin-top:12px;
+            }
+            .foku-emotion-tags{
+                display:flex;
+                flex-wrap:wrap;
+                gap:8px;
+            }
+            .foku-emotion-tags .ei{
+                background:#f7faff;
+                border:1px solid #e6ecff;
+                color:#4f618f;
+                border-radius:999px;
+                padding:8px 10px;
+                font-weight:900;
+            }
+            .foku-energy-box{
+                margin-top:14px;
+                padding:12px;
+                border-radius:18px;
+                background:#f8fbff;
+                border:1px solid #e8efff;
+            }
+            .foku-energy-head{
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:12px;
+                margin-bottom:8px;
+                color:#5f729d;
+                font-size:12px;
+                font-weight:900;
+            }
+            .foku-energy-head strong{color:#16203c;font-size:13px}
+            @media(max-width:1100px){
+                .foku-main-grid,.foku-bottom-grid{
+                    grid-template-columns:1fr;
+                }
+                .foku-side-panel{
+                    grid-template-columns:1fr 1fr;
+                }
+            }
+            @media(max-width:780px){
+                .home-foku{
+                    border-radius:0;
+                }
+                .foku-shell{padding:16px}
+                .foku-topbar{align-items:center}
+                .foku-greet strong{font-size:20px}
+                .foku-main-grid,.foku-bottom-grid,.foku-side-panel{
+                    grid-template-columns:1fr;
+                    gap:14px;
+                }
+                .foku-pet-card-top{
+                    flex-direction:column;
+                }
+                .foku-message-bubble{
+                    max-width:none;
+                    width:100%;
+                }
+                .foku-stage{
+                    min-height:280px;
+                }
+                .foku-pet-stats{
+                    grid-template-columns:1fr 1fr;
+                }
+                .foku-quick-actions{
+                    grid-template-columns:repeat(2,1fr);
+                }
+                .foku-worker-stats{
+                    grid-template-columns:repeat(2,1fr);
+                }
+            }
+            @media(max-width:480px){
+                .foku-shell{padding:12px}
+                .foku-hero-card,.foku-side-card,.foku-bottom-card{
+                    border-radius:28px;
+                }
+                .foku-pet-card{
+                    padding:12px;
+                    border-radius:24px;
+                }
+                .foku-stage{
+                    min-height:240px;
+                    border-radius:22px;
+                }
+                .foku-stage canvas{
+                    width:170px;
+                    height:170px;
+                }
+                .foku-pet-stats,.foku-worker-stats{
+                    grid-template-columns:1fr;
+                }
+                .foku-pet-stat strong{
+                    font-size:20px;
+                }
+                .foku-primary-btn{
+                    min-height:54px;
+                    font-size:14px;
+                }
+            }
+
 </style>
     </head>
     <body class="auth-lock">
@@ -2789,122 +3334,168 @@
                 </div>
 
                 <!-- HOME -->
-                <section id="pg-home" class="<%= pageId === 'pg-home' ? 'pg on home-v2' : 'pg home-v2' %>" aria-label="Beranda">
-                    <div class="home-hero-v2">
-                        <div class="home-hero-copy">
-                            <div class="home-kicker"><span></span> Emotional Companion</div>
-                            <h1>Hari ini mau dibuat lebih plong?</h1>
-                            <p>Rawat pet, lepaskan isi hati, tanam progress kecil, dan kumpulkan energi baik dari perjalanan emosimu.</p>
-                            <div class="home-hero-actions">
-                                <button class="home-primary-btn" type="button" data-page="pg-assist"><i class="fas fa-comment-dots"></i> Mulai cerita</button>
-                                <button class="home-soft-btn" type="button" data-page="pg-garden"><i class="fas fa-seedling"></i> Buka kebun</button>
+                <section id="pg-home" class="<%= pageId === 'pg-home' ? 'pg on home-foku' : 'pg home-foku' %>" aria-label="Beranda">
+                    <div class="foku-shell">
+                        <div class="foku-topbar">
+                            <div class="foku-greet">
+                                <span>Good afternoon</span>
+                                <strong>Ruang yang tenang untukmu</strong>
+                                <small id="foku-date">01 March 2026</small>
+                            </div>
+                            <div class="foku-points-pill">
+                                <i class="fas fa-fire-flame-curved"></i>
+                                <span id="pet-level-display">1</span>
                             </div>
                         </div>
-                        <div class="home-hero-stats">
-                            <div class="home-stat-chip">
-                                <span>Level Pet</span>
-                                <strong><span id="pet-level-display">1</span></strong>
-                            </div>
-                            <div class="home-stat-chip">
-                                <span>EXP</span>
-                                <strong><span id="pet-exp-display">0</span>/<span id="pet-exp-max">30</span></strong>
-                            </div>
-                            <div class="home-stat-chip">
-                                <span>Mood</span>
-                                <strong>Tenang</strong>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="home-layout-v2">
-                        <section class="home-pet-card-v2" aria-label="Pet companion">
-                            <div class="home-card-head-v2">
-                                <div>
-                                    <span>Pet Companion</span>
-                                    <strong id="pet-name-display">Plong</strong>
-                                </div>
-                                <button class="home-icon-btn" type="button" data-page="pg-avatar" aria-label="Kustom avatar"><i class="fas fa-user-astronaut"></i></button>
-                            </div>
-
-                            <div class="home-pet-stage-v2">
-                                <div class="home-pet-glow"></div>
-                                <canvas id="pet-canvas" width="220" height="220"></canvas>
-                            </div>
-
-                            <p class="home-mood-text" id="pet-mood-text">Mood: Tenang ✨</p>
-                            <div class="home-exp-track"><div id="exp-bar" class="home-exp-fill" style="width:0%"></div></div>
-
-                            <div class="home-pet-actions-v2">
-                                <button class="pet-act" id="pet-play" type="button"><i class="fas fa-hand-sparkles"></i> Elus</button>
-                                <button class="pet-act" id="pet-calm" type="button"><i class="fas fa-leaf"></i> Tenang</button>
-                                <button class="pet-act" type="button" data-page="pg-avatar"><i class="fas fa-wand-magic-sparkles"></i> Kustom</button>
-                            </div>
-                        </section>
-
-                        <section class="home-panel-v2 home-checkin-v2" aria-label="Check-in emosi">
-                            <div class="home-card-head-v2">
-                                <div>
-                                    <span>Check-in cepat</span>
-                                    <strong>Mulai dari satu langkah kecil</strong>
-                                </div>
-                            </div>
-                            <div class="home-quick-grid">
-                                <button type="button" data-page="pg-vent"><i class="fas fa-microphone"></i><span>Vent</span><small>keluarkan isi hati</small></button>
-                                <button type="button" data-page="pg-assist"><i class="fas fa-comment-dots"></i><span>Chat</span><small>cerita ke Plong</small></button>
-                                <button type="button" data-page="pg-art"><i class="fas fa-palette"></i><span>Art</span><small>lihat pola emosi</small></button>
-                                <button type="button" data-page="pg-redeem"><i class="fas fa-gift"></i><span>Reward</span><small>cek hadiah digital</small></button>
-                            </div>
-
-                            <div class="home-bars-v2">
-                                <div class="home-bar-item">
-                                    <div><i class="fas fa-drumstick-bite"></i><span>Kenyang</span></div>
-                                    <div class="home-bar-track"><div id="hunger-bar" class="home-bar-fill hunger" style="width:50%"></div></div>
-                                </div>
-                                <div class="home-bar-item">
-                                    <div><i class="fas fa-heart"></i><span>Bahagia</span></div>
-                                    <div class="home-bar-track"><div id="happy-bar" class="home-bar-fill happy" style="width:50%"></div></div>
-                                </div>
-                                <div class="home-bar-item">
-                                    <div><i class="fas fa-bolt"></i><span>Energi Pet</span></div>
-                                    <div class="home-bar-track"><div id="pet-energy-bar" class="home-bar-fill energy" style="width:70%"></div></div>
-                                </div>
-                            </div>
-                        </section>
-
-                        <section class="home-panel-v2 home-worker-v2" aria-label="Pet soul worker">
-                            <div class="pet-worker-card home-worker-card-v2">
-                                <div class="pet-worker-head">
-                                    <div>
-                                        <strong>Pet Soul Worker</strong>
-                                        <span>Plong mengolah emosi jadi Soul Coins.</span>
+                        <div class="foku-main-grid">
+                            <section class="foku-hero-card">
+                                <div class="foku-pet-card">
+                                    <div class="foku-pet-card-top">
+                                        <div>
+                                            <h2 id="pet-name-display">Plong</h2>
+                                            <p class="foku-status" id="pet-mood-text">I am ready to calm you down ✨</p>
+                                        </div>
+                                        <div class="foku-message-bubble">
+                                            <span>Ready to listen!</span>
+                                            <strong>Let’s make today lighter.</strong>
+                                        </div>
                                     </div>
-                                    <button class="pet-worker-btn" id="pet-worker-claim" type="button"><i class="fas fa-coins"></i> Klaim</button>
+
+                                    <div class="foku-stage">
+                                        <div class="foku-stage-stars">
+                                            <span></span><span></span><span></span><span></span>
+                                        </div>
+                                        <div class="foku-stage-circle"></div>
+                                        <canvas id="pet-canvas" width="220" height="220"></canvas>
+                                    </div>
+
+                                    <div class="foku-pet-stats">
+                                        <div class="foku-pet-stat">
+                                            <label><i class="fas fa-drumstick-bite"></i> Hunger</label>
+                                            <strong id="pet-hunger-label">65%</strong>
+                                            <div class="foku-mini-bar"><div id="hunger-bar" class="foku-mini-fill hunger" style="width:65%"></div></div>
+                                        </div>
+                                        <div class="foku-pet-stat">
+                                            <label><i class="fas fa-heart"></i> Happiness</label>
+                                            <strong id="pet-happy-label">80%</strong>
+                                            <div class="foku-mini-bar"><div id="happy-bar" class="foku-mini-fill happy" style="width:80%"></div></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="pet-worker-stats">
+
+                                <div class="foku-primary-action">
+                                    <button class="foku-primary-btn" id="pet-calm" type="button"><i class="fas fa-play"></i> Start calm session</button>
+                                    <small>5 min · 10 min · customizable</small>
+                                </div>
+                            </section>
+
+                            <section class="foku-side-panel">
+                                <div class="foku-side-card">
+                                    <div class="foku-side-head">
+                                        <div>
+                                            <span>Pet Progress</span>
+                                            <strong>Daily companion status</strong>
+                                        </div>
+                                        <button class="home-icon-btn foku-soft-icon" type="button" data-page="pg-avatar" aria-label="Customize pet"><i class="fas fa-user-astronaut"></i></button>
+                                    </div>
+
+                                    <div class="foku-exp-box">
+                                        <div class="foku-exp-row">
+                                            <span>Level</span>
+                                            <strong><span id="pet-level-chip">1</span></strong>
+                                        </div>
+                                        <div class="foku-exp-row">
+                                            <span>EXP</span>
+                                            <strong><span id="pet-exp-display">0</span>/<span id="pet-exp-max">30</span></strong>
+                                        </div>
+                                        <div class="foku-exp-track"><div id="exp-bar" class="foku-exp-fill" style="width:0%"></div></div>
+                                    </div>
+
+                                    <div class="foku-quick-actions">
+                                        <button class="foku-quick-btn" id="pet-play" type="button"><i class="fas fa-hand-sparkles"></i><span>Pet</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-assist"><i class="fas fa-comment-dots"></i><span>Chat</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-vent"><i class="fas fa-microphone"></i><span>Vent</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-garden"><i class="fas fa-seedling"></i><span>Garden</span></button>
+                                    </div>
+                                </div>
+
+                                <div class="foku-side-card">
+                                    <div class="foku-side-head">
+                                        <div>
+                                            <span>Today's focus</span>
+                                            <strong>Small steps still count</strong>
+                                        </div>
+                                        <button type="button" class="foku-inline-link" data-page="pg-art">View all <i class="fas fa-arrow-right"></i></button>
+                                    </div>
+
+                                    <div class="foku-focus-list">
+                                        <div class="foku-focus-item">
+                                            <div class="foku-focus-left">
+                                                <div class="foku-focus-icon"><i class="fas fa-book-open"></i></div>
+                                                <div>
+                                                    <strong>Journaling</strong>
+                                                    <span>ten minutes of emotional release</span>
+                                                </div>
+                                            </div>
+                                            <small>10 min</small>
+                                        </div>
+                                        <div class="foku-focus-progress"><span style="width:72%"></span></div>
+
+                                        <div class="foku-focus-chips">
+                                            <button type="button" data-page="pg-assist">Chat</button>
+                                            <button type="button" data-page="pg-vent">Voice note</button>
+                                            <button type="button" data-page="pg-redeem">Rewards</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="foku-bottom-grid">
+                            <section class="foku-bottom-card">
+                                <div class="foku-section-head">
+                                    <div>
+                                        <span>Soul worker</span>
+                                        <strong>Passive progress & rewards</strong>
+                                    </div>
+                                    <button class="pet-worker-btn" id="pet-worker-claim" type="button"><i class="fas fa-coins"></i> Claim</button>
+                                </div>
+
+                                <div class="foku-worker-stats">
                                     <div><span>Bond</span><strong id="pet-bond-display">0%</strong></div>
-                                    <div><span>Energi</span><strong id="pet-energy-display">70%</strong></div>
+                                    <div><span>Energy</span><strong id="pet-energy-display">70%</strong></div>
                                     <div><span>Essence</span><strong id="pet-essence-display">0</strong></div>
                                     <div><span>Passive</span><strong id="pet-passive-display">+0</strong></div>
                                 </div>
-                                <div class="pet-worker-actions">
-                                    <button class="pet-worker-small" id="pet-worker-convert" type="button"><i class="fas fa-wand-magic-sparkles"></i> Olah Essence</button>
-                                    <button class="pet-worker-small" id="pet-worker-daily" type="button"><i class="fas fa-gift"></i> Bonus Harian</button>
-                                </div>
-                                <div class="pet-worker-missions" id="pet-worker-missions"></div>
-                            </div>
-                        </section>
 
-                        <section class="home-panel-v2 home-emotion-v2" aria-label="Komposisi emosi">
-                            <div class="home-card-head-v2">
-                                <div>
-                                    <span>Komposisi emosi</span>
-                                    <strong>Ringkasan perjalananmu</strong>
+                                <div class="foku-worker-actions">
+                                    <button class="pet-worker-small" id="pet-worker-convert" type="button"><i class="fas fa-wand-magic-sparkles"></i> Convert</button>
+                                    <button class="pet-worker-small" id="pet-worker-daily" type="button"><i class="fas fa-gift"></i> Daily gift</button>
                                 </div>
-                            </div>
-                            <div id="emo-tags" class="eg home-emotion-tags">
-                                <span class="ei"><span class="ed" style="background:var(--tenang)"></span>Tenang 0</span>
-                            </div>
-                        </section>
+
+                                <div class="pet-worker-missions" id="pet-worker-missions"></div>
+                            </section>
+
+                            <section class="foku-bottom-card">
+                                <div class="foku-section-head">
+                                    <div>
+                                        <span>Emotion composition</span>
+                                        <strong>Your emotional color today</strong>
+                                    </div>
+                                </div>
+                                <div id="emo-tags" class="eg foku-emotion-tags">
+                                    <span class="ei"><span class="ed" style="background:var(--tenang)"></span>Tenang 0</span>
+                                </div>
+                                <div class="foku-energy-box">
+                                    <div class="foku-energy-head">
+                                        <span>Pet Energy</span>
+                                        <strong id="pet-energy-inline">70%</strong>
+                                    </div>
+                                    <div class="foku-mini-bar large"><div id="pet-energy-bar" class="foku-mini-fill energy" style="width:70%"></div></div>
+                                </div>
+                            </section>
+                        </div>
                     </div>
                 </section>
 
@@ -4212,6 +4803,29 @@ var authToken=localStorage.getItem("vkm_token")||"";
                     return data;
                 }catch(e){toast(e.message||"Pet Worker lagi bermasalah.");return null;}
             }
+            
+            function updateFokuHomeExtras(){
+                var hungerBar=document.getElementById("hunger-bar");
+                var happyBar=document.getElementById("happy-bar");
+                var energyBar=document.getElementById("pet-energy-bar");
+                var hungerLabel=document.getElementById("pet-hunger-label");
+                var happyLabel=document.getElementById("pet-happy-label");
+                var energyInline=document.getElementById("pet-energy-inline");
+                var levelChip=document.getElementById("pet-level-chip");
+                var levelDisplay=document.getElementById("pet-level-display");
+                var dateEl=document.getElementById("foku-date");
+
+                if(hungerBar && hungerLabel) hungerLabel.textContent=(hungerBar.style.width || "0%");
+                if(happyBar && happyLabel) happyLabel.textContent=(happyBar.style.width || "0%");
+                if(energyBar && energyInline) energyInline.textContent=(energyBar.style.width || "0%");
+                if(levelChip && levelDisplay) levelChip.textContent=levelDisplay.textContent || "1";
+
+                if(dateEl){
+                    var d=new Date();
+                    dateEl.textContent=d.toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
+                }
+            }
+
             function refreshUI(){
                 ensureDefaults();
                 var p=state.pet;
