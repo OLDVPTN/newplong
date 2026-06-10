@@ -2228,7 +2228,481 @@
                 .page-loader,.page-loader-progress span{transition:none!important}
             }
 
-        </style>
+        
+
+            /* ═══════ HOME V2 — CALM DASHBOARD / USER FRIENDLY ═══════ */
+            .home-v2{
+                max-width:1180px!important;
+                margin:0 auto;
+                padding-bottom:calc(var(--nav-h) + var(--s-b) + 24px)!important;
+            }
+            .home-hero-v2{
+                position:relative;
+                display:grid;
+                grid-template-columns:minmax(0,1fr) 320px;
+                gap:16px;
+                margin-bottom:16px;
+                padding:24px;
+                border-radius:34px;
+                overflow:hidden;
+                background:
+                    radial-gradient(circle at 88% 18%,rgba(255,255,255,.78),transparent 150px),
+                    linear-gradient(135deg,#fff7ed 0%,#ecfff3 50%,#eef7ff 100%);
+                border:1px solid rgba(255,255,255,.88);
+                box-shadow:0 24px 70px rgba(70,89,52,.11);
+            }
+            .home-hero-v2::before{
+                content:'';
+                position:absolute;
+                width:280px;
+                height:280px;
+                border-radius:50%;
+                right:-90px;
+                top:-110px;
+                background:radial-gradient(circle,rgba(255,151,82,.22),transparent 68%);
+            }
+            .home-hero-v2::after{
+                content:'';
+                position:absolute;
+                width:250px;
+                height:250px;
+                border-radius:50%;
+                left:-90px;
+                bottom:-130px;
+                background:radial-gradient(circle,rgba(34,197,94,.16),transparent 68%);
+            }
+            .home-hero-copy,.home-hero-stats{position:relative;z-index:1}
+            .home-kicker{
+                display:inline-flex;
+                align-items:center;
+                gap:8px;
+                height:30px;
+                padding:0 12px;
+                border-radius:999px;
+                background:rgba(255,255,255,.72);
+                color:#c05621;
+                border:1px solid rgba(255,237,213,.92);
+                font-size:11px;
+                font-weight:900;
+                letter-spacing:.25px;
+                margin-bottom:12px;
+            }
+            .home-kicker span{
+                width:8px;
+                height:8px;
+                border-radius:50%;
+                background:#22c55e;
+                box-shadow:0 0 0 5px rgba(34,197,94,.14);
+            }
+            .home-hero-copy h1{
+                margin:0;
+                max-width:620px;
+                font-family:'Syne',sans-serif;
+                font-size:clamp(30px,4vw,52px);
+                line-height:.98;
+                letter-spacing:-1.4px;
+                color:#1f2f24;
+            }
+            .home-hero-copy p{
+                margin:14px 0 0;
+                max-width:640px;
+                color:#6f7b6e;
+                font-size:14px;
+                font-weight:700;
+                line-height:1.65;
+            }
+            .home-hero-actions{
+                display:flex;
+                flex-wrap:wrap;
+                gap:10px;
+                margin-top:20px;
+            }
+            .home-primary-btn,.home-soft-btn{
+                min-height:46px;
+                border:0;
+                border-radius:17px;
+                padding:0 16px;
+                display:inline-flex;
+                align-items:center;
+                justify-content:center;
+                gap:9px;
+                font-size:12px;
+                font-weight:900;
+            }
+            .home-primary-btn{
+                color:#fff;
+                background:linear-gradient(180deg,#ff8a47,#ef5b2d);
+                box-shadow:0 8px 0 #ba4323,0 16px 28px rgba(239,91,45,.17);
+            }
+            .home-soft-btn{
+                color:#166534;
+                background:rgba(255,255,255,.74);
+                border:1px solid rgba(187,247,208,.9);
+                box-shadow:0 12px 24px rgba(22,101,52,.08);
+            }
+            .home-hero-stats{
+                display:grid;
+                grid-template-columns:1fr;
+                gap:10px;
+                align-content:center;
+            }
+            .home-stat-chip{
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:12px;
+                min-height:64px;
+                padding:13px 14px;
+                border-radius:22px;
+                background:rgba(255,255,255,.78);
+                border:1px solid rgba(255,255,255,.9);
+                box-shadow:0 12px 28px rgba(74,89,52,.08);
+                backdrop-filter:blur(14px);
+                -webkit-backdrop-filter:blur(14px);
+            }
+            .home-stat-chip span{
+                font-size:10px;
+                text-transform:uppercase;
+                letter-spacing:.4px;
+                color:#879082;
+                font-weight:900;
+            }
+            .home-stat-chip strong{
+                font-size:18px;
+                color:#263c29;
+                font-weight:900;
+            }
+
+            .home-layout-v2{
+                display:grid;
+                grid-template-columns:minmax(320px,.95fr) minmax(0,1.05fr);
+                gap:16px;
+                align-items:start;
+            }
+            .home-pet-card-v2,
+            .home-panel-v2{
+                background:rgba(255,255,255,.9);
+                border:1px solid rgba(255,255,255,.9);
+                border-radius:30px;
+                box-shadow:0 20px 55px rgba(70,89,52,.10);
+                backdrop-filter:blur(14px);
+                -webkit-backdrop-filter:blur(14px);
+            }
+            .home-pet-card-v2{
+                grid-row:span 3;
+                position:relative;
+                overflow:hidden;
+                padding:16px;
+            }
+            .home-pet-card-v2::before{
+                content:'';
+                position:absolute;
+                inset:auto -40px -120px -40px;
+                height:220px;
+                background:radial-gradient(ellipse at center,#dff8a8,#91d866 58%,transparent 60%);
+                opacity:.72;
+            }
+            .home-card-head-v2{
+                position:relative;
+                z-index:1;
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:12px;
+                margin-bottom:12px;
+            }
+            .home-card-head-v2 span{
+                display:block;
+                color:#8a9786;
+                font-size:10px;
+                font-weight:900;
+                text-transform:uppercase;
+                letter-spacing:.45px;
+            }
+            .home-card-head-v2 strong{
+                display:block;
+                margin-top:4px;
+                color:#203226;
+                font-size:18px;
+                line-height:1.12;
+                font-weight:900;
+            }
+            .home-icon-btn{
+                width:42px;
+                height:42px;
+                border:0;
+                border-radius:16px;
+                display:grid;
+                place-items:center;
+                color:#ef5b2d;
+                background:#fff4eb;
+                border:1px solid #ffe0cb;
+                box-shadow:0 8px 16px rgba(239,91,45,.08);
+            }
+            .home-pet-stage-v2{
+                position:relative;
+                z-index:1;
+                min-height:252px;
+                display:grid;
+                place-items:center;
+                border-radius:28px;
+                background:
+                    radial-gradient(circle at 50% 40%,rgba(255,255,255,.92),rgba(255,250,242,.38) 65%,transparent 66%),
+                    linear-gradient(180deg,#fff9f2,#efffe8);
+                overflow:hidden;
+            }
+            .home-pet-glow{
+                position:absolute;
+                width:190px;
+                height:190px;
+                border-radius:50%;
+                background:radial-gradient(circle,rgba(255,151,82,.18),rgba(34,197,94,.10),transparent 70%);
+                animation:homeGlow 3.2s ease-in-out infinite;
+            }
+            .home-pet-stage-v2 canvas{
+                position:relative;
+                z-index:1;
+                filter:drop-shadow(0 16px 18px rgba(59,79,48,.16));
+            }
+            @keyframes homeGlow{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.08);opacity:.65}}
+            .home-mood-text{
+                position:relative;
+                z-index:1;
+                text-align:center;
+                color:#74806f;
+                font-size:12px;
+                font-weight:800;
+                margin:13px 0 10px;
+            }
+            .home-exp-track{
+                position:relative;
+                z-index:1;
+                height:10px;
+                border-radius:999px;
+                overflow:hidden;
+                background:#e8f0df;
+            }
+            .home-exp-fill{
+                height:100%;
+                border-radius:999px;
+                background:linear-gradient(90deg,#ff8a47,#22c55e);
+                transition:width .25s ease;
+            }
+            .home-pet-actions-v2{
+                position:relative;
+                z-index:1;
+                display:grid;
+                grid-template-columns:repeat(3,1fr);
+                gap:9px;
+                margin-top:12px;
+            }
+            .home-pet-actions-v2 .pet-act{
+                min-height:46px;
+                border-radius:16px;
+                background:#fff8f1;
+                border:1px solid #ffe3cc;
+                color:#7a4a2d;
+                box-shadow:none;
+                font-size:11px;
+                font-weight:900;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                gap:7px;
+            }
+            .home-panel-v2{
+                padding:16px;
+            }
+            .home-quick-grid{
+                display:grid;
+                grid-template-columns:repeat(2,1fr);
+                gap:10px;
+            }
+            .home-quick-grid button{
+                min-height:92px;
+                border:0;
+                border-radius:22px;
+                padding:14px;
+                text-align:left;
+                background:linear-gradient(180deg,#fff,#fff8f0);
+                border:1px solid #ffe3cc;
+                display:flex;
+                flex-direction:column;
+                align-items:flex-start;
+                justify-content:center;
+                gap:5px;
+                box-shadow:0 10px 20px rgba(120,72,32,.06);
+            }
+            .home-quick-grid i{
+                width:34px;
+                height:34px;
+                border-radius:13px;
+                display:grid;
+                place-items:center;
+                color:#fff;
+                background:linear-gradient(180deg,#ff8a47,#ef5b2d);
+                margin-bottom:4px;
+            }
+            .home-quick-grid button:nth-child(2) i{background:linear-gradient(180deg,#67d7ff,#0ea5e9)}
+            .home-quick-grid button:nth-child(3) i{background:linear-gradient(180deg,#c084fc,#9333ea)}
+            .home-quick-grid button:nth-child(4) i{background:linear-gradient(180deg,#fbd34d,#f59e0b)}
+            .home-quick-grid span{
+                color:#27382c;
+                font-size:13px;
+                font-weight:900;
+            }
+            .home-quick-grid small{
+                color:#879082;
+                font-size:10px;
+                line-height:1.35;
+                font-weight:800;
+            }
+            .home-bars-v2{
+                display:grid;
+                gap:10px;
+                margin-top:14px;
+            }
+            .home-bar-item{
+                display:grid;
+                gap:8px;
+                padding:11px;
+                border-radius:18px;
+                background:#fbfff7;
+                border:1px solid #e3f4d8;
+            }
+            .home-bar-item>div:first-child{
+                display:flex;
+                align-items:center;
+                gap:8px;
+                color:#52644e;
+                font-size:11px;
+                font-weight:900;
+            }
+            .home-bar-item i{color:#ef5b2d}
+            .home-bar-track{
+                height:9px;
+                overflow:hidden;
+                border-radius:999px;
+                background:#e7eddc;
+            }
+            .home-bar-fill{
+                height:100%;
+                border-radius:999px;
+                transition:width .24s ease;
+            }
+            .home-bar-fill.hunger{background:linear-gradient(90deg,#ff8a47,#f97316)}
+            .home-bar-fill.happy{background:linear-gradient(90deg,#fb7185,#e11d48)}
+            .home-bar-fill.energy{background:linear-gradient(90deg,#fbbf24,#f59e0b)}
+            .home-worker-v2{
+                padding:0;
+                background:transparent;
+                border:0;
+                box-shadow:none;
+            }
+            .home-worker-card-v2{
+                margin:0!important;
+                border-radius:30px!important;
+                box-shadow:0 20px 55px rgba(70,89,52,.10)!important;
+            }
+            .home-emotion-v2{
+                min-height:132px;
+            }
+            .home-emotion-tags{
+                margin-top:10px;
+                display:flex;
+                flex-wrap:wrap;
+                gap:8px;
+            }
+            .home-emotion-tags .ei{
+                background:#f8fff2;
+                border:1px solid #e4f4da;
+                color:#52644e;
+                border-radius:999px;
+                padding:8px 10px;
+                font-weight:900;
+            }
+
+            @media(min-width:1100px){
+                .home-checkin-v2{grid-column:2}
+                .home-worker-v2{grid-column:2}
+                .home-emotion-v2{grid-column:2}
+            }
+            @media(max-width:980px){
+                .home-hero-v2{
+                    grid-template-columns:1fr;
+                }
+                .home-hero-stats{
+                    grid-template-columns:repeat(3,1fr);
+                }
+                .home-layout-v2{
+                    grid-template-columns:1fr;
+                }
+                .home-pet-card-v2{
+                    grid-row:auto;
+                }
+            }
+            @media(max-width:640px){
+                .home-v2{
+                    padding-left:0!important;
+                    padding-right:0!important;
+                }
+                .home-hero-v2{
+                    padding:18px;
+                    border-radius:28px;
+                    margin-bottom:12px;
+                }
+                .home-hero-copy h1{
+                    font-size:32px;
+                    letter-spacing:-1px;
+                }
+                .home-hero-copy p{
+                    font-size:12px;
+                    line-height:1.55;
+                }
+                .home-hero-stats{
+                    grid-template-columns:1fr;
+                    gap:8px;
+                }
+                .home-stat-chip{
+                    min-height:54px;
+                }
+                .home-hero-actions{
+                    display:grid;
+                    grid-template-columns:1fr;
+                }
+                .home-layout-v2{
+                    gap:12px;
+                }
+                .home-pet-card-v2,.home-panel-v2,.home-worker-card-v2{
+                    border-radius:24px!important;
+                }
+                .home-pet-stage-v2{
+                    min-height:218px;
+                    border-radius:22px;
+                }
+                .home-pet-actions-v2{
+                    grid-template-columns:1fr;
+                }
+                .home-quick-grid{
+                    grid-template-columns:1fr 1fr;
+                    gap:8px;
+                }
+                .home-quick-grid button{
+                    min-height:84px;
+                    border-radius:18px;
+                    padding:12px;
+                }
+            }
+            @media(max-width:370px){
+                .home-quick-grid{
+                    grid-template-columns:1fr;
+                }
+                .home-hero-v2,.home-pet-card-v2,.home-panel-v2{
+                    padding:14px;
+                }
+            }
+
+</style>
     </head>
     <body class="auth-lock">
         <div id="page-loader" class="page-loader show" aria-live="polite" aria-label="Memuat halaman">
@@ -2315,26 +2789,90 @@
                 </div>
 
                 <!-- HOME -->
-                <section id="pg-home" class="<%= pageId === 'pg-home' ? 'pg on' : 'pg' %>" aria-label="Beranda">
-                    <div class="ph">
-                        <div>
-                            <h1 class="pt">Hi, Plong! 👋</h1>
-                            <p class="ps">Level <span id="pet-level-display">1</span> · <span id="pet-exp-display">0</span>/<span id="pet-exp-max">30</span> EXP</p>
+                <section id="pg-home" class="<%= pageId === 'pg-home' ? 'pg on home-v2' : 'pg home-v2' %>" aria-label="Beranda">
+                    <div class="home-hero-v2">
+                        <div class="home-hero-copy">
+                            <div class="home-kicker"><span></span> Emotional Companion</div>
+                            <h1>Hari ini mau dibuat lebih plong?</h1>
+                            <p>Rawat pet, lepaskan isi hati, tanam progress kecil, dan kumpulkan energi baik dari perjalanan emosimu.</p>
+                            <div class="home-hero-actions">
+                                <button class="home-primary-btn" type="button" data-page="pg-assist"><i class="fas fa-comment-dots"></i> Mulai cerita</button>
+                                <button class="home-soft-btn" type="button" data-page="pg-garden"><i class="fas fa-seedling"></i> Buka kebun</button>
+                            </div>
+                        </div>
+                        <div class="home-hero-stats">
+                            <div class="home-stat-chip">
+                                <span>Level Pet</span>
+                                <strong><span id="pet-level-display">1</span></strong>
+                            </div>
+                            <div class="home-stat-chip">
+                                <span>EXP</span>
+                                <strong><span id="pet-exp-display">0</span>/<span id="pet-exp-max">30</span></strong>
+                            </div>
+                            <div class="home-stat-chip">
+                                <span>Mood</span>
+                                <strong>Tenang</strong>
+                            </div>
                         </div>
                     </div>
-                    <div class="pet-h">
-                        <canvas id="pet-canvas" width="220" height="220"></canvas>
-                        <div class="pet-hi" style="text-align:center">
-                            <h2 id="pet-name-display" class="pn">Plong</h2>
-                            <p class="pm" id="pet-mood-text" style="color:var(--t3)">Mood: Tenang ✨</p>
-                            <div class="xptr"><div id="exp-bar" class="xpf" style="width:0%"></div></div>
-                            <div class="pet-actions">
-                                <button class="pet-act" id="pet-play" type="button"><i class="fas fa-hand-sparkles"></i> Elus Plong</button>
-                                <button class="pet-act" id="pet-calm" type="button"><i class="fas fa-leaf"></i> Tenang bareng</button>
-                                <button class="pet-act" type="button" data-page="pg-garden"><i class="fas fa-seedling"></i> Kebun</button>
-                                <button class="pet-act pet-act-primary" type="button" data-page="pg-avatar"><i class="fas fa-user-astronaut"></i> Kustom</button>
+
+                    <div class="home-layout-v2">
+                        <section class="home-pet-card-v2" aria-label="Pet companion">
+                            <div class="home-card-head-v2">
+                                <div>
+                                    <span>Pet Companion</span>
+                                    <strong id="pet-name-display">Plong</strong>
+                                </div>
+                                <button class="home-icon-btn" type="button" data-page="pg-avatar" aria-label="Kustom avatar"><i class="fas fa-user-astronaut"></i></button>
                             </div>
-                            <div class="pet-worker-card">
+
+                            <div class="home-pet-stage-v2">
+                                <div class="home-pet-glow"></div>
+                                <canvas id="pet-canvas" width="220" height="220"></canvas>
+                            </div>
+
+                            <p class="home-mood-text" id="pet-mood-text">Mood: Tenang ✨</p>
+                            <div class="home-exp-track"><div id="exp-bar" class="home-exp-fill" style="width:0%"></div></div>
+
+                            <div class="home-pet-actions-v2">
+                                <button class="pet-act" id="pet-play" type="button"><i class="fas fa-hand-sparkles"></i> Elus</button>
+                                <button class="pet-act" id="pet-calm" type="button"><i class="fas fa-leaf"></i> Tenang</button>
+                                <button class="pet-act" type="button" data-page="pg-avatar"><i class="fas fa-wand-magic-sparkles"></i> Kustom</button>
+                            </div>
+                        </section>
+
+                        <section class="home-panel-v2 home-checkin-v2" aria-label="Check-in emosi">
+                            <div class="home-card-head-v2">
+                                <div>
+                                    <span>Check-in cepat</span>
+                                    <strong>Mulai dari satu langkah kecil</strong>
+                                </div>
+                            </div>
+                            <div class="home-quick-grid">
+                                <button type="button" data-page="pg-vent"><i class="fas fa-microphone"></i><span>Vent</span><small>keluarkan isi hati</small></button>
+                                <button type="button" data-page="pg-assist"><i class="fas fa-comment-dots"></i><span>Chat</span><small>cerita ke Plong</small></button>
+                                <button type="button" data-page="pg-art"><i class="fas fa-palette"></i><span>Art</span><small>lihat pola emosi</small></button>
+                                <button type="button" data-page="pg-redeem"><i class="fas fa-gift"></i><span>Reward</span><small>cek hadiah digital</small></button>
+                            </div>
+
+                            <div class="home-bars-v2">
+                                <div class="home-bar-item">
+                                    <div><i class="fas fa-drumstick-bite"></i><span>Kenyang</span></div>
+                                    <div class="home-bar-track"><div id="hunger-bar" class="home-bar-fill hunger" style="width:50%"></div></div>
+                                </div>
+                                <div class="home-bar-item">
+                                    <div><i class="fas fa-heart"></i><span>Bahagia</span></div>
+                                    <div class="home-bar-track"><div id="happy-bar" class="home-bar-fill happy" style="width:50%"></div></div>
+                                </div>
+                                <div class="home-bar-item">
+                                    <div><i class="fas fa-bolt"></i><span>Energi Pet</span></div>
+                                    <div class="home-bar-track"><div id="pet-energy-bar" class="home-bar-fill energy" style="width:70%"></div></div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="home-panel-v2 home-worker-v2" aria-label="Pet soul worker">
+                            <div class="pet-worker-card home-worker-card-v2">
                                 <div class="pet-worker-head">
                                     <div>
                                         <strong>Pet Soul Worker</strong>
@@ -2354,29 +2892,20 @@
                                 </div>
                                 <div class="pet-worker-missions" id="pet-worker-missions"></div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="sr">
-                        <div class="sc">
-                            <div class="sl"><i class="fas fa-drumstick-bite" style="color:var(--ac);font-size:10px"></i> Kenyang</div>
-                            <div class="sb2"><div id="hunger-bar" class="sf" style="width:50%;background:var(--ac)"></div></div>
-                        </div>
-                        <div class="sc">
-                            <div class="sl"><i class="fas fa-heart" style="color:#e11d48;font-size:10px"></i> Bahagia</div>
-                            <div class="sb2"><div id="happy-bar" class="sf" style="width:50%;background:#e11d48"></div></div>
-                        </div>
-                        <div class="sc">
-                            <div class="sl"><i class="fas fa-bolt" style="color:#F59E0B;font-size:10px"></i> Energi Pet</div>
-                            <div class="sb2"><div id="pet-energy-bar" class="sf" style="width:70%;background:#F59E0B"></div></div>
-                        </div>
-                    </div>
-                    <div class="es">
-                        <div class="et">Komposisi Emosi</div>
-                        <div id="emo-tags" class="eg">
-                            <span class="ei"><span class="ed" style="background:var(--tenang)"></span>Tenang 0</span>
-                        </div>
-                    </div>
+                        </section>
 
+                        <section class="home-panel-v2 home-emotion-v2" aria-label="Komposisi emosi">
+                            <div class="home-card-head-v2">
+                                <div>
+                                    <span>Komposisi emosi</span>
+                                    <strong>Ringkasan perjalananmu</strong>
+                                </div>
+                            </div>
+                            <div id="emo-tags" class="eg home-emotion-tags">
+                                <span class="ei"><span class="ed" style="background:var(--tenang)"></span>Tenang 0</span>
+                            </div>
+                        </section>
+                    </div>
                 </section>
 
 
