@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
         <title>Plong - <%= title %></title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
         <style>
             :root{
@@ -21,8 +21,8 @@
             }
             *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
             html{scroll-behavior:smooth;height:100%}
-            body{font-family:'DM Sans',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--t1);height:100%;min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-size:15px;line-height:1.6}
-            h1,h2,h3,h4{font-family:'Syne',sans-serif;line-height:1.15}
+            body{font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;background:var(--bg);color:var(--t1);height:100%;min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-size:15px;line-height:1.6}
+            h1,h2,h3,h4{font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;line-height:1.15}
             button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
             input,textarea,select{font-family:inherit}
             a{color:inherit;text-decoration:none}
@@ -34,7 +34,7 @@
             #sidebar{display:none;width:var(--side-w);flex-shrink:0;position:fixed;top:0;left:0;bottom:0;z-index:200;background:var(--bg2);border-right:1px solid var(--bd1);flex-direction:column;padding:20px 12px}
             #sidebar .logo{display:flex;align-items:center;gap:9px;padding:0 6px;margin-bottom:28px}
             #sidebar .logo-mk{width:28px;height:28px;border-radius:var(--r3);background:linear-gradient(135deg,var(--ac),#ff8c65);display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;flex-shrink:0}
-            #sidebar .logo-t{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;letter-spacing:-.2px}
+            #sidebar .logo-t{font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:15px;font-weight:800;letter-spacing:-.2px}
             #sidebar nav{flex:1;display:flex;flex-direction:column;gap:1px}
             .sb{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--r3);color:var(--t3);font-size:13px;font-weight:500;transition:all .12s}
             .sb i{width:16px;text-align:center;font-size:14px}
@@ -65,7 +65,7 @@
             .ps{font-size:11px;color:var(--t3);margin-top:1px}
 
             #tbar{display:flex;align-items:center;justify-content:space-between;padding:calc(var(--s-t)+12px) 16px 8px;position:sticky;top:0;z-index:50;background:linear-gradient(var(--bg) 70%,transparent);flex-shrink:0}
-            #tbar .lw{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;letter-spacing:-.2px}
+            #tbar .lw{font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:15px;font-weight:800;letter-spacing:-.2px}
             .cpill{display:inline-flex;align-items:center;gap:5px;background:var(--ac-bg);border:1px solid var(--ac-bd);padding:4px 10px;border-radius:16px;font-weight:700;font-size:11px;color:var(--ac)}
             .cpill i{font-size:10px}
 
@@ -135,7 +135,7 @@
             #rec-btn:active{transform:scale(.97)}
             #rec-btn.rec{animation:rP 1.2s ease infinite}
             @keyframes rP{0%,100%{box-shadow:0 0 0 10px rgba(232,77,26,.08),0 4px 20px rgba(232,77,26,.2)}50%{box-shadow:0 0 0 20px rgba(232,77,26,.03),0 4px 28px rgba(232,77,26,.15)}}
-            #rec-timer{font-family:'Syne',sans-serif;font-size:22px;font-weight:400;letter-spacing:3px;color:var(--t3);min-height:28px}
+            #rec-timer{font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:22px;font-weight:400;letter-spacing:3px;color:var(--t3);min-height:28px}
             #emo-res{width:100%;max-width:320px;background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:18px;text-align:center;animation:pI .35s cubic-bezier(.34,1.4,.64,1);box-shadow:0 2px 12px rgba(0,0,0,.04)}
             @keyframes pI{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
 
@@ -185,7 +185,7 @@
             .pp-hero.hide{
                 display:none;
             }
-            .pp-hero-logo{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;letter-spacing:-.5px;color:var(--t1);margin-bottom:4px}
+            .pp-hero-logo{font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:28px;font-weight:800;letter-spacing:-.5px;color:var(--t1);margin-bottom:4px}
             .pp-hero-sub{font-size:13px;color:var(--t4);margin-bottom:28px}
 
             .pp-input-wrap{width:100%;max-width:640px;position:relative}
@@ -473,7 +473,7 @@
                 margin-top:2px;
                 font-size:13px;
                 color:var(--t1);
-                font-family:'Syne',sans-serif;
+                font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
                 line-height:1.15;
             }
             .pet-worker-actions{
@@ -994,7 +994,7 @@
             }
             #garden-status{font-size:12px;color:#365045;font-weight:700;margin-top:2px}
             #garden-percent{
-                font-family:'Syne',sans-serif;
+                font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
                 font-size:22px!important;
                 color:#059669!important;
                 line-height:1;
@@ -1290,7 +1290,7 @@
             }
             .garden-tycoon-stat strong{
                 display:block;
-                font-family:'Syne',sans-serif;
+                font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
                 font-size:17px;
                 font-weight:800;
                 color:var(--t1);
@@ -1777,7 +1777,7 @@
             .st-header,.st-wallet,.st-main-card,.st-garden-grid,.st-history{position:relative;z-index:2}
             .st-header{display:flex;align-items:center;gap:12px;color:#fff;margin-bottom:14px}
             .st-back,.st-help{width:42px;height:42px;border:1px solid rgba(255,255,255,.24);border-radius:16px;background:rgba(255,255,255,.18);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(127,59,15,.14)}
-            .st-title{flex:1;min-width:0}.st-title strong{display:block;font-family:'Syne',sans-serif;font-size:22px;line-height:1.05;text-shadow:0 2px 6px rgba(130,55,18,.18)}.st-title span{display:block;font-size:11px;font-weight:800;opacity:.96;margin-top:4px;max-width:360px}
+            .st-title{flex:1;min-width:0}.st-title strong{display:block;font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:22px;line-height:1.05;text-shadow:0 2px 6px rgba(130,55,18,.18)}.st-title span{display:block;font-size:11px;font-weight:800;opacity:.96;margin-top:4px;max-width:360px}
             .st-wallet{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
             .st-wallet-item{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.82);border-radius:20px;padding:10px 12px;box-shadow:0 14px 28px rgba(114,63,23,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
             .st-wallet-item i{width:34px;height:34px;border-radius:12px;background:linear-gradient(180deg,#ffb76b,#f97316);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 8px 16px rgba(249,115,22,.18)}
@@ -1902,7 +1902,7 @@
             .st-cute-page .st-title strong::after{
                 content:' ૮ ˶ᵔ ᵕ ᵔ˶ ა';
                 font-size:12px;
-                font-family:'Outfit',sans-serif;
+                font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
                 margin-left:6px;
                 opacity:.9;
             }
@@ -2047,7 +2047,7 @@
             #pg-account{gap:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
             .acct-card{background:var(--bg2);border:1px solid var(--bd1);border-radius:var(--r);padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.035)}
             .acct-hero{display:flex;align-items:center;gap:12px}
-            .acct-avatar{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,var(--ac),#ff8c65);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:20px;box-shadow:0 5px 18px rgba(232,77,26,.18);flex-shrink:0}
+            .acct-avatar{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,var(--ac),#ff8c65);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-weight:800;font-size:20px;box-shadow:0 5px 18px rgba(232,77,26,.18);flex-shrink:0}
             .acct-name{font-size:16px;font-weight:800;color:var(--t1);line-height:1.2}
             .acct-user{font-size:11px;color:var(--t3);margin-top:2px}
             .acct-bio{font-size:12px;color:var(--t2);margin-top:7px;line-height:1.55}
@@ -2083,9 +2083,9 @@
             .auth-card{width:min(440px,100%);background:rgba(255,255,255,.92);border:1px solid var(--bd1);border-radius:22px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.10);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
             .auth-logo{display:flex;align-items:center;gap:10px;margin-bottom:18px}
             .auth-logo-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--ac),#ff8c65);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(232,77,26,.22)}
-            .auth-logo-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;line-height:1.1;color:var(--t1)}
+            .auth-logo-title{font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:18px;font-weight:800;line-height:1.1;color:var(--t1)}
             .auth-logo-sub{font-size:11px;color:var(--t3);margin-top:2px}
-            .auth-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-.5px;color:var(--t1);margin-bottom:4px}
+            .auth-title{font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:26px;font-weight:800;letter-spacing:-.5px;color:var(--t1);margin-bottom:4px}
             .auth-desc{font-size:13px;color:var(--t3);margin-bottom:18px;line-height:1.55}
             .auth-form{display:flex;flex-direction:column;gap:10px}
             .auth-register-only{display:none}
@@ -2297,7 +2297,7 @@
             .home-hero-copy h1{
                 margin:0;
                 max-width:620px;
-                font-family:'Syne',sans-serif;
+                font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
                 font-size:clamp(30px,4vw,52px);
                 line-height:.98;
                 letter-spacing:-1.4px;
@@ -3247,7 +3247,48 @@
                 }
             }
 
-</style>
+
+            /* ═══════ FONT UPDATE — POPPINS ROUNDED FEEL ═══════ */
+            :root{
+                --font-main:'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            }
+            body,
+            button,
+            input,
+            textarea,
+            select{
+                font-family:var(--font-main)!important;
+                letter-spacing:-.01em;
+            }
+            h1,h2,h3,h4,
+            .logo-t,
+            #tbar .lw,
+            .pt,
+            .pn,
+            .st-title strong,
+            .auth-title,
+            .auth-logo-title,
+            .foku-greet strong,
+            .foku-pet-card-top h2,
+            .foku-side-head strong,
+            .foku-section-head strong{
+                font-family:var(--font-main)!important;
+                letter-spacing:-.035em;
+                font-weight:800;
+            }
+            .foku-primary-btn,
+            .home-primary-btn,
+            .home-soft-btn,
+            .foku-quick-btn,
+            .pet-act,
+            .sb,
+            .nb{
+                font-family:var(--font-main)!important;
+                font-weight:800;
+                letter-spacing:-.015em;
+            }
+
+        </style>
     </head>
     <body class="auth-lock">
         <div id="page-loader" class="page-loader show" aria-live="polite" aria-label="Memuat halaman">
@@ -4619,7 +4660,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                     c.save();c.globalAlpha=.9;
                     rr(cx+42,cy-62,23,14,8);c.fillStyle='rgba(255,255,255,.82)';c.fill();c.strokeStyle='rgba(228,228,231,.95)';c.stroke();
                     if(sleepy){c.beginPath();c.moveTo(cx+49,cy-53);c.lineTo(cx+59,cy-53);c.strokeStyle=cfg.color;c.lineWidth=1.7;c.stroke();}
-                    else if(confused){c.fillStyle=cfg.color;c.font='bold 12px DM Sans, sans-serif';c.fillText('?',cx+50,cy-50);}
+                    else if(confused){c.fillStyle=cfg.color;c.font='bold 12px Poppins, sans-serif';c.fillText('?',cx+50,cy-50);}
                     else{ellipse(cx+49,cy-55,1.6,1.6,0,cfg.color);ellipse(cx+56,cy-55,1.6,1.6,0,cfg.color);}
                     c.restore();
                 }
@@ -4734,7 +4775,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
             function fV(mood,intensity,summary,suggestion){var cfg=EMO[mood],coins=Math.floor(intensity/8)+5;state.coins+=coins;if(!state.emotions[mood])state.emotions[mood]=0;state.emotions[mood]++;state.pet.exp+=8;state.pet.happy=Math.min(100,state.pet.happy+10);state.pet.hunger=Math.min(100,(state.pet.hunger||50)+8);if(!state.vents)state.vents=[];state.vents.unshift({id:Date.now().toString(36),mood:mood,intensity:intensity,summary:summary||"Vent tersimpan.",suggestion:suggestion||"Pelan-pelan ya.",coins:coins,exp:8,durationSeconds:rS,createdAt:new Date().toISOString()});if(state.pet.exp>=state.pet.expMax){state.pet.level++;state.pet.exp-=state.pet.expMax;state.pet.expMax=Math.floor(state.pet.expMax*1.4);toast("🎉 Level "+state.pet.level+"!")}var art=gA(mood,intensity);state.art.unshift(art);if(state.art.length>20)state.art.pop();save();refreshUI();renderVentResult({mood:mood,intensity:intensity,coins:coins,title:"Vent lokal",summary:summary||"Vent kamu sudah tersimpan sebagai energi emosi.",suggestion:suggestion||"Ambil jeda sebentar, lalu lanjut pelan-pelan."})}
 
             /* ART */
-            function gA(mood){var o=document.createElement("canvas");o.width=300;o.height=300;var c=o.getContext("2d"),cfg=EMO[mood];var bg=c.createLinearGradient(0,0,300,300);bg.addColorStop(0,"#F7F7F8");bg.addColorStop(1,cfg.color+"22");c.fillStyle=bg;c.fillRect(0,0,300,300);for(var i=0;i<12;i++){var x=Math.random()*300,y=Math.random()*300,r=10+Math.random()*50;c.beginPath();if(mood==="marah")c.rect(x-r/2,y-r/2,r,r);else if(mood==="sedih")c.ellipse(x,y,r*.5,r,Math.PI/4,0,Math.PI*2);else c.arc(x,y,r,0,Math.PI*2);c.fillStyle=cfg.color+Math.floor(30+Math.random()*60).toString(16).padStart(2,"0");c.fill()}for(var j=0;j<8;j++){c.beginPath();c.moveTo(Math.random()*300,Math.random()*300);c.quadraticCurveTo(Math.random()*300,Math.random()*300,Math.random()*300,Math.random()*300);c.strokeStyle=cfg.color+"44";c.lineWidth=1+Math.random()*3;c.stroke()}c.font="bold 15px Syne,sans-serif";c.fillStyle=cfg.color+"88";c.fillText(cfg.label,12,288);return{id:Date.now(),mood:mood,src:o.toDataURL()}}
+            function gA(mood){var o=document.createElement("canvas");o.width=300;o.height=300;var c=o.getContext("2d"),cfg=EMO[mood];var bg=c.createLinearGradient(0,0,300,300);bg.addColorStop(0,"#F7F7F8");bg.addColorStop(1,cfg.color+"22");c.fillStyle=bg;c.fillRect(0,0,300,300);for(var i=0;i<12;i++){var x=Math.random()*300,y=Math.random()*300,r=10+Math.random()*50;c.beginPath();if(mood==="marah")c.rect(x-r/2,y-r/2,r,r);else if(mood==="sedih")c.ellipse(x,y,r*.5,r,Math.PI/4,0,Math.PI*2);else c.arc(x,y,r,0,Math.PI*2);c.fillStyle=cfg.color+Math.floor(30+Math.random()*60).toString(16).padStart(2,"0");c.fill()}for(var j=0;j<8;j++){c.beginPath();c.moveTo(Math.random()*300,Math.random()*300);c.quadraticCurveTo(Math.random()*300,Math.random()*300,Math.random()*300,Math.random()*300);c.strokeStyle=cfg.color+"44";c.lineWidth=1+Math.random()*3;c.stroke()}c.font="bold 15px Poppins,sans-serif";c.fillStyle=cfg.color+"88";c.fillText(cfg.label,12,288);return{id:Date.now(),mood:mood,src:o.toDataURL()}}
 
             /* REFRESH */
             function productOwned(p){return !!(p.key&&state.inventory&&state.inventory.indexOf(p.key)>-1)}
