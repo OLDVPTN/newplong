@@ -3289,60 +3289,47 @@
             }
 
         
-            /* ===== Custom garden assets + animations ===== */
-            .st-tree-emoji{display:flex;align-items:center;justify-content:center;min-height:120px;min-width:120px}
-            .st-tree-emoji.empty{opacity:.96}
-            .st-tree-emoji .garden-main-asset{width:min(180px,28vw);max-width:180px;min-width:108px;height:auto;display:block;filter:drop-shadow(0 8px 14px rgba(82,145,74,.16));transform-origin:50% 100%;animation:gardenPlantFloat 3.8s ease-in-out infinite,gardenPlantSway 4.8s ease-in-out infinite}
-            .st-tree-emoji .garden-main-asset.ready{animation:gardenPlantFloat 3.4s ease-in-out infinite,gardenPlantBounce 1.7s ease-in-out infinite}
-            .st-tree-emoji .garden-main-asset.idle{animation:gardenPlantFloat 4.3s ease-in-out infinite}
-            .st-tree-pot{animation:gardenPotBob 4.2s ease-in-out infinite}
-            .st-cloud{animation:gardenCloudDrift 15s ease-in-out infinite}
-            .st-cloud.c2{animation-duration:18s}
-            .cute-spark{animation:gardenSparkle 2.8s ease-in-out infinite}
-            .cute-spark.s2{animation-delay:.5s}
-            .cute-spark.s3{animation-delay:1s}
-            .st-progress-ring-shell{position:relative;overflow:visible}
-            .st-progress-ring-shell::after{content:'';position:absolute;inset:auto 16% -6px 16%;height:18px;background:radial-gradient(circle,rgba(179,255,132,.4),rgba(179,255,132,0) 72%);filter:blur(10px);pointer-events:none}
-            .st-ring-orbit{animation:gardenOrbitPulse 6s linear infinite}
-            .st-ring-orbit.orbit-b{animation-direction:reverse;animation-duration:8s}
-            .st-plots{gap:14px}
-            .st-plot-btn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:12px 10px 12px;min-height:210px;background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(249,253,255,.78));border:1px solid rgba(203,228,255,.9);border-radius:22px;box-shadow:0 12px 24px rgba(88,124,170,.10);overflow:hidden;transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease}
-            .st-plot-btn:hover,.st-plot-btn.on{transform:translateY(-4px);box-shadow:0 16px 28px rgba(88,124,170,.16);border-color:#9ed08b}
-            .st-plot-btn.ready{border-color:#ffd166;box-shadow:0 16px 28px rgba(255,202,72,.18)}
-            .st-plot-btn.empty{background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(249,253,255,.82));}
-            .st-plot-art{position:relative;display:flex;align-items:flex-end;justify-content:center;width:100%;height:118px;margin-top:10px;margin-bottom:6px}
-            .st-plot-base{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:86px;height:auto;filter:drop-shadow(0 8px 12px rgba(135,199,98,.18))}
-            .st-plot-plant,.st-plot-sprout{position:relative;z-index:1;max-width:78px;max-height:94px;width:auto;height:auto;transform-origin:50% 100%;filter:drop-shadow(0 8px 10px rgba(100,150,80,.12));animation:gardenPlantSway 4.6s ease-in-out infinite}
-            .st-plot-plant.stage-seedling,.st-plot-sprout{max-width:62px;max-height:76px}
+            /* ===== Premium cute garden assets + watering/harvest animation ===== */
+            .st-tree-emoji{display:flex;align-items:center;justify-content:center;min-height:124px;min-width:124px}
+            .st-tree-emoji .garden-main-asset{width:min(190px,30vw);max-width:190px;min-width:112px;height:auto;display:block;filter:drop-shadow(0 10px 16px rgba(82,145,74,.18));transform-origin:50% 100%;animation:gardenPlantFloat 3.6s ease-in-out infinite,gardenPlantSway 4.6s ease-in-out infinite}
+            .st-tree-emoji .garden-main-asset.ready{animation:gardenPlantFloat 3.1s ease-in-out infinite,gardenPlantBounce 1.65s ease-in-out infinite}
+            .st-tree-emoji .garden-main-asset.idle{animation:gardenSeedPulse 3s ease-in-out infinite}
+            .st-plot-btn{position:relative;overflow:hidden}
+            .st-plot-art{position:relative;display:flex;align-items:flex-end;justify-content:center;width:100%;height:124px;margin:8px 0 6px}
+            .st-plot-base{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:104px;height:auto;filter:drop-shadow(0 9px 13px rgba(92,142,80,.18))}
+            .st-plot-plant,.st-plot-sprout{position:relative;z-index:2;max-width:86px;max-height:102px;width:auto;height:auto;transform-origin:50% 100%;filter:drop-shadow(0 8px 10px rgba(100,150,80,.13));animation:gardenPlantSway 4.6s ease-in-out infinite}
+            .st-plot-plant.stage-seedling,.st-plot-sprout{max-width:64px;max-height:78px}
             .st-plot-plant.ready{animation:gardenPlantBounce 1.8s ease-in-out infinite}
             .st-plot-btn.on .st-plot-base{animation:gardenPlotGlow 2.4s ease-in-out infinite}
-            .st-plot-btn.ready .st-plot-base{animation:gardenPlotShine 1.9s ease-in-out infinite}
-            .st-plot-badge{z-index:2}
-            .st-plot-meta{margin-top:2px;text-align:center}
-            .st-plot-label{font-size:13px;font-weight:800;color:#355068}
-            .st-plot-name{font-size:11px;font-weight:700;color:#658099}
-            .st-plot-bar{width:86%;height:8px;margin-top:auto;background:#e7f2ff;border-radius:999px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(31,80,125,.08)}
-            .st-plot-bar span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#7cd9ff,#80b2ff,#8f8cff)}
-            .garden-card-art{width:64px;height:64px;display:grid;place-items:center;border-radius:18px;background:linear-gradient(180deg,#f7fbff,#eef8ff);box-shadow:inset 0 1px 0 rgba(255,255,255,.8);margin:0 auto 8px}
-            .garden-card-thumb{max-width:52px;max-height:52px;width:auto;height:auto;display:block;transform-origin:50% 100%;filter:drop-shadow(0 6px 8px rgba(94,150,78,.12))}
-            .garden-card-thumb.seed{animation:gardenPlantFloat 3.6s ease-in-out infinite}
+            .st-plot-btn.ready .st-plot-base{animation:gardenPlotShine 1.75s ease-in-out infinite}
+            .st-plot-emoji-wrap,.st-plot-emoji{display:none!important}
+            .garden-card-art{width:66px;height:66px;display:grid;place-items:center;border-radius:20px;background:linear-gradient(180deg,#fffdf4,#effcff);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 8px 16px rgba(90,122,155,.08);margin:0 auto 8px}
+            .garden-card-thumb{max-width:54px;max-height:54px;width:auto;height:auto;display:block;transform-origin:50% 100%;filter:drop-shadow(0 7px 8px rgba(94,150,78,.14))}
+            .garden-card-thumb.seed{animation:gardenSeedPulse 3.2s ease-in-out infinite}
             .garden-card-thumb.ready{animation:gardenPlantSway 4.3s ease-in-out infinite}
-            .garden-seed,.garden-feed{position:relative;overflow:hidden}
-            .garden-seed::after,.garden-feed::after{content:'';position:absolute;inset:auto -30% -40px -30%;height:80px;background:radial-gradient(circle at center,rgba(167,232,127,.22),rgba(167,232,127,0) 65%);pointer-events:none}
+            .garden-water-splash,.garden-harvest-burst{position:absolute;inset:0;z-index:4;pointer-events:none;display:none}
+            .garden-water-splash i{position:absolute;top:10px;width:7px;height:18px;border-radius:999px;background:linear-gradient(180deg,#b8f3ff,#38bdf8);box-shadow:0 0 10px rgba(56,189,248,.45);opacity:0}
+            .garden-water-splash i:nth-child(1){left:38%;animation-delay:.05s}.garden-water-splash i:nth-child(2){left:49%;animation-delay:.13s}.garden-water-splash i:nth-child(3){left:58%;animation-delay:.2s}.garden-water-splash i:nth-child(4){left:45%;animation-delay:.3s}
+            .garden-harvest-burst i{position:absolute;left:50%;bottom:46px;width:24px;height:24px;border-radius:50%;background:radial-gradient(circle,#fff8a8 0 26%,#ffd04a 27% 70%,#ef9f1a 71%);box-shadow:0 0 14px rgba(255,211,73,.55);opacity:0}
+            .garden-harvest-burst i:nth-child(1){--x:-32px;--r:-18deg}.garden-harvest-burst i:nth-child(2){--x:0px;--r:8deg}.garden-harvest-burst i:nth-child(3){--x:34px;--r:20deg}
+            .garden-anim-water .st-plot-btn.on .garden-water-splash{display:block}
+            .garden-anim-water .st-plot-btn.on .garden-water-splash i{animation:gardenWaterDrop .85s ease-out both}
+            .garden-anim-water .st-plot-btn.on .st-plot-plant,.garden-anim-water .st-plot-btn.on .st-plot-sprout{animation:gardenWateredWiggle .85s ease-out both}
+            .garden-anim-harvest .st-plot-btn.on.ready .garden-harvest-burst{display:block}
+            .garden-anim-harvest .st-plot-btn.on.ready .garden-harvest-burst i{animation:gardenCoinPop .95s cubic-bezier(.18,1.15,.32,1) both}
+            .garden-anim-harvest .st-plot-btn.on.ready .st-plot-plant{animation:gardenHarvestPop .85s cubic-bezier(.18,1.15,.32,1) both}
+            .garden-anim-harvest .st-plot-btn.on.ready .st-plot-base{animation:gardenPlotShine 1s ease-in-out both}
             @keyframes gardenPlantSway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
             @keyframes gardenPlantFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-            @keyframes gardenPlantBounce{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-6px) scale(1.04)}}
-            @keyframes gardenPotBob{0%,100%{transform:translateY(0)}50%{transform:translateY(2px)}}
-            @keyframes gardenCloudDrift{0%,100%{transform:translateX(0)}50%{transform:translateX(12px)}}
-            @keyframes gardenSparkle{0%,100%{transform:scale(.92);opacity:.45}50%{transform:scale(1.12);opacity:.95}}
-            @keyframes gardenOrbitPulse{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-            @keyframes gardenPlotGlow{0%,100%{filter:drop-shadow(0 8px 12px rgba(135,199,98,.18))}50%{filter:drop-shadow(0 0 16px rgba(170,255,117,.45))}}
-            @keyframes gardenPlotShine{0%,100%{filter:drop-shadow(0 0 10px rgba(255,208,88,.28))}50%{filter:drop-shadow(0 0 18px rgba(255,229,133,.52))}}
-            @media (max-width: 640px){
-                .st-plot-btn{min-height:196px;padding:10px 8px 12px}
-                .st-plot-art{height:104px}
-                .st-tree-emoji .garden-main-asset{width:min(160px,38vw)}
-            }
+            @keyframes gardenPlantBounce{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-7px) scale(1.045)}}
+            @keyframes gardenSeedPulse{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.06)}}
+            @keyframes gardenPlotGlow{0%,100%{filter:drop-shadow(0 8px 12px rgba(135,199,98,.18))}50%{filter:drop-shadow(0 0 18px rgba(170,255,117,.55))}}
+            @keyframes gardenPlotShine{0%,100%{filter:drop-shadow(0 0 10px rgba(255,208,88,.30))}50%{filter:drop-shadow(0 0 22px rgba(255,229,133,.70))}}
+            @keyframes gardenWaterDrop{0%{transform:translateY(-48px) scale(.55);opacity:0}15%{opacity:1}80%{opacity:1}100%{transform:translateY(58px) scale(.95);opacity:0}}
+            @keyframes gardenWateredWiggle{0%,100%{transform:rotate(0) scale(1)}20%{transform:rotate(-8deg) scale(1.04)}45%{transform:rotate(7deg) scale(1.06)}70%{transform:rotate(-4deg) scale(1.03)}}
+            @keyframes gardenCoinPop{0%{transform:translate(-50%,0) scale(.35) rotate(0);opacity:0}20%{opacity:1}75%{opacity:1}100%{transform:translate(calc(-50% + var(--x)),-86px) scale(1.06) rotate(var(--r));opacity:0}}
+            @keyframes gardenHarvestPop{0%{transform:translateY(0) scale(1);opacity:1}45%{transform:translateY(-34px) scale(1.12);opacity:1}100%{transform:translateY(8px) scale(.82);opacity:.2}}
+            @media(max-width:640px){.st-plot-art{height:108px}.st-plot-base{width:90px}.st-plot-plant{max-width:76px;max-height:90px}.st-tree-emoji .garden-main-asset{width:min(170px,40vw)}}
 
         </style>
     </head>
@@ -4201,8 +4188,8 @@ var EMO={marah:{label:"Marah",color:"#DC2626",hue:0,icon:"fa-fire",desc:"Api Cha
             var ML2={"qwen2.5:3b":"Curhat Santai","qwen2.5:0.5b":"PokoAI 1.2"};
             var AL={id:{label:"Indonesia santai",welcome:"Hei! Aku Plong 👋 Aku di sini buat nemenin kamu. Mau cerita apa hari ini?"},"id-formal":{label:"Indonesia formal",welcome:"Halo, aku Plong 👋 Aku siap menemanimu. Apa yang ingin kamu ceritakan?"},en:{label:"English",welcome:"Hey, I'm Plong 👋 I'm here with you. What would you like to talk about?"},"jv-ngoko":{label:"Jawa ngoko",welcome:"Hei, aku Plong 👋 Aku neng kene ngancani kowe."},"jv-krama":{label:"Jawa krama",welcome:"Sugeng rawuh, kula Plong 👋 Kula siap ngancani panjenangan."},su:{label:"Sunda",welcome:"Hai, abdi Plong 👋 Abdi aya di dieu kanggo ngadangu."},ms:{label:"Melayu",welcome:"Hai, saya Plong 👋 Saya ada di sini untuk menemani kamu."}};
             var FOLLOWS=["Gimana cara aku bisa lebih tenang?","Ceritakan hal positif dong","Aku bingung mau ngambil keputusan","Bantu aku pahami perasaanku","Bantu aku urai pelan-pelan","Aku butuh kalimat penyemangat"];
+            var GARDEN_ASSETS={base:'/assets/garden',petBase:'/assets/pet',plotEmpty:'/assets/garden/premium-plot-empty.svg',plotActive:'/assets/garden/premium-plot-active.svg',plotWet:'/assets/garden/premium-plot-wet.svg',plotReady:'/assets/garden/premium-plot-ready.svg',plotLocked:'/assets/garden/premium-plot-locked.svg'};
             var VEGGIES={carrot:{id:"carrot",name:"Wortel Ceria",icon:"🥕",growNeed:3,hunger:24,happy:7,desc:"Kenyang +24"},lettuce:{id:"lettuce",name:"Selada Tenang",icon:"🥬",growNeed:2,hunger:18,happy:10,desc:"Happy +10"},tomato:{id:"tomato",name:"Tomat Semangat",icon:"🍅",growNeed:4,hunger:28,happy:12,desc:"Kenyang +28"}};
-            var GARDEN_ASSETS={base:'/assets/garden',plotEmpty:'/assets/garden/plot-empty.svg',plotActive:'/assets/garden/plot-active.svg'};
 
             function gLK(){var k=state.al||"id";return AL[k]?k:"id"}
             function gL(){return AL[gLK()]||AL.id}
@@ -5040,13 +5027,15 @@ var authToken=localStorage.getItem("vkm_token")||"";
             function gardenAssetFor(type,stage){
                 var safeType=VEGGIES[type]?type:'carrot';
                 var safeStage=(stage==='seedling'||stage==='mid'||stage==='ready')?stage:'seedling';
-                return GARDEN_ASSETS.base+'/'+safeType+'-'+safeStage+'.svg';
+                return GARDEN_ASSETS.base+'/premium-'+safeType+'-'+safeStage+'.svg';
             }
             function gardenSeedAssetFor(type){
                 var safeType=VEGGIES[type]?type:'carrot';
-                return GARDEN_ASSETS.base+'/seed-'+safeType+'.svg';
+                return GARDEN_ASSETS.base+'/premium-seed-'+safeType+'.svg';
             }
-            function gardenPlotBase(active){
+            function gardenPlotBase(plot,active){
+                if(plot&&plot.ready)return GARDEN_ASSETS.plotReady;
+                if(plot&&Number(plot.waterCount||0)>0&&!plot.ready)return GARDEN_ASSETS.plotWet;
                 return active?GARDEN_ASSETS.plotActive:GARDEN_ASSETS.plotEmpty;
             }
             function gardenMainAssetHtml(plot){
@@ -5062,9 +5051,19 @@ var authToken=localStorage.getItem("vkm_token")||"";
                     ? '<img class="st-plot-plant '+(plot.ready?'ready':'growing')+' stage-'+stage+'" src="'+gardenAssetFor(type,stage)+'" alt="'+escH(label)+'" />'
                     : '<img class="st-plot-sprout idle" src="'+gardenSeedAssetFor(type)+'" alt="Bibit" />';
                 return '<span class="st-plot-art">'
-                    + '<img class="st-plot-base" src="'+gardenPlotBase(!!active)+'" alt="Plot" />'
+                    + '<img class="st-plot-base" src="'+gardenPlotBase(plot,!!active)+'" alt="Plot" />'
                     + plant
+                    + '<span class="garden-water-splash" aria-hidden="true"><i></i><i></i><i></i><i></i></span>'
+                    + '<span class="garden-harvest-burst" aria-hidden="true"><i></i><i></i><i></i></span>'
                     + '</span>';
+            }
+            function gardenPlayAnimation(type){
+                var page=document.getElementById('pg-garden');
+                if(!page)return;
+                page.classList.remove('garden-anim-water','garden-anim-harvest');
+                void page.offsetWidth;
+                page.classList.add(type==='harvest'?'garden-anim-harvest':'garden-anim-water');
+                setTimeout(function(){page.classList.remove('garden-anim-water','garden-anim-harvest');},1300);
             }
             function gardenActivePlantCountLocal(g){
                 return (g&&Array.isArray(g.plots)?g.plots:[]).filter(Boolean).length;
@@ -5144,7 +5143,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                         var v=VEGGIES[k];
                         var dis=plot?' disabled':'';
                         var hint=plot?(plot.ready?'Panen plot aktif dulu':'Plot aktif terisi'):(v.growNeed+'x siram');
-                        return '<button class="garden-seed" data-seed="'+k+'"'+dis+'><span class="garden-card-art"><img src="'+gardenSeedAssetFor(k)+'" alt="'+escH(v.name)+'" class="garden-card-thumb seed" /></span><strong>'+escH(v.name)+'</strong><small>'+escH(hint)+'<br>Reward coins + makanan pet</small></button>';
+                        return '<button class="garden-seed" data-seed="'+k+'"'+dis+'><span>'+v.icon+'</span><strong>'+escH(v.name)+'</strong><small>'+escH(hint)+'<br>Reward coins + makanan pet</small></button>';
                     }).join('');
                     seeds.querySelectorAll('[data-seed]').forEach(function(b){b.addEventListener('click',function(){gardenPlant(b.dataset.seed)})});
                 }
@@ -5153,7 +5152,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 if(inv){
                     inv.innerHTML=Object.keys(VEGGIES).map(function(k){
                         var v=VEGGIES[k],n=Number(g.inventory[k]||0);
-                        return '<button class="garden-feed" data-feed="'+k+'" '+(n>0?'':'disabled')+'><span class="garden-card-art"><img src="'+gardenAssetFor(k,'ready')+'" alt="'+escH(v.name)+'" class="garden-card-thumb ready" /></span><strong>x'+n+'</strong><small>'+escH(v.name)+'<br>'+escH(v.desc)+'</small></button>';
+                        return '<button class="garden-feed" data-feed="'+k+'" '+(n>0?'':'disabled')+'><span>'+v.icon+'</span><strong>x'+n+'</strong><small>'+escH(v.name)+'<br>'+escH(v.desc)+'</small></button>';
                     }).join('');
                     inv.querySelectorAll('[data-feed]').forEach(function(b){b.addEventListener('click',function(){gardenFeed(b.dataset.feed)})});
                 }
@@ -5252,12 +5251,12 @@ var gardenBusy=false;
                 if(plot&&plot.ready){toast('Plot '+(idx+1)+' siap panen. Panen dulu ya.');return;}
                 gardenRequest('/api/garden/plant',{seed:seed,plotIndex:idx}).then(function(d){if(d)closeGardenSheets();});
             }
-            function gardenWater(){
+            function gardenWater(){gardenPlayAnimation('water');
                 var tree=document.querySelector('.st-tree-emoji');
                 if(tree){tree.classList.remove('grow');void tree.offsetWidth;tree.classList.add('grow');}
                 gardenRequest('/api/garden/water',{plotIndex:getActivePlotIndex()});
             }
-            function gardenHarvest(){gardenRequest('/api/garden/harvest',{plotIndex:getActivePlotIndex()});}
+            function gardenHarvest(){gardenPlayAnimation('harvest');gardenRequest('/api/garden/harvest',{plotIndex:getActivePlotIndex()});}
             function gardenFeed(veggie){gardenRequest('/api/garden/feed',{veggie:veggie}).then(function(d){if(d)closeGardenSheets();});}
             function gardenClaim(){gardenRequest('/api/garden/claim',{});}
             function gardenUpgrade(){gardenRequest('/api/garden/upgrade',{});}
