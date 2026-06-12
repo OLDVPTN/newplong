@@ -3331,6 +3331,94 @@
             @keyframes gardenHarvestPop{0%{transform:translateY(0) scale(1);opacity:1}45%{transform:translateY(-34px) scale(1.12);opacity:1}100%{transform:translateY(8px) scale(.82);opacity:.2}}
             @media(max-width:640px){.st-plot-art{height:108px}.st-plot-base{width:90px}.st-plot-plant{max-width:76px;max-height:90px}.st-tree-emoji .garden-main-asset{width:min(170px,40vw)}}
 
+        
+            /* ===== Garden pet helper sprite ===== */
+            .st-tree-zone{
+                position:relative;
+                overflow:visible;
+            }
+            .garden-pet-helper{
+                position:absolute;
+                right:clamp(6px,3vw,28px);
+                bottom:clamp(8px,2.4vw,24px);
+                z-index:8;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                gap:6px;
+                pointer-events:none;
+                transform-origin:50% 100%;
+                animation:gardenPetIdle 3.4s ease-in-out infinite;
+            }
+            .garden-pet-helper img{
+                width:clamp(70px,15vw,112px);
+                height:auto;
+                display:block;
+                filter:drop-shadow(0 12px 14px rgba(42,82,151,.20));
+            }
+            .garden-pet-bubble{
+                max-width:150px;
+                padding:8px 10px;
+                border-radius:15px 15px 15px 5px;
+                background:rgba(255,255,255,.92);
+                border:1px solid rgba(255,255,255,.9);
+                box-shadow:0 10px 20px rgba(65,92,145,.12);
+                color:#3f5181;
+                font-size:10px;
+                line-height:1.25;
+                font-weight:700;
+                text-align:center;
+                backdrop-filter:blur(10px);
+                -webkit-backdrop-filter:blur(10px);
+            }
+            .garden-pet-helper.is-watering{
+                animation:gardenPetWater .85s ease-out both;
+            }
+            .garden-pet-helper.is-harvest{
+                animation:gardenPetHarvest .95s cubic-bezier(.18,1.15,.32,1) both;
+            }
+            .garden-pet-helper.is-idle{
+                animation:gardenPetIdle 3.4s ease-in-out infinite;
+            }
+            @keyframes gardenPetIdle{
+                0%,100%{transform:translateY(0) rotate(-1deg)}
+                50%{transform:translateY(-5px) rotate(1deg)}
+            }
+            @keyframes gardenPetWater{
+                0%,100%{transform:translateY(0) rotate(0) scale(1)}
+                25%{transform:translateY(-8px) rotate(-7deg) scale(1.04)}
+                55%{transform:translateY(-4px) rotate(6deg) scale(1.03)}
+                80%{transform:translateY(-2px) rotate(-3deg) scale(1.01)}
+            }
+            @keyframes gardenPetHarvest{
+                0%{transform:translateY(0) scale(1)}
+                35%{transform:translateY(-18px) scale(1.1)}
+                65%{transform:translateY(-8px) scale(1.04)}
+                100%{transform:translateY(0) scale(1)}
+            }
+            @media(max-width:640px){
+                .garden-pet-helper{
+                    right:2px;
+                    bottom:4px;
+                }
+                .garden-pet-helper img{
+                    width:74px;
+                }
+                .garden-pet-bubble{
+                    max-width:112px;
+                    font-size:9px;
+                    padding:7px 8px;
+                }
+            }
+            @media(max-width:420px){
+                .garden-pet-helper{
+                    position:relative;
+                    right:auto;
+                    bottom:auto;
+                    margin:12px auto 0;
+                }
+            }
+
         </style>
     </head>
     <body class="auth-lock">
@@ -3666,6 +3754,12 @@
                                     <strong>Plot Aktif</strong>
                                     <span id="garden-status">Pilih bibit dulu untuk mulai tanam.</span>
                                 </div>
+
+                                <div class="garden-pet-helper" id="garden-pet-helper" aria-label="Pet helper kebun">
+                                    <img id="garden-pet-sprite" src="/assets/pet/plong-happy.svg" alt="Plong helper" loading="lazy" decoding="async" />
+                                    <div class="garden-pet-bubble" id="garden-pet-bubble">Aku bantu rawat kebunmu!</div>
+                                </div>
+
                             </div>
 
                             <div class="st-level-card">
@@ -5060,10 +5154,36 @@ var authToken=localStorage.getItem("vkm_token")||"";
             function gardenPlayAnimation(type){
                 var page=document.getElementById('pg-garden');
                 if(!page)return;
+
+                var pet=document.getElementById('garden-pet-sprite');
+                var bubble=document.getElementById('garden-pet-bubble');
+                var helper=document.getElementById('garden-pet-helper');
+
                 page.classList.remove('garden-anim-water','garden-anim-harvest');
+                if(helper)helper.classList.remove('is-watering','is-harvest','is-idle');
                 void page.offsetWidth;
-                page.classList.add(type==='harvest'?'garden-anim-harvest':'garden-anim-water');
-                setTimeout(function(){page.classList.remove('garden-anim-water','garden-anim-harvest');},1300);
+
+                if(type==='harvest'){
+                    page.classList.add('garden-anim-harvest');
+                    if(helper)helper.classList.add('is-harvest');
+                    if(pet)pet.src='/assets/pet/plong-happy.svg';
+                    if(bubble)bubble.textContent='Yeay, panen dulu!';
+                }else{
+                    page.classList.add('garden-anim-water');
+                    if(helper)helper.classList.add('is-watering');
+                    if(pet)pet.src='/assets/pet/plong-focus.svg';
+                    if(bubble)bubble.textContent='Siram pelan-pelan ya!';
+                }
+
+                setTimeout(function(){
+                    page.classList.remove('garden-anim-water','garden-anim-harvest');
+                    if(helper){
+                        helper.classList.remove('is-watering','is-harvest');
+                        helper.classList.add('is-idle');
+                    }
+                    if(pet)pet.src='/assets/pet/plong-happy.svg';
+                    if(bubble)bubble.textContent='Aku bantu rawat kebunmu!';
+                },1300);
             }
             function gardenActivePlantCountLocal(g){
                 return (g&&Array.isArray(g.plots)?g.plots:[]).filter(Boolean).length;
