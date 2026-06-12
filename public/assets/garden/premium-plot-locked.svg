@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+
+<defs>
+  <filter id="softShadow" x="-30%" y="-30%" width="160%" height="180%">
+    <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#5b7d49" flood-opacity=".18"/>
+  </filter>
+  <filter id="goldGlow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="5" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#b9f66d"/>
+    <stop offset="1" stop-color="#6dc94a"/>
+  </linearGradient>
+  <linearGradient id="soil" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#9a6339"/>
+    <stop offset="1" stop-color="#6a3e27"/>
+  </linearGradient>
+  <radialGradient id="plotGlow" cx="50%" cy="42%" r="55%">
+    <stop offset="0" stop-color="#fff9ba"/>
+    <stop offset=".55" stop-color="#ffd35a"/>
+    <stop offset="1" stop-color="#f6a61d"/>
+  </radialGradient>
+</defs>
+
+<g filter="url(#softShadow)">
+  <path d="M33 98c9-42 39-62 95-62s86 20 95 62v54c0 41-35 68-95 68s-95-27-95-68z" fill="url(#soil)" opacity=".75"/>
+  <path d="M23 91c10-45 43-66 105-66s95 21 105 66v39c0 36-39 58-105 58S23 166 23 130z" fill="#8c9a7e"/>
+  <path d="M45 90c8-29 33-43 83-43s75 14 83 43v32c0 25-31 40-83 40s-83-15-83-40z" fill="#b8b8b0"/>
+  <rect x="94" y="86" width="68" height="58" rx="14" fill="#747672"/>
+  <rect x="103" y="100" width="50" height="36" rx="8" fill="#d9d9d5"/>
+  <path d="M109 102V87c0-13 9-22 19-22s19 9 19 22v15h-12V88c0-6-3-10-7-10s-7 4-7 10v14z" fill="#f3f3ef"/>
+  <circle cx="128" cy="117" r="6" fill="#6f716e"/><path d="M125 121h6l3 12h-12z" fill="#6f716e"/>
+</g>
+
+</svg>

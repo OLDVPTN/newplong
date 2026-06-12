@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+
+<defs>
+  <filter id="softShadow" x="-30%" y="-30%" width="160%" height="180%">
+    <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#5b7d49" flood-opacity=".18"/>
+  </filter>
+  <filter id="goldGlow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="5" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#b9f66d"/>
+    <stop offset="1" stop-color="#6dc94a"/>
+  </linearGradient>
+  <linearGradient id="soil" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#9a6339"/>
+    <stop offset="1" stop-color="#6a3e27"/>
+  </linearGradient>
+  <radialGradient id="plotGlow" cx="50%" cy="42%" r="55%">
+    <stop offset="0" stop-color="#fff9ba"/>
+    <stop offset=".55" stop-color="#ffd35a"/>
+    <stop offset="1" stop-color="#f6a61d"/>
+  </radialGradient>
+</defs>
+
+<g filter="url(#softShadow)">
+  <path d="M128 140c-12 18 -17 52 -17 48 0 28 17 42 17 42s17-14 17-42c0-22-9-56-26-48z" fill="#f28b21"/>
+  <ellipse cx="139" cy="180" rx="7" ry="16" fill="#ffb14a" opacity=".48"/>
+  <path d="M126 140c-23-4-37-16-43-39 27 4 43 14 52 33z" fill="#70c957"/>
+  <path d="M135 140c14-25 31-38 58-45-5 32-24 50-52 57z" fill="#80d663"/>
+  <path d="M130 136c-3-25 3-45 20-64 11 27 9 47-6 65z" fill="#57b849"/>
+  
+</g>
+
+</svg>

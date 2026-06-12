@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+
+<defs>
+  <filter id="softShadow" x="-30%" y="-30%" width="160%" height="180%">
+    <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#5b7d49" flood-opacity=".18"/>
+  </filter>
+  <filter id="goldGlow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="5" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#b9f66d"/>
+    <stop offset="1" stop-color="#6dc94a"/>
+  </linearGradient>
+  <linearGradient id="soil" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#9a6339"/>
+    <stop offset="1" stop-color="#6a3e27"/>
+  </linearGradient>
+  <radialGradient id="plotGlow" cx="50%" cy="42%" r="55%">
+    <stop offset="0" stop-color="#fff9ba"/>
+    <stop offset=".55" stop-color="#ffd35a"/>
+    <stop offset="1" stop-color="#f6a61d"/>
+  </radialGradient>
+</defs>
+
+<g filter="url(#softShadow)">
+  <circle cx="128" cy="128" r="86" fill="#fff7d9"/>
+  <circle cx="128" cy="128" r="74" fill="#fffbe9" stroke="#ffd979" stroke-width="4"/>
+  <path d="M68 151c8-20 26-33 47-33 10-18 29-30 52-30 29 0 52 21 52 47 0 11-4 21-11 29 7 7 11 15 11 25 0 20-18 36-45 36H93c-35 0-62-25-62-56 0-22 14-39 37-48z" fill="#6acb51"/><path d="M97 151c24-19 52-25 83-18" stroke="#9aec7a" stroke-width="11" stroke-linecap="round"/>
+</g>
+
+</svg>
