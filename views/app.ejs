@@ -3288,794 +3288,7 @@
                 letter-spacing:-.015em;
             }
 
-        
-
-            /* ═══════ GARDEN UI — LEMO INSPIRED CUTE SKY FARM ═══════ */
-            #pg-garden.lemo-garden-page{
-                max-width:760px!important;
-                margin:0 auto;
-                padding:0!important;
-                background:linear-gradient(180deg,#a9d5ff 0%,#b9deff 17%,#d7edff 36%,#f6fbff 100%);
-                min-height:100dvh;
-                border-radius:34px;
-                overflow:hidden;
-            }
-            .lemo-garden-shell{
-                position:relative;
-                min-height:100dvh;
-                padding:16px 14px calc(var(--nav-h) + var(--s-b) + 16px);
-                overflow:hidden;
-            }
-            .lemo-garden-shell::before{
-                content:'';
-                position:absolute;
-                inset:0;
-                background:
-                    linear-gradient(115deg,rgba(255,255,255,.18) 14%,transparent 14% 33%,rgba(255,255,255,.13) 33% 36%,transparent 36% 100%);
-                pointer-events:none;
-            }
-            .lemo-topbar,.lemo-icon-row,.lemo-status-card,.lemo-history-card,.lemo-upgrade-note,.lemo-bottom-dock,.lemo-scene-card{position:relative;z-index:1}
-            .lemo-topbar{
-                display:flex;
-                align-items:center;
-                gap:12px;
-                margin-bottom:12px;
-            }
-            .lemo-pill{
-                height:40px;
-                min-width:150px;
-                padding:0 15px;
-                border-radius:999px;
-                display:flex;
-                align-items:center;
-                gap:10px;
-                color:#fff;
-                background:linear-gradient(180deg,#6f85b8,#5b6e9d);
-                border:2px solid rgba(255,255,255,.68);
-                box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 10px 20px rgba(63,84,135,.15);
-                font-size:15px;
-                font-weight:700;
-            }
-            .lemo-pill i{
-                font-size:21px;
-                color:#83d8ff;
-                filter:drop-shadow(0 2px 0 rgba(0,0,0,.08));
-            }
-            .lemo-pill.sun i{color:#ffd760}
-            .lemo-pill strong{
-                font-size:16px;
-                font-weight:700;
-                letter-spacing:.02em;
-            }
-            .lemo-icon-row{
-                display:flex;
-                align-items:center;
-                flex-wrap:wrap;
-                gap:12px;
-                margin-bottom:14px;
-            }
-            .lemo-top-icon{
-                width:54px;
-                height:54px;
-                border-radius:50%;
-                border:3px solid rgba(255,255,255,.76);
-                background:linear-gradient(180deg,#6670c5,#4f57aa);
-                color:#fff;
-                box-shadow:0 10px 18px rgba(74,92,150,.18), inset 0 2px 0 rgba(255,255,255,.25);
-                display:grid;
-                place-items:center;
-                font-size:22px;
-            }
-            .lemo-top-icon:nth-child(4){background:linear-gradient(180deg,#8169e0,#6a53cb)}
-            .lemo-top-icon:nth-child(5){background:linear-gradient(180deg,#4b7dff,#355fd4)}
-            .lemo-top-icon:disabled{opacity:.55}
-            .lemo-scene-card{
-                min-height:560px;
-                border-radius:34px;
-                padding:16px 10px 24px;
-                background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.02));
-                overflow:hidden;
-            }
-            .lemo-scene-bg{
-                position:absolute;
-                inset:0;
-                pointer-events:none;
-            }
-            .lemo-rainbow{
-                position:absolute;
-                left:22px;
-                top:160px;
-                width:220px;
-                height:150px;
-                border-radius:220px 220px 0 0;
-                background:linear-gradient(180deg,transparent 52%,rgba(255,194,194,.0) 52%);
-                box-shadow:
-                    0 0 0 14px rgba(255,181,190,.5),
-                    0 0 0 28px rgba(255,220,160,.45),
-                    0 0 0 42px rgba(255,246,175,.42),
-                    0 0 0 56px rgba(191,242,200,.38),
-                    0 0 0 70px rgba(184,213,255,.34);
-                clip-path:inset(0 0 50% 0);
-                opacity:.75;
-                filter:blur(.2px);
-            }
-            .lemo-cloud{
-                position:absolute;
-                background:rgba(255,255,255,.9);
-                border-radius:999px;
-                filter:blur(1px);
-                box-shadow:0 10px 20px rgba(255,255,255,.2);
-            }
-            .lemo-cloud::before,.lemo-cloud::after{
-                content:'';
-                position:absolute;
-                background:inherit;
-                border-radius:50%;
-            }
-            .lemo-cloud.lc1{left:-10px;top:250px;width:110px;height:42px}
-            .lemo-cloud.lc1::before{width:46px;height:46px;left:12px;top:-18px}
-            .lemo-cloud.lc1::after{width:58px;height:58px;right:10px;top:-24px}
-            .lemo-cloud.lc2{right:30px;top:118px;width:120px;height:45px}
-            .lemo-cloud.lc2::before{width:54px;height:54px;left:10px;top:-20px}
-            .lemo-cloud.lc2::after{width:62px;height:62px;right:12px;top:-25px}
-            .lemo-cloud.lc3{right:-14px;bottom:140px;width:115px;height:43px}
-            .lemo-cloud.lc3::before{width:50px;height:50px;left:16px;top:-20px}
-            .lemo-cloud.lc3::after{width:58px;height:58px;right:8px;top:-24px}
-            .lemo-cloud.lc4{left:160px;top:76px;width:78px;height:28px;opacity:.78}
-            .lemo-cloud.lc4::before{width:34px;height:34px;left:8px;top:-10px}
-            .lemo-cloud.lc4::after{width:40px;height:40px;right:7px;top:-14px}
-            .lemo-sun-glow{
-                position:absolute;
-                top:94px;
-                right:40px;
-                width:160px;
-                height:160px;
-                border-radius:50%;
-                background:radial-gradient(circle,rgba(255,255,255,.44),rgba(255,255,255,0) 66%);
-            }
-            .lemo-progress-orb{
-                position:absolute;
-                right:18px;
-                top:116px;
-                width:132px;
-                height:132px;
-                display:grid;
-                place-items:center;
-            }
-            .lemo-orb-ring{
-                position:relative;
-                width:124px;
-                height:124px;
-            }
-            .lemo-orb-ring svg{
-                width:124px;
-                height:124px;
-                transform:rotate(-90deg);
-            }
-            .lemo-orb-ring circle{
-                fill:none;
-                stroke-width:12;
-                stroke:rgba(255,255,255,.55);
-            }
-            .lemo-orb-ring #st-ring-fill{
-                stroke:#6d72db;
-                stroke-linecap:round;
-                filter:drop-shadow(0 4px 6px rgba(109,114,219,.18));
-            }
-            .lemo-orb-core{
-                position:absolute;
-                inset:13px;
-                border-radius:50%;
-                background:linear-gradient(180deg,#ffffff,#f7f9ff);
-                border:3px solid rgba(255,255,255,.85);
-                display:flex;
-                flex-direction:column;
-                align-items:center;
-                justify-content:center;
-                box-shadow:0 12px 22px rgba(101,117,166,.15);
-            }
-            #garden-emoji{
-                font-size:36px;
-                line-height:1;
-                margin-bottom:4px;
-            }
-            #garden-percent{
-                color:#445288;
-                font-size:16px;
-                font-weight:700;
-            }
-            .lemo-level-badge{
-                position:absolute;
-                top:236px;
-                right:20px;
-                width:150px;
-                padding:12px;
-                border-radius:22px;
-                background:rgba(255,255,255,.84);
-                border:2px solid rgba(255,255,255,.76);
-                box-shadow:0 14px 26px rgba(102,117,168,.12);
-            }
-            .lemo-level-top{
-                display:flex;
-                align-items:center;
-                justify-content:space-between;
-                gap:8px;
-                margin-bottom:8px;
-                color:#54648e;
-            }
-            .lemo-level-top strong{
-                font-size:18px;
-                color:#3e4d7c;
-                font-weight:700;
-            }
-            .lemo-level-top span{
-                font-size:12px;
-                font-weight:700;
-                color:#7f8bb2;
-            }
-            .lemo-level-track{
-                height:10px;
-                border-radius:999px;
-                background:#e8eeff;
-                overflow:hidden;
-            }
-            .lemo-level-track span{
-                display:block;
-                height:100%;
-                width:0%;
-                border-radius:999px;
-                background:linear-gradient(90deg,#7ad4ff,#6279df);
-            }
-            .lemo-level-badge small{
-                display:block;
-                margin-top:7px;
-                color:#7e8aae;
-                font-size:11px;
-                font-weight:600;
-                line-height:1.35;
-            }
-            .lemo-field{
-                position:relative;
-                margin-top:280px;
-                padding-top:6px;
-                min-height:302px;
-            }
-            .lemo-fence{
-                position:absolute;
-                left:10px;
-                right:10px;
-                top:58px;
-                height:44px;
-                background:linear-gradient(180deg,#cb9a93,#bc857f);
-                border-radius:22px 22px 8px 8px;
-                box-shadow:inset 0 4px 0 rgba(255,255,255,.22);
-            }
-            .lemo-fence::before,.lemo-fence::after{
-                content:'';
-                position:absolute;
-                bottom:0;
-                width:52px;
-                height:86px;
-                background:linear-gradient(180deg,#d5a39a,#b57d75);
-                clip-path:polygon(50% 0,100% 24%,100% 100%,0 100%,0 24%);
-                border-radius:12px;
-            }
-            .lemo-fence::before{left:8px}
-            .lemo-fence::after{right:8px}
-            .lemo-platform{
-                position:absolute;
-                left:34px;
-                right:34px;
-                top:84px;
-                height:170px;
-                border-radius:34px;
-                background:linear-gradient(180deg,#ddf98d 0%,#c8eb79 74%,#a7cf60 74%,#96b352 100%);
-                box-shadow:0 18px 34px rgba(88,125,82,.18), inset 0 -10px 0 rgba(120,141,79,.24);
-            }
-            .lemo-platform::before{
-                content:'';
-                position:absolute;
-                left:26px;
-                right:26px;
-                bottom:-24px;
-                height:26px;
-                border-radius:0 0 28px 28px;
-                background:linear-gradient(180deg,#9f6d65,#82524d);
-            }
-            .lemo-plots{
-                position:relative;
-                z-index:2;
-                display:grid;
-                grid-template-columns:repeat(3,minmax(0,1fr));
-                gap:22px 18px;
-                padding:0 16px;
-            }
-            .lemo-plots .st-plot-btn{
-                position:relative;
-                min-height:140px;
-                padding:12px 8px 10px;
-                border:0;
-                background:transparent;
-                display:flex;
-                flex-direction:column;
-                align-items:center;
-                justify-content:flex-end;
-                gap:8px;
-            }
-            .lemo-plots .st-plot-btn:nth-child(1),
-            .lemo-plots .st-plot-btn:nth-child(2){
-                margin-bottom:38px;
-            }
-            .lemo-plots .st-plot-btn:nth-child(1){grid-column:1}
-            .lemo-plots .st-plot-btn:nth-child(2){grid-column:3}
-            .lemo-plots .st-plot-btn:nth-child(3){grid-column:1}
-            .lemo-plots .st-plot-btn:nth-child(4){grid-column:2}
-            .lemo-plots .st-plot-btn:nth-child(5){grid-column:3}
-            .lemo-plots .st-plot-btn::after{
-                content:'';
-                position:absolute;
-                bottom:8px;
-                width:96px;
-                height:28px;
-                border-radius:50%;
-                background:radial-gradient(circle at center,#fff490 0%,#ffd753 45%,#f7b82a 68%,#efaf1d 100%);
-                box-shadow:0 0 0 6px rgba(212,255,118,.4);
-                z-index:0;
-            }
-            .lemo-plots .st-plot-btn::before{
-                content:'';
-                position:absolute;
-                bottom:36px;
-                width:114px;
-                height:20px;
-                border-radius:50%;
-                background:radial-gradient(circle,rgba(161,255,100,.46),rgba(161,255,100,0) 70%);
-                filter:blur(1px);
-                z-index:0;
-            }
-            .st-plot-badge{
-                position:absolute;
-                top:0;
-                left:50%;
-                transform:translateX(-50%);
-                min-width:54px;
-                height:24px;
-                padding:0 9px;
-                border-radius:999px;
-                background:rgba(74,97,169,.92);
-                color:#fff;
-                display:inline-flex;
-                align-items:center;
-                justify-content:center;
-                font-size:10px;
-                font-weight:700;
-                box-shadow:0 6px 14px rgba(75,96,164,.16);
-                z-index:3;
-            }
-            .st-plot-emoji-wrap{
-                position:relative;
-                z-index:2;
-                display:flex;
-                align-items:flex-end;
-                justify-content:center;
-                min-height:86px;
-                width:100%;
-            }
-            .st-plot-emoji{
-                font-size:58px;
-                line-height:1;
-                filter:drop-shadow(0 6px 0 rgba(0,0,0,.06));
-                transform-origin:bottom center;
-                transition:transform .22s ease;
-            }
-            .st-plot-btn.on .st-plot-emoji,
-            .st-plot-btn:hover .st-plot-emoji{
-                transform:scale(1.08);
-            }
-            .st-plot-meta{
-                position:relative;
-                z-index:2;
-                width:100%;
-                display:flex;
-                flex-direction:column;
-                align-items:center;
-                gap:2px;
-                text-align:center;
-                padding:0 4px;
-            }
-            .st-plot-name{
-                color:#4f3a29;
-                font-size:13px;
-                line-height:1.15;
-                font-weight:700;
-            }
-            .st-plot-label{
-                color:#745f49;
-                font-size:11px;
-                font-weight:600;
-            }
-            .st-plot-bar{
-                position:relative;
-                z-index:2;
-                width:80px;
-                height:8px;
-                border-radius:999px;
-                background:rgba(255,255,255,.78);
-                overflow:hidden;
-                box-shadow:inset 0 1px 2px rgba(0,0,0,.06);
-            }
-            .st-plot-bar span{
-                display:block;
-                height:100%;
-                width:0;
-                border-radius:999px;
-                background:linear-gradient(90deg,#7ad4ff,#6279df);
-            }
-            .st-plot-btn.ready .st-plot-label{color:#f59e0b}
-            .st-plot-btn.on::after{
-                box-shadow:0 0 0 9px rgba(212,255,118,.5),0 10px 24px rgba(255,205,90,.28);
-            }
-            .lemo-status-card{
-                margin-top:8px;
-                padding:16px;
-                border-radius:28px;
-                background:rgba(255,255,255,.84);
-                border:2px solid rgba(255,255,255,.78);
-                box-shadow:0 16px 28px rgba(105,123,173,.11);
-            }
-            .lemo-status-main{
-                display:flex;
-                align-items:center;
-                justify-content:space-between;
-                gap:12px;
-                margin-bottom:12px;
-            }
-            .lemo-status-copy span{
-                display:block;
-                color:#7887ab;
-                font-size:11px;
-                text-transform:uppercase;
-                letter-spacing:.04em;
-                font-weight:700;
-            }
-            .lemo-status-copy strong{
-                display:block;
-                margin-top:4px;
-                color:#43527f;
-                font-size:15px;
-                line-height:1.35;
-                font-weight:700;
-            }
-            .lemo-chip-action{
-                height:38px;
-                padding:0 14px;
-                border-radius:999px;
-                border:0;
-                color:#fff;
-                background:linear-gradient(180deg,#6f85b8,#5b6e9d);
-                display:inline-flex;
-                align-items:center;
-                gap:8px;
-                font-weight:700;
-                box-shadow:0 10px 18px rgba(90,108,156,.15);
-                white-space:nowrap;
-            }
-            .lemo-micro-stats{
-                display:grid;
-                grid-template-columns:repeat(4,minmax(0,1fr));
-                gap:10px;
-            }
-            .lemo-micro{
-                padding:12px 10px;
-                border-radius:20px;
-                background:#f8fbff;
-                border:1px solid #edf3ff;
-                text-align:center;
-            }
-            .lemo-micro span{
-                display:block;
-                color:#8491b1;
-                font-size:10px;
-                text-transform:uppercase;
-                letter-spacing:.05em;
-                font-weight:700;
-            }
-            .lemo-micro strong{
-                display:block;
-                margin-top:5px;
-                color:#44517f;
-                font-size:14px;
-                font-weight:700;
-            }
-            .lemo-bottom-dock{
-                margin-top:14px;
-                padding:14px 10px 10px;
-                border-radius:30px;
-                background:linear-gradient(180deg,rgba(171,197,255,.55),rgba(170,163,255,.38));
-                backdrop-filter:blur(8px);
-                -webkit-backdrop-filter:blur(8px);
-                display:grid;
-                grid-template-columns:repeat(5,minmax(0,1fr));
-                gap:8px;
-                box-shadow:0 20px 30px rgba(113,127,179,.12);
-            }
-            .lemo-dock-btn{
-                border:0;
-                background:transparent;
-                display:flex;
-                flex-direction:column;
-                align-items:center;
-                justify-content:center;
-                gap:6px;
-                padding:2px 0;
-                color:#f7f9ff;
-            }
-            .lemo-dock-btn i{
-                width:58px;
-                height:58px;
-                border-radius:50%;
-                border:3px solid rgba(255,255,255,.76);
-                background:linear-gradient(180deg,#6670c5,#4f57aa);
-                box-shadow:0 10px 18px rgba(74,92,150,.18), inset 0 2px 0 rgba(255,255,255,.25);
-                display:grid;
-                place-items:center;
-                font-size:22px;
-                color:#fff;
-            }
-            .lemo-dock-btn.primary i{
-                background:linear-gradient(180deg,#6fb8ff,#5372ff);
-            }
-            .lemo-dock-btn span{
-                display:block;
-                font-size:12px;
-                line-height:1.1;
-                font-weight:700;
-                color:#4e5c94;
-                background:linear-gradient(180deg,#8ea8ff,#6984e5);
-                border-radius:999px;
-                padding:4px 10px;
-                min-width:64px;
-                text-align:center;
-                box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
-            }
-            .lemo-dock-btn.primary span{
-                background:linear-gradient(180deg,#87f3af,#70cf87);
-                color:#fff;
-            }
-            .lemo-dock-btn:disabled{opacity:.5}
-            .lemo-upgrade-note{margin-top:10px}
-            .lemo-upgrade-pill{
-                padding:14px 16px;
-                border-radius:24px;
-                background:rgba(255,255,255,.72);
-                border:2px solid rgba(255,255,255,.65);
-                color:#53628e;
-            }
-            .lemo-upgrade-pill strong{
-                display:block;
-                font-size:14px;
-                font-weight:700;
-                color:#44517f;
-            }
-            .lemo-upgrade-pill small{
-                display:block;
-                margin-top:4px;
-                font-size:12px;
-                line-height:1.4;
-                color:#7c88aa;
-                font-weight:600;
-            }
-            .lemo-history-card{
-                margin-top:12px;
-                padding:16px;
-                border-radius:28px;
-                background:rgba(255,255,255,.84);
-                border:2px solid rgba(255,255,255,.78);
-                box-shadow:0 16px 28px rgba(105,123,173,.11);
-            }
-            .lemo-history-card .garden-section-title{
-                display:flex;
-                align-items:center;
-                justify-content:space-between;
-                gap:10px;
-                margin-bottom:10px;
-            }
-            .lemo-history-card .acct-title{
-                color:#43527f;
-                font-size:16px;
-                font-weight:700;
-            }
-            .garden-pill{
-                font-size:10px;
-                font-weight:700;
-                color:#5c73c9;
-                background:#eef2ff;
-                border-radius:999px;
-                padding:5px 10px;
-            }
-            .garden-history{
-                display:grid;
-                gap:8px;
-            }
-            .garden-history-item{
-                padding:12px 14px;
-                border-radius:18px;
-                background:#f8fbff;
-                border:1px solid #ecf2ff;
-                color:#6677a5;
-                font-size:12px;
-                font-weight:600;
-                line-height:1.45;
-            }
-
-            @media(min-width:900px){
-                #pg-garden.lemo-garden-page{
-                    max-width:980px!important;
-                }
-                .lemo-garden-shell{
-                    padding:18px 20px calc(var(--nav-h) + 24px);
-                }
-                .lemo-scene-card{
-                    min-height:610px;
-                }
-                .lemo-field{
-                    margin-top:295px;
-                }
-                .lemo-platform{
-                    left:110px;
-                    right:110px;
-                }
-                .lemo-plots{
-                    max-width:760px;
-                    margin:0 auto;
-                    gap:28px 28px;
-                }
-                .lemo-progress-orb{right:50px}
-                .lemo-level-badge{right:44px}
-            }
-            @media(max-width:640px){
-                #pg-garden.lemo-garden-page{
-                    border-radius:0;
-                }
-                .lemo-topbar{
-                    gap:8px;
-                }
-                .lemo-pill{
-                    min-width:0;
-                    flex:1;
-                    font-size:14px;
-                    padding:0 12px;
-                }
-                .lemo-icon-row{
-                    gap:10px;
-                }
-                .lemo-top-icon{
-                    width:50px;
-                    height:50px;
-                    font-size:20px;
-                }
-                .lemo-scene-card{
-                    min-height:540px;
-                    padding-left:6px;
-                    padding-right:6px;
-                }
-                .lemo-progress-orb{
-                    right:6px;
-                    top:118px;
-                    transform:scale(.92);
-                }
-                .lemo-level-badge{
-                    right:10px;
-                    top:240px;
-                    width:138px;
-                }
-                .lemo-rainbow{
-                    left:18px;
-                    top:182px;
-                    width:165px;
-                    height:110px;
-                }
-                .lemo-field{
-                    margin-top:286px;
-                    min-height:290px;
-                }
-                .lemo-platform{
-                    left:12px;
-                    right:12px;
-                    top:94px;
-                    height:156px;
-                }
-                .lemo-fence{
-                    left:2px;
-                    right:2px;
-                }
-                .lemo-plots{
-                    gap:16px 6px;
-                    padding:0 4px;
-                }
-                .lemo-plots .st-plot-btn{
-                    min-height:132px;
-                }
-                .lemo-plots .st-plot-btn::after{
-                    width:82px;
-                    height:24px;
-                }
-                .st-plot-emoji{
-                    font-size:50px;
-                }
-                .lemo-micro-stats{
-                    grid-template-columns:repeat(2,minmax(0,1fr));
-                }
-                .lemo-bottom-dock{
-                    grid-template-columns:repeat(5,minmax(0,1fr));
-                    gap:6px;
-                    padding:12px 6px 8px;
-                }
-                .lemo-dock-btn i{
-                    width:52px;
-                    height:52px;
-                    font-size:20px;
-                }
-                .lemo-dock-btn span{
-                    min-width:0;
-                    width:100%;
-                    padding:4px 4px;
-                    font-size:10px;
-                }
-            }
-            @media(max-width:420px){
-                .lemo-garden-shell{
-                    padding:14px 10px calc(var(--nav-h) + var(--s-b) + 12px);
-                }
-                .lemo-icon-row{
-                    justify-content:space-between;
-                }
-                .lemo-top-icon{
-                    width:46px;
-                    height:46px;
-                    font-size:18px;
-                }
-                .lemo-scene-card{
-                    min-height:510px;
-                }
-                .lemo-progress-orb{
-                    right:0;
-                    top:112px;
-                    transform:scale(.84);
-                }
-                .lemo-level-badge{
-                    right:4px;
-                    top:236px;
-                    width:124px;
-                    padding:10px;
-                }
-                .lemo-field{
-                    margin-top:278px;
-                }
-                .lemo-platform{
-                    left:8px;
-                    right:8px;
-                }
-                .lemo-plots .st-plot-btn:nth-child(1),
-                .lemo-plots .st-plot-btn:nth-child(2){
-                    margin-bottom:26px;
-                }
-                .st-plot-emoji{
-                    font-size:44px;
-                }
-                .st-plot-name{
-                    font-size:12px;
-                }
-                .st-plot-label{
-                    font-size:10px;
-                }
-                .lemo-status-main{
-                    flex-direction:column;
-                    align-items:flex-start;
-                }
-            }
-
-</style>
+        </style>
     </head>
     <body class="auth-lock">
         <div id="page-loader" class="page-loader show" aria-live="polite" aria-label="Memuat halaman">
@@ -4330,126 +3543,138 @@
 
 
                 <!-- GARDEN -->
-                <section id="pg-garden" class="<%= pageId === 'pg-garden' ? 'pg on lemo-garden-page st-farm-page st-cute-page' : 'pg lemo-garden-page st-farm-page st-cute-page' %>" aria-label="Plong Tanam">
-                    <div class="lemo-garden-shell">
-                        <div class="lemo-topbar">
-                            <div class="lemo-pill water">
+                <section id="pg-garden" class="<%= pageId === 'pg-garden' ? 'pg on st-farm-page st-cute-page' : 'pg st-farm-page st-cute-page' %>" aria-label="Plong Tanam">
+                    <div class="st-bg">
+                        <div class="st-sky"></div>
+                        <div class="st-glow"></div><div class="cute-spark s1">✦</div><div class="cute-spark s2">♡</div><div class="cute-spark s3">✿</div>
+                        <div class="st-hill h1"></div>
+                        <div class="st-hill h2"></div>
+                        <div class="st-cloud c1"></div>
+                        <div class="st-cloud c2"></div>
+                    </div>
+
+                    <div class="st-app">
+                        <div class="st-header">
+                            <button type="button" class="st-back" data-page="pg-home"><i class="fas fa-chevron-left"></i></button>
+                            <div class="st-title">
+                                <strong>Kebun Imut Plong</strong>
+                                <span>Tanam santai, siram lucu, panen hadiah kecil</span>
+                            </div>
+                            <button type="button" class="st-help" id="st-help"><i class="fas fa-question"></i></button>
+                        </div>
+
+                        <div class="st-wallet">
+                            <div class="st-wallet-item">
+                                <i class="fas fa-coins"></i>
+                                <div><span>Soul Coins</span><strong id="lemo-coin-display">0</strong></div>
+                            </div>
+                            <div class="st-wallet-item">
                                 <i class="fas fa-droplet"></i>
-                                <strong id="lemo-coin-display">0</strong>
+                                <div><span>Air</span><strong id="st-water-display">20</strong></div>
                             </div>
-                            <div class="lemo-pill sun">
-                                <i class="fas fa-sun"></i>
-                                <strong id="st-water-display">0</strong>
+                            <div class="st-wallet-item">
+                                <i class="fas fa-star"></i>
+                                <div><span>Level</span><strong id="garden-level">Lv 1</strong></div>
                             </div>
                         </div>
 
-                        <div class="lemo-icon-row">
-                            <button type="button" class="lemo-top-icon" id="st-help" aria-label="Bantuan"><i class="fas fa-gear"></i></button>
-                            <button type="button" class="lemo-top-icon" id="st-daily-tasks" aria-label="Tugas harian"><i class="fas fa-book-open"></i></button>
-                            <button type="button" class="lemo-top-icon" id="garden-open-stock" aria-label="Stok"><i class="fas fa-bag-shopping"></i></button>
-                            <button type="button" class="lemo-top-icon" id="garden-claim" aria-label="Claim"><i class="fas fa-gift"></i></button>
-                            <button type="button" class="lemo-top-icon" id="st-daily-reward" aria-label="Reward harian"><i class="fas fa-crown"></i></button>
-                        </div>
-
-                        <div class="lemo-scene-card">
-                            <div class="lemo-scene-bg">
-                                <div class="lemo-rainbow"></div>
-                                <div class="lemo-cloud lc1"></div>
-                                <div class="lemo-cloud lc2"></div>
-                                <div class="lemo-cloud lc3"></div>
-                                <div class="lemo-cloud lc4"></div>
-                                <div class="lemo-sun-glow"></div>
-                            </div>
-
-                            <div class="lemo-progress-orb">
-                                <div class="lemo-orb-ring">
-                                    <svg viewBox="0 0 120 120" aria-hidden="true">
-                                        <circle cx="60" cy="60" r="52"></circle>
-                                        <circle cx="60" cy="60" r="52" id="st-ring-fill"></circle>
-                                    </svg>
-                                    <div class="lemo-orb-core">
-                                        <div id="garden-emoji">🌱</div>
-                                        <strong id="garden-percent">0%</strong>
+                        <div class="st-main-card">
+                            <div class="st-main-top">
+                                <div class="st-reward-banner">
+                                    <div class="st-voucher">
+                                        <div class="st-voucher-icon"><i class="fas fa-basket-shopping"></i></div>
+                                        <div>
+                                            <strong>Hasil Kebun</strong>
+                                            <span id="garden-idle-coins">+0</span>
+                                        </div>
+                                    </div>
+                                    <button id="garden-claim" type="button">Klaim</button>
+                                </div>
+                                <div class="st-mini-stats">
+                                    <div class="st-mini-stat">
+                                        <span>Daya siram</span>
+                                        <strong id="garden-water-power">x1</strong>
+                                    </div>
+                                    <div class="st-mini-stat">
+                                        <span>Idle rate</span>
+                                        <strong id="garden-idle-rate">+0/mnt</strong>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="lemo-level-badge">
-                                <div class="lemo-level-top">
-                                    <strong id="garden-level">Lv 1</strong>
-                                    <span id="garden-water-power">x1</span>
+                            <div class="st-tree-zone">
+                                <div class="st-progress-ring-shell">
+                                    <div class="st-ring-orbit orbit-a"></div>
+                                    <div class="st-ring-orbit orbit-b"></div>
+                                    <div class="st-progress-ring">
+                                        <svg viewBox="0 0 120 120" aria-hidden="true">
+                                            <circle cx="60" cy="60" r="52"></circle>
+                                            <circle id="st-ring-fill" cx="60" cy="60" r="52"></circle>
+                                        </svg>
+                                        <div class="st-tree">
+                                            <div class="st-tree-shadow"></div>
+                                            <div class="st-tree-emoji" id="garden-emoji">🌱</div>
+                                            <div class="st-tree-pot"></div>
+                                        </div>
+                                    </div>
+                                    <div class="st-progress-pill" id="garden-percent">0%</div>
                                 </div>
-                                <div class="lemo-level-track"><span id="garden-level-progress" style="width:0%"></span></div>
-                                <small><span id="garden-idle-coins">+0</span> · <span id="garden-idle-rate">+0/mnt</span></small>
+                                <div class="st-growth">
+                                    <strong>Plot Aktif</strong>
+                                    <span id="garden-status">Pilih bibit dulu untuk mulai tanam.</span>
+                                </div>
                             </div>
 
-                            <div class="lemo-field">
-                                <div class="lemo-fence"></div>
-                                <div class="lemo-platform"></div>
-                                <div class="st-plots lemo-plots" id="garden-plots" aria-live="polite"></div>
-                            </div>
-                        </div>
-
-                        <div class="lemo-status-card">
-                            <div class="lemo-status-main">
-                                <div class="lemo-status-copy">
-                                    <span>Status kebun</span>
-                                    <strong id="garden-status">Pilih bibit untuk mulai menanam.</strong>
+                            <div class="st-level-card">
+                                <div class="st-level-copy">
+                                    <span>Progress level kebun</span>
+                                    <strong>Terus rawat kebunmu biar makin cepat berkembang</strong>
                                 </div>
-                                <button type="button" class="lemo-chip-action" id="st-claim-water"><i class="fas fa-plus"></i> Air gratis</button>
+                                <div class="st-level-bar">
+                                    <span id="garden-level-progress"></span>
+                                </div>
                             </div>
 
-                            <div class="lemo-micro-stats">
-                                <div class="lemo-micro">
-                                    <span>Idle</span>
-                                    <strong id="garden-idle-coins-clone">+0</strong>
-                                </div>
-                                <div class="lemo-micro">
-                                    <span>Rate</span>
-                                    <strong id="garden-idle-rate-clone">+0/mnt</strong>
-                                </div>
-                                <div class="lemo-micro">
-                                    <span>Power</span>
-                                    <strong id="garden-water-power-clone">x1</strong>
-                                </div>
-                                <div class="lemo-micro">
-                                    <span>Bibit</span>
-                                    <strong id="garden-seeds">0</strong>
-                                </div>
+                            <div class="st-action-row">
+                                <button id="garden-open-seeds" type="button" class="st-action secondary"><i class="fas fa-seedling"></i><span>Pilih Bibit</span></button>
+                                <button id="garden-water" type="button" class="st-action primary"><i class="fas fa-droplet"></i><span>Siram Sekarang</span></button>
+                                <button id="garden-harvest" type="button" class="st-action accent"><i class="fas fa-basket-shopping"></i><span>Panen Hasil</span></button>
                             </div>
                         </div>
 
-                        <div class="lemo-bottom-dock">
-                            <button type="button" class="lemo-dock-btn" id="garden-open-seeds">
-                                <i class="fas fa-seedling"></i>
-                                <span>Gardener</span>
-                            </button>
-                            <button type="button" class="lemo-dock-btn" id="garden-water">
-                                <i class="fas fa-droplet"></i>
-                                <span>Focus!</span>
-                            </button>
-                            <button type="button" class="lemo-dock-btn primary" id="garden-harvest">
-                                <i class="fas fa-carrot"></i>
-                                <span>Nursery</span>
-                            </button>
-                            <button type="button" class="lemo-dock-btn" id="garden-upgrade">
-                                <i class="fas fa-arrow-trend-up"></i>
-                                <span>Upgrade</span>
-                            </button>
-                            <button type="button" class="lemo-dock-btn" id="garden-bonus">
-                                <i class="fas fa-user-group"></i>
-                                <span>Social</span>
-                            </button>
-                        </div>
+                        <div class="st-garden-grid">
+                            <div class="st-plot-card">
+                                <div class="st-card-head">
+                                    <div>
+                                        <strong>Plot Tanaman</strong>
+                                        <span>Pilih plot yang mau kamu fokuskan lalu rawat sampai siap panen.</span>
+                                    </div>
+                                    <button type="button" id="st-claim-water"><i class="fas fa-plus"></i> Air gratis</button>
+                                </div>
+                                <div class="st-plots" id="garden-plots" aria-label="Plot kebun"></div>
+                            </div>
 
-                        <div class="lemo-upgrade-note">
-                            <div class="lemo-upgrade-pill">
-                                <strong>Upgrade kebun</strong>
-                                <small id="pf-upgrade-text">Buka level baru untuk pertumbuhan yang lebih cepat.</small>
+                            <div class="st-side-stack">
+                                <div class="st-task-card">
+                                    <div class="st-card-head">
+                                        <div>
+                                            <strong>Misi Harian</strong>
+                                            <span>Selesaikan misi kecil biar hadiahmu makin banyak.</span>
+                                        </div>
+                                        <button type="button" id="st-daily-reward"><i class="fas fa-gift"></i> Klaim</button>
+                                    </div>
+                                    <div class="st-tasks" id="st-daily-tasks"></div>
+                                </div>
+
+                                <div class="st-boost-grid">
+                                    <button type="button" id="garden-upgrade"><span>⚡</span><strong>Upgrade</strong><small id="pf-upgrade-text">Naikkan hasil</small></button>
+                                    <button type="button" id="garden-bonus"><span>🎁</span><strong>Bonus</strong><small>Hadiah kunjungan</small></button>
+                                    <button type="button" id="garden-open-stock"><span>🎒</span><strong>Stok</strong><small>Makanan pet</small></button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="st-history lemo-history-card">
+                        <div class="st-history">
                             <div class="garden-section-title">
                                 <div class="acct-title">Riwayat Tanam</div>
                                 <span class="garden-pill">Aktivitas</span>
@@ -4458,7 +3683,6 @@
                         </div>
                     </div>
                 </section>
-
 
                 <!-- GARDEN SEPARATE SHEETS -->
                 <div class="garden-sheet" id="garden-seed-sheet" aria-hidden="true">
@@ -5770,19 +4994,6 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 var level=Math.max(1,Math.floor(Number(g&&g.level||1)));
                 return 24+level*18;
             }
-            
-            function updateGardenUiMirrors(){
-                var idleSrc=document.getElementById('garden-idle-coins');
-                var idleDst=document.getElementById('garden-idle-coins-clone');
-                var rateSrc=document.getElementById('garden-idle-rate');
-                var rateDst=document.getElementById('garden-idle-rate-clone');
-                var powerSrc=document.getElementById('garden-water-power');
-                var powerDst=document.getElementById('garden-water-power-clone');
-                if(idleSrc && idleDst) idleDst.textContent = idleSrc.textContent || '+0';
-                if(rateSrc && rateDst) rateDst.textContent = rateSrc.textContent || '+0/mnt';
-                if(powerSrc && powerDst) powerDst.textContent = powerSrc.textContent || 'x1';
-            }
-
             function renderGarden(){
                 var g=ensureGardenLocal(), active=getActivePlotIndex(), plot=g.plots[active]||null;
                 g.plot=plot;
