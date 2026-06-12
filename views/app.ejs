@@ -3853,6 +3853,106 @@
                 }
             }
 
+
+            /* MOBILE FIX: plot tanaman muncul lebih awal tanpa scroll jauh */
+            @media(max-width:640px){
+                #pg-garden.st-farm-page .st-app{
+                    display:flex!important;
+                    flex-direction:column!important;
+                }
+                #pg-garden.st-farm-page .st-header{order:1!important;}
+                #pg-garden.st-farm-page .st-wallet{order:2!important;}
+
+                /* .st-garden-grid dibuka supaya Plot bisa naik sendiri,
+                   sementara misi/boost tetap di bawah kartu utama */
+                #pg-garden.st-farm-page .st-garden-grid{
+                    display:contents!important;
+                }
+                #pg-garden.st-farm-page .st-plot-card{
+                    order:3!important;
+                    margin:0 0 10px!important;
+                    padding:10px!important;
+                    border-radius:20px!important;
+                }
+                #pg-garden.st-farm-page .st-main-card{
+                    order:4!important;
+                    margin-bottom:10px!important;
+                }
+                #pg-garden.st-farm-page .st-side-stack{
+                    order:5!important;
+                    margin-bottom:10px!important;
+                }
+                #pg-garden.st-farm-page .st-history{order:6!important;}
+
+                /* Plot dibuat satu baris horizontal, bukan 2 baris vertikal */
+                #pg-garden.st-farm-page .st-plot-card .st-card-head{
+                    flex-direction:row!important;
+                    align-items:center!important;
+                    gap:8px!important;
+                    margin-bottom:8px!important;
+                }
+                #pg-garden.st-farm-page .st-plot-card .st-card-head span{
+                    display:none!important;
+                }
+                #pg-garden.st-farm-page .st-plot-card #st-claim-water{
+                    width:auto!important;
+                    min-height:32px!important;
+                    padding:0 9px!important;
+                    font-size:9px!important;
+                    border-radius:12px!important;
+                    flex-shrink:0!important;
+                }
+                #pg-garden.st-farm-page .st-plots{
+                    display:flex!important;
+                    grid-template-columns:none!important;
+                    overflow-x:auto!important;
+                    overflow-y:hidden!important;
+                    gap:8px!important;
+                    padding:1px 1px 4px!important;
+                    scroll-snap-type:x proximity;
+                    -webkit-overflow-scrolling:touch;
+                    scrollbar-width:none;
+                }
+                #pg-garden.st-farm-page .st-plots::-webkit-scrollbar{
+                    display:none!important;
+                }
+                #pg-garden.st-farm-page .st-plot-btn{
+                    flex:0 0 108px!important;
+                    width:108px!important;
+                    min-width:108px!important;
+                    min-height:104px!important;
+                    padding:8px 6px!important;
+                    border-radius:16px!important;
+                    scroll-snap-align:start;
+                }
+                #pg-garden.st-farm-page .st-plot-art{
+                    height:56px!important;
+                    margin:14px 0 2px!important;
+                }
+                #pg-garden.st-farm-page .st-plot-base{
+                    width:56px!important;
+                }
+                #pg-garden.st-farm-page .st-plot-plant{
+                    max-width:46px!important;
+                    max-height:52px!important;
+                }
+                #pg-garden.st-farm-page .st-plot-badge{
+                    height:18px!important;
+                    min-width:38px!important;
+                    font-size:7px!important;
+                }
+                #pg-garden.st-farm-page .st-plot-label{
+                    font-size:9px!important;
+                }
+                #pg-garden.st-farm-page .st-plot-name{
+                    font-size:8px!important;
+                }
+                #pg-garden.st-farm-page .st-plot-bar{
+                    height:4px!important;
+                    width:86%!important;
+                }
+            }
+
         </style>
     </head>
     <body class="auth-lock">
