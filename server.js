@@ -2025,6 +2025,9 @@ const APP_VIEWS = {
   '/assist.html': 'assist',
   '/chat': 'assist',
 
+  '/friends': 'friends',
+  '/friends.html': 'friends',
+
   '/account': 'account',
   '/account.html': 'account'
 };
