@@ -162,6 +162,80 @@ async function initDb() {
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_friendships_addressee ON friendships(addressee_id);`);
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_friendships_status ON friendships(status);`);
 
+  await pool.query(`ALTER TABLE friendships ADD COLUMN IF NOT EXISTS support_count INT NOT NULL DEFAULT 0;`);
+  await pool.query(`ALTER TABLE friendships ADD COLUMN IF NOT EXISTS friend_xp INT NOT NULL DEFAULT 0;`);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS notifications (
+      id BIGSERIAL PRIMARY KEY,
+      user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      type VARCHAR(40) NOT NULL DEFAULT 'info',
+      title VARCHAR(120) NOT NULL,
+      body TEXT NOT NULL DEFAULT '',
+      data JSONB NOT NULL DEFAULT '{}'::jsonb,
+      is_read BOOLEAN NOT NULL DEFAULT FALSE,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_notifications_user_created ON notifications(user_id, created_at DESC);`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_notifications_unread ON notifications(user_id, is_read);`);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS friend_supports (
+      id BIGSERIAL PRIMARY KEY,
+      friendship_id BIGINT NOT NULL REFERENCES friendships(id) ON DELETE CASCADE,
+      sender_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      receiver_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      message VARCHAR(240) NOT NULL,
+      mood VARCHAR(40) NOT NULL DEFAULT 'support',
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      CHECK (sender_id <> receiver_id)
+    );
+  `);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_friend_supports_receiver ON friend_supports(receiver_id, created_at DESC);`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_friend_supports_sender ON friend_supports(sender_id, created_at DESC);`);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS mood_checkins (
+      id BIGSERIAL PRIMARY KEY,
+      user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      mood VARCHAR(40) NOT NULL,
+      intensity INT NOT NULL DEFAULT 3,
+      note VARCHAR(280) NOT NULL DEFAULT '',
+      mood_date DATE NOT NULL DEFAULT CURRENT_DATE,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      CHECK (intensity >= 1 AND intensity <= 5)
+    );
+  `);
+  await pool.query(`CREATE UNIQUE INDEX IF NOT EXISTS idx_mood_checkins_user_date ON mood_checkins(user_id, mood_date);`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_mood_checkins_user_created ON mood_checkins(user_id, created_at DESC);`);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS calm_sessions (
+      id BIGSERIAL PRIMARY KEY,
+      user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      mode VARCHAR(40) NOT NULL DEFAULT 'breathing',
+      duration_seconds INT NOT NULL DEFAULT 60,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_calm_sessions_user_created ON calm_sessions(user_id, created_at DESC);`);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS achievements (
+      id BIGSERIAL PRIMARY KEY,
+      user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      badge_key VARCHAR(80) NOT NULL,
+      title VARCHAR(120) NOT NULL,
+      body TEXT NOT NULL DEFAULT '',
+      unlocked_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      UNIQUE(user_id, badge_key)
+    );
+  `);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_achievements_user_unlocked ON achievements(user_id, unlocked_at DESC);`);
+
+
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);`);
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);`);
 }
@@ -211,9 +285,113 @@ function friendUserToPublic(row) {
     friendshipStatus: row.friendship_status || null,
     relationship: row.relationship || 'none',
     requestedByMe: row.requester_id ? String(row.requester_id) === String(row.current_user_id || '') : false,
-    since: row.friendship_updated_at || row.friendship_created_at || null
+    since: row.friendship_updated_at || row.friendship_created_at || null,
+    friendshipXp: Number(row.friend_xp || 0),
+    supportCount: Number(row.support_count || 0),
+    friendshipLevel: friendshipLevelFromXp(row.friend_xp || 0)
   };
 }
+
+
+function friendshipLevelFromXp(xp = 0) {
+  const n = Math.max(0, Math.floor(Number(xp) || 0));
+  if (n >= 220) return { level: 5, name: 'Support Buddy', icon: '🌳', nextXp: null, progress: 100 };
+  if (n >= 120) return { level: 4, name: 'Teman Baik', icon: '🌿', nextXp: 220, progress: Math.round(((n - 120) / 100) * 100) };
+  if (n >= 55) return { level: 3, name: 'Teman Dekat', icon: '🍃', nextXp: 120, progress: Math.round(((n - 55) / 65) * 100) };
+  if (n >= 20) return { level: 2, name: 'Mulai Nyambung', icon: '🌱', nextXp: 55, progress: Math.round(((n - 20) / 35) * 100) };
+  return { level: 1, name: 'Kenalan Baru', icon: '✨', nextXp: 20, progress: Math.round((n / 20) * 100) };
+}
+
+async function createNotification(userId, type, title, body = '', data = {}) {
+  try {
+    await query(
+      `INSERT INTO notifications (user_id, type, title, body, data, is_read, created_at)
+       VALUES ($1, $2, $3, $4, $5::jsonb, FALSE, NOW())`,
+      [Number(userId), String(type || 'info').slice(0, 40), String(title || 'Notifikasi').slice(0, 120), String(body || '').slice(0, 500), JSON.stringify(data || {})]
+    );
+  } catch (error) {
+    console.warn('Create notification failed:', error.message);
+  }
+}
+
+async function unlockAchievement(userId, badgeKey, title, body = '') {
+  try {
+    const rows = await query(
+      `INSERT INTO achievements (user_id, badge_key, title, body, unlocked_at)
+       VALUES ($1, $2, $3, $4, NOW())
+       ON CONFLICT (user_id, badge_key) DO NOTHING
+       RETURNING id`,
+      [Number(userId), String(badgeKey).slice(0, 80), String(title).slice(0, 120), String(body || '').slice(0, 500)]
+    );
+
+    if (rows.length) {
+      await createNotification(userId, 'achievement', `Badge terbuka: ${title}`, body || 'Achievement baru berhasil kamu buka.', { badgeKey });
+      return true;
+    }
+  } catch (error) {
+    console.warn('Unlock achievement failed:', error.message);
+  }
+  return false;
+}
+
+async function awardAchievements(userId) {
+  const uid = Number(userId);
+  if (!Number.isFinite(uid) || uid <= 0) return;
+
+  try {
+    const [moodRows, supportRows, friendRows, calmRows] = await Promise.all([
+      query(`SELECT COUNT(*)::INT AS total FROM mood_checkins WHERE user_id = $1`, [uid]),
+      query(`SELECT COUNT(*)::INT AS total FROM friend_supports WHERE sender_id = $1`, [uid]),
+      query(`SELECT COUNT(*)::INT AS total FROM friendships WHERE status = 'accepted' AND (requester_id = $1 OR addressee_id = $1)`, [uid]),
+      query(`SELECT COUNT(*)::INT AS total FROM calm_sessions WHERE user_id = $1`, [uid])
+    ]);
+
+    const mood = Number(moodRows[0]?.total || 0);
+    const support = Number(supportRows[0]?.total || 0);
+    const friends = Number(friendRows[0]?.total || 0);
+    const calm = Number(calmRows[0]?.total || 0);
+
+    if (mood >= 1) await unlockAchievement(uid, 'first_mood', 'Mood Pertama', 'Kamu berhasil check-in mood pertama.');
+    if (mood >= 3) await unlockAchievement(uid, 'mood_3', 'Mulai Kenal Diri', 'Kamu sudah check-in mood 3 kali.');
+    if (mood >= 7) await unlockAchievement(uid, 'mood_7', 'Seminggu Menjaga Diri', 'Kamu sudah punya 7 catatan mood.');
+
+    if (support >= 1) await unlockAchievement(uid, 'first_support', 'Sapa Pertama', 'Kamu mengirim dukungan pertama ke teman.');
+    if (support >= 5) await unlockAchievement(uid, 'support_5', 'Supportive Friend', 'Kamu sudah mengirim dukungan 5 kali.');
+
+    if (friends >= 1) await unlockAchievement(uid, 'first_friend', 'Teman Pertama', 'Kamu punya teman pertama di VokaMon.');
+    if (friends >= 5) await unlockAchievement(uid, 'friend_5', 'Circle Kecil', 'Kamu sudah punya 5 teman.');
+
+    if (calm >= 1) await unlockAchievement(uid, 'first_calm', 'Ruang Tenang Pertama', 'Kamu menyelesaikan sesi tenang pertama.');
+    if (calm >= 5) await unlockAchievement(uid, 'calm_5', 'Napas Lebih Pelan', 'Kamu sudah menyelesaikan 5 sesi tenang.');
+  } catch (error) {
+    console.warn('Award achievements failed:', error.message);
+  }
+}
+
+function notificationToPublic(row) {
+  return {
+    id: String(row.id),
+    type: row.type || 'info',
+    title: row.title || 'Notifikasi',
+    body: row.body || '',
+    data: row.data || {},
+    isRead: !!row.is_read,
+    createdAt: row.created_at || null
+  };
+}
+
+function moodPublic(row) {
+  return {
+    id: row.id ? String(row.id) : null,
+    mood: row.mood || 'tenang',
+    intensity: Number(row.intensity || 3),
+    note: row.note || '',
+    date: row.mood_date || null,
+    createdAt: row.created_at || null,
+    updatedAt: row.updated_at || null
+  };
+}
+
 
 function safeLimit(value, fallback = 20, max = 50) {
   const n = Number(value);
@@ -2086,7 +2264,7 @@ app.get('/api/friends/search', requireAuth, async (req, res) => {
       `SELECT
           u.id AS user_id, u.name, u.username, u.bio, u.created_at, u.last_login_at,
           f.id AS friendship_id, f.status AS friendship_status,
-          f.requester_id, f.addressee_id, f.created_at AS friendship_created_at, f.updated_at AS friendship_updated_at,
+          f.requester_id, f.addressee_id, f.support_count, f.friend_xp, f.created_at AS friendship_created_at, f.updated_at AS friendship_updated_at,
           $1::BIGINT AS current_user_id,
           CASE
             WHEN f.id IS NULL OR f.status = 'declined' THEN 'none'
@@ -2123,7 +2301,7 @@ app.get('/api/friends', requireAuth, async (req, res) => {
       `SELECT
           u.id AS user_id, u.name, u.username, u.bio, u.created_at, u.last_login_at,
           f.id AS friendship_id, f.status AS friendship_status,
-          f.requester_id, f.addressee_id, f.created_at AS friendship_created_at, f.updated_at AS friendship_updated_at,
+          f.requester_id, f.addressee_id, f.support_count, f.friend_xp, f.created_at AS friendship_created_at, f.updated_at AS friendship_updated_at,
           $1::BIGINT AS current_user_id,
           CASE
             WHEN f.status = 'accepted' THEN 'friends'
@@ -2172,7 +2350,7 @@ app.get('/api/friends/profile/:profileKey', requireAuth, async (req, res) => {
       `SELECT
           u.id AS user_id, u.name, u.username, u.bio, u.created_at, u.last_login_at,
           f.id AS friendship_id, f.status AS friendship_status,
-          f.requester_id, f.addressee_id, f.created_at AS friendship_created_at, f.updated_at AS friendship_updated_at,
+          f.requester_id, f.addressee_id, f.support_count, f.friend_xp, f.created_at AS friendship_created_at, f.updated_at AS friendship_updated_at,
           $1::BIGINT AS current_user_id,
           CASE
             WHEN u.id = $1 THEN 'self'
@@ -2241,12 +2419,16 @@ app.post('/api/friends/request', requireAuth, async (req, res) => {
       if (existing.status === 'pending' && Number(existing.requester_id) === me) return res.status(409).json({ ok: false, error: 'Request sudah dikirim.' });
       if (existing.status === 'pending' && Number(existing.addressee_id) === me) {
         await query(`UPDATE friendships SET status = 'accepted', updated_at = NOW() WHERE id = $1`, [existing.id]);
+        await createNotification(targetId, 'friend_accept', 'Request teman diterima', `${req.user.name || 'Teman'} menerima request pertemananmu.`, { friendUserId: me });
+        await awardAchievements(me);
+        await awardAchievements(targetId);
         return res.json({ ok: true, message: 'Request diterima. Kalian sekarang berteman.' });
       }
       await query(
         `UPDATE friendships SET requester_id = $1, addressee_id = $2, status = 'pending', updated_at = NOW() WHERE id = $3`,
         [me, targetId, existing.id]
       );
+      await createNotification(targetId, 'friend_request', 'Request teman baru', `${req.user.name || 'Seseorang'} ingin berteman denganmu.`, { fromUserId: me });
       return res.json({ ok: true, message: 'Request teman dikirim.' });
     }
 
@@ -2256,6 +2438,7 @@ app.post('/api/friends/request', requireAuth, async (req, res) => {
       [me, targetId]
     );
 
+    await createNotification(targetId, 'friend_request', 'Request teman baru', `${req.user.name || 'Seseorang'} ingin berteman denganmu.`, { fromUserId: me });
     res.status(201).json({ ok: true, message: 'Request teman dikirim.' });
   } catch (error) {
     console.error('Friend request error:', error);
@@ -2278,6 +2461,14 @@ app.post('/api/friends/:id/accept', requireAuth, async (req, res) => {
     );
 
     if (!rows.length) return res.status(404).json({ ok: false, error: 'Request tidak ditemukan atau sudah diproses.' });
+
+    const requesterRows = await query(`SELECT requester_id FROM friendships WHERE id = $1 LIMIT 1`, [friendshipId]);
+    const requesterId = Number(requesterRows[0]?.requester_id || 0);
+    if (requesterId) {
+      await createNotification(requesterId, 'friend_accept', 'Request teman diterima', `${req.user.name || 'Teman'} menerima request pertemananmu.`, { friendUserId: me });
+      await awardAchievements(requesterId);
+    }
+    await awardAchievements(me);
     res.json({ ok: true, message: 'Request diterima.' });
   } catch (error) {
     console.error('Friend accept error:', error);
@@ -2329,6 +2520,257 @@ app.delete('/api/friends/:id', requireAuth, async (req, res) => {
 
 
 
+
+
+/* ═══════ SOCIAL HEALING FEATURES: NOTIFICATIONS, SUPPORT, MOOD, CALM, ACHIEVEMENTS ═══════ */
+
+app.get('/api/notifications', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const limit = safeLimit(req.query.limit, 30, 80);
+    const rows = await query(
+      `SELECT id, type, title, body, data, is_read, created_at
+       FROM notifications
+       WHERE user_id = $1
+       ORDER BY created_at DESC
+       LIMIT $2`,
+      [me, limit]
+    );
+    const unreadRows = await query(`SELECT COUNT(*)::INT AS total FROM notifications WHERE user_id = $1 AND is_read = FALSE`, [me]);
+    res.json({ ok: true, unread: Number(unreadRows[0]?.total || 0), notifications: rows.map(notificationToPublic) });
+  } catch (error) {
+    console.error('Notifications list error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat notifikasi.' });
+  }
+});
+
+app.post('/api/notifications/:id/read', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id) || id <= 0) return res.status(400).json({ ok: false, error: 'Notifikasi tidak valid.' });
+    await query(`UPDATE notifications SET is_read = TRUE WHERE id = $1 AND user_id = $2`, [id, me]);
+    res.json({ ok: true });
+  } catch (error) {
+    console.error('Notification read error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal menandai notifikasi.' });
+  }
+});
+
+app.post('/api/notifications/read-all', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    await query(`UPDATE notifications SET is_read = TRUE WHERE user_id = $1 AND is_read = FALSE`, [me]);
+    res.json({ ok: true });
+  } catch (error) {
+    console.error('Notification read all error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal menandai semua notifikasi.' });
+  }
+});
+
+app.post('/api/mood/checkin', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const allowed = ['senang','tenang','sedih','marah','galau','stres','capek','kosong','overthinking'];
+    const mood = String(req.body.mood || 'tenang').toLowerCase().trim();
+    const safeMood = allowed.includes(mood) ? mood : 'tenang';
+    const intensity = Math.max(1, Math.min(5, Math.floor(Number(req.body.intensity || 3))));
+    const note = String(req.body.note || '').trim().slice(0, 280);
+
+    const rows = await query(
+      `INSERT INTO mood_checkins (user_id, mood, intensity, note, mood_date, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, CURRENT_DATE, NOW(), NOW())
+       ON CONFLICT (user_id, mood_date)
+       DO UPDATE SET mood = EXCLUDED.mood, intensity = EXCLUDED.intensity, note = EXCLUDED.note, updated_at = NOW()
+       RETURNING *`,
+      [me, safeMood, intensity, note]
+    );
+
+    await createNotification(me, 'mood', 'Mood check-in tersimpan', `Hari ini kamu mencatat mood: ${safeMood}.`, { mood: safeMood, intensity });
+    await awardAchievements(me);
+
+    res.json({ ok: true, checkin: moodPublic(rows[0]) });
+  } catch (error) {
+    console.error('Mood checkin error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal menyimpan mood check-in.' });
+  }
+});
+
+app.get('/api/mood/summary', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const rows = await query(
+      `SELECT id, mood, intensity, note, mood_date, created_at, updated_at
+       FROM mood_checkins
+       WHERE user_id = $1
+       ORDER BY mood_date DESC
+       LIMIT 30`,
+      [me]
+    );
+
+    const todayRows = await query(
+      `SELECT id, mood, intensity, note, mood_date, created_at, updated_at
+       FROM mood_checkins
+       WHERE user_id = $1 AND mood_date = CURRENT_DATE
+       LIMIT 1`,
+      [me]
+    );
+
+    const countRows = await query(
+      `SELECT mood, COUNT(*)::INT AS total, ROUND(AVG(intensity)::numeric, 1) AS avg_intensity
+       FROM mood_checkins
+       WHERE user_id = $1
+       GROUP BY mood
+       ORDER BY total DESC, avg_intensity DESC`,
+      [me]
+    );
+
+    const dates = rows.map((r) => String(r.mood_date).slice(0, 10));
+    let streak = 0;
+    const set = new Set(dates);
+    const d = new Date();
+    for (let i = 0; i < 60; i++) {
+      const key = d.toISOString().slice(0, 10);
+      if (set.has(key)) {
+        streak += 1;
+        d.setDate(d.getDate() - 1);
+      } else {
+        break;
+      }
+    }
+
+    res.json({
+      ok: true,
+      today: todayRows[0] ? moodPublic(todayRows[0]) : null,
+      recent: rows.map(moodPublic),
+      counts: countRows.map((r) => ({ mood: r.mood, total: Number(r.total || 0), avgIntensity: Number(r.avg_intensity || 0) })),
+      dominant: countRows[0] ? countRows[0].mood : null,
+      streak
+    });
+  } catch (error) {
+    console.error('Mood summary error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat profil emosi.' });
+  }
+});
+
+app.post('/api/friends/support', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const targetId = Number(req.body.userId);
+    const message = String(req.body.message || 'Aku dukung kamu 🌱').trim().slice(0, 240);
+    const mood = String(req.body.mood || 'support').trim().toLowerCase().slice(0, 40);
+
+    if (!Number.isFinite(targetId) || targetId <= 0 || targetId === me) {
+      return res.status(400).json({ ok: false, error: 'Teman tujuan tidak valid.' });
+    }
+
+    const friendshipRows = await query(
+      `SELECT id, requester_id, addressee_id, friend_xp, support_count
+       FROM friendships
+       WHERE status = 'accepted'
+         AND ((requester_id = $1 AND addressee_id = $2) OR (requester_id = $2 AND addressee_id = $1))
+       LIMIT 1`,
+      [me, targetId]
+    );
+
+    if (!friendshipRows.length) {
+      return res.status(403).json({ ok: false, error: 'Kamu hanya bisa kirim dukungan ke teman yang sudah accepted.' });
+    }
+
+    const friendship = friendshipRows[0];
+    await query(
+      `INSERT INTO friend_supports (friendship_id, sender_id, receiver_id, message, mood, created_at)
+       VALUES ($1, $2, $3, $4, $5, NOW())`,
+      [friendship.id, me, targetId, message, mood]
+    );
+
+    const updatedRows = await query(
+      `UPDATE friendships
+       SET support_count = support_count + 1, friend_xp = friend_xp + 12, updated_at = NOW()
+       WHERE id = $1
+       RETURNING friend_xp, support_count`,
+      [friendship.id]
+    );
+
+    await createNotification(targetId, 'support', 'Dukungan dari teman', `${req.user.name || 'Teman'} mengirim dukungan: "${message}"`, { fromUserId: me, friendshipId: friendship.id, mood });
+    await createNotification(me, 'support_sent', 'Dukungan terkirim', 'Kamu baru saja mengirim dukungan ke temanmu.', { toUserId: targetId, friendshipId: friendship.id });
+    await awardAchievements(me);
+
+    const xp = Number(updatedRows[0]?.friend_xp || 0);
+    res.json({ ok: true, message: 'Dukungan terkirim.', friendship: { xp, supportCount: Number(updatedRows[0]?.support_count || 0), level: friendshipLevelFromXp(xp) } });
+  } catch (error) {
+    console.error('Friend support error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal mengirim dukungan.' });
+  }
+});
+
+app.post('/api/calm/complete', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const mode = String(req.body.mode || 'breathing').trim().toLowerCase().slice(0, 40);
+    const duration = Math.max(20, Math.min(900, Math.floor(Number(req.body.durationSeconds || 60))));
+
+    await query(
+      `INSERT INTO calm_sessions (user_id, mode, duration_seconds, created_at)
+       VALUES ($1, $2, $3, NOW())`,
+      [me, mode, duration]
+    );
+
+    await createNotification(me, 'calm', 'Sesi Ruang Tenang selesai', `Kamu menyelesaikan sesi ${duration} detik.`, { mode, durationSeconds: duration });
+    await awardAchievements(me);
+
+    res.json({ ok: true, message: 'Sesi tenang tersimpan.' });
+  } catch (error) {
+    console.error('Calm complete error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal menyimpan sesi tenang.' });
+  }
+});
+
+app.get('/api/calm/stats', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const rows = await query(
+      `SELECT COUNT(*)::INT AS total, COALESCE(SUM(duration_seconds),0)::INT AS seconds
+       FROM calm_sessions
+       WHERE user_id = $1`,
+      [me]
+    );
+    res.json({ ok: true, total: Number(rows[0]?.total || 0), seconds: Number(rows[0]?.seconds || 0) });
+  } catch (error) {
+    console.error('Calm stats error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat statistik ruang tenang.' });
+  }
+});
+
+app.get('/api/achievements', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    await awardAchievements(me);
+    const rows = await query(
+      `SELECT id, badge_key, title, body, unlocked_at
+       FROM achievements
+       WHERE user_id = $1
+       ORDER BY unlocked_at DESC`,
+      [me]
+    );
+    res.json({
+      ok: true,
+      achievements: rows.map((r) => ({
+        id: String(r.id),
+        key: r.badge_key,
+        title: r.title,
+        body: r.body || '',
+        unlockedAt: r.unlocked_at || null
+      }))
+    });
+  } catch (error) {
+    console.error('Achievements error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat achievement.' });
+  }
+});
+
+
+
 const APP_VIEWS = {
   '/': 'home',
   '/home': 'home',
@@ -2355,6 +2797,18 @@ const APP_VIEWS = {
 
   '/friends': 'friends',
   '/friends.html': 'friends',
+
+  '/notifications': 'notifications',
+  '/notifications.html': 'notifications',
+
+  '/mood': 'mood',
+  '/mood.html': 'mood',
+
+  '/calm': 'calm',
+  '/calm.html': 'calm',
+
+  '/achievements': 'achievements',
+  '/achievements.html': 'achievements',
 
   '/account': 'account',
   '/account.html': 'account'
