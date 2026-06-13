@@ -4150,6 +4150,243 @@
 .friend-btn.danger{color:#b42318;border-color:#ffd1cc;background:#fff7f6}.friend-btn[disabled]{opacity:.65;cursor:not-allowed}
 @media(max-width:599px){.friend-tabs{border-radius:18px}.friend-tab{min-height:44px;font-size:12px;padding:0 12px}.friend-card-actions{display:grid;grid-template-columns:1fr 1fr}.friend-btn{min-height:44px}}
 
+
+
+            #pg-profile{gap:12px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding-bottom:calc(var(--nav-h) + var(--s-b) + 18px)}
+            .profile-page-shell{max-width:560px;margin:0 auto;width:100%}
+            .profile-page-card{width:100%;max-height:none;overflow:visible}
+
+            /* ===== Friend realtime + public profile modal ===== */
+            .friend-nav-badge{
+                position:absolute;
+                top:3px;
+                right:8px;
+                min-width:18px;
+                height:18px;
+                padding:0 5px;
+                border-radius:999px;
+                background:#ef4444;
+                color:#fff;
+                border:2px solid rgba(255,255,255,.95);
+                font-style:normal;
+                font-size:10px;
+                font-weight:900;
+                line-height:14px;
+                display:none;
+                place-items:center;
+                box-shadow:0 6px 12px rgba(239,68,68,.24);
+            }
+            .friend-nav-badge.show{display:grid}
+            .friend-realtime-pill{
+                display:inline-flex;
+                align-items:center;
+                gap:7px;
+                margin-left:8px;
+                padding:6px 9px;
+                border-radius:999px;
+                background:#f0fdf4;
+                border:1px solid #bbf7d0;
+                color:#15803d;
+                font-size:10px;
+                font-weight:900;
+                white-space:nowrap;
+            }
+            .friend-realtime-pill::before{
+                content:'';
+                width:7px;
+                height:7px;
+                border-radius:50%;
+                background:#22c55e;
+                box-shadow:0 0 0 4px rgba(34,197,94,.13);
+            }
+
+            .friend-live-row{
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:10px;
+                color:#74819b;
+                font-size:11px;
+                font-weight:800;
+                margin:-2px 2px 2px;
+                flex-wrap:wrap;
+            }
+            .friend-profile-link{
+                margin-top:6px;
+                width:max-content;
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                color:#4268df;
+                font-size:11px;
+                font-weight:900;
+                background:#eef5ff;
+                border:1px solid #dbe8ff;
+                border-radius:999px;
+                padding:6px 9px;
+            }
+
+            .friend-profile-modal{
+                position:fixed;
+                inset:0;
+                z-index:950;
+                display:none;
+                align-items:center;
+                justify-content:center;
+                padding:18px;
+            }
+            .friend-profile-modal.show{display:flex}
+            .friend-profile-backdrop{
+                position:absolute;
+                inset:0;
+                background:rgba(12,20,34,.38);
+                -webkit-backdrop-filter:blur(12px);
+                backdrop-filter:blur(12px);
+            }
+            .friend-profile-card{
+                position:relative;
+                width:min(430px,100%);
+                max-height:calc(100dvh - 36px);
+                overflow:auto;
+                border-radius:30px;
+                background:linear-gradient(180deg,#fff,#f8fbff);
+                border:1px solid rgba(255,255,255,.9);
+                box-shadow:0 28px 90px rgba(15,23,42,.24);
+                animation:friendProfileIn .18s ease-out both;
+            }
+            @keyframes friendProfileIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+            .friend-profile-close{
+                position:absolute;
+                top:12px;
+                right:12px;
+                z-index:3;
+                width:38px;
+                height:38px;
+                border-radius:14px;
+                display:grid;
+                place-items:center;
+                background:rgba(255,255,255,.85);
+                border:1px solid rgba(226,232,240,.9);
+                color:#55627d;
+                box-shadow:0 10px 24px rgba(34,42,66,.10);
+            }
+            .friend-profile-cover{
+                min-height:148px;
+                display:grid;
+                place-items:center;
+                background:
+                    radial-gradient(circle at 30% 15%,rgba(255,255,255,.8),transparent 120px),
+                    linear-gradient(135deg,#fff4e7,#ecfff5 52%,#eef5ff);
+                border-radius:30px 30px 22px 22px;
+            }
+            .friend-profile-cover img{
+                width:122px;
+                height:122px;
+                object-fit:contain;
+                filter:drop-shadow(0 14px 24px rgba(79,101,82,.20));
+            }
+            .friend-profile-body{padding:18px}
+            .friend-profile-kicker{
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:7px 10px;
+                border-radius:999px;
+                background:#f3f7ff;
+                border:1px solid #e1eaff;
+                color:#52699b;
+                font-size:11px;
+                font-weight:900;
+                margin-bottom:10px;
+            }
+            .friend-profile-body h2{
+                margin:0;
+                color:#182641;
+                font-size:26px;
+                line-height:1.12;
+            }
+            .friend-profile-body > span{
+                display:block;
+                margin-top:5px;
+                color:#6a7793;
+                font-size:13px;
+                font-weight:800;
+            }
+            .friend-profile-body p{
+                margin:13px 0 0;
+                color:#516078;
+                font-size:14px;
+                line-height:1.75;
+            }
+            .friend-profile-stats{
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:10px;
+                margin-top:14px;
+            }
+            .friend-profile-stats div{
+                padding:12px;
+                border-radius:18px;
+                background:#fff;
+                border:1px solid #e7eefc;
+                box-shadow:0 10px 22px rgba(84,106,160,.06);
+            }
+            .friend-profile-stats strong{
+                display:block;
+                color:#1b2c4c;
+                font-size:20px;
+                line-height:1;
+            }
+            .friend-profile-stats span{
+                display:block;
+                margin-top:6px;
+                color:#71809e;
+                font-size:11px;
+                font-weight:800;
+            }
+            .friend-profile-actions{
+                display:flex;
+                gap:8px;
+                margin-top:14px;
+            }
+            @media(max-width:599px){
+                .friend-nav-badge{top:4px;right:7px}
+                .friend-realtime-pill{display:flex;margin:8px 0 0;width:max-content}
+    
+            .friend-live-row{
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:10px;
+                color:#74819b;
+                font-size:11px;
+                font-weight:800;
+                margin:-2px 2px 2px;
+                flex-wrap:wrap;
+            }
+            .friend-profile-link{
+                margin-top:6px;
+                width:max-content;
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                color:#4268df;
+                font-size:11px;
+                font-weight:900;
+                background:#eef5ff;
+                border:1px solid #dbe8ff;
+                border-radius:999px;
+                padding:6px 9px;
+            }
+
+            .friend-profile-modal{padding:12px;align-items:flex-end}
+                .friend-profile-card{border-radius:26px;max-height:calc(100dvh - 24px)}
+                .friend-profile-cover{min-height:132px;border-radius:26px 26px 20px 20px}
+                .friend-profile-cover img{width:108px;height:108px}
+                .friend-profile-body h2{font-size:24px}
+                .friend-profile-actions{display:grid;grid-template-columns:1fr 1fr}
+            }
+
         </style>
     </head>
     <body class="auth-lock">
@@ -4169,6 +4406,28 @@
         </div>
 
         <div id="toast" role="alert" aria-live="polite"></div>
+
+        <div id="friend-profile-modal" class="friend-profile-modal" aria-hidden="true">
+            <div class="friend-profile-backdrop" data-friend-profile-close></div>
+            <article class="friend-profile-card" role="dialog" aria-modal="true" aria-label="Profil pengguna">
+                <button class="friend-profile-close" type="button" data-friend-profile-close aria-label="Tutup profil"><i class="fas fa-xmark"></i></button>
+                <div class="friend-profile-cover">
+                    <img id="friend-profile-avatar" src="/assets/nav/sfriends.png" alt="">
+                </div>
+                <div class="friend-profile-body">
+                    <div class="friend-profile-kicker" id="friend-profile-status">Memuat profil...</div>
+                    <h2 id="friend-profile-name">Profil</h2>
+                    <span id="friend-profile-username">@username</span>
+                    <p id="friend-profile-bio">Memuat bio...</p>
+                    <div class="friend-profile-stats">
+                        <div><strong id="friend-profile-friends">0</strong><span>Teman</span></div>
+                        <div><strong id="friend-profile-joined">-</strong><span>Bergabung</span></div>
+                    </div>
+                    <div class="friend-profile-actions" id="friend-profile-actions"></div>
+                </div>
+            </article>
+        </div>
+
 
         <div id="auth-screen" class="hide" role="dialog" aria-modal="true" aria-label="Masuk VokaMon">
             <div class="auth-card">
@@ -4753,6 +5012,10 @@
             <button class="friend-tab" type="button" data-friend-view="outgoing">Terkirim <span id="friend-outgoing-badge">0</span></button>
             <button class="friend-tab" type="button" data-friend-view="friends">Temanku <span id="friend-total-badge">0</span></button>
         </div>
+        <div class="friend-live-row">
+            <span class="friend-realtime-pill" id="friend-live-status">Auto update aktif</span>
+            <span id="friend-last-sync">Data akan dicek otomatis.</span>
+        </div>
 
         <div class="friend-panel active" data-friend-panel="discover">
             <div class="friend-search-card">
@@ -4804,6 +5067,36 @@
         </div>
     </div>
 </section>
+
+
+                <!-- PUBLIC PROFILE -->
+                <section id="pg-profile" class="<%= pageId === 'pg-profile' ? 'pg on' : 'pg' %>" aria-label="Profil User">
+                    <div class="ph">
+                        <div>
+                            <h1 class="pt">Lihat Profil</h1>
+                            <p class="ps">Kepoin profil dulu sebelum add pertemanan.</p>
+                        </div>
+                        <button class="friend-btn" type="button" data-page="pg-friends" style="max-width:130px">Cari Teman</button>
+                    </div>
+                    <div class="profile-page-shell">
+                        <article class="friend-profile-card profile-page-card">
+                            <div class="friend-profile-cover">
+                                <img id="friend-page-avatar" src="/assets/nav/sfriends.png" alt="">
+                            </div>
+                            <div class="friend-profile-body">
+                                <div class="friend-profile-kicker" id="friend-page-status">Memuat profil...</div>
+                                <h2 id="friend-page-name">Profil</h2>
+                                <span id="friend-page-username">@username</span>
+                                <p id="friend-page-bio">Data profil sedang dimuat.</p>
+                                <div class="friend-profile-stats">
+                                    <div><strong id="friend-page-friends">0</strong><span>Teman</span></div>
+                                    <div><strong id="friend-page-joined">-</strong><span>Bergabung</span></div>
+                                </div>
+                                <div class="friend-profile-actions" id="friend-page-actions"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
 
                 <!-- REDEEM -->
                 <section id="pg-redeem" class="<%= pageId === 'pg-redeem' ? 'pg on' : 'pg' %>" aria-label="Redeem">
@@ -4979,7 +5272,7 @@
 
         <nav id="bnav" aria-label="Navigasi">
             <button class="<%= pageId === 'pg-home' ? 'nb on' : 'nb' %>" data-page="pg-home"><img class="nav-img" src="/assets/nav/home.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Beranda</span></button>
-            <button class="<%= pageId === 'pg-friends' ? 'nb on' : 'nb' %>" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Cari Teman</span></button>
+            <button class="<%= pageId === 'pg-friends' ? 'nb on' : 'nb' %>" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Cari Teman</span><em class="friend-nav-badge" id="friend-nav-badge">0</em></button>
             <button class="<%= pageId === 'pg-garden' ? 'nb on' : 'nb' %>" data-page="pg-garden"><img class="nav-img" src="/assets/nav/garden.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Kebun</span></button>
             <button class="<%= pageId === 'pg-vent' ? 'nb on' : 'nb' %>" data-page="pg-vent"><img class="nav-img" src="/assets/nav/vent.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Voice</span></button>
             <!---<button class="<%= pageId === 'pg-art' ? 'nb on' : 'nb' %>" data-page="pg-art"><img class="nav-img" src="/assets/nav/art.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Art</span></button>-->
@@ -4991,6 +5284,7 @@
 
         <script>
             window.__VKM_PAGE_ID="<%= pageId %>";
+            window.__VKM_PROFILE_USER_ID="<%= typeof profileUserId !== 'undefined' ? profileUserId : '' %>";
             
 
             var PAGE_LOADER_MIN_MS=5000;
@@ -5336,6 +5630,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 "pg-vent":"/vent",
                 "pg-art":"/art",
                 "pg-friends":"/friends",
+                "pg-profile":"/profile/"+(window.__VKM_PROFILE_USER_ID||""),
                 "pg-redeem":"/redeem",
                 "pg-assist":"/chat",
                 "pg-account":"/account"
@@ -6585,7 +6880,24 @@ var gardenBusy=false;
             setInterval(function(){renderPetWorker()},30000);
 
 
-var friendState={view:'discover',filter:'all',query:'',search:[],friends:[],incoming:[],outgoing:[],loading:false,searchTimer:null,ready:false};
+var friendState={
+    view:'discover',
+    filter:'all',
+    query:'',
+    search:[],
+    friends:[],
+    incoming:[],
+    outgoing:[],
+    loading:false,
+    searchTimer:null,
+    pollTimer:null,
+    pollMs:8000,
+    ready:false,
+    summaryLoaded:false,
+    profile:null,
+    profileStats:null,
+    profileOpen:false
+};
 function friendEsc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
 function friendAvatarFor(user){
     var u=String(user&&user.username||'').toLowerCase();
@@ -6595,24 +6907,44 @@ function friendAvatarFor(user){
     if(u.length%5===3)return '/assets/nav/chat.png';
     return '/assets/nav/sfriends.png';
 }
+function friendStatusText(rel){
+    if(rel==='self')return 'Ini profil kamu';
+    if(rel==='friends')return 'Sudah berteman';
+    if(rel==='outgoing_pending')return 'Request menunggu';
+    if(rel==='incoming_pending')return 'Request masuk';
+    if(rel==='blocked')return 'Diblokir';
+    return 'Belum berteman';
+}
 function friendStatusLabel(rel){
+    if(rel==='self')return '<span class="friend-status ok"><i class="fas fa-user-check"></i> Profil kamu</span>';
     if(rel==='friends')return '<span class="friend-status ok"><i class="fas fa-check"></i> Sudah teman</span>';
     if(rel==='outgoing_pending')return '<span class="friend-status warn"><i class="fas fa-clock"></i> Menunggu</span>';
     if(rel==='incoming_pending')return '<span class="friend-status in"><i class="fas fa-inbox"></i> Request masuk</span>';
     return '<span class="friend-status"><i class="fas fa-user-plus"></i> Belum berteman</span>';
 }
 function friendActions(user,mode){
-    var id=friendEsc(user.id),fid=friendEsc(user.friendshipId||'');
-    if(mode==='incoming'||user.relationship==='incoming_pending'){
+    var id=friendEsc(user.id),fid=friendEsc(user.friendshipId||''),rel=user.relationship||'none';
+    if(rel==='self'){
+        return '<button class="friend-btn" type="button" disabled>Ini akunmu</button>';
+    }
+    if(mode==='incoming'||rel==='incoming_pending'){
         return '<button class="friend-btn primary" type="button" data-friend-action="accept" data-friendship-id="'+fid+'">Terima</button><button class="friend-btn danger" type="button" data-friend-action="decline" data-friendship-id="'+fid+'">Tolak</button>';
     }
-    if(user.relationship==='friends'){
-        return '<button class="friend-btn primary" type="button" data-friend-action="profile" data-user-name="'+friendEsc(user.name)+'" data-user-bio="'+friendEsc(user.bio)+'">Profil</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Hapus</button>';
+    if(rel==='friends'){
+        return '<button class="friend-btn primary" type="button" data-friend-action="profile" data-user-id="'+id+'">Lihat profil</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Hapus</button>';
     }
-    if(user.relationship==='outgoing_pending'){
+    if(rel==='outgoing_pending'){
         return '<button class="friend-btn" type="button" disabled>Request terkirim</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Batalkan</button>';
     }
-    return '<button class="friend-btn primary" type="button" data-friend-action="request" data-user-id="'+id+'">Tambah teman</button><button class="friend-btn" type="button" data-friend-action="profile" data-user-name="'+friendEsc(user.name)+'" data-user-bio="'+friendEsc(user.bio)+'">Profil</button>';
+    return '<button class="friend-btn primary" type="button" data-friend-action="request" data-user-id="'+id+'">Tambah teman</button><button class="friend-btn" type="button" data-friend-action="profile" data-user-id="'+id+'">Profil dulu</button>';
+}
+function friendModalActions(user){
+    var id=friendEsc(user.id),fid=friendEsc(user.friendshipId||''),rel=user.relationship||'none';
+    if(rel==='self')return '<button class="friend-btn" type="button" disabled>Ini profil kamu</button>';
+    if(rel==='incoming_pending')return '<button class="friend-btn primary" type="button" data-friend-action="accept" data-friendship-id="'+fid+'">Terima request</button><button class="friend-btn danger" type="button" data-friend-action="decline" data-friendship-id="'+fid+'">Tolak</button>';
+    if(rel==='friends')return '<button class="friend-btn primary" type="button" disabled>Sudah berteman</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Hapus teman</button>';
+    if(rel==='outgoing_pending')return '<button class="friend-btn" type="button" disabled>Menunggu diterima</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Batalkan request</button>';
+    return '<button class="friend-btn primary" type="button" data-friend-action="request" data-user-id="'+id+'">Tambah teman</button><button class="friend-btn" type="button" data-friend-profile-close>Tutup</button>';
 }
 function friendCard(user,mode){
     var tags=[];
@@ -6620,7 +6952,7 @@ function friendCard(user,mode){
     ['healing','gaming','musik','desain','curhat'].forEach(function(t){if(bio.indexOf(t)>-1)tags.push(t.charAt(0).toUpperCase()+t.slice(1));});
     if(!tags.length)tags=['VokaMon','Supportive'];
     return '<article class="friend-card" data-user-id="'+friendEsc(user.id)+'">'+
-        '<div class="friend-card-head"><div class="friend-avatar"><img src="'+friendAvatarFor(user)+'" alt=""></div><div class="friend-meta"><strong>'+friendEsc(user.name)+'</strong><span>'+friendEsc(user.username)+' · '+(user.lastLoginAt?'Pernah login':'User baru')+'</span></div></div>'+
+        '<div class="friend-card-head"><div class="friend-avatar"><img src="'+friendAvatarFor(user)+'" alt=""></div><div class="friend-meta"><strong>'+friendEsc(user.name)+'</strong><span>'+friendEsc(user.username)+' · '+(user.lastLoginAt?'Pernah login':'User baru')+'</span><button class="friend-profile-link" type="button" data-friend-action="profile" data-user-id="'+friendEsc(user.id)+'"><i class="fas fa-eye"></i> Lihat profil</button></div></div>'+
         '<div class="friend-tags">'+tags.slice(0,3).map(function(t){return '<span>'+friendEsc(t)+'</span>'}).join('')+'</div>'+
         '<p class="friend-bio">'+friendEsc(user.bio||'Belum menulis bio.')+'</p>'+friendStatusLabel(user.relationship)+
         '<div class="friend-card-actions">'+friendActions(user,mode)+'</div>'+
@@ -6633,17 +6965,29 @@ function setFriendView(view){
     renderFriendFinder();
 }
 function updateFriendBadges(){
-    var ib=document.getElementById('friend-incoming-badge'),ob=document.getElementById('friend-outgoing-badge'),tb=document.getElementById('friend-total-badge');
-    if(ib)ib.textContent=friendState.incoming.length;
-    if(ob)ob.textContent=friendState.outgoing.length;
-    if(tb)tb.textContent=friendState.friends.length;
+    var ib=document.getElementById('friend-incoming-badge'),ob=document.getElementById('friend-outgoing-badge'),tb=document.getElementById('friend-total-badge'),nb=document.getElementById('friend-nav-badge');
+    var incoming=friendState.incoming.length,outgoing=friendState.outgoing.length,total=friendState.friends.length;
+    if(ib)ib.textContent=incoming;
+    if(ob)ob.textContent=outgoing;
+    if(tb)tb.textContent=total;
+    if(nb){
+        nb.textContent=incoming>99?'99+':incoming;
+        nb.classList.toggle('show',incoming>0);
+    }
+}
+function setFriendLastSync(){
+    var el=document.getElementById('friend-last-sync');
+    if(!el)return;
+    var now=new Date();
+    el.textContent='Terakhir dicek '+now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
 }
 function renderFriendList(targetId,emptyId,countId,list,mode){
     var grid=document.getElementById(targetId),empty=document.getElementById(emptyId),count=document.getElementById(countId);
     if(!grid)return;
     grid.innerHTML=(list||[]).map(function(u){return friendCard(u,mode)}).join('');
     if(empty)empty.classList.toggle('show',!list||!list.length);
-    if(count)count.textContent=(list?list.length:0)+((list&&list.length===1)?' item':' item');
+    var noun=mode==='friends'?' teman':' request';
+    if(count)count.textContent=(list?list.length:0)+noun;
 }
 function renderFriendFinder(){
     updateFriendBadges();
@@ -6656,8 +7000,10 @@ function renderFriendFinder(){
     renderFriendList('friend-outgoing-grid','friend-outgoing-empty','friend-outgoing-count',friendState.outgoing,'outgoing');
     renderFriendList('friend-list-grid','friend-list-empty','friend-list-count',friendState.friends,'friends');
 }
-async function loadFriendSummary(){
+async function loadFriendSummary(options){
+    options=options||{};
     if(!authToken)return;
+    var previousIncoming=friendState.incoming.length;
     try{
         var r=await apiFetch('/api/friends');
         var d=await r.json();
@@ -6665,51 +7011,189 @@ async function loadFriendSummary(){
         friendState.friends=d.friends||[];
         friendState.incoming=d.incoming||[];
         friendState.outgoing=d.outgoing||[];
+        if(friendState.summaryLoaded&&options.silent&&friendState.incoming.length>previousIncoming){
+            toast('Ada request pertemanan baru masuk.',3600);
+        }
+        friendState.summaryLoaded=true;
+        setFriendLastSync();
         renderFriendFinder();
-    }catch(e){toast(e.message||'Gagal memuat data teman.')}
+    }catch(e){
+        if(!options.silent)toast(e.message||'Gagal memuat data teman.');
+    }
 }
-async function searchFriends(){
+async function searchFriends(silent){
     if(!authToken){friendState.search=[];friendState.loading=false;renderFriendFinder();if((window.__VKM_PAGE_ID||'')==='pg-friends')showAuth('Silakan login dulu untuk mencari teman.');return;}
     var input=document.getElementById('friend-search');
     friendState.query=input?input.value.trim():'';
-    friendState.loading=true;renderFriendFinder();
+    if(!silent){friendState.loading=true;renderFriendFinder();}
     var url='/api/friends/search?limit=30&q='+encodeURIComponent(friendState.query)+'&filter='+encodeURIComponent(friendState.filter||'all');
     try{
         var r=await apiFetch(url);
         var d=await r.json();
         if(!r.ok||!d.ok)throw new Error(d.error||'Gagal mencari teman.');
         friendState.search=d.users||[];
-    }catch(e){toast(e.message||'Gagal mencari teman.');friendState.search=[]}
+    }catch(e){
+        if(!silent)toast(e.message||'Gagal mencari teman.');
+        friendState.search=[];
+    }
     friendState.loading=false;renderFriendFinder();
 }
-function scheduleFriendSearch(){clearTimeout(friendState.searchTimer);friendState.searchTimer=setTimeout(searchFriends,260)}
+function scheduleFriendSearch(){clearTimeout(friendState.searchTimer);friendState.searchTimer=setTimeout(function(){searchFriends(false)},260)}
+async function refreshFriendData(options){
+    options=options||{};
+    await loadFriendSummary({silent:!!options.silent});
+    if((window.__VKM_PAGE_ID||'')==='pg-friends')await searchFriends(!!options.silent);
+}
+function showFriendProfileShell(){
+    var modal=document.getElementById('friend-profile-modal');
+    if(!modal)return;
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden','false');
+    friendState.profileOpen=true;
+}
+function closeFriendProfile(){
+    var modal=document.getElementById('friend-profile-modal');
+    if(!modal)return;
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden','true');
+    friendState.profileOpen=false;
+    friendState.profile=null;
+    friendState.profileStats=null;
+}
+function setFriendProfileLoading(){
+    showFriendProfileShell();
+    var avatar=document.getElementById('friend-profile-avatar'),status=document.getElementById('friend-profile-status'),name=document.getElementById('friend-profile-name'),username=document.getElementById('friend-profile-username'),bio=document.getElementById('friend-profile-bio'),friends=document.getElementById('friend-profile-friends'),joined=document.getElementById('friend-profile-joined'),actions=document.getElementById('friend-profile-actions');
+    if(avatar)avatar.src='/assets/nav/sfriends.png';
+    if(status)status.textContent='Memuat profil...';
+    if(name)name.textContent='Profil';
+    if(username)username.textContent='@username';
+    if(bio)bio.textContent='Sebentar ya, data profil sedang dimuat.';
+    if(friends)friends.textContent='-';
+    if(joined)joined.textContent='-';
+    if(actions)actions.innerHTML='<button class="friend-btn" type="button" disabled>Memuat...</button>';
+}
+function renderFriendProfile(user,stats){
+    var avatar=document.getElementById('friend-profile-avatar'),status=document.getElementById('friend-profile-status'),name=document.getElementById('friend-profile-name'),username=document.getElementById('friend-profile-username'),bio=document.getElementById('friend-profile-bio'),friends=document.getElementById('friend-profile-friends'),joined=document.getElementById('friend-profile-joined'),actions=document.getElementById('friend-profile-actions');
+    if(avatar)avatar.src=friendAvatarFor(user);
+    if(status)status.textContent=friendStatusText(user.relationship);
+    if(name)name.textContent=user.name||'VokaMon User';
+    if(username)username.textContent=user.username||'@vokamon.user';
+    if(bio)bio.textContent=user.bio||'Belum menulis bio.';
+    if(friends)friends.textContent=String((stats&&stats.friends)||0);
+    if(joined){
+        var d=user.createdAt?new Date(user.createdAt):null;
+        joined.textContent=(d&&!isNaN(d.getTime()))?d.toLocaleDateString('id-ID',{month:'short',year:'numeric'}):'-';
+    }
+    if(actions)actions.innerHTML=friendModalActions(user);
+}
+function renderFriendProfilePage(user,stats){
+    var avatar=document.getElementById('friend-page-avatar'),status=document.getElementById('friend-page-status'),name=document.getElementById('friend-page-name'),username=document.getElementById('friend-page-username'),bio=document.getElementById('friend-page-bio'),friends=document.getElementById('friend-page-friends'),joined=document.getElementById('friend-page-joined'),actions=document.getElementById('friend-page-actions');
+    if(avatar)avatar.src=friendAvatarFor(user);
+    if(status)status.textContent=friendStatusText(user.relationship);
+    if(name)name.textContent=user.name||'VokaMon User';
+    if(username)username.textContent=user.username||'@vokamon.user';
+    if(bio)bio.textContent=user.bio||'Belum menulis bio.';
+    if(friends)friends.textContent=String((stats&&stats.friends)||0);
+    if(joined){
+        var d=user.createdAt?new Date(user.createdAt):null;
+        joined.textContent=(d&&!isNaN(d.getTime()))?d.toLocaleDateString('id-ID',{month:'short',year:'numeric'}):'-';
+    }
+    if(actions)actions.innerHTML=friendModalActions(user);
+}
+function setFriendProfilePageLoading(){
+    var avatar=document.getElementById('friend-page-avatar'),status=document.getElementById('friend-page-status'),name=document.getElementById('friend-page-name'),username=document.getElementById('friend-page-username'),bio=document.getElementById('friend-page-bio'),friends=document.getElementById('friend-page-friends'),joined=document.getElementById('friend-page-joined'),actions=document.getElementById('friend-page-actions');
+    if(avatar)avatar.src='/assets/nav/sfriends.png';
+    if(status)status.textContent='Memuat profil...';
+    if(name)name.textContent='Profil';
+    if(username)username.textContent='@username';
+    if(bio)bio.textContent='Data profil sedang dimuat.';
+    if(friends)friends.textContent='-';
+    if(joined)joined.textContent='-';
+    if(actions)actions.innerHTML='<button class="friend-btn" type="button" disabled>Memuat...</button>';
+}
+async function loadFriendProfilePage(userId,silent){
+    if(!userId)return;
+    if(!authToken){showAuth('Silakan login dulu untuk melihat profil.');return;}
+    setFriendProfilePageLoading();
+    try{
+        var r=await apiFetch('/api/friends/profile/'+encodeURIComponent(userId));
+        var d=await r.json();
+        if(!r.ok||!d.ok)throw new Error(d.error||'Gagal memuat profil.');
+        friendState.profile=d.user;
+        friendState.profileStats=d.stats||{};
+        renderFriendProfilePage(d.user,d.stats||{});
+    }catch(e){
+        if(!silent)toast(e.message||'Gagal memuat profil.');
+        var bio=document.getElementById('friend-page-bio'),status=document.getElementById('friend-page-status'),actions=document.getElementById('friend-page-actions');
+        if(status)status.textContent='Profil tidak tersedia';
+        if(bio)bio.textContent=e.message||'Profil tidak bisa dimuat.';
+        if(actions)actions.innerHTML='<button class="friend-btn" type="button" data-page="pg-friends">Kembali cari teman</button>';
+    }
+}
+async function openFriendProfile(userId,silent){
+    if(!authToken){showAuth('Silakan login dulu.');return;}
+    if(!userId)return;
+    setFriendProfileLoading();
+    try{
+        var r=await apiFetch('/api/friends/profile/'+encodeURIComponent(userId));
+        var d=await r.json();
+        if(!r.ok||!d.ok)throw new Error(d.error||'Gagal memuat profil.');
+        friendState.profile=d.user;
+        friendState.profileStats=d.stats||{};
+        renderFriendProfile(d.user,d.stats||{});
+    }catch(e){
+        if(!silent)toast(e.message||'Gagal memuat profil.');
+        closeFriendProfile();
+    }
+}
 async function friendAction(action,btn){
     if(!authToken){showAuth('Silakan login dulu.');return;}
-    var card=btn.closest('.friend-card');if(card)card.dataset.busy='1';
+    if(action==='profile'){if(btn.dataset.userId)navigateWithLoader('/profile/'+encodeURIComponent(btn.dataset.userId));return;}
+    var card=btn.closest('.friend-card')||btn.closest('.friend-profile-card');if(card)card.dataset.busy='1';
     var url='',opts={method:'POST',headers:{'Content-Type':'application/json'}};
     if(action==='request'){url='/api/friends/request';opts.body=JSON.stringify({userId:btn.dataset.userId});}
     else if(action==='accept'){url='/api/friends/'+btn.dataset.friendshipId+'/accept';}
     else if(action==='decline'){url='/api/friends/'+btn.dataset.friendshipId+'/decline';}
     else if(action==='remove'){url='/api/friends/'+btn.dataset.friendshipId;opts.method='DELETE';}
-    else if(action==='profile'){toast((btn.dataset.userName||'Profil')+': '+(btn.dataset.userBio||'Belum ada bio.'),3600);if(card)card.dataset.busy='0';return;}
+    else {if(card)card.dataset.busy='0';return;}
     try{
         var r=await apiFetch(url,opts);var d=await r.json();
         if(!r.ok||!d.ok)throw new Error(d.error||'Aksi gagal.');
         toast(d.message||'Berhasil.');
-        await loadFriendSummary();
-        await searchFriends();
+        var profileId=friendState.profile&&friendState.profile.id;
+        await refreshFriendData({silent:true});
+        if(friendState.profileOpen&&profileId)await openFriendProfile(profileId,true);
+        if((window.__VKM_PAGE_ID||'')==='pg-profile'&&window.__VKM_PROFILE_USER_ID)await loadFriendProfilePage(window.__VKM_PROFILE_USER_ID,true);
     }catch(e){toast(e.message||'Aksi gagal.');}
     if(card)card.dataset.busy='0';
+}
+function startFriendRealtime(){
+    if(friendState.pollTimer)clearInterval(friendState.pollTimer);
+    if(!authToken)return;
+    friendState.pollTimer=setInterval(function(){
+        if(document.hidden)return;
+        refreshFriendData({silent:true});
+    },friendState.pollMs);
 }
 function initFriendFinder(){
     if(friendState.ready)return;friendState.ready=true;
     var input=document.getElementById('friend-search'),clear=document.getElementById('friend-search-clear');
     if(input)input.addEventListener('input',scheduleFriendSearch);
-    if(clear)clear.addEventListener('click',function(){if(input)input.value='';searchFriends();});
-    document.querySelectorAll('.friend-chip').forEach(function(chip){chip.addEventListener('click',function(){document.querySelectorAll('.friend-chip').forEach(function(x){x.classList.remove('active')});chip.classList.add('active');friendState.filter=chip.dataset.filter||'all';searchFriends();});});
+    if(clear)clear.addEventListener('click',function(){if(input)input.value='';searchFriends(false);});
+    document.querySelectorAll('.friend-chip').forEach(function(chip){chip.addEventListener('click',function(){document.querySelectorAll('.friend-chip').forEach(function(x){x.classList.remove('active')});chip.classList.add('active');friendState.filter=chip.dataset.filter||'all';searchFriends(false);});});
     document.querySelectorAll('.friend-tab').forEach(function(tab){tab.addEventListener('click',function(){setFriendView(tab.dataset.friendView||'discover')});});
-    document.addEventListener('click',function(e){var btn=e.target.closest('[data-friend-action]');if(btn)friendAction(btn.dataset.friendAction,btn);});
-    loadFriendSummary();searchFriends();
+    document.addEventListener('click',function(e){
+        var close=e.target.closest('[data-friend-profile-close]');
+        if(close){closeFriendProfile();return;}
+        var btn=e.target.closest('[data-friend-action]');
+        if(btn)friendAction(btn.dataset.friendAction,btn);
+    });
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&friendState.profileOpen)closeFriendProfile();});
+    document.addEventListener('visibilitychange',function(){if(!document.hidden)refreshFriendData({silent:true});});
+    window.addEventListener('focus',function(){refreshFriendData({silent:true});});
+    refreshFriendData({silent:true});
+    if((window.__VKM_PAGE_ID||'')==='pg-profile'&&window.__VKM_PROFILE_USER_ID)loadFriendProfilePage(window.__VKM_PROFILE_USER_ID,true);
+    startFriendRealtime();
 }
             initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
         </script>
