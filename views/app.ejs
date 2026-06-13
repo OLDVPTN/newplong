@@ -3962,6 +3962,90 @@
                 }
             }
 
+        
+/* ===== Readability & friends upgrade ===== */
+:root{--nav-h:64px}
+#tbar .lw{font-size:16px}
+.pt{font-size:22px;font-weight:800;letter-spacing:-.35px}
+.ps,.pm{font-size:12.5px;line-height:1.6}
+.pn{font-size:20px}
+.sb{font-size:14px;font-weight:700;padding:10px 12px}
+.nb{font-size:10.5px;font-weight:800;gap:2px;padding:6px 10px;min-height:46px;min-width:52px}
+.nb span{line-height:1.18}
+.sb .nav-img{width:25px;height:25px}
+.nb .nav-img{width:28px;height:28px}
+.cp,.cpill{font-size:12px}
+.home-soft-btn,.home-primary-btn,.foku-primary-btn,.pet-act,.friend-btn{font-size:13px}
+.foku-greet span{font-size:15px}
+.foku-greet strong{font-size:28px;line-height:1.14}
+.foku-greet small{font-size:13px;line-height:1.6}
+.foku-message-bubble span{font-size:12px}
+.foku-message-bubble strong{font-size:15px;line-height:1.45}
+.foku-pet-card-top h2{font-size:26px}
+.foku-status{font-size:13px;line-height:1.6}
+.foku-pet-stat label{font-size:12px}
+.foku-pet-stat strong{font-size:25px}
+.foku-side-head span,.foku-section-head span{font-size:11px}
+.foku-side-head strong,.foku-section-head strong{font-size:19px}
+.foku-quick-btn{font-size:12px;min-height:86px}
+.foku-focus-item p,.foku-side-card p,.foku-bottom-card p{font-size:13px;line-height:1.65}
+.pp-hero-logo{font-size:30px}
+.pp-hero-sub{font-size:14px;line-height:1.6}
+.pp-input-box textarea{font-size:15.5px}
+.pp-msg-user .pp-bbl,.pp-msg-bot .pp-bbl{font-size:14.5px}
+.st-title strong{font-size:24px}
+.st-title span{font-size:12px;line-height:1.55}
+.st-card-head strong{font-size:15px}
+.st-card-head span{font-size:12px;line-height:1.55}
+.st-wallet-item strong{font-size:14px}
+.st-wallet-item span{font-size:12px}
+
+#pg-friends{gap:12px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding-bottom:calc(var(--nav-h) + var(--s-b) + 18px)}
+.friend-shell{display:flex;flex-direction:column;gap:12px;max-width:1100px;margin:0 auto}
+.friend-hero{position:relative;overflow:hidden;padding:18px;border-radius:26px;background:linear-gradient(135deg,#fff7ef 0%,#f2fff5 46%,#f7f4ff 100%);border:1px solid rgba(255,255,255,.9);box-shadow:0 16px 40px rgba(91,121,90,.10);display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:14px;align-items:center}
+.friend-kicker{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.85);border:1px solid rgba(160,196,155,.25);font-size:11px;font-weight:900;color:#507155;width:max-content;margin-bottom:10px}
+.friend-kicker img{width:18px;height:18px;object-fit:contain}
+.friend-hero h2{margin:0 0 6px;font-size:26px;color:#21374d;line-height:1.15}
+.friend-hero p{margin:0;color:#6a748e;line-height:1.7;font-size:13px;max-width:58ch}
+.friend-hero-art{display:flex;justify-content:center;align-items:center}
+.friend-hero-art img{width:min(112px,100%);height:auto;filter:drop-shadow(0 10px 18px rgba(93,126,87,.18))}
+.friend-search-card,.friend-section-card{background:rgba(255,255,255,.92);border:1px solid rgba(221,229,240,.95);border-radius:24px;padding:14px;box-shadow:0 10px 26px rgba(62,80,114,.06)}
+.friend-search-box{display:flex;gap:10px;align-items:center;background:#f7fbff;border:1px solid #e2ecff;border-radius:18px;padding:10px 12px}
+.friend-search-box i{color:#6a86d8}
+#friend-search{flex:1;border:0;background:transparent;outline:0;color:#23314e;font-size:14px}
+.friend-chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.friend-chip{border:1px solid #e5ecfb;background:#fff;border-radius:999px;padding:8px 12px;font-size:11px;font-weight:800;color:#5e6e96;cursor:pointer;transition:.15s}
+.friend-chip.active,.friend-chip:hover{background:#eef5ff;border-color:#bfd6ff;color:#335dc7}
+.friend-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.friend-card{background:linear-gradient(180deg,#ffffff,#f8fbff);border:1px solid #e7eefc;border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 22px rgba(84,106,160,.06)}
+.friend-card-head{display:flex;align-items:center;gap:12px}
+.friend-avatar{width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,#fff6e8,#eef8ff);border:1px solid #e7effc;display:grid;place-items:center;overflow:hidden;flex:0 0 58px}
+.friend-avatar img{width:42px;height:42px;object-fit:contain}
+.friend-meta strong{display:block;font-size:15px;color:#1f2c49}
+.friend-meta span{display:block;font-size:11px;color:#6d7b9c;margin-top:3px}
+.friend-tags{display:flex;flex-wrap:wrap;gap:6px}
+.friend-tags span{display:inline-flex;align-items:center;padding:6px 9px;border-radius:999px;background:#f4f7ff;border:1px solid #e4ebfd;font-size:10px;font-weight:800;color:#6172a0}
+.friend-bio{margin:0;color:#54627d;font-size:12.5px;line-height:1.7;min-height:58px}
+.friend-card-actions{display:flex;gap:8px}
+.friend-btn{flex:1;min-height:42px;border-radius:14px;border:1px solid #dce7fb;background:#fff;color:#3f5aa6;font-size:12px;font-weight:900}
+.friend-btn.primary{background:linear-gradient(180deg,#ffb46d,#ff9349);border-color:#ff9349;color:#fff;box-shadow:0 10px 18px rgba(255,147,73,.18)}
+.friend-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.friend-section-head strong{font-size:16px;color:#21324f}
+.friend-section-head span{font-size:11px;color:#7280a1}
+.friend-empty{padding:16px;border-radius:18px;background:#f8fbff;border:1px dashed #d8e4fb;color:#64739a;font-size:12px;text-align:center;display:none}
+.friend-empty.show{display:block}
+@media(max-width:900px){.friend-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:599px){
+  .pt{font-size:20px}.ps,.pm{font-size:11.5px}
+  .nb{font-size:10px;padding:6px 8px}.nb span{max-width:64px}
+  .foku-greet strong{font-size:24px}.foku-greet small{font-size:12px}
+  .foku-message-bubble strong{font-size:14px}.foku-quick-btn{font-size:11px;min-height:82px}
+  .pp-hero-logo{font-size:26px}.pp-hero-sub{font-size:13px}
+  .st-title strong{font-size:22px}.st-title span{font-size:11.5px}
+  .friend-hero{grid-template-columns:1fr;padding:14px;border-radius:22px}.friend-grid{grid-template-columns:1fr}
+  .friend-search-card,.friend-section-card{padding:12px;border-radius:20px}
+}
+
         </style>
     </head>
     <body class="auth-lock">
@@ -4033,6 +4117,7 @@
                     <button class="<%= pageId === 'pg-avatar' ? 'sb on' : 'sb' %>" data-page="pg-avatar"><img class="nav-img" src="/assets/nav/avatar.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Avatar</button>
                     <button class="<%= pageId === 'pg-vent' ? 'sb on' : 'sb' %>" data-page="pg-vent"><img class="nav-img" src="/assets/nav/vent.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Vent</button>
                     <button class="<%= pageId === 'pg-art' ? 'sb on' : 'sb' %>" data-page="pg-art"><img class="nav-img" src="/assets/nav/art.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Galeri Seni</button>
+                    <button class="<%= pageId === 'pg-friends' ? 'sb on' : 'sb' %>" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Cari Teman</button>
                     <button class="<%= pageId === 'pg-redeem' ? 'sb on' : 'sb' %>" data-page="pg-redeem"><img class="nav-img" src="/assets/nav/redeem.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Redeem</button>
                     <button class="<%= pageId === 'pg-assist' ? 'sb on' : 'sb' %>" data-page="pg-assist"><img class="nav-img" src="/assets/nav/chat.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Asisten</button>
                     <button class="<%= pageId === 'pg-account' ? 'sb on' : 'sb' %>" data-page="pg-account"><img class="nav-img" src="/assets/nav/account.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Akun</button>
@@ -4542,6 +4627,81 @@
                     </div>
                 </section>
 
+
+
+<!-- FRIENDS -->
+<section id="pg-friends" class="<%= pageId === 'pg-friends' ? 'pg on' : 'pg' %>" aria-label="Cari Teman">
+    <div class="ph"><div><h1 class="pt">Cari Teman</h1><p class="ps">Temukan teman dengan vibe, minat, dan obrolan yang nyambung.</p></div></div>
+    <div class="friend-shell">
+        <div class="friend-hero">
+            <div>
+                <div class="friend-kicker"><img src="/assets/nav/sfriends.png" alt="" aria-hidden="true"><span>Teman baru, energi baru</span></div>
+                <h2>Temukan teman satu frekuensi ✨</h2>
+                <p>Cari teman ngobrol yang cocok buat healing, curhat, gaming, desain, atau sekadar ngobrol santai. Ini masih versi awal UI, tapi sudah nyaman buat eksplorasi konsep fiturnya.</p>
+            </div>
+            <div class="friend-hero-art"><img src="/assets/nav/sfriends.png" alt="Ilustrasi cari teman"></div>
+        </div>
+
+        <div class="friend-search-card">
+            <div class="friend-search-box">
+                <i class="fas fa-search"></i>
+                <input id="friend-search" type="text" placeholder="Cari nama atau minat... misal healing, gaming, desain">
+            </div>
+            <div class="friend-chip-row">
+                <button class="friend-chip active" type="button" data-filter="all">Semua</button>
+                <button class="friend-chip" type="button" data-filter="healing">Healing</button>
+                <button class="friend-chip" type="button" data-filter="gaming">Gaming</button>
+                <button class="friend-chip" type="button" data-filter="musik">Musik</button>
+                <button class="friend-chip" type="button" data-filter="desain">Desain</button>
+                <button class="friend-chip" type="button" data-filter="curhat">Curhat</button>
+            </div>
+        </div>
+
+        <div class="friend-section-card">
+            <div class="friend-section-head"><strong>Rekomendasi teman</strong><span id="friend-count">6 teman cocok</span></div>
+            <div class="friend-grid" id="friend-grid">
+                <article class="friend-card" data-friend="naya healing journaling curhat film cozy">
+                    <div class="friend-card-head"><div class="friend-avatar"><img src="/assets/nav/account.png" alt=""></div><div class="friend-meta"><strong>Naya</strong><span>@nayahug · Online</span></div></div>
+                    <div class="friend-tags"><span>Healing</span><span>Curhat</span><span>Film cozy</span></div>
+                    <p class="friend-bio">Suka dengerin cerita orang, journaling, dan ngobrol pelan-pelan kalau lagi penat.</p>
+                    <div class="friend-card-actions"><button class="friend-btn primary" type="button">Sapa</button><button class="friend-btn" type="button">Profil</button></div>
+                </article>
+                <article class="friend-card" data-friend="reno gaming mlbb chill ngobrol malam">
+                    <div class="friend-card-head"><div class="friend-avatar"><img src="/assets/nav/avatar.png" alt=""></div><div class="friend-meta"><strong>Reno</strong><span>@renochill · Aktif 5 mnt lalu</span></div></div>
+                    <div class="friend-tags"><span>Gaming</span><span>MLBB</span><span>Chill talk</span></div>
+                    <p class="friend-bio">Teman ngobrol santai habis main game. Cocok buat mabar atau sekadar cerita receh.</p>
+                    <div class="friend-card-actions"><button class="friend-btn primary" type="button">Sapa</button><button class="friend-btn" type="button">Profil</button></div>
+                </article>
+                <article class="friend-card" data-friend="sora musik indie curhat malam playlist">
+                    <div class="friend-card-head"><div class="friend-avatar"><img src="/assets/nav/vent.png" alt=""></div><div class="friend-meta"><strong>Sora</strong><span>@soraside · Online</span></div></div>
+                    <div class="friend-tags"><span>Musik</span><span>Playlist</span><span>Curhat malam</span></div>
+                    <p class="friend-bio">Paling suka tuker lagu dan ngobrol soal hal-hal kecil yang kepikiran pas malam hari.</p>
+                    <div class="friend-card-actions"><button class="friend-btn primary" type="button">Sapa</button><button class="friend-btn" type="button">Profil</button></div>
+                </article>
+                <article class="friend-card" data-friend="mei desain ilustrasi ui ux warna pastel">
+                    <div class="friend-card-head"><div class="friend-avatar"><img src="/assets/nav/art.png" alt=""></div><div class="friend-meta"><strong>Mei</strong><span>@meisketch · Aktif hari ini</span></div></div>
+                    <div class="friend-tags"><span>Desain</span><span>Ilustrasi</span><span>UI/UX</span></div>
+                    <p class="friend-bio">Senang bikin ilustrasi lucu dan bahas warna pastel, layout, serta ide visual baru.</p>
+                    <div class="friend-card-actions"><button class="friend-btn primary" type="button">Sapa</button><button class="friend-btn" type="button">Profil</button></div>
+                </article>
+                <article class="friend-card" data-friend="fajar kebun tanaman sayur healing pagi">
+                    <div class="friend-card-head"><div class="friend-avatar"><img src="/assets/nav/garden.png" alt=""></div><div class="friend-meta"><strong>Fajar</strong><span>@fajarleaf · Online</span></div></div>
+                    <div class="friend-tags"><span>Kebun</span><span>Tanaman</span><span>Healing pagi</span></div>
+                    <p class="friend-bio">Suka ngobrol soal tanaman, rutinitas pagi, dan progress kecil yang bikin hati lebih tenang.</p>
+                    <div class="friend-card-actions"><button class="friend-btn primary" type="button">Sapa</button><button class="friend-btn" type="button">Profil</button></div>
+                </article>
+                <article class="friend-card" data-friend="luna support bestie curhat self care">
+                    <div class="friend-card-head"><div class="friend-avatar"><img src="/assets/nav/sfriends.png" alt=""></div><div class="friend-meta"><strong>Luna</strong><span>@lunacare · Online</span></div></div>
+                    <div class="friend-tags"><span>Supportive</span><span>Bestie vibe</span><span>Self care</span></div>
+                    <p class="friend-bio">Kalau butuh teman yang hangat dan suportif, Luna tipikal teman yang gampang nyambung.</p>
+                    <div class="friend-card-actions"><button class="friend-btn primary" type="button">Sapa</button><button class="friend-btn" type="button">Profil</button></div>
+                </article>
+            </div>
+            <div class="friend-empty" id="friend-empty">Belum ada teman yang cocok dengan pencarianmu. Coba kata kunci lain ya.</div>
+        </div>
+    </div>
+</section>
+
                 <!-- REDEEM -->
                 <section id="pg-redeem" class="<%= pageId === 'pg-redeem' ? 'pg on' : 'pg' %>" aria-label="Redeem">
                     <div class="ph">
@@ -4716,7 +4876,7 @@
 
         <nav id="bnav" aria-label="Navigasi">
             <button class="<%= pageId === 'pg-home' ? 'nb on' : 'nb' %>" data-page="pg-home"><img class="nav-img" src="/assets/nav/home.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Beranda</span></button>
-            <button class="<%= pageId === 'pg-art' ? 'nb on' : 'nb' %>" data-page="pg-art"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Cari teman</span></button>
+            <button class="<%= pageId === 'pg-friends' ? 'nb on' : 'nb' %>" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Teman</span></button>
             <button class="<%= pageId === 'pg-garden' ? 'nb on' : 'nb' %>" data-page="pg-garden"><img class="nav-img" src="/assets/nav/garden.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Kebun</span></button>
             <button class="<%= pageId === 'pg-vent' ? 'nb on' : 'nb' %>" data-page="pg-vent"><img class="nav-img" src="/assets/nav/vent.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Curhat (voice)</span></button>
             <!---<button class="<%= pageId === 'pg-art' ? 'nb on' : 'nb' %>" data-page="pg-art"><img class="nav-img" src="/assets/nav/art.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Art</span></button>-->
@@ -5072,6 +5232,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 "pg-avatar":"/avatar",
                 "pg-vent":"/vent",
                 "pg-art":"/art",
+                "pg-friends":"/friends",
                 "pg-redeem":"/redeem",
                 "pg-assist":"/chat",
                 "pg-account":"/account"
@@ -6319,7 +6480,50 @@ var gardenBusy=false;
             if(pwConvert)pwConvert.addEventListener("click",function(){petWorkerAction("/api/pet/convert-essence",{mood:"all"})});
             if(pwDaily)pwDaily.addEventListener("click",function(){petWorkerAction("/api/pet/daily-bonus",{})});
             setInterval(function(){renderPetWorker()},30000);
-            initAvatarCustomizer();initAccount();renderGarden();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
+
+function renderFriendFinder(){
+    var input=document.getElementById('friend-search');
+    var cards=[].slice.call(document.querySelectorAll('#friend-grid .friend-card'));
+    var empty=document.getElementById('friend-empty');
+    var count=document.getElementById('friend-count');
+    if(!cards.length) return;
+    var activeChip=document.querySelector('.friend-chip.active');
+    var active=activeChip ? (activeChip.getAttribute('data-filter')||'all') : 'all';
+    var q=(input&&input.value||'').trim().toLowerCase();
+    var shown=0;
+    cards.forEach(function(card){
+        var hay=(card.getAttribute('data-friend')||'').toLowerCase();
+        var ok=(active==='all' || hay.indexOf(active)>-1) && (!q || hay.indexOf(q)>-1);
+        card.style.display=ok?'flex':'none';
+        if(ok) shown++;
+    });
+    if(count) count.textContent=shown + ' teman cocok';
+    if(empty) empty.classList.toggle('show', shown===0);
+}
+function initFriendFinder(){
+    var input=document.getElementById('friend-search');
+    if(input && !input.dataset.bound){
+        input.dataset.bound='1';
+        input.addEventListener('input', renderFriendFinder);
+    }
+    document.querySelectorAll('.friend-chip').forEach(function(chip){
+        if(chip.dataset.bound) return;
+        chip.dataset.bound='1';
+        chip.addEventListener('click', function(){
+            document.querySelectorAll('.friend-chip').forEach(function(x){x.classList.remove('active')});
+            chip.classList.add('active');
+            renderFriendFinder();
+        });
+    });
+    document.querySelectorAll('.friend-btn').forEach(function(btn){
+        if(btn.dataset.bound) return;
+        btn.dataset.bound='1';
+        btn.addEventListener('click', function(){ toast('Versi ini masih prototipe UI, backend pertemanan belum dihubungkan.'); });
+    });
+    renderFriendFinder();
+}
+
+            initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
         </script>
     </body>
 </html>
