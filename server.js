@@ -649,7 +649,7 @@ function defaultAppState(user = {}) {
     inventory: [],
     redeemHistory: [],
     lastCrystal: null,
-    onboarding: { completed: false, goal: '', petName: 'Plong', firstMood: 'tenang' },
+    onboarding: { completed: false, goal: 'curhat_dulu', petName: 'Plong', firstMood: 'tenang' },
     garden: defaultGarden(),
     gm: 'qwen2.5:3b',
     al: 'id',
