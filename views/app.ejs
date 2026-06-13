@@ -5323,38 +5323,10 @@
             .summary-history-item{padding:13px;border-radius:20px;background:#f8fbff;border:1px solid #e7eefc}
             .summary-history-item strong{display:block;color:#1d2d4d;font-size:14px}
             .summary-history-item p{margin:8px 0 0;color:#66728d;font-size:12px;line-height:1.55}
-            .onboarding-modal{position:fixed;inset:0;z-index:990;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(248,251,255,.78);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
-            .onboarding-modal.show{display:flex}
-            .onboarding-card{width:min(520px,100%);max-height:calc(100dvh - 36px);overflow:auto;border-radius:34px;background:#fff;border:1px solid rgba(255,255,255,.9);box-shadow:0 28px 90px rgba(15,23,42,.22);padding:22px}
-            .onboarding-mark{width:66px;height:66px;border-radius:24px;display:grid;place-items:center;background:#f0fdf4;border:1px solid #bbf7d0;font-size:32px;margin-bottom:12px}
-            .onboarding-card>span{color:#15803d;font-size:12px;font-weight:900;text-transform:uppercase}
-            .onboarding-card h1{margin:6px 0;color:#16233f;font-size:30px;line-height:1.1}
-            .onboarding-card p{color:#66728d;font-size:14px;line-height:1.65;margin:0 0 14px}
-            .onboarding-card label{display:block;margin:12px 0 7px;color:#52627f;font-size:12px;font-weight:900}
-            .onboarding-card input{width:100%;min-height:46px;border-radius:16px;border:1px solid #dce7fb;background:#f8fbff;padding:0 12px;font-size:16px;outline:0}
-            .onboarding-goals{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-            .onboarding-goal,.onboarding-mood{min-height:42px;border-radius:16px;background:#f8fbff;border:1px solid #e7eefc;color:#52627f;font-size:13px;font-weight:900}
-            .onboarding-goal.active,.onboarding-mood.active{background:#fff7ed;border-color:#fed7aa;color:#c2410c}
-
-            .onboarding-note{
-                margin:12px 0 0;
-                padding:10px 12px;
-                border-radius:16px;
-                background:#f0fdf4;
-                border:1px solid #bbf7d0;
-                color:#3f6f4a;
-                font-size:12px;
-                line-height:1.55;
-                font-weight:800;
-            }
-            #onboarding-reset{margin-top:10px}
 
             @media(max-width:900px){.safety-layout,.summary-layout{grid-template-columns:1fr}}
             @media(max-width:599px){
                 .garden-economy-items{grid-template-columns:1fr}
-                .onboarding-modal{align-items:flex-end;padding:12px}
-                .onboarding-card{border-radius:28px}
-                .onboarding-card h1{font-size:26px}
             }
 
         </style>
@@ -5401,37 +5373,7 @@
             </article>
         </div>
 
-        <div id="onboarding-modal" class="onboarding-modal" aria-hidden="true">
-            <article class="onboarding-card" role="dialog" aria-modal="true" aria-label="Onboarding Plong">
-                <div class="onboarding-mark">🌱</div>
-                <span>Mulai perjalanan emosimu</span>
-                <h1>Hari ini kamu mau mulai dari mana dulu?</h1>
-                <p>Plong tetap tempat buat curhat dan melepas emosi. Pilihan ini hanya menentukan pintu masuk pertama, bukan mengunci fitur lain.</p>
-                <label>Pintu masuk pertama</label>
-                <div class="onboarding-goals">
-                    <button type="button" class="onboarding-goal active" data-goal="curhat_dulu">Curhat dulu</button>
-                    <button type="button" class="onboarding-goal" data-goal="checkin_mood">Check-in mood</button>
-                    <button type="button" class="onboarding-goal" data-goal="rawat_pet_emosi">Rawat pet dari emosimu</button>
-                    <button type="button" class="onboarding-goal" data-goal="ruang_tenang">Tenangkan diri</button>
-                    <button type="button" class="onboarding-goal" data-goal="kebun_emosi">Lihat kebun emosimu</button>
-                    <button type="button" class="onboarding-goal" data-goal="cari_support">Cari support ringan</button>
-                </div>
-                <label for="onboarding-pet-name">Nama pet pendamping emosimu</label>
-                <input id="onboarding-pet-name" type="text" maxlength="24" value="Plong">
-                <label>Mood awal hari ini</label>
-                <div class="onboarding-goals">
-                    <button type="button" class="onboarding-mood active" data-mood="tenang">😌 Tenang</button>
-                    <button type="button" class="onboarding-mood" data-mood="senang">😊 Senang</button>
-                    <button type="button" class="onboarding-mood" data-mood="galau">🌧️ Galau</button>
-                    <button type="button" class="onboarding-mood" data-mood="stres">😵‍💫 Stres</button>
-                </div>
-                <div class="onboarding-note">Semua fitur tetap bisa diakses setelah ini. Onboarding hanya muncul sekali, kecuali kamu buka ulang dari tombol reset.</div>
-                <button id="onboarding-finish" class="support-send" type="button"><i class="fas fa-seedling"></i> Mulai Perjalanan</button>
-            </article>
-        </div>
-
-
-        <div id="support-modal" class="support-modal" aria-hidden="true">
+                <div id="support-modal" class="support-modal" aria-hidden="true">
             <div class="support-backdrop" data-support-close></div>
             <article class="support-card" role="dialog" aria-modal="true" aria-label="Kirim dukungan">
                 <button class="support-close" type="button" data-support-close aria-label="Tutup"><i class="fas fa-xmark"></i></button>
@@ -6085,7 +6027,6 @@
                                 <label class="safety-toggle"><input id="safety-allow-requests" type="checkbox" checked><span>Izinkan request pertemanan</span></label>
                                 <label class="safety-toggle"><input id="safety-allow-support" type="checkbox" checked><span>Izinkan pesan dukungan dari teman</span></label>
                                 <button id="safety-save" class="feature-btn primary wide" type="button"><i class="fas fa-save"></i> Simpan Safety</button>
-                                <button id="onboarding-reset" class="feature-btn wide" type="button"><i class="fas fa-seedling"></i> Ulang Onboarding</button>
                             </div>
                             <div class="feature-card">
                                 <div class="feature-card-head"><strong>User diblokir</strong><span>Relasi diblokir tidak bisa request/dukung.</span></div>
@@ -8772,8 +8713,7 @@ var growthState={
     reportName:'',
     quests:[],
     summaries:[],
-    onboardingGoal:'curhat_dulu',
-    onboardingMood:'tenang'
+    introRemoved:true
 };
 function petReactionForMood(mood){
     var map={
@@ -8935,48 +8875,6 @@ async function generateAiSummary(){
     }catch(e){toast(e.message||'Gagal membuat ringkasan.')}
 }
 
-function openOnboardingModal(manual){
-    if(!state.onboarding)state.onboarding={completed:false,goal:'curhat_dulu',petName:'Plong',firstMood:'tenang'};
-    var petName=document.getElementById('onboarding-pet-name');
-    if(petName)petName.value=(state.onboarding.petName||state.pet&&state.pet.name||'Plong');
-    var goal=state.onboarding.goal||growthState.onboardingGoal||'curhat_dulu';
-    var mood=state.onboarding.firstMood||growthState.onboardingMood||'tenang';
-    document.querySelectorAll('.onboarding-goal').forEach(function(b){b.classList.toggle('active',b.dataset.goal===goal)});
-    document.querySelectorAll('.onboarding-mood').forEach(function(b){b.classList.toggle('active',b.dataset.mood===mood)});
-    growthState.onboardingGoal=goal;
-    growthState.onboardingMood=mood;
-    var modal=document.getElementById('onboarding-modal');
-    if(modal){modal.classList.add('show');modal.setAttribute('aria-hidden','false');}
-    if(manual)toast('Onboarding dibuka ulang. Fitur tetap tidak dikunci.');
-}
-function showOnboardingIfNeeded(){
-    if(!authToken)return;
-    if(!state.onboarding)state.onboarding={completed:false,goal:'curhat_dulu',petName:'Plong',firstMood:'tenang'};
-    if(state.onboarding.completed)return;
-    openOnboardingModal(false);
-}
-function onboardingTargetPage(goal){
-    return {
-        curhat_dulu:'pg-assist',
-        checkin_mood:'pg-mood',
-        rawat_pet_emosi:'pg-home',
-        ruang_tenang:'pg-calm',
-        kebun_emosi:'pg-garden',
-        cari_support:'pg-friends'
-    }[goal]||'pg-home';
-}
-function finishOnboarding(){
-    var petName=document.getElementById('onboarding-pet-name');
-    state.onboarding={completed:true,goal:growthState.onboardingGoal,petName:(petName&&petName.value.trim())||'Plong',firstMood:growthState.onboardingMood,completedAt:new Date().toISOString()};
-    state.pet=state.pet||{};state.pet.name=state.onboarding.petName;
-    applyPetReaction(growthState.onboardingMood);
-    if(typeof save==='function')save();
-    var modal=document.getElementById('onboarding-modal');if(modal){modal.classList.remove('show');modal.setAttribute('aria-hidden','true');}
-    toast('Onboarding selesai. Semua fitur tetap terbuka 🌱');
-    var target=onboardingTargetPage(state.onboarding.goal);
-    setTimeout(function(){go(target)},250);
-}
-
 function initGrowthFeatures(){
     document.addEventListener('click',function(e){
         var ub=e.target.closest('[data-unblock-user]');if(ub){unblockUser(ub.dataset.unblockUser);return;}
@@ -8988,12 +8886,7 @@ function initGrowthFeatures(){
     var questRefresh=document.getElementById('quest-refresh');if(questRefresh)questRefresh.addEventListener('click',function(){loadQuests(false)});
     var convert=document.getElementById('garden-convert');if(convert)convert.addEventListener('click',convertGardenHarvest);
     var summaryGenerate=document.getElementById('summary-generate');if(summaryGenerate)summaryGenerate.addEventListener('click',generateAiSummary);
-    document.querySelectorAll('.onboarding-goal').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.onboarding-goal').forEach(function(x){x.classList.remove('active')});b.classList.add('active');growthState.onboardingGoal=b.dataset.goal||'curhat';});});
-    document.querySelectorAll('.onboarding-mood').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.onboarding-mood').forEach(function(x){x.classList.remove('active')});b.classList.add('active');growthState.onboardingMood=b.dataset.mood||'tenang';});});
-    var finish=document.getElementById('onboarding-finish');if(finish)finish.addEventListener('click',finishOnboarding);
-    var reset=document.getElementById('onboarding-reset');if(reset)reset.addEventListener('click',function(){openOnboardingModal(true)});
     loadQuests(true);loadSafetyCenter(true);loadAiSummaries(true);loadGardenEconomy(true);
-    setTimeout(showOnboardingIfNeeded,900);
 }
 
             initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();initSocialFeatures();initGrowthFeatures();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
