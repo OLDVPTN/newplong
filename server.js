@@ -139,6 +139,29 @@ async function initDb() {
     );
   `);
 
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS friendships (
+      id BIGSERIAL PRIMARY KEY,
+      requester_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      addressee_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      status VARCHAR(20) NOT NULL DEFAULT 'pending',
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      CHECK (requester_id <> addressee_id),
+      CHECK (status IN ('pending','accepted','declined','blocked'))
+    );
+  `);
+
+  await pool.query(`
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_friendships_pair_unique
+    ON friendships (LEAST(requester_id, addressee_id), GREATEST(requester_id, addressee_id));
+  `);
+
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_friendships_requester ON friendships(requester_id);`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_friendships_addressee ON friendships(addressee_id);`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_friendships_status ON friendships(status);`);
+
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);`);
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);`);
 }
@@ -161,6 +184,41 @@ function dbUserToPublic(user) {
     bio: user.bio || 'Lagi belajar memahami emosi pelan-pelan.',
     createdAt: user.created_at || user.createdAt || null
   };
+}
+
+
+function friendUserToPublic(row) {
+  const user = {
+    id: row.user_id || row.id,
+    name: row.name,
+    username: row.username,
+    email: row.email || '',
+    bio: row.bio,
+    created_at: row.created_at
+  };
+
+  const publicUser = dbUserToPublic(user);
+  delete publicUser.email;
+
+  return {
+    id: publicUser.id,
+    name: publicUser.name,
+    username: publicUser.username,
+    bio: publicUser.bio,
+    createdAt: publicUser.createdAt,
+    lastLoginAt: row.last_login_at || null,
+    friendshipId: row.friendship_id ? String(row.friendship_id) : null,
+    friendshipStatus: row.friendship_status || null,
+    relationship: row.relationship || 'none',
+    requestedByMe: row.requester_id ? String(row.requester_id) === String(row.current_user_id || '') : false,
+    since: row.friendship_updated_at || row.friendship_created_at || null
+  };
+}
+
+function safeLimit(value, fallback = 20, max = 50) {
+  const n = Number(value);
+  if (!Number.isFinite(n) || n <= 0) return fallback;
+  return Math.min(Math.floor(n), max);
 }
 
 function signToken(user) {
@@ -1996,6 +2054,212 @@ app.post('/api/chat', aiLimiter, requireAuth, async (req, res) => {
       reply: 'Server AI lokal lagi bermasalah. Pastikan Ollama dan server Node.js aktif.',
       error: error.message
     });
+  }
+});
+
+
+app.get('/api/friends/search', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const q = String(req.query.q || '').trim().slice(0, 60);
+    const filter = String(req.query.filter || 'all').trim().toLowerCase().slice(0, 30);
+    const limit = safeLimit(req.query.limit, 24, 60);
+    const terms = [];
+
+    if (q) terms.push(q);
+    if (filter && filter !== 'all') terms.push(filter);
+
+    const needle = terms.join(' ').trim();
+    const params = [me, limit];
+    let where = `u.id <> $1`;
+
+    if (needle) {
+      params.push(`%${needle.toLowerCase()}%`);
+      where += ` AND (
+        LOWER(u.name) LIKE $3 OR
+        LOWER(u.username) LIKE $3 OR
+        LOWER(u.bio) LIKE $3
+      )`;
+    }
+
+    const rows = await query(
+      `SELECT
+          u.id AS user_id, u.name, u.username, u.bio, u.created_at, u.last_login_at,
+          f.id AS friendship_id, f.status AS friendship_status,
+          f.requester_id, f.addressee_id, f.created_at AS friendship_created_at, f.updated_at AS friendship_updated_at,
+          $1::BIGINT AS current_user_id,
+          CASE
+            WHEN f.id IS NULL OR f.status = 'declined' THEN 'none'
+            WHEN f.status = 'accepted' THEN 'friends'
+            WHEN f.status = 'pending' AND f.requester_id = $1 THEN 'outgoing_pending'
+            WHEN f.status = 'pending' AND f.addressee_id = $1 THEN 'incoming_pending'
+            WHEN f.status = 'blocked' THEN 'blocked'
+            ELSE 'none'
+          END AS relationship
+       FROM users u
+       LEFT JOIN friendships f
+         ON ((f.requester_id = $1 AND f.addressee_id = u.id) OR (f.requester_id = u.id AND f.addressee_id = $1))
+       WHERE ${where}
+         AND (f.status IS NULL OR f.status <> 'blocked')
+       ORDER BY
+         CASE WHEN f.status = 'accepted' THEN 0 WHEN f.status = 'pending' THEN 1 ELSE 2 END,
+         u.last_login_at DESC NULLS LAST,
+         u.created_at DESC
+       LIMIT $2`,
+      params
+    );
+
+    res.json({ ok: true, users: rows.map(friendUserToPublic) });
+  } catch (error) {
+    console.error('Friend search error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal mencari teman.' });
+  }
+});
+
+app.get('/api/friends', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const rows = await query(
+      `SELECT
+          u.id AS user_id, u.name, u.username, u.bio, u.created_at, u.last_login_at,
+          f.id AS friendship_id, f.status AS friendship_status,
+          f.requester_id, f.addressee_id, f.created_at AS friendship_created_at, f.updated_at AS friendship_updated_at,
+          $1::BIGINT AS current_user_id,
+          CASE
+            WHEN f.status = 'accepted' THEN 'friends'
+            WHEN f.status = 'pending' AND f.requester_id = $1 THEN 'outgoing_pending'
+            WHEN f.status = 'pending' AND f.addressee_id = $1 THEN 'incoming_pending'
+            ELSE 'none'
+          END AS relationship
+       FROM friendships f
+       JOIN users u ON u.id = CASE WHEN f.requester_id = $1 THEN f.addressee_id ELSE f.requester_id END
+       WHERE (f.requester_id = $1 OR f.addressee_id = $1)
+         AND f.status IN ('pending','accepted')
+       ORDER BY f.updated_at DESC`,
+      [me]
+    );
+
+    const mapped = rows.map(friendUserToPublic);
+    res.json({
+      ok: true,
+      friends: mapped.filter((u) => u.relationship === 'friends'),
+      incoming: mapped.filter((u) => u.relationship === 'incoming_pending'),
+      outgoing: mapped.filter((u) => u.relationship === 'outgoing_pending')
+    });
+  } catch (error) {
+    console.error('Friends list error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat daftar teman.' });
+  }
+});
+
+app.post('/api/friends/request', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const targetId = Number(req.body.userId);
+
+    if (!Number.isFinite(targetId) || targetId <= 0 || targetId === me) {
+      return res.status(400).json({ ok: false, error: 'User tujuan tidak valid.' });
+    }
+
+    const target = await getUserById(targetId);
+    if (!target) return res.status(404).json({ ok: false, error: 'User tidak ditemukan.' });
+
+    const existingRows = await query(
+      `SELECT id, requester_id, addressee_id, status FROM friendships
+       WHERE (requester_id = $1 AND addressee_id = $2) OR (requester_id = $2 AND addressee_id = $1)
+       LIMIT 1`,
+      [me, targetId]
+    );
+    const existing = existingRows[0];
+
+    if (existing) {
+      if (existing.status === 'accepted') return res.status(409).json({ ok: false, error: 'Kalian sudah berteman.' });
+      if (existing.status === 'pending' && Number(existing.requester_id) === me) return res.status(409).json({ ok: false, error: 'Request sudah dikirim.' });
+      if (existing.status === 'pending' && Number(existing.addressee_id) === me) {
+        await query(`UPDATE friendships SET status = 'accepted', updated_at = NOW() WHERE id = $1`, [existing.id]);
+        return res.json({ ok: true, message: 'Request diterima. Kalian sekarang berteman.' });
+      }
+      await query(
+        `UPDATE friendships SET requester_id = $1, addressee_id = $2, status = 'pending', updated_at = NOW() WHERE id = $3`,
+        [me, targetId, existing.id]
+      );
+      return res.json({ ok: true, message: 'Request teman dikirim.' });
+    }
+
+    await query(
+      `INSERT INTO friendships (requester_id, addressee_id, status, created_at, updated_at)
+       VALUES ($1, $2, 'pending', NOW(), NOW())`,
+      [me, targetId]
+    );
+
+    res.status(201).json({ ok: true, message: 'Request teman dikirim.' });
+  } catch (error) {
+    console.error('Friend request error:', error);
+    if (error.code === '23505') return res.status(409).json({ ok: false, error: 'Relasi pertemanan sudah ada.' });
+    res.status(500).json({ ok: false, error: 'Gagal mengirim request teman.' });
+  }
+});
+
+app.post('/api/friends/:id/accept', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const friendshipId = Number(req.params.id);
+    if (!Number.isFinite(friendshipId) || friendshipId <= 0) return res.status(400).json({ ok: false, error: 'Request tidak valid.' });
+
+    const rows = await query(
+      `UPDATE friendships SET status = 'accepted', updated_at = NOW()
+       WHERE id = $1 AND addressee_id = $2 AND status = 'pending'
+       RETURNING id`,
+      [friendshipId, me]
+    );
+
+    if (!rows.length) return res.status(404).json({ ok: false, error: 'Request tidak ditemukan atau sudah diproses.' });
+    res.json({ ok: true, message: 'Request diterima.' });
+  } catch (error) {
+    console.error('Friend accept error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal menerima request.' });
+  }
+});
+
+app.post('/api/friends/:id/decline', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const friendshipId = Number(req.params.id);
+    if (!Number.isFinite(friendshipId) || friendshipId <= 0) return res.status(400).json({ ok: false, error: 'Request tidak valid.' });
+
+    const rows = await query(
+      `UPDATE friendships SET status = 'declined', updated_at = NOW()
+       WHERE id = $1 AND addressee_id = $2 AND status = 'pending'
+       RETURNING id`,
+      [friendshipId, me]
+    );
+
+    if (!rows.length) return res.status(404).json({ ok: false, error: 'Request tidak ditemukan atau sudah diproses.' });
+    res.json({ ok: true, message: 'Request ditolak.' });
+  } catch (error) {
+    console.error('Friend decline error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal menolak request.' });
+  }
+});
+
+app.delete('/api/friends/:id', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const friendshipId = Number(req.params.id);
+    if (!Number.isFinite(friendshipId) || friendshipId <= 0) return res.status(400).json({ ok: false, error: 'Relasi tidak valid.' });
+
+    const rows = await query(
+      `DELETE FROM friendships
+       WHERE id = $1 AND (requester_id = $2 OR addressee_id = $2)
+       RETURNING id`,
+      [friendshipId, me]
+    );
+
+    if (!rows.length) return res.status(404).json({ ok: false, error: 'Relasi tidak ditemukan.' });
+    res.json({ ok: true, message: 'Relasi pertemanan dihapus.' });
+  } catch (error) {
+    console.error('Friend delete error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal menghapus relasi.' });
   }
 });
 
