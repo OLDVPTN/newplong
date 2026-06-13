@@ -2153,14 +2153,20 @@ app.get('/api/friends', requireAuth, async (req, res) => {
 });
 
 
-app.get('/api/friends/profile/:userId', requireAuth, async (req, res) => {
+app.get('/api/friends/profile/:profileKey', requireAuth, async (req, res) => {
   try {
     const me = Number(req.user.id);
-    const targetId = Number(req.params.userId);
+    const rawKey = String(req.params.profileKey || '').trim();
+    const profileKey = rawKey.replace(/^@+/, '').toLowerCase();
+    const targetId = Number(rawKey);
 
-    if (!Number.isFinite(targetId) || targetId <= 0) {
+    if (!profileKey) {
       return res.status(400).json({ ok: false, error: 'User tidak valid.' });
     }
+
+    const isNumericId = Number.isFinite(targetId) && targetId > 0 && String(targetId) === rawKey;
+    const lookupWhere = isNumericId ? 'u.id = $2' : 'LOWER(u.username) = $2';
+    const lookupValue = isNumericId ? targetId : profileKey;
 
     const rows = await query(
       `SELECT
@@ -2180,20 +2186,21 @@ app.get('/api/friends/profile/:userId', requireAuth, async (req, res) => {
        FROM users u
        LEFT JOIN friendships f
          ON ((f.requester_id = $1 AND f.addressee_id = u.id) OR (f.requester_id = u.id AND f.addressee_id = $1))
-       WHERE u.id = $2
+       WHERE ${lookupWhere}
          AND (f.status IS NULL OR f.status <> 'blocked')
        LIMIT 1`,
-      [me, targetId]
+      [me, lookupValue]
     );
 
     if (!rows.length) return res.status(404).json({ ok: false, error: 'Profil tidak ditemukan.' });
 
+    const targetUserId = Number(rows[0].user_id);
     const friendCountRows = await query(
       `SELECT COUNT(*)::INT AS total
        FROM friendships
        WHERE status = 'accepted'
          AND (requester_id = $1 OR addressee_id = $1)`,
-      [targetId]
+      [targetUserId]
     );
 
     res.json({
@@ -2360,8 +2367,8 @@ Object.entries(APP_VIEWS).forEach(([route, view]) => {
 });
 
 
-app.get(['/profile/:userId', '/user/:userId'], (req, res) => {
-  res.render('profile', { profileUserId: req.params.userId });
+app.get(['/profile/:profileKey', '/user/:profileKey'], (req, res) => {
+  res.render('profile', { profileKey: req.params.profileKey });
 });
 
 app.get(['/login', '/login.html'], (req, res) => {
