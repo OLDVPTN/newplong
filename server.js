@@ -235,6 +235,71 @@ async function initDb() {
   `);
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_achievements_user_unlocked ON achievements(user_id, unlocked_at DESC);`);
 
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS user_safety_settings (
+      user_id BIGINT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+      profile_visibility VARCHAR(20) NOT NULL DEFAULT 'public',
+      allow_friend_requests BOOLEAN NOT NULL DEFAULT TRUE,
+      allow_support_messages BOOLEAN NOT NULL DEFAULT TRUE,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      CHECK (profile_visibility IN ('public','friends','private'))
+    );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS user_blocks (
+      id BIGSERIAL PRIMARY KEY,
+      blocker_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      blocked_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      CHECK (blocker_id <> blocked_id),
+      UNIQUE(blocker_id, blocked_id)
+    );
+  `);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_user_blocks_blocker ON user_blocks(blocker_id);`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_user_blocks_blocked ON user_blocks(blocked_id);`);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS user_reports (
+      id BIGSERIAL PRIMARY KEY,
+      reporter_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      reported_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      reason VARCHAR(80) NOT NULL,
+      detail VARCHAR(500) NOT NULL DEFAULT '',
+      status VARCHAR(20) NOT NULL DEFAULT 'open',
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      CHECK (reporter_id <> reported_id)
+    );
+  `);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_user_reports_reported ON user_reports(reported_id, created_at DESC);`);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS daily_quest_claims (
+      id BIGSERIAL PRIMARY KEY,
+      user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      quest_date DATE NOT NULL DEFAULT CURRENT_DATE,
+      quest_key VARCHAR(80) NOT NULL,
+      reward_coins INT NOT NULL DEFAULT 0,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      UNIQUE(user_id, quest_date, quest_key)
+    );
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS ai_emotion_summaries (
+      id BIGSERIAL PRIMARY KEY,
+      user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      input_text VARCHAR(2200) NOT NULL DEFAULT '',
+      summary TEXT NOT NULL DEFAULT '',
+      emotions JSONB NOT NULL DEFAULT '[]'::jsonb,
+      suggestions JSONB NOT NULL DEFAULT '[]'::jsonb,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_ai_summaries_user_created ON ai_emotion_summaries(user_id, created_at DESC);`);
+
+
 
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);`);
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);`);
@@ -368,6 +433,126 @@ async function awardAchievements(userId) {
   }
 }
 
+
+async function isBlockedBetween(a, b) {
+  const rows = await query(
+    `SELECT id FROM user_blocks
+     WHERE (blocker_id = $1 AND blocked_id = $2) OR (blocker_id = $2 AND blocked_id = $1)
+     LIMIT 1`,
+    [Number(a), Number(b)]
+  );
+  return rows.length > 0;
+}
+
+async function getSafetySettings(userId) {
+  const rows = await query(
+    `INSERT INTO user_safety_settings (user_id)
+     VALUES ($1)
+     ON CONFLICT (user_id) DO NOTHING
+     RETURNING user_id`,
+    [Number(userId)]
+  );
+  const settings = await query(
+    `SELECT profile_visibility, allow_friend_requests, allow_support_messages
+     FROM user_safety_settings WHERE user_id = $1 LIMIT 1`,
+    [Number(userId)]
+  );
+  return settings[0] || { profile_visibility: 'public', allow_friend_requests: true, allow_support_messages: true };
+}
+
+async function rewardUserState(userId, reward = {}) {
+  const user = await getUserById(userId);
+  if (!user) return null;
+  const state = await getStateForUser(user);
+  const coins = Math.max(0, Math.floor(Number(reward.coins || 0)));
+  const petExp = Math.max(0, Math.floor(Number(reward.petExp || 0)));
+  const gardenExp = Math.max(0, Math.floor(Number(reward.gardenExp || 0)));
+  state.coins = Math.max(0, Math.floor(Number(state.coins || 0))) + coins;
+  if (petExp && typeof addPetExp === 'function') addPetExp(state, petExp);
+  ensureGarden(state);
+  if (gardenExp && typeof addGardenExp === 'function') addGardenExp(state.garden, gardenExp);
+  await saveStateForUser(userId, state);
+  return state;
+}
+
+function gardenInventoryValue(inventory = {}) {
+  const rates = { carrot: 8, lettuce: 11, tomato: 15 };
+  const items = Object.keys(rates).map((key) => ({
+    key,
+    qty: Math.max(0, Math.floor(Number(inventory?.[key] || 0))),
+    rate: rates[key],
+    value: Math.max(0, Math.floor(Number(inventory?.[key] || 0))) * rates[key]
+  }));
+  return {
+    items,
+    total: items.reduce((sum, item) => sum + item.value, 0)
+  };
+}
+
+function analyzeEmotionText(text = '') {
+  const raw = String(text || '').toLowerCase();
+  const buckets = [
+    { key: 'stres', words: ['stres','stress','pusing','tekanan','capek','lelah','burnout','panik','cemas','overthinking'] },
+    { key: 'sedih', words: ['sedih','nangis','kecewa','hampa','kosong','sendiri','kesepian'] },
+    { key: 'marah', words: ['marah','kesal','benci','emosi','jengkel','muak'] },
+    { key: 'galau', words: ['galau','bingung','ragu','dilema','takut'] },
+    { key: 'tenang', words: ['tenang','lega','plong','damai','bersyukur'] },
+    { key: 'senang', words: ['senang','bahagia','happy','semangat','excited'] }
+  ];
+  const scored = buckets.map((b) => ({ key: b.key, score: b.words.reduce((n, w) => n + (raw.includes(w) ? 1 : 0), 0) }))
+    .sort((a,b) => b.score - a.score);
+  const top = scored.filter((x) => x.score > 0).slice(0, 3);
+  const primary = top[0]?.key || 'tenang';
+  const suggestions = [];
+  if (['stres','marah','galau'].includes(primary)) suggestions.push('Coba buka Ruang Tenang selama 60 detik.');
+  if (['sedih','kosong'].includes(primary)) suggestions.push('Tulis mood check-in dan rawat pet sebentar.');
+  suggestions.push('Ambil satu langkah kecil yang masih terasa mungkin hari ini.');
+  return {
+    primary,
+    emotions: top.length ? top : [{ key: primary, score: 1 }],
+    summary: `Emosi utama yang terbaca: ${primary}. Ceritamu menunjukkan kebutuhan untuk dipahami, diberi jeda, dan diproses pelan-pelan.`,
+    suggestions: suggestions.slice(0, 3)
+  };
+}
+
+function questCatalog() {
+  return [
+    { key: 'mood_today', title: 'Check-in mood hari ini', body: 'Catat mood harianmu minimal 1 kali.', rewardCoins: 8, rewardPetExp: 5 },
+    { key: 'calm_today', title: 'Ruang Tenang 1 sesi', body: 'Selesaikan sesi napas minimal 60 detik.', rewardCoins: 10, rewardPetExp: 6 },
+    { key: 'support_today', title: 'Kirim dukungan ke teman', body: 'Sapa teman dengan pesan dukungan.', rewardCoins: 12, rewardPetExp: 5 },
+    { key: 'garden_today', title: 'Rawat ekonomi kebun', body: 'Panen atau konversi hasil kebun menjadi Soul Coins.', rewardCoins: 10, rewardGardenExp: 8 },
+    { key: 'ai_summary_today', title: 'Buat ringkasan emosi AI', body: 'Ringkas curhatanmu menjadi insight emosi.', rewardCoins: 9, rewardPetExp: 5 }
+  ];
+}
+
+async function buildQuestStatus(userId) {
+  const uid = Number(userId);
+  const [moodRows, calmRows, supportRows, aiRows, claimedRows] = await Promise.all([
+    query(`SELECT COUNT(*)::INT AS total FROM mood_checkins WHERE user_id = $1 AND mood_date = CURRENT_DATE`, [uid]),
+    query(`SELECT COUNT(*)::INT AS total FROM calm_sessions WHERE user_id = $1 AND created_at::date = CURRENT_DATE`, [uid]),
+    query(`SELECT COUNT(*)::INT AS total FROM friend_supports WHERE sender_id = $1 AND created_at::date = CURRENT_DATE`, [uid]),
+    query(`SELECT COUNT(*)::INT AS total FROM ai_emotion_summaries WHERE user_id = $1 AND created_at::date = CURRENT_DATE`, [uid]),
+    query(`SELECT quest_key FROM daily_quest_claims WHERE user_id = $1 AND quest_date = CURRENT_DATE`, [uid])
+  ]);
+  const user = await getUserById(uid);
+  const state = user ? await getStateForUser(user) : {};
+  const garden = state.garden || {};
+  const gardenDone = Number(garden?.daily?.harvested || 0) > 0 || Number(garden?.economy?.convertedToday || 0) > 0;
+  const doneMap = {
+    mood_today: Number(moodRows[0]?.total || 0) > 0,
+    calm_today: Number(calmRows[0]?.total || 0) > 0,
+    support_today: Number(supportRows[0]?.total || 0) > 0,
+    garden_today: gardenDone,
+    ai_summary_today: Number(aiRows[0]?.total || 0) > 0
+  };
+  const claimed = new Set(claimedRows.map((r) => r.quest_key));
+  return questCatalog().map((q) => ({
+    ...q,
+    done: !!doneMap[q.key],
+    claimed: claimed.has(q.key)
+  }));
+}
+
 function notificationToPublic(row) {
   return {
     id: String(row.id),
@@ -464,6 +649,7 @@ function defaultAppState(user = {}) {
     inventory: [],
     redeemHistory: [],
     lastCrystal: null,
+    onboarding: { completed: false, goal: '', petName: 'Plong', firstMood: 'tenang' },
     garden: defaultGarden(),
     gm: 'qwen2.5:3b',
     al: 'id',
@@ -2406,6 +2592,14 @@ app.post('/api/friends/request', requireAuth, async (req, res) => {
     const target = await getUserById(targetId);
     if (!target) return res.status(404).json({ ok: false, error: 'User tidak ditemukan.' });
 
+    if (await isBlockedBetween(me, targetId)) {
+      return res.status(403).json({ ok: false, error: 'Tidak bisa mengirim request karena ada relasi blokir.' });
+    }
+    const targetSafety = await getSafetySettings(targetId);
+    if (!targetSafety.allow_friend_requests) {
+      return res.status(403).json({ ok: false, error: 'User ini sedang menutup request pertemanan.' });
+    }
+
     const existingRows = await query(
       `SELECT id, requester_id, addressee_id, status FROM friendships
        WHERE (requester_id = $1 AND addressee_id = $2) OR (requester_id = $2 AND addressee_id = $1)
@@ -2664,6 +2858,14 @@ app.post('/api/friends/support', requireAuth, async (req, res) => {
       return res.status(400).json({ ok: false, error: 'Teman tujuan tidak valid.' });
     }
 
+    if (await isBlockedBetween(me, targetId)) {
+      return res.status(403).json({ ok: false, error: 'Tidak bisa mengirim dukungan karena ada relasi blokir.' });
+    }
+    const receiverSafety = await getSafetySettings(targetId);
+    if (!receiverSafety.allow_support_messages) {
+      return res.status(403).json({ ok: false, error: 'Teman ini sedang menutup pesan dukungan.' });
+    }
+
     const friendshipRows = await query(
       `SELECT id, requester_id, addressee_id, friend_xp, support_count
        FROM friendships
@@ -2771,6 +2973,234 @@ app.get('/api/achievements', requireAuth, async (req, res) => {
 
 
 
+
+
+/* ═══════ GROWTH PACK: SAFETY, QUESTS, GARDEN ECONOMY, AI EMOTION SUMMARY ═══════ */
+
+app.get('/api/safety/settings', requireAuth, async (req, res) => {
+  try {
+    const s = await getSafetySettings(req.user.id);
+    const blocks = await query(
+      `SELECT b.id, u.id AS user_id, u.name, u.username, u.bio, b.created_at
+       FROM user_blocks b
+       JOIN users u ON u.id = b.blocked_id
+       WHERE b.blocker_id = $1
+       ORDER BY b.created_at DESC`,
+      [req.user.id]
+    );
+    res.json({
+      ok: true,
+      settings: {
+        profileVisibility: s.profile_visibility,
+        allowFriendRequests: !!s.allow_friend_requests,
+        allowSupportMessages: !!s.allow_support_messages
+      },
+      blocks: blocks.map((row) => ({
+        id: String(row.id),
+        user: { id: String(row.user_id), name: row.name, username: row.username ? `@${row.username}` : '@vokamon.user', bio: row.bio || '' },
+        createdAt: row.created_at
+      }))
+    });
+  } catch (error) {
+    console.error('Safety settings error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat safety center.' });
+  }
+});
+
+app.put('/api/safety/settings', requireAuth, async (req, res) => {
+  try {
+    const visibility = ['public','friends','private'].includes(req.body.profileVisibility) ? req.body.profileVisibility : 'public';
+    const allowFriendRequests = req.body.allowFriendRequests !== false;
+    const allowSupportMessages = req.body.allowSupportMessages !== false;
+    await query(
+      `INSERT INTO user_safety_settings (user_id, profile_visibility, allow_friend_requests, allow_support_messages, updated_at)
+       VALUES ($1, $2, $3, $4, NOW())
+       ON CONFLICT (user_id)
+       DO UPDATE SET profile_visibility = EXCLUDED.profile_visibility,
+                     allow_friend_requests = EXCLUDED.allow_friend_requests,
+                     allow_support_messages = EXCLUDED.allow_support_messages,
+                     updated_at = NOW()`,
+      [req.user.id, visibility, allowFriendRequests, allowSupportMessages]
+    );
+    res.json({ ok: true, message: 'Pengaturan safety tersimpan.' });
+  } catch (error) {
+    console.error('Safety save error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal menyimpan safety center.' });
+  }
+});
+
+app.post('/api/safety/block', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const targetId = Number(req.body.userId);
+    if (!Number.isFinite(targetId) || targetId <= 0 || targetId === me) return res.status(400).json({ ok: false, error: 'User tidak valid.' });
+    const target = await getUserById(targetId);
+    if (!target) return res.status(404).json({ ok: false, error: 'User tidak ditemukan.' });
+
+    await query(
+      `INSERT INTO user_blocks (blocker_id, blocked_id, created_at)
+       VALUES ($1, $2, NOW())
+       ON CONFLICT (blocker_id, blocked_id) DO NOTHING`,
+      [me, targetId]
+    );
+    await query(
+      `DELETE FROM friendships
+       WHERE (requester_id = $1 AND addressee_id = $2) OR (requester_id = $2 AND addressee_id = $1)`,
+      [me, targetId]
+    );
+    await createNotification(me, 'safety', 'User diblokir', `${target.name || 'User'} sudah diblokir.`, { blockedUserId: targetId });
+    res.json({ ok: true, message: 'User diblokir dan relasi pertemanan dihapus.' });
+  } catch (error) {
+    console.error('Block user error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memblokir user.' });
+  }
+});
+
+app.delete('/api/safety/block/:userId', requireAuth, async (req, res) => {
+  try {
+    const targetId = Number(req.params.userId);
+    if (!Number.isFinite(targetId) || targetId <= 0) return res.status(400).json({ ok: false, error: 'User tidak valid.' });
+    await query(`DELETE FROM user_blocks WHERE blocker_id = $1 AND blocked_id = $2`, [req.user.id, targetId]);
+    res.json({ ok: true, message: 'Blokir dibuka.' });
+  } catch (error) {
+    console.error('Unblock user error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal membuka blokir.' });
+  }
+});
+
+app.post('/api/safety/report', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const targetId = Number(req.body.userId);
+    const reason = String(req.body.reason || 'other').trim().slice(0, 80);
+    const detail = String(req.body.detail || '').trim().slice(0, 500);
+    if (!Number.isFinite(targetId) || targetId <= 0 || targetId === me) return res.status(400).json({ ok: false, error: 'User tidak valid.' });
+    const target = await getUserById(targetId);
+    if (!target) return res.status(404).json({ ok: false, error: 'User tidak ditemukan.' });
+    await query(
+      `INSERT INTO user_reports (reporter_id, reported_id, reason, detail, status, created_at)
+       VALUES ($1, $2, $3, $4, 'open', NOW())`,
+      [me, targetId, reason, detail]
+    );
+    await createNotification(me, 'safety', 'Laporan terkirim', 'Terima kasih. Laporanmu sudah tersimpan untuk ditinjau.', { reportedUserId: targetId, reason });
+    res.json({ ok: true, message: 'Laporan terkirim.' });
+  } catch (error) {
+    console.error('Report user error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal mengirim laporan.' });
+  }
+});
+
+app.get('/api/quests', requireAuth, async (req, res) => {
+  try {
+    const quests = await buildQuestStatus(req.user.id);
+    const done = quests.filter((q) => q.done).length;
+    const claimed = quests.filter((q) => q.claimed).length;
+    res.json({ ok: true, date: new Date().toISOString().slice(0, 10), done, claimed, quests });
+  } catch (error) {
+    console.error('Quest list error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat daily quest.' });
+  }
+});
+
+app.post('/api/quests/:key/claim', requireAuth, async (req, res) => {
+  try {
+    const key = String(req.params.key || '').trim();
+    const quests = await buildQuestStatus(req.user.id);
+    const quest = quests.find((q) => q.key === key);
+    if (!quest) return res.status(404).json({ ok: false, error: 'Quest tidak ditemukan.' });
+    if (!quest.done) return res.status(400).json({ ok: false, error: 'Quest belum selesai.' });
+    if (quest.claimed) return res.status(409).json({ ok: false, error: 'Reward quest sudah diklaim.' });
+
+    await query(
+      `INSERT INTO daily_quest_claims (user_id, quest_date, quest_key, reward_coins, created_at)
+       VALUES ($1, CURRENT_DATE, $2, $3, NOW())`,
+      [req.user.id, key, quest.rewardCoins || 0]
+    );
+    const state = await rewardUserState(req.user.id, { coins: quest.rewardCoins, petExp: quest.rewardPetExp, gardenExp: quest.rewardGardenExp });
+    await createNotification(req.user.id, 'quest', 'Reward quest diklaim', `${quest.title}: +${quest.rewardCoins || 0} Soul Coins.`, { questKey: key });
+    res.json({ ok: true, message: 'Reward quest diklaim.', state });
+  } catch (error) {
+    if (error.code === '23505') return res.status(409).json({ ok: false, error: 'Reward quest sudah diklaim.' });
+    console.error('Quest claim error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal klaim quest.' });
+  }
+});
+
+app.get('/api/garden/economy', requireAuth, async (req, res) => {
+  try {
+    const state = await getStateForUser(req.user);
+    ensureGarden(state);
+    const value = gardenInventoryValue(state.garden.inventory || {});
+    res.json({ ok: true, inventory: state.garden.inventory || {}, value, economy: state.garden.economy || {} });
+  } catch (error) {
+    console.error('Garden economy error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat ekonomi kebun.' });
+  }
+});
+
+app.post('/api/garden/economy/convert', requireAuth, async (req, res) => {
+  try {
+    const state = await getStateForUser(req.user);
+    ensureGarden(state);
+    const value = gardenInventoryValue(state.garden.inventory || {});
+    if (value.total <= 0) return res.status(400).json({ ok: false, error: 'Belum ada hasil panen untuk dikonversi.' });
+
+    state.coins = Math.max(0, Math.floor(Number(state.coins || 0))) + value.total;
+    state.garden.inventory = { carrot: 0, lettuce: 0, tomato: 0 };
+    state.garden.economy = state.garden.economy || {};
+    const today = new Date().toISOString().slice(0, 10);
+    if (state.garden.economy.date !== today) state.garden.economy = { date: today, convertedToday: 0, totalConverted: Number(state.garden.economy.totalConverted || 0) };
+    state.garden.economy.convertedToday = Number(state.garden.economy.convertedToday || 0) + value.total;
+    state.garden.economy.totalConverted = Number(state.garden.economy.totalConverted || 0) + value.total;
+    addGardenExp(state.garden, Math.max(5, Math.floor(value.total / 3)));
+
+    await saveStateForUser(req.user.id, state);
+    await createNotification(req.user.id, 'garden', 'Hasil kebun dikonversi', `Kamu mendapatkan +${value.total} Soul Coins dari hasil panen.`, { coins: value.total });
+    res.json({ ok: true, message: `Hasil kebun dikonversi menjadi ${value.total} Soul Coins.`, value, state });
+  } catch (error) {
+    console.error('Garden convert error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal konversi hasil kebun.' });
+  }
+});
+
+app.post('/api/ai/emotion-summary', requireAuth, async (req, res) => {
+  try {
+    const text = String(req.body.text || '').trim().slice(0, 2200);
+    if (!text) return res.status(400).json({ ok: false, error: 'Teks curhat masih kosong.' });
+
+    const insight = analyzeEmotionText(text);
+    const rows = await query(
+      `INSERT INTO ai_emotion_summaries (user_id, input_text, summary, emotions, suggestions, created_at)
+       VALUES ($1, $2, $3, $4::jsonb, $5::jsonb, NOW())
+       RETURNING id, input_text, summary, emotions, suggestions, created_at`,
+      [req.user.id, text, insight.summary, JSON.stringify(insight.emotions), JSON.stringify(insight.suggestions)]
+    );
+    await createNotification(req.user.id, 'ai_summary', 'Ringkasan emosi dibuat', `Emosi utama: ${insight.primary}.`, { summaryId: rows[0].id, primary: insight.primary });
+    res.json({ ok: true, summary: { id: String(rows[0].id), inputText: rows[0].input_text, summary: rows[0].summary, emotions: rows[0].emotions, suggestions: rows[0].suggestions, createdAt: rows[0].created_at } });
+  } catch (error) {
+    console.error('AI emotion summary error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal membuat ringkasan emosi.' });
+  }
+});
+
+app.get('/api/ai/emotion-summary', requireAuth, async (req, res) => {
+  try {
+    const rows = await query(
+      `SELECT id, input_text, summary, emotions, suggestions, created_at
+       FROM ai_emotion_summaries
+       WHERE user_id = $1
+       ORDER BY created_at DESC
+       LIMIT 12`,
+      [req.user.id]
+    );
+    res.json({ ok: true, summaries: rows.map((r) => ({ id: String(r.id), inputText: r.input_text, summary: r.summary, emotions: r.emotions, suggestions: r.suggestions, createdAt: r.created_at })) });
+  } catch (error) {
+    console.error('AI summary list error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat ringkasan emosi.' });
+  }
+});
+
+
 const APP_VIEWS = {
   '/': 'home',
   '/home': 'home',
@@ -2809,6 +3239,15 @@ const APP_VIEWS = {
 
   '/achievements': 'achievements',
   '/achievements.html': 'achievements',
+
+  '/safety': 'safety',
+  '/safety.html': 'safety',
+
+  '/quests': 'quests',
+  '/quests.html': 'quests',
+
+  '/summary': 'summary',
+  '/summary.html': 'summary',
 
   '/account': 'account',
   '/account.html': 'account'
