@@ -4046,6 +4046,93 @@
   .friend-search-card,.friend-section-card{padding:12px;border-radius:20px}
 }
 
+        
+
+            /* ===== Mobile big text + bottom nav collision fix ===== */
+            @media(max-width:599px){
+              :root{--nav-h:76px}
+              body{font-size:16px;line-height:1.7}
+              #main{padding-bottom:calc(var(--nav-h) + var(--s-b) + 4px)!important}
+              .pg{padding:14px!important}
+              .ph{margin-bottom:12px!important;gap:12px}
+              .pt{font-size:23px!important;line-height:1.13!important;letter-spacing:-.45px!important}
+              .ps,.pm{font-size:13px!important;line-height:1.65!important}
+              .pn{font-size:21px!important;line-height:1.16!important}
+              #tbar .lw{font-size:17px!important}
+              .cpill{font-size:12.5px!important}
+
+              #bnav{
+                height:calc(var(--nav-h) + var(--s-b))!important;
+                align-items:stretch!important;
+                gap:4px!important;
+                padding-left:8px!important;
+                padding-right:8px!important;
+              }
+              .nb{
+                flex:0 0 76px!important;
+                min-width:76px!important;
+                min-height:58px!important;
+                padding:7px 6px 6px!important;
+                gap:3px!important;
+                font-size:11px!important;
+                line-height:1.05!important;
+              }
+              .nb .nav-img{width:30px!important;height:30px!important;margin-bottom:0!important}
+              .nb span{
+                max-width:72px!important;
+                min-height:22px!important;
+                white-space:normal!important;
+                overflow:visible!important;
+                text-overflow:clip!important;
+                display:flex!important;
+                align-items:center!important;
+                justify-content:center!important;
+                text-align:center!important;
+                line-height:1.04!important;
+                word-break:normal!important;
+              }
+              .nb.on::before{width:20px!important;height:3px!important}
+
+              .foku-shell{padding:14px!important}
+              .foku-greet span{font-size:15.5px!important}
+              .foku-greet strong{font-size:27px!important;line-height:1.12!important}
+              .foku-greet small{font-size:13.5px!important;line-height:1.65!important}
+              .foku-hero-card,.foku-side-card,.foku-bottom-card{border-radius:28px!important}
+              .foku-message-bubble span{font-size:12.5px!important}
+              .foku-message-bubble strong{font-size:15.5px!important;line-height:1.45!important}
+              .foku-pet-card-top h2{font-size:27px!important;line-height:1.12!important}
+              .foku-status{font-size:13.5px!important;line-height:1.65!important}
+              .foku-pet-stat label{font-size:12.5px!important}
+              .foku-pet-stat strong{font-size:27px!important}
+              .foku-side-head span,.foku-section-head span{font-size:11.5px!important}
+              .foku-side-head strong,.foku-section-head strong{font-size:20px!important;line-height:1.22!important}
+              .foku-quick-btn{font-size:12.5px!important;min-height:88px!important}
+              .foku-quick-btn .nav-img{width:25px!important;height:25px!important}
+              .foku-focus-item p,.foku-side-card p,.foku-bottom-card p{font-size:13.5px!important;line-height:1.7!important}
+
+              .pp-hero-logo{font-size:29px!important;line-height:1.15!important;text-align:center}
+              .pp-hero-sub{font-size:14px!important;line-height:1.65!important;text-align:center}
+              .pp-input-box textarea{font-size:16px!important;line-height:1.55!important}
+              .pp-msg-user .pp-bbl,.pp-msg-bot .pp-bbl{font-size:15px!important;line-height:1.7!important}
+              .pp-sel-btn,.pp-opt,.pp-sug,.pp-fu-btn{font-size:12.5px!important}
+
+              .st-title strong{font-size:24px!important;line-height:1.12!important}
+              .st-title span{font-size:13px!important;line-height:1.6!important}
+              .st-card-head strong{font-size:16px!important}
+              .st-card-head span{font-size:13px!important;line-height:1.6!important}
+              .st-wallet-item strong{font-size:15px!important}
+              .st-wallet-item span{font-size:12.5px!important}
+
+              .friend-hero h2{font-size:25px!important;line-height:1.15!important}
+              .friend-hero p{font-size:13.5px!important;line-height:1.7!important}
+              #friend-search{font-size:15px!important}
+              .friend-meta strong{font-size:16px!important}
+              .friend-meta span{font-size:12px!important}
+              .friend-bio{font-size:13.5px!important;line-height:1.75!important}
+              .friend-btn{font-size:13px!important;min-height:44px!important}
+              .friend-chip{font-size:12px!important;padding:9px 13px!important}
+            }
+
         </style>
     </head>
     <body class="auth-lock">
@@ -4876,11 +4963,11 @@
 
         <nav id="bnav" aria-label="Navigasi">
             <button class="<%= pageId === 'pg-home' ? 'nb on' : 'nb' %>" data-page="pg-home"><img class="nav-img" src="/assets/nav/home.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Beranda</span></button>
-            <button class="<%= pageId === 'pg-friends' ? 'nb on' : 'nb' %>" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Teman</span></button>
+            <button class="<%= pageId === 'pg-friends' ? 'nb on' : 'nb' %>" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Cari Teman</span></button>
             <button class="<%= pageId === 'pg-garden' ? 'nb on' : 'nb' %>" data-page="pg-garden"><img class="nav-img" src="/assets/nav/garden.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Kebun</span></button>
-            <button class="<%= pageId === 'pg-vent' ? 'nb on' : 'nb' %>" data-page="pg-vent"><img class="nav-img" src="/assets/nav/vent.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Curhat (voice)</span></button>
+            <button class="<%= pageId === 'pg-vent' ? 'nb on' : 'nb' %>" data-page="pg-vent"><img class="nav-img" src="/assets/nav/vent.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Voice</span></button>
             <!---<button class="<%= pageId === 'pg-art' ? 'nb on' : 'nb' %>" data-page="pg-art"><img class="nav-img" src="/assets/nav/art.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Art</span></button>-->
-            <button class="<%= pageId === 'pg-assist' ? 'nb on' : 'nb' %>" data-page="pg-assist"><img class="nav-img" src="/assets/nav/chat.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Curhat (chat)</span></button>
+            <button class="<%= pageId === 'pg-assist' ? 'nb on' : 'nb' %>" data-page="pg-assist"><img class="nav-img" src="/assets/nav/chat.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Chat</span></button>
             <button class="<%= pageId === 'pg-redeem' ? 'nb on' : 'nb' %>" data-page="pg-redeem"><img class="nav-img" src="/assets/nav/redeem.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Reward</span></button>
             <!--<button class="<%= pageId === 'pg-avatar' ? 'nb on' : 'nb' %>" data-page="pg-avatar"><img class="nav-img" src="/assets/nav/avatar.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Kostumisasi</span></button>-->
             <button class="<%= pageId === 'pg-account' ? 'nb on' : 'nb' %>" data-page="pg-account"><img class="nav-img" src="/assets/nav/account.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Akun</span></button>
