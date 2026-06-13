@@ -5335,6 +5335,20 @@
             .onboarding-goals{display:grid;grid-template-columns:1fr 1fr;gap:8px}
             .onboarding-goal,.onboarding-mood{min-height:42px;border-radius:16px;background:#f8fbff;border:1px solid #e7eefc;color:#52627f;font-size:13px;font-weight:900}
             .onboarding-goal.active,.onboarding-mood.active{background:#fff7ed;border-color:#fed7aa;color:#c2410c}
+
+            .onboarding-note{
+                margin:12px 0 0;
+                padding:10px 12px;
+                border-radius:16px;
+                background:#f0fdf4;
+                border:1px solid #bbf7d0;
+                color:#3f6f4a;
+                font-size:12px;
+                line-height:1.55;
+                font-weight:800;
+            }
+            #onboarding-reset{margin-top:10px}
+
             @media(max-width:900px){.safety-layout,.summary-layout{grid-template-columns:1fr}}
             @media(max-width:599px){
                 .garden-economy-items{grid-template-columns:1fr}
@@ -5390,25 +5404,28 @@
         <div id="onboarding-modal" class="onboarding-modal" aria-hidden="true">
             <article class="onboarding-card" role="dialog" aria-modal="true" aria-label="Onboarding Plong">
                 <div class="onboarding-mark">🌱</div>
-                <span>Selamat datang di VokaMon</span>
-                <h1>Biar aku kenalin ruang healing-mu dulu</h1>
-                <p>Pilih tujuan awal, nama pet, dan mood pertama. Setelah selesai kamu akan dapat arah yang lebih jelas.</p>
-                <label>Tujuan utama</label>
+                <span>Mulai perjalanan emosimu</span>
+                <h1>Hari ini kamu mau mulai dari mana dulu?</h1>
+                <p>Plong tetap tempat buat curhat dan melepas emosi. Pilihan ini hanya menentukan pintu masuk pertama, bukan mengunci fitur lain.</p>
+                <label>Pintu masuk pertama</label>
                 <div class="onboarding-goals">
-                    <button type="button" class="onboarding-goal active" data-goal="curhat">Curhat</button>
-                    <button type="button" class="onboarding-goal" data-goal="emosi">Kelola emosi</button>
-                    <button type="button" class="onboarding-goal" data-goal="pet">Rawat pet</button>
-                    <button type="button" class="onboarding-goal" data-goal="support">Cari support</button>
+                    <button type="button" class="onboarding-goal active" data-goal="curhat_dulu">Curhat dulu</button>
+                    <button type="button" class="onboarding-goal" data-goal="checkin_mood">Check-in mood</button>
+                    <button type="button" class="onboarding-goal" data-goal="rawat_pet_emosi">Rawat pet dari emosimu</button>
+                    <button type="button" class="onboarding-goal" data-goal="ruang_tenang">Tenangkan diri</button>
+                    <button type="button" class="onboarding-goal" data-goal="kebun_emosi">Lihat kebun emosimu</button>
+                    <button type="button" class="onboarding-goal" data-goal="cari_support">Cari support ringan</button>
                 </div>
-                <label for="onboarding-pet-name">Nama pet</label>
+                <label for="onboarding-pet-name">Nama pet pendamping emosimu</label>
                 <input id="onboarding-pet-name" type="text" maxlength="24" value="Plong">
-                <label>Mood awal</label>
+                <label>Mood awal hari ini</label>
                 <div class="onboarding-goals">
                     <button type="button" class="onboarding-mood active" data-mood="tenang">😌 Tenang</button>
                     <button type="button" class="onboarding-mood" data-mood="senang">😊 Senang</button>
                     <button type="button" class="onboarding-mood" data-mood="galau">🌧️ Galau</button>
                     <button type="button" class="onboarding-mood" data-mood="stres">😵‍💫 Stres</button>
                 </div>
+                <div class="onboarding-note">Semua fitur tetap bisa diakses setelah ini. Onboarding hanya muncul sekali, kecuali kamu buka ulang dari tombol reset.</div>
                 <button id="onboarding-finish" class="support-send" type="button"><i class="fas fa-seedling"></i> Mulai Perjalanan</button>
             </article>
         </div>
@@ -6068,6 +6085,7 @@
                                 <label class="safety-toggle"><input id="safety-allow-requests" type="checkbox" checked><span>Izinkan request pertemanan</span></label>
                                 <label class="safety-toggle"><input id="safety-allow-support" type="checkbox" checked><span>Izinkan pesan dukungan dari teman</span></label>
                                 <button id="safety-save" class="feature-btn primary wide" type="button"><i class="fas fa-save"></i> Simpan Safety</button>
+                                <button id="onboarding-reset" class="feature-btn wide" type="button"><i class="fas fa-seedling"></i> Ulang Onboarding</button>
                             </div>
                             <div class="feature-card">
                                 <div class="feature-card-head"><strong>User diblokir</strong><span>Relasi diblokir tidak bisa request/dukung.</span></div>
@@ -6718,7 +6736,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
             window.__vkmAuthReady=false;
 
             function defaultStateForUser(user){
-                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,bond:0,worker:{lastClaimAt:new Date().toISOString(),essence:{marah:0,sedih:0,galau:0,stres:0,excited:0,tenang:0},totalEarned:0,today:{date:new Date().toISOString().slice(0,10),vent:0,chat:0,garden:0,care:0,bonusClaimed:false}},accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,onboarding:{completed:false,goal:"",petName:"Plong",firstMood:"tenang"},garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null,economy:{date:new Date().toISOString().slice(0,10),convertedToday:0,totalConverted:0}},gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
+                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,bond:0,worker:{lastClaimAt:new Date().toISOString(),essence:{marah:0,sedih:0,galau:0,stres:0,excited:0,tenang:0},totalEarned:0,today:{date:new Date().toISOString().slice(0,10),vent:0,chat:0,garden:0,care:0,bonusClaimed:false}},accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,onboarding:{completed:false,goal:"curhat_dulu",petName:"Plong",firstMood:"tenang"},garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null,economy:{date:new Date().toISOString().slice(0,10),convertedToday:0,totalConverted:0}},gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
             }
             function ensureDefaults(){
                 if(!state.pet)state.pet={name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50};
@@ -8754,7 +8772,7 @@ var growthState={
     reportName:'',
     quests:[],
     summaries:[],
-    onboardingGoal:'curhat',
+    onboardingGoal:'curhat_dulu',
     onboardingMood:'tenang'
 };
 function petReactionForMood(mood){
@@ -8917,10 +8935,35 @@ async function generateAiSummary(){
     }catch(e){toast(e.message||'Gagal membuat ringkasan.')}
 }
 
+function openOnboardingModal(manual){
+    if(!state.onboarding)state.onboarding={completed:false,goal:'curhat_dulu',petName:'Plong',firstMood:'tenang'};
+    var petName=document.getElementById('onboarding-pet-name');
+    if(petName)petName.value=(state.onboarding.petName||state.pet&&state.pet.name||'Plong');
+    var goal=state.onboarding.goal||growthState.onboardingGoal||'curhat_dulu';
+    var mood=state.onboarding.firstMood||growthState.onboardingMood||'tenang';
+    document.querySelectorAll('.onboarding-goal').forEach(function(b){b.classList.toggle('active',b.dataset.goal===goal)});
+    document.querySelectorAll('.onboarding-mood').forEach(function(b){b.classList.toggle('active',b.dataset.mood===mood)});
+    growthState.onboardingGoal=goal;
+    growthState.onboardingMood=mood;
+    var modal=document.getElementById('onboarding-modal');
+    if(modal){modal.classList.add('show');modal.setAttribute('aria-hidden','false');}
+    if(manual)toast('Onboarding dibuka ulang. Fitur tetap tidak dikunci.');
+}
 function showOnboardingIfNeeded(){
-    if(!state.onboarding)state.onboarding={completed:false,goal:'',petName:'Plong',firstMood:'tenang'};
+    if(!authToken)return;
+    if(!state.onboarding)state.onboarding={completed:false,goal:'curhat_dulu',petName:'Plong',firstMood:'tenang'};
     if(state.onboarding.completed)return;
-    var modal=document.getElementById('onboarding-modal');if(modal){modal.classList.add('show');modal.setAttribute('aria-hidden','false');}
+    openOnboardingModal(false);
+}
+function onboardingTargetPage(goal){
+    return {
+        curhat_dulu:'pg-assist',
+        checkin_mood:'pg-mood',
+        rawat_pet_emosi:'pg-home',
+        ruang_tenang:'pg-calm',
+        kebun_emosi:'pg-garden',
+        cari_support:'pg-friends'
+    }[goal]||'pg-home';
 }
 function finishOnboarding(){
     var petName=document.getElementById('onboarding-pet-name');
@@ -8929,7 +8972,9 @@ function finishOnboarding(){
     applyPetReaction(growthState.onboardingMood);
     if(typeof save==='function')save();
     var modal=document.getElementById('onboarding-modal');if(modal){modal.classList.remove('show');modal.setAttribute('aria-hidden','true');}
-    toast('Onboarding selesai. Selamat datang 🌱');
+    toast('Onboarding selesai. Semua fitur tetap terbuka 🌱');
+    var target=onboardingTargetPage(state.onboarding.goal);
+    setTimeout(function(){go(target)},250);
 }
 
 function initGrowthFeatures(){
@@ -8946,6 +8991,7 @@ function initGrowthFeatures(){
     document.querySelectorAll('.onboarding-goal').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.onboarding-goal').forEach(function(x){x.classList.remove('active')});b.classList.add('active');growthState.onboardingGoal=b.dataset.goal||'curhat';});});
     document.querySelectorAll('.onboarding-mood').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.onboarding-mood').forEach(function(x){x.classList.remove('active')});b.classList.add('active');growthState.onboardingMood=b.dataset.mood||'tenang';});});
     var finish=document.getElementById('onboarding-finish');if(finish)finish.addEventListener('click',finishOnboarding);
+    var reset=document.getElementById('onboarding-reset');if(reset)reset.addEventListener('click',function(){openOnboardingModal(true)});
     loadQuests(true);loadSafetyCenter(true);loadAiSummaries(true);loadGardenEconomy(true);
     setTimeout(showOnboardingIfNeeded,900);
 }
