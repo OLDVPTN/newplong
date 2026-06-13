@@ -3007,7 +3007,7 @@
             }
             .foku-quick-actions{
                 display:grid;
-                grid-template-columns:repeat(4,1fr);
+                grid-template-columns:repeat(auto-fit,minmax(82px,1fr));
                 gap:10px;
                 margin-top:14px;
             }
@@ -4878,6 +4878,374 @@
                 }
             }
 
+
+            /* ===== Social healing feature pack ===== */
+            .notif-nav-badge{
+                margin-left:auto;
+                min-width:18px;
+                height:18px;
+                padding:0 5px;
+                border-radius:999px;
+                background:#ef4444;
+                color:#fff;
+                font-style:normal;
+                font-size:10px;
+                font-weight:900;
+                display:none;
+                place-items:center;
+                line-height:18px;
+            }
+            .notif-nav-badge.show{display:grid}
+            .feature-page{
+                overflow-y:auto;
+                -webkit-overflow-scrolling:touch;
+                overscroll-behavior-y:contain;
+                padding:18px 18px calc(var(--nav-h) + var(--s-b) + 22px)!important;
+                background:linear-gradient(180deg,#f8fbff,#f7f8fb);
+            }
+            .feature-shell{
+                width:min(100%,1180px);
+                margin:0 auto;
+                display:flex;
+                flex-direction:column;
+                gap:16px;
+            }
+            .feature-hero{
+                position:relative;
+                overflow:hidden;
+                display:grid;
+                grid-template-columns:minmax(0,1fr) 150px;
+                gap:18px;
+                align-items:center;
+                padding:clamp(20px,3vw,34px);
+                border-radius:34px;
+                border:1px solid rgba(255,255,255,.92);
+                box-shadow:0 24px 70px rgba(62,80,114,.10);
+            }
+            .notif-hero{background:linear-gradient(135deg,#fff7ed,#eff6ff 58%,#f5f3ff)}
+            .mood-hero{background:linear-gradient(135deg,#fff7ed,#f0fdf4 55%,#eff6ff)}
+            .calm-hero{background:linear-gradient(135deg,#ecfeff,#f0fdf4 54%,#f8fafc)}
+            .badge-hero{background:linear-gradient(135deg,#fff7ed,#fef9c3 52%,#f5f3ff)}
+            .feature-kicker{
+                display:inline-flex;
+                align-items:center;
+                gap:8px;
+                min-height:34px;
+                padding:8px 12px;
+                border-radius:999px;
+                background:rgba(255,255,255,.88);
+                border:1px solid rgba(224,232,244,.9);
+                color:#4f6389;
+                font-size:12px;
+                font-weight:900;
+                margin-bottom:12px;
+            }
+            .feature-hero h1{
+                margin:0;
+                color:#16233f;
+                font-size:clamp(28px,4vw,44px);
+                line-height:1.08;
+                letter-spacing:-.8px;
+            }
+            .feature-hero p{
+                margin:10px 0 0;
+                color:#5f6f8d;
+                font-size:clamp(14px,1.45vw,16px);
+                line-height:1.75;
+                max-width:720px;
+            }
+            .feature-hero-icon{
+                min-height:140px;
+                display:grid;
+                place-items:center;
+                border-radius:30px;
+                background:rgba(255,255,255,.52);
+                border:1px solid rgba(255,255,255,.76);
+                font-size:72px;
+                filter:drop-shadow(0 18px 24px rgba(84,106,160,.13));
+            }
+            .feature-toolbar,.feature-card{
+                background:rgba(255,255,255,.92);
+                border:1px solid rgba(221,229,240,.95);
+                border-radius:28px;
+                padding:18px;
+                box-shadow:0 18px 45px rgba(62,80,114,.08);
+            }
+            .feature-toolbar{
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:14px;
+            }
+            .feature-toolbar strong,.feature-card-head strong{
+                display:block;
+                color:#1d2d4d;
+                font-size:18px;
+                line-height:1.2;
+            }
+            .feature-toolbar span,.feature-card-head span{
+                display:block;
+                color:#6f7e9c;
+                font-size:12px;
+                margin-top:4px;
+                line-height:1.45;
+            }
+            .feature-toolbar-actions,.feature-card-head{
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:10px;
+            }
+            .feature-btn{
+                min-height:44px;
+                padding:0 14px;
+                border-radius:16px;
+                border:1px solid #dce7fb;
+                background:#fff;
+                color:#3f5aa6;
+                font-size:13px;
+                font-weight:900;
+                display:inline-flex;
+                align-items:center;
+                justify-content:center;
+                gap:8px;
+                touch-action:manipulation;
+            }
+            .feature-btn.primary,.support-send{
+                background:linear-gradient(180deg,#ffb46d,#ff9349);
+                border-color:#ff9349;
+                color:#fff;
+                box-shadow:0 10px 18px rgba(255,147,73,.18);
+            }
+            .feature-btn.wide{width:100%}
+            .feature-empty{
+                display:none;
+                min-height:120px;
+                align-items:center;
+                justify-content:center;
+                padding:18px;
+                border-radius:24px;
+                background:rgba(255,255,255,.78);
+                border:1px dashed #d8e4fb;
+                color:#64739a;
+                font-size:13px;
+                line-height:1.6;
+                text-align:center;
+            }
+            .feature-empty.show{display:flex}
+
+            .notif-list{display:flex;flex-direction:column;gap:10px}
+            .notif-item{
+                display:flex;
+                gap:12px;
+                align-items:flex-start;
+                padding:14px;
+                border-radius:22px;
+                background:#fff;
+                border:1px solid #e7eefc;
+                box-shadow:0 10px 22px rgba(84,106,160,.06);
+            }
+            .notif-item.unread{border-color:#bfd6ff;background:linear-gradient(180deg,#fff,#f8fbff)}
+            .notif-ic{
+                width:42px;
+                height:42px;
+                border-radius:16px;
+                display:grid;
+                place-items:center;
+                background:#eef5ff;
+                color:#4268df;
+                flex:0 0 42px;
+            }
+            .notif-body{flex:1;min-width:0}
+            .notif-body strong{display:block;color:#1d2d4d;font-size:14px}
+            .notif-body p{margin:4px 0 0;color:#66728d;font-size:13px;line-height:1.55}
+            .notif-body span{display:block;margin-top:7px;color:#96a0b6;font-size:11px;font-weight:800}
+            .notif-mark{width:34px;height:34px;border-radius:12px;background:#f8fbff;border:1px solid #e1eaff;color:#52699b;display:grid;place-items:center}
+
+            .mood-layout,.calm-layout{
+                display:grid;
+                grid-template-columns:minmax(0,1fr) minmax(320px,.85fr);
+                gap:16px;
+            }
+            .mood-options{
+                display:grid;
+                grid-template-columns:repeat(4,minmax(0,1fr));
+                gap:9px;
+                margin-top:14px;
+            }
+            .mood-option{
+                min-height:76px;
+                border-radius:20px;
+                background:#f8fbff;
+                border:1px solid #e7eefc;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                justify-content:center;
+                gap:6px;
+                font-size:24px;
+                transition:.15s;
+            }
+            .mood-option span{font-size:12px;font-weight:900;color:#52627f}
+            .mood-option.active{
+                background:#fff7ed;
+                border-color:#fed7aa;
+                box-shadow:0 12px 22px rgba(255,147,73,.12);
+                transform:translateY(-1px);
+            }
+            .feature-label{
+                display:block;
+                margin:14px 0 8px;
+                color:#52627f;
+                font-size:12px;
+                font-weight:900;
+            }
+            #mood-intensity{width:100%;accent-color:#ff9349}
+            #mood-note,#support-message{
+                width:100%;
+                resize:none;
+                margin-top:12px;
+                border:1px solid #dce7fb;
+                background:#f8fbff;
+                color:#1d2d4d;
+                outline:0;
+                border-radius:18px;
+                padding:12px;
+                font-size:14px;
+                line-height:1.6;
+            }
+            .emotion-profile-grid{
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:10px;
+                margin-top:14px;
+            }
+            .emotion-profile-grid div{
+                padding:13px;
+                border-radius:20px;
+                background:#f8fbff;
+                border:1px solid #e7eefc;
+            }
+            .emotion-profile-grid span{display:block;color:#6f7e9c;font-size:11px;font-weight:900}
+            .emotion-profile-grid strong{display:block;margin-top:6px;color:#1d2d4d;font-size:19px}
+            .emotion-bars{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+            .emotion-bar{display:grid;grid-template-columns:86px 1fr 42px;gap:8px;align-items:center;color:#56647e;font-size:12px;font-weight:900}
+            .emotion-bar-track{height:10px;border-radius:999px;background:#e8efff;overflow:hidden}
+            .emotion-bar-track i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#ffb46d,#76a9ff)}
+            .mood-history{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+            .mood-history-item{padding:12px;border-radius:18px;background:#f8fbff;border:1px solid #e7eefc}
+            .mood-history-item strong{display:block;color:#1d2d4d;font-size:14px}
+            .mood-history-item span{display:block;margin-top:4px;color:#6f7e9c;font-size:11px;font-weight:800}
+            .mood-history-item p{margin:8px 0 0;color:#56647e;font-size:12px;line-height:1.55}
+
+            .calm-session-card{text-align:center}
+            .calm-orb{
+                width:210px;
+                height:210px;
+                margin:8px auto 16px;
+                border-radius:50%;
+                display:grid;
+                place-items:center;
+                background:radial-gradient(circle at 50% 45%,#fff,#dff8ff 58%,#bcefff);
+                border:1px solid rgba(255,255,255,.9);
+                box-shadow:0 20px 60px rgba(59,130,246,.17), inset 0 0 28px rgba(255,255,255,.8);
+                transition:transform 2s ease-in-out;
+            }
+            .calm-orb.breathe{animation:calmBreathe 6s ease-in-out infinite}
+            @keyframes calmBreathe{0%,100%{transform:scale(.88)}50%{transform:scale(1.06)}}
+            .calm-orb span{font-size:44px;font-weight:900;color:#164e63}
+            .calm-session-card h2{margin:0;color:#1d2d4d;font-size:22px}
+            .calm-session-card p{color:#66728d;font-size:13px;line-height:1.65;margin:8px auto 14px;max-width:440px}
+            .calm-duration{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+            .calm-duration-btn{min-height:38px;padding:0 12px;border-radius:999px;background:#f8fbff;border:1px solid #dce7fb;color:#52699b;font-size:12px;font-weight:900}
+            .calm-duration-btn.active{background:#ecfeff;border-color:#a5f3fc;color:#0e7490}
+            .grounding-list{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+            .grounding-list div{display:flex;gap:12px;align-items:center;padding:12px;border-radius:18px;background:#f8fbff;border:1px solid #e7eefc}
+            .grounding-list strong{width:38px;height:38px;border-radius:14px;display:grid;place-items:center;background:#ecfeff;color:#0e7490;font-size:18px}
+            .grounding-list span{color:#52627f;font-size:13px;line-height:1.55}
+            .calm-stats{margin-top:14px;padding:14px;border-radius:20px;background:#f0fdf4;border:1px solid #bbf7d0}
+            .calm-stats strong{display:block;color:#15803d;font-size:18px}
+            .calm-stats span{display:block;color:#4d7c5b;font-size:12px;margin-top:4px}
+
+            .achievement-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px}
+            .badge-card{padding:16px;border-radius:24px;background:#fff;border:1px solid #e7eefc;box-shadow:0 10px 22px rgba(84,106,160,.06);min-height:170px;display:flex;flex-direction:column;gap:10px}
+            .badge-card.locked{opacity:.58;filter:grayscale(.55)}
+            .badge-icon{width:54px;height:54px;border-radius:20px;display:grid;place-items:center;background:#fff7ed;border:1px solid #fed7aa;font-size:26px}
+            .badge-card strong{color:#1d2d4d;font-size:15px}
+            .badge-card p{margin:0;color:#66728d;font-size:12px;line-height:1.55}
+            .badge-card span{margin-top:auto;color:#8a97b7;font-size:11px;font-weight:900}
+
+            .support-modal{
+                position:fixed;
+                inset:0;
+                z-index:970;
+                display:none;
+                align-items:center;
+                justify-content:center;
+                padding:18px;
+            }
+            .support-modal.show{display:flex}
+            .support-backdrop{position:absolute;inset:0;background:rgba(12,20,34,.38);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+            .support-card{
+                position:relative;
+                width:min(460px,100%);
+                border-radius:30px;
+                background:linear-gradient(180deg,#fff,#f8fbff);
+                border:1px solid rgba(255,255,255,.92);
+                box-shadow:0 28px 90px rgba(15,23,42,.24);
+                padding:18px;
+            }
+            .support-close{position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:14px;background:#fff;border:1px solid #e7eefc;color:#52627f}
+            .support-head{display:flex;gap:12px;align-items:flex-start;padding-right:44px}
+            .support-emoji{width:58px;height:58px;border-radius:22px;background:#f0fdf4;border:1px solid #bbf7d0;display:grid;place-items:center;font-size:28px;flex:0 0 58px}
+            .support-head span{color:#15803d;font-size:11px;font-weight:900;text-transform:uppercase}
+            .support-head h2{margin:3px 0;color:#1d2d4d;font-size:22px}
+            .support-head p{margin:0;color:#66728d;font-size:13px;line-height:1.55}
+            .support-templates{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+            .support-templates button{min-height:54px;border-radius:16px;background:#f8fbff;border:1px solid #e7eefc;color:#52627f;font-size:12px;font-weight:900;padding:8px;text-align:left}
+            .support-send{width:100%;min-height:48px;border-radius:16px;margin-top:12px;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:8px}
+
+            .friend-level{
+                position:relative;
+                overflow:hidden;
+                padding:10px 11px 12px;
+                border-radius:18px;
+                background:#f0fdf4;
+                border:1px solid #bbf7d0;
+            }
+            .friend-level strong{display:block;color:#15803d;font-size:12px}
+            .friend-level span{display:block;margin-top:4px;color:#4d7c5b;font-size:10px;font-weight:900}
+            .friend-level i{position:absolute;left:0;bottom:0;height:4px;background:#22c55e;border-radius:999px;font-style:normal}
+
+            @media(max-width:900px){
+                .mood-layout,.calm-layout,.feature-hero{grid-template-columns:1fr}
+                .feature-hero-icon{min-height:100px;font-size:54px;justify-content:flex-start;padding-left:22px}
+                .mood-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+            }
+            @media(max-width:599px){
+                .feature-page{padding:14px 12px calc(var(--nav-h) + var(--s-b) + 18px)!important}
+                .feature-shell{gap:12px}
+                .feature-hero{border-radius:28px;padding:18px}
+                .feature-hero h1{font-size:29px}
+                .feature-toolbar{align-items:flex-start;flex-direction:column;border-radius:24px;padding:14px}
+                .feature-toolbar-actions{width:100%;display:grid;grid-template-columns:1fr}
+                .feature-card{border-radius:23px;padding:14px}
+                .feature-card-head{align-items:flex-start;flex-direction:column}
+                .mood-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+                .emotion-profile-grid{grid-template-columns:1fr 1fr}
+                .emotion-bar{grid-template-columns:74px 1fr 36px}
+                .calm-orb{width:180px;height:180px}
+                .support-modal{align-items:flex-end;padding:12px}
+                .support-card{border-radius:26px}
+                .support-templates{grid-template-columns:1fr}
+                .friend-card-actions{grid-template-columns:1fr 1fr!important}
+            }
+            @supports(-webkit-touch-callout:none){
+                .feature-page{min-height:-webkit-fill-available}
+                #mood-note,#support-message,#friend-search{font-size:16px!important}
+                .feature-btn,.mood-option,.calm-duration-btn,.support-templates button{touch-action:manipulation;-webkit-user-select:none;user-select:none}
+            }
+
         </style>
     </head>
     <body class="auth-lock">
@@ -4897,6 +5265,30 @@
         </div>
 
         <div id="toast" role="alert" aria-live="polite"></div>
+
+        <div id="support-modal" class="support-modal" aria-hidden="true">
+            <div class="support-backdrop" data-support-close></div>
+            <article class="support-card" role="dialog" aria-modal="true" aria-label="Kirim dukungan">
+                <button class="support-close" type="button" data-support-close aria-label="Tutup"><i class="fas fa-xmark"></i></button>
+                <div class="support-head">
+                    <div class="support-emoji">🌱</div>
+                    <div>
+                        <span>Kirim Dukungan</span>
+                        <h2 id="support-title">Sapa temanmu</h2>
+                        <p>Pilih pesan pendek yang hangat. Fitur ini lebih aman daripada chat bebas.</p>
+                    </div>
+                </div>
+                <div class="support-templates" id="support-templates">
+                    <button type="button" data-support-message="Aku dukung kamu. Pelan-pelan aja ya 🌱">Aku dukung kamu 🌱</button>
+                    <button type="button" data-support-message="Kamu nggak sendiri. Aku di sini kalau kamu butuh teman 🤗">Kamu nggak sendiri 🤗</button>
+                    <button type="button" data-support-message="Semangat ya. Satu langkah kecil tetap berarti ✨">Semangat ya ✨</button>
+                    <button type="button" data-support-message="Istirahat dulu juga nggak apa-apa. Kamu tetap berharga 💛">Istirahat dulu 💛</button>
+                </div>
+                <textarea id="support-message" maxlength="240" rows="3" placeholder="Atau tulis dukunganmu sendiri..."></textarea>
+                <button id="support-send" class="support-send" type="button"><i class="fas fa-paper-plane"></i> Kirim Dukungan</button>
+            </article>
+        </div>
+
 
         <div id="friend-profile-modal" class="friend-profile-modal" aria-hidden="true">
             <div class="friend-profile-backdrop" data-friend-profile-close></div>
@@ -4972,6 +5364,10 @@
                     <button class="<%= pageId === 'pg-vent' ? 'sb on' : 'sb' %>" data-page="pg-vent"><img class="nav-img" src="/assets/nav/vent.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Vent</button>
                     <button class="<%= pageId === 'pg-art' ? 'sb on' : 'sb' %>" data-page="pg-art"><img class="nav-img" src="/assets/nav/art.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Galeri Seni</button>
                     <button class="<%= pageId === 'pg-friends' ? 'sb on' : 'sb' %>" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Cari Teman</button>
+                    <button class="<%= pageId === 'pg-notifications' ? 'sb on' : 'sb' %>" data-page="pg-notifications"><i class="fas fa-bell"></i> Notifikasi <em class="notif-nav-badge" id="notif-sidebar-badge">0</em></button>
+                    <button class="<%= pageId === 'pg-mood' ? 'sb on' : 'sb' %>" data-page="pg-mood"><i class="fas fa-face-smile"></i> Profil Emosi</button>
+                    <button class="<%= pageId === 'pg-calm' ? 'sb on' : 'sb' %>" data-page="pg-calm"><i class="fas fa-spa"></i> Ruang Tenang</button>
+                    <button class="<%= pageId === 'pg-achievements' ? 'sb on' : 'sb' %>" data-page="pg-achievements"><i class="fas fa-medal"></i> Badge</button>
                     <button class="<%= pageId === 'pg-redeem' ? 'sb on' : 'sb' %>" data-page="pg-redeem"><img class="nav-img" src="/assets/nav/redeem.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Redeem</button>
                     <button class="<%= pageId === 'pg-assist' ? 'sb on' : 'sb' %>" data-page="pg-assist"><img class="nav-img" src="/assets/nav/chat.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Asisten</button>
                     <button class="<%= pageId === 'pg-account' ? 'sb on' : 'sb' %>" data-page="pg-account"><img class="nav-img" src="/assets/nav/account.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Akun</button>
@@ -5068,8 +5464,12 @@
 
                                     <div class="foku-quick-actions">
                                         <button class="foku-quick-btn" id="pet-play" type="button"><img class="nav-img" src="/assets/nav/avatar.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Pet</span></button>
-                                        <button class="foku-quick-btn" type="button" data-page="pg-assist"><img class="nav-img" src="/assets/nav/chat.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Chat</span></button>
-                                        <button class="foku-quick-btn" type="button" data-page="pg-vent"><img class="nav-img" src="/assets/nav/vent.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Vent</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-assist"><img class="nav-img" src="/assets/nav/chat.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Chat AI</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-mood"><i class="fas fa-face-smile"></i><span>Check-in</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-calm"><i class="fas fa-spa"></i><span>Tenang</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-notifications"><i class="fas fa-bell"></i><span>Notif</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Teman</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-achievements"><i class="fas fa-medal"></i><span>Badge</span></button>
                                         <button class="foku-quick-btn" type="button" data-page="pg-garden"><img class="nav-img" src="/assets/nav/garden.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Garden</span></button>
                                     </div>
                                 </div>
@@ -5483,6 +5883,133 @@
 
 
 
+
+                <!-- NOTIFICATIONS -->
+                <section id="pg-notifications" class="<%= pageId === 'pg-notifications' ? 'pg on feature-page' : 'pg feature-page' %>" aria-label="Notification Center">
+                    <div class="feature-shell">
+                        <div class="feature-hero notif-hero">
+                            <div>
+                                <span class="feature-kicker"><i class="fas fa-bell"></i> Notification Center</span>
+                                <h1>Semua kabar penting ada di sini</h1>
+                                <p>Request teman, dukungan, achievement, mood check-in, dan aktivitas penting akan masuk ke pusat notifikasi.</p>
+                            </div>
+                            <div class="feature-hero-icon">🔔</div>
+                        </div>
+                        <div class="feature-toolbar">
+                            <div><strong id="notif-summary">Memuat notifikasi...</strong><span>Auto update aktif saat aplikasi dibuka.</span></div>
+                            <div class="feature-toolbar-actions">
+                                <button id="notif-refresh" class="feature-btn" type="button"><i class="fas fa-rotate"></i> Refresh</button>
+                                <button id="notif-read-all" class="feature-btn primary" type="button"><i class="fas fa-check-double"></i> Tandai semua dibaca</button>
+                            </div>
+                        </div>
+                        <div id="notif-list" class="notif-list"></div>
+                        <div id="notif-empty" class="feature-empty">Belum ada notifikasi. Aktivitas dari teman, mood, dan badge nanti muncul di sini.</div>
+                    </div>
+                </section>
+
+                <!-- MOOD & EMOTION PROFILE -->
+                <section id="pg-mood" class="<%= pageId === 'pg-mood' ? 'pg on feature-page' : 'pg feature-page' %>" aria-label="Mood Check-in dan Profil Emosi">
+                    <div class="feature-shell">
+                        <div class="feature-hero mood-hero">
+                            <div>
+                                <span class="feature-kicker"><i class="fas fa-face-smile"></i> Mood Check-in Harian</span>
+                                <h1>Kenali emosimu pelan-pelan</h1>
+                                <p>Check-in harian akan membentuk Profil Emosi: mood dominan, streak, intensitas, dan riwayat emosimu.</p>
+                            </div>
+                            <div class="feature-hero-icon">🌤️</div>
+                        </div>
+                        <div class="mood-layout">
+                            <div class="feature-card">
+                                <div class="feature-card-head"><strong>Check-in hari ini</strong><span id="mood-today-status">Belum check-in</span></div>
+                                <div class="mood-options" id="mood-options">
+                                    <button type="button" class="mood-option active" data-mood="tenang">😌<span>Tenang</span></button>
+                                    <button type="button" class="mood-option" data-mood="senang">😊<span>Senang</span></button>
+                                    <button type="button" class="mood-option" data-mood="sedih">😢<span>Sedih</span></button>
+                                    <button type="button" class="mood-option" data-mood="galau">🌧️<span>Galau</span></button>
+                                    <button type="button" class="mood-option" data-mood="stres">😵‍💫<span>Stres</span></button>
+                                    <button type="button" class="mood-option" data-mood="capek">🥱<span>Capek</span></button>
+                                    <button type="button" class="mood-option" data-mood="kosong">🫥<span>Kosong</span></button>
+                                    <button type="button" class="mood-option" data-mood="overthinking">🌀<span>Overthinking</span></button>
+                                </div>
+                                <label class="feature-label" for="mood-intensity">Intensitas</label>
+                                <input id="mood-intensity" type="range" min="1" max="5" value="3">
+                                <textarea id="mood-note" maxlength="280" rows="3" placeholder="Catatan kecil hari ini..."></textarea>
+                                <button id="mood-save" class="feature-btn primary wide" type="button"><i class="fas fa-heart"></i> Simpan Check-in</button>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-card-head"><strong>Profil Emosi</strong><span>Private untuk kamu</span></div>
+                                <div class="emotion-profile-grid">
+                                    <div><span>Mood dominan</span><strong id="emotion-dominant">-</strong></div>
+                                    <div><span>Streak check-in</span><strong id="emotion-streak">0 hari</strong></div>
+                                    <div><span>Total catatan</span><strong id="emotion-total">0</strong></div>
+                                    <div><span>Check-in hari ini</span><strong id="emotion-today">Belum</strong></div>
+                                </div>
+                                <div id="emotion-bars" class="emotion-bars"></div>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-card-head"><strong>Riwayat mood</strong><span>30 check-in terakhir</span></div>
+                            <div id="mood-history" class="mood-history"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CALM ROOM -->
+                <section id="pg-calm" class="<%= pageId === 'pg-calm' ? 'pg on feature-page' : 'pg feature-page' %>" aria-label="Ruang Tenang">
+                    <div class="feature-shell">
+                        <div class="feature-hero calm-hero">
+                            <div>
+                                <span class="feature-kicker"><i class="fas fa-spa"></i> Ruang Tenang</span>
+                                <h1>Ambil napas. Pelan-pelan dulu.</h1>
+                                <p>Gunakan latihan napas, grounding, dan afirmasi singkat saat kamu panik, overthinking, atau butuh jeda.</p>
+                            </div>
+                            <div class="feature-hero-icon">🫧</div>
+                        </div>
+                        <div class="calm-layout">
+                            <div class="feature-card calm-session-card">
+                                <div class="calm-orb" id="calm-orb"><span id="calm-timer">60</span></div>
+                                <h2 id="calm-instruction">Tarik napas pelan</h2>
+                                <p>Ikuti ritme lingkaran. Selesai sesi akan membuka badge Ruang Tenang.</p>
+                                <div class="calm-duration">
+                                    <button class="calm-duration-btn active" type="button" data-duration="60">60 detik</button>
+                                    <button class="calm-duration-btn" type="button" data-duration="120">2 menit</button>
+                                    <button class="calm-duration-btn" type="button" data-duration="300">5 menit</button>
+                                </div>
+                                <button id="calm-start" class="feature-btn primary wide" type="button"><i class="fas fa-play"></i> Mulai Sesi</button>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-card-head"><strong>Grounding 5-4-3-2-1</strong><span>Untuk menenangkan pikiran</span></div>
+                                <div class="grounding-list">
+                                    <div><strong>5</strong><span>Sebutkan 5 hal yang kamu lihat.</span></div>
+                                    <div><strong>4</strong><span>Rasakan 4 hal yang bisa kamu sentuh.</span></div>
+                                    <div><strong>3</strong><span>Dengarkan 3 suara di sekitarmu.</span></div>
+                                    <div><strong>2</strong><span>Sadari 2 aroma atau napasmu.</span></div>
+                                    <div><strong>1</strong><span>Sebutkan 1 hal baik kecil hari ini.</span></div>
+                                </div>
+                                <div class="calm-stats"><strong id="calm-total">0 sesi</strong><span id="calm-seconds">0 detik tenang</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ACHIEVEMENTS -->
+                <section id="pg-achievements" class="<%= pageId === 'pg-achievements' ? 'pg on feature-page' : 'pg feature-page' %>" aria-label="Badge dan Achievement">
+                    <div class="feature-shell">
+                        <div class="feature-hero badge-hero">
+                            <div>
+                                <span class="feature-kicker"><i class="fas fa-medal"></i> Badge / Achievement</span>
+                                <h1>Rayakan progress kecilmu</h1>
+                                <p>Badge terbuka dari mood check-in, ruang tenang, teman pertama, dan dukungan yang kamu kirim.</p>
+                            </div>
+                            <div class="feature-hero-icon">🏅</div>
+                        </div>
+                        <div class="feature-toolbar">
+                            <div><strong id="achievement-summary">Memuat badge...</strong><span>Badge baru akan muncul otomatis setelah aktivitas tertentu.</span></div>
+                            <button id="achievement-refresh" class="feature-btn" type="button"><i class="fas fa-rotate"></i> Refresh</button>
+                        </div>
+                        <div id="achievement-grid" class="achievement-grid"></div>
+                    </div>
+                </section>
 
 <!-- FRIENDS -->
 <section id="pg-friends" class="<%= pageId === 'pg-friends' ? 'pg on' : 'pg' %>" aria-label="Cari Teman">
@@ -6127,6 +6654,10 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 "pg-art":"/art",
                 "pg-friends":"/friends",
                 "pg-profile":"/profile/"+(window.__VKM_PROFILE_KEY||""),
+                "pg-notifications":"/notifications",
+                "pg-mood":"/mood",
+                "pg-calm":"/calm",
+                "pg-achievements":"/achievements",
                 "pg-redeem":"/redeem",
                 "pg-assist":"/chat",
                 "pg-account":"/account"
@@ -6153,6 +6684,10 @@ var authToken=localStorage.getItem("vkm_token")||"";
                     if(typeof renderGarden==="function")renderGarden();
                     if(typeof loadGardenFromServer==="function")loadGardenFromServer();
                 }
+                if(id==="pg-notifications"&&typeof loadNotifications==="function")loadNotifications(false);
+                if(id==="pg-mood"&&typeof loadMoodSummary==="function")loadMoodSummary(false);
+                if(id==="pg-calm"&&typeof loadCalmStats==="function")loadCalmStats(false);
+                if(id==="pg-achievements"&&typeof loadAchievements==="function")loadAchievements(false);
                 if(id==="pg-assist"&&typeof scrollToBottom==="function")setTimeout(scrollToBottom,80);
             }
 
@@ -7430,7 +7965,7 @@ function friendStatusLabel(rel){
     return '<span class="friend-status"><i class="fas fa-user-plus"></i> Belum berteman</span>';
 }
 function friendActions(user,mode){
-    var id=friendEsc(user.id),fid=friendEsc(user.friendshipId||''),rel=user.relationship||'none',profileKey=friendEsc(friendProfileSlug(user));
+    var id=friendEsc(user.id),fid=friendEsc(user.friendshipId||''),rel=user.relationship||'none',profileKey=friendEsc(friendProfileSlug(user)),userName=friendEsc(user.name||'Teman');
     if(rel==='self'){
         return '<button class="friend-btn" type="button" disabled>Ini akunmu</button>';
     }
@@ -7438,7 +7973,7 @@ function friendActions(user,mode){
         return '<button class="friend-btn primary" type="button" data-friend-action="accept" data-friendship-id="'+fid+'">Terima</button><button class="friend-btn danger" type="button" data-friend-action="decline" data-friendship-id="'+fid+'">Tolak</button>';
     }
     if(rel==='friends'){
-        return '<button class="friend-btn primary" type="button" data-friend-action="profile" data-profile-key="'+profileKey+'">Lihat profil</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Hapus</button>';
+        return '<button class="friend-btn primary" type="button" data-friend-action="support" data-user-id="'+id+'" data-user-name="'+userName+'">Dukung</button><button class="friend-btn" type="button" data-friend-action="profile" data-profile-key="'+profileKey+'">Profil</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Hapus</button>';
     }
     if(rel==='outgoing_pending'){
         return '<button class="friend-btn" type="button" disabled>Request terkirim</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Batalkan</button>';
@@ -7446,10 +7981,10 @@ function friendActions(user,mode){
     return '<button class="friend-btn primary" type="button" data-friend-action="request" data-user-id="'+id+'">Tambah teman</button><button class="friend-btn" type="button" data-friend-action="profile" data-profile-key="'+profileKey+'">Profil dulu</button>';
 }
 function friendModalActions(user){
-    var id=friendEsc(user.id),fid=friendEsc(user.friendshipId||''),rel=user.relationship||'none';
+    var id=friendEsc(user.id),fid=friendEsc(user.friendshipId||''),rel=user.relationship||'none',userName=friendEsc(user.name||'Teman');
     if(rel==='self')return '<button class="friend-btn" type="button" disabled>Ini profil kamu</button>';
     if(rel==='incoming_pending')return '<button class="friend-btn primary" type="button" data-friend-action="accept" data-friendship-id="'+fid+'">Terima request</button><button class="friend-btn danger" type="button" data-friend-action="decline" data-friendship-id="'+fid+'">Tolak</button>';
-    if(rel==='friends')return '<button class="friend-btn primary" type="button" disabled>Sudah berteman</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Hapus teman</button>';
+    if(rel==='friends')return '<button class="friend-btn primary" type="button" data-friend-action="support" data-user-id="'+id+'" data-user-name="'+userName+'">Kirim dukungan</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Hapus teman</button>';
     if(rel==='outgoing_pending')return '<button class="friend-btn" type="button" disabled>Menunggu diterima</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Batalkan request</button>';
     return '<button class="friend-btn primary" type="button" data-friend-action="request" data-user-id="'+id+'">Tambah teman</button><button class="friend-btn" type="button" data-friend-profile-close>Tutup</button>';
 }
@@ -7458,10 +7993,12 @@ function friendCard(user,mode){
     var bio=String(user.bio||'').toLowerCase();
     ['healing','gaming','musik','desain','curhat'].forEach(function(t){if(bio.indexOf(t)>-1)tags.push(t.charAt(0).toUpperCase()+t.slice(1));});
     if(!tags.length)tags=['VokaMon','Supportive'];
+    var level=user.friendshipLevel||null;
+    var levelHtml=(user.relationship==='friends'&&level)?'<div class="friend-level"><strong>'+friendEsc(level.icon||'🌱')+' '+friendEsc(level.name||'Kenalan')+'</strong><span>XP '+friendEsc(user.friendshipXp||0)+' · Support '+friendEsc(user.supportCount||0)+'x</span><i style="width:'+Math.max(0,Math.min(100,Number(level.progress||0)))+'%"></i></div>':'';
     return '<article class="friend-card" data-user-id="'+friendEsc(user.id)+'">'+
         '<div class="friend-card-head"><div class="friend-avatar"><img src="'+friendAvatarFor(user)+'" alt=""></div><div class="friend-meta"><strong>'+friendEsc(user.name)+'</strong><span>'+friendEsc(user.username)+' · '+(user.lastLoginAt?'Pernah login':'User baru')+'</span><button class="friend-profile-link" type="button" data-friend-action="profile" data-profile-key="'+friendEsc(friendProfileSlug(user))+'"><i class="fas fa-eye"></i> Lihat profil</button></div></div>'+
         '<div class="friend-tags">'+tags.slice(0,3).map(function(t){return '<span>'+friendEsc(t)+'</span>'}).join('')+'</div>'+
-        '<p class="friend-bio">'+friendEsc(user.bio||'Belum menulis bio.')+'</p>'+friendStatusLabel(user.relationship)+
+        '<p class="friend-bio">'+friendEsc(user.bio||'Belum menulis bio.')+'</p>'+friendStatusLabel(user.relationship)+levelHtml+
         '<div class="friend-card-actions">'+friendActions(user,mode)+'</div>'+
     '</article>';
 }
@@ -7660,6 +8197,7 @@ async function openFriendProfile(userId,silent){
 async function friendAction(action,btn){
     if(!authToken){showAuth('Silakan login dulu.');return;}
     if(action==='profile'){var key=btn.dataset.profileKey||btn.dataset.userId;if(key)navigateWithLoader('/profile/'+key);return;}
+    if(action==='support'){openSupportModal(btn.dataset.userId,btn.dataset.userName||'Teman');return;}
     var card=btn.closest('.friend-card')||btn.closest('.friend-profile-card');if(card)card.dataset.busy='1';
     var url='',opts={method:'POST',headers:{'Content-Type':'application/json'}};
     if(action==='request'){url='/api/friends/request';opts.body=JSON.stringify({userId:btn.dataset.userId});}
@@ -7706,7 +8244,252 @@ function initFriendFinder(){
     if((window.__VKM_PAGE_ID||'')==='pg-profile'&&window.__VKM_PROFILE_KEY)loadFriendProfilePage(window.__VKM_PROFILE_KEY,true);
     startFriendRealtime();
 }
-            initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
+
+var socialState={
+    notifications:[],
+    unread:0,
+    notifTimer:null,
+    mood:'tenang',
+    supportTarget:null,
+    supportName:'',
+    calmDuration:60,
+    calmRemaining:60,
+    calmTimer:null,
+    calmRunning:false,
+    achievements:[],
+    badgeCatalog:[
+        {key:'first_mood',icon:'🌤️',title:'Mood Pertama',body:'Check-in mood pertama.'},
+        {key:'mood_3',icon:'🪴',title:'Mulai Kenal Diri',body:'Check-in mood 3 kali.'},
+        {key:'mood_7',icon:'🌈',title:'Seminggu Menjaga Diri',body:'Punya 7 catatan mood.'},
+        {key:'first_support',icon:'🤗',title:'Sapa Pertama',body:'Mengirim dukungan pertama.'},
+        {key:'support_5',icon:'💛',title:'Supportive Friend',body:'Mengirim dukungan 5 kali.'},
+        {key:'first_friend',icon:'🌱',title:'Teman Pertama',body:'Punya teman pertama.'},
+        {key:'friend_5',icon:'🌿',title:'Circle Kecil',body:'Punya 5 teman.'},
+        {key:'first_calm',icon:'🫧',title:'Ruang Tenang Pertama',body:'Menyelesaikan sesi tenang pertama.'},
+        {key:'calm_5',icon:'🧘',title:'Napas Lebih Pelan',body:'Menyelesaikan 5 sesi tenang.'}
+    ]
+};
+function fmtTimeAgo(v){
+    var d=v?new Date(v):null;if(!d||isNaN(d.getTime()))return 'baru saja';
+    var s=Math.floor((Date.now()-d.getTime())/1000);
+    if(s<60)return 'baru saja';
+    if(s<3600)return Math.floor(s/60)+' menit lalu';
+    if(s<86400)return Math.floor(s/3600)+' jam lalu';
+    return d.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
+}
+function notifIcon(type){
+    if(type==='friend_request')return 'fa-user-plus';
+    if(type==='friend_accept')return 'fa-user-check';
+    if(type==='support'||type==='support_sent')return 'fa-hands-holding-heart';
+    if(type==='achievement')return 'fa-medal';
+    if(type==='mood')return 'fa-face-smile';
+    if(type==='calm')return 'fa-spa';
+    return 'fa-bell';
+}
+function updateNotifBadges(){
+    var sb=document.getElementById('notif-sidebar-badge');
+    if(sb){sb.textContent=socialState.unread>99?'99+':socialState.unread;sb.classList.toggle('show',socialState.unread>0);}
+}
+function renderNotifications(){
+    updateNotifBadges();
+    var list=document.getElementById('notif-list'),empty=document.getElementById('notif-empty'),summary=document.getElementById('notif-summary');
+    if(summary)summary.textContent=socialState.unread+' belum dibaca · '+socialState.notifications.length+' total';
+    if(!list)return;
+    list.innerHTML=socialState.notifications.map(function(n){
+        return '<article class="notif-item '+(!n.isRead?'unread':'')+'">'+
+            '<div class="notif-ic"><i class="fas '+notifIcon(n.type)+'"></i></div>'+
+            '<div class="notif-body"><strong>'+friendEsc(n.title)+'</strong><p>'+friendEsc(n.body||'')+'</p><span>'+fmtTimeAgo(n.createdAt)+'</span></div>'+
+            (!n.isRead?'<button class="notif-mark" type="button" data-notif-read="'+friendEsc(n.id)+'" aria-label="Tandai dibaca"><i class="fas fa-check"></i></button>':'')+
+        '</article>';
+    }).join('');
+    if(empty)empty.classList.toggle('show',socialState.notifications.length===0);
+}
+async function loadNotifications(silent){
+    if(!authToken)return;
+    try{
+        var r=await apiFetch('/api/notifications?limit=40');var d=await r.json();
+        if(!r.ok||!d.ok)throw new Error(d.error||'Gagal memuat notifikasi.');
+        socialState.notifications=d.notifications||[];
+        socialState.unread=Number(d.unread||0);
+        renderNotifications();
+    }catch(e){if(!silent)toast(e.message||'Gagal memuat notifikasi.')}
+}
+async function markNotificationRead(id){
+    try{
+        await apiFetch('/api/notifications/'+encodeURIComponent(id)+'/read',{method:'POST'});
+        await loadNotifications(true);
+    }catch(e){toast('Gagal menandai notifikasi.')}
+}
+async function markAllNotificationsRead(){
+    try{
+        var r=await apiFetch('/api/notifications/read-all',{method:'POST'});var d=await r.json();
+        if(!r.ok||!d.ok)throw new Error(d.error||'Gagal.');
+        await loadNotifications(true);
+        toast('Semua notifikasi ditandai dibaca.');
+    }catch(e){toast(e.message||'Gagal menandai semua.')}
+}
+
+function moodEmoji(m){
+    return {tenang:'😌',senang:'😊',sedih:'😢',marah:'😡',galau:'🌧️',stres:'😵‍💫',capek:'🥱',kosong:'🫥',overthinking:'🌀'}[m]||'🌤️';
+}
+function renderMoodSummary(data){
+    var today=data.today,counts=data.counts||[],recent=data.recent||[];
+    var total=recent.length;
+    var dominant=document.getElementById('emotion-dominant'),streak=document.getElementById('emotion-streak'),totalEl=document.getElementById('emotion-total'),todayEl=document.getElementById('emotion-today'),status=document.getElementById('mood-today-status'),bars=document.getElementById('emotion-bars'),history=document.getElementById('mood-history');
+    if(dominant)dominant.textContent=data.dominant?(moodEmoji(data.dominant)+' '+data.dominant):'-';
+    if(streak)streak.textContent=(data.streak||0)+' hari';
+    if(totalEl)totalEl.textContent=total;
+    if(todayEl)todayEl.textContent=today?(moodEmoji(today.mood)+' '+today.mood):'Belum';
+    if(status)status.textContent=today?('Hari ini: '+today.mood+' · intensitas '+today.intensity):'Belum check-in';
+    if(today){
+        var moodBtn=document.querySelector('.mood-option[data-mood="'+today.mood+'"]');
+        if(moodBtn){document.querySelectorAll('.mood-option').forEach(function(b){b.classList.remove('active')});moodBtn.classList.add('active');socialState.mood=today.mood;}
+        var range=document.getElementById('mood-intensity'),note=document.getElementById('mood-note');
+        if(range)range.value=today.intensity||3;
+        if(note)note.value=today.note||'';
+    }
+    var max=counts.reduce(function(a,b){return Math.max(a,Number(b.total||0))},1);
+    if(bars)bars.innerHTML=counts.slice(0,8).map(function(c){
+        var pct=Math.round((Number(c.total||0)/max)*100);
+        return '<div class="emotion-bar"><span>'+moodEmoji(c.mood)+' '+friendEsc(c.mood)+'</span><div class="emotion-bar-track"><i style="width:'+pct+'%"></i></div><strong>'+friendEsc(c.total)+'</strong></div>';
+    }).join('') || '<div class="feature-empty show">Belum ada data emosi.</div>';
+    if(history)history.innerHTML=recent.slice(0,12).map(function(x){
+        return '<div class="mood-history-item"><strong>'+moodEmoji(x.mood)+' '+friendEsc(x.mood)+' · '+friendEsc(x.intensity)+'/5</strong><span>'+fmtTimeAgo(x.createdAt)+'</span>'+(x.note?'<p>'+friendEsc(x.note)+'</p>':'')+'</div>';
+    }).join('') || '<div class="feature-empty show">Belum ada riwayat mood.</div>';
+}
+async function loadMoodSummary(silent){
+    if(!authToken)return;
+    try{
+        var r=await apiFetch('/api/mood/summary');var d=await r.json();
+        if(!r.ok||!d.ok)throw new Error(d.error||'Gagal memuat profil emosi.');
+        renderMoodSummary(d);
+    }catch(e){if(!silent)toast(e.message||'Gagal memuat profil emosi.')}
+}
+async function saveMoodCheckin(){
+    var range=document.getElementById('mood-intensity'),note=document.getElementById('mood-note');
+    try{
+        var r=await apiFetch('/api/mood/checkin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mood:socialState.mood,intensity:range?range.value:3,note:note?note.value:''})});
+        var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal menyimpan mood.');
+        toast('Mood check-in tersimpan.');
+        await loadMoodSummary(true);await loadAchievements(true);await loadNotifications(true);
+    }catch(e){toast(e.message||'Gagal menyimpan mood.')}
+}
+
+function setCalmDuration(n){
+    socialState.calmDuration=n;socialState.calmRemaining=n;
+    var timer=document.getElementById('calm-timer');if(timer)timer.textContent=n;
+}
+function setCalmInstruction(){
+    var i=document.getElementById('calm-instruction');
+    if(!i)return;
+    var phase=socialState.calmRemaining%12;
+    i.textContent=phase>6?'Hembuskan napas pelan':'Tarik napas pelan';
+}
+async function completeCalmSession(){
+    try{
+        var r=await apiFetch('/api/calm/complete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:'breathing',durationSeconds:socialState.calmDuration})});
+        var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal menyimpan sesi.');
+        toast('Sesi Ruang Tenang selesai.');
+        await loadCalmStats(true);await loadAchievements(true);await loadNotifications(true);
+    }catch(e){toast(e.message||'Gagal menyimpan sesi tenang.')}
+}
+function startCalmSession(){
+    if(socialState.calmRunning)return;
+    socialState.calmRunning=true;socialState.calmRemaining=socialState.calmDuration;
+    var btn=document.getElementById('calm-start'),orb=document.getElementById('calm-orb'),timer=document.getElementById('calm-timer');
+    if(btn)btn.innerHTML='<i class="fas fa-hourglass-half"></i> Sesi berjalan';
+    if(orb)orb.classList.add('breathe');
+    clearInterval(socialState.calmTimer);
+    socialState.calmTimer=setInterval(function(){
+        socialState.calmRemaining-=1;
+        if(timer)timer.textContent=Math.max(0,socialState.calmRemaining);
+        setCalmInstruction();
+        if(socialState.calmRemaining<=0){
+            clearInterval(socialState.calmTimer);socialState.calmRunning=false;
+            if(btn)btn.innerHTML='<i class="fas fa-play"></i> Mulai Sesi';
+            if(orb)orb.classList.remove('breathe');
+            completeCalmSession();
+        }
+    },1000);
+}
+async function loadCalmStats(silent){
+    if(!authToken)return;
+    try{
+        var r=await apiFetch('/api/calm/stats');var d=await r.json();
+        if(!r.ok||!d.ok)throw new Error(d.error||'Gagal memuat statistik.');
+        var total=document.getElementById('calm-total'),seconds=document.getElementById('calm-seconds');
+        if(total)total.textContent=(d.total||0)+' sesi';
+        if(seconds)seconds.textContent=(d.seconds||0)+' detik tenang';
+    }catch(e){if(!silent)toast(e.message||'Gagal memuat ruang tenang.')}
+}
+
+function renderAchievements(){
+    var grid=document.getElementById('achievement-grid'),summary=document.getElementById('achievement-summary');
+    if(!grid)return;
+    var unlocked={};
+    socialState.achievements.forEach(function(a){unlocked[a.key]=a});
+    if(summary)summary.textContent=socialState.achievements.length+' badge terbuka dari '+socialState.badgeCatalog.length;
+    grid.innerHTML=socialState.badgeCatalog.map(function(b){
+        var a=unlocked[b.key],open=!!a;
+        return '<article class="badge-card '+(open?'':'locked')+'"><div class="badge-icon">'+friendEsc(b.icon)+'</div><strong>'+friendEsc(b.title)+'</strong><p>'+friendEsc(b.body)+'</p><span>'+(open?('Terbuka · '+fmtTimeAgo(a.unlockedAt)):'Belum terbuka')+'</span></article>';
+    }).join('');
+}
+async function loadAchievements(silent){
+    if(!authToken)return;
+    try{
+        var r=await apiFetch('/api/achievements');var d=await r.json();
+        if(!r.ok||!d.ok)throw new Error(d.error||'Gagal memuat badge.');
+        socialState.achievements=d.achievements||[];
+        renderAchievements();
+    }catch(e){if(!silent)toast(e.message||'Gagal memuat badge.')}
+}
+
+function openSupportModal(userId,name){
+    socialState.supportTarget=userId;socialState.supportName=name||'Teman';
+    var modal=document.getElementById('support-modal'),title=document.getElementById('support-title'),msg=document.getElementById('support-message');
+    if(title)title.textContent='Sapa '+socialState.supportName;
+    if(msg)msg.value='Aku dukung kamu. Pelan-pelan aja ya 🌱';
+    if(modal){modal.classList.add('show');modal.setAttribute('aria-hidden','false');}
+}
+function closeSupportModal(){
+    var modal=document.getElementById('support-modal');
+    if(modal){modal.classList.remove('show');modal.setAttribute('aria-hidden','true');}
+    socialState.supportTarget=null;
+}
+async function sendSupportMessage(){
+    var msg=document.getElementById('support-message');
+    if(!socialState.supportTarget)return;
+    try{
+        var r=await apiFetch('/api/friends/support',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:socialState.supportTarget,message:msg?msg.value:'Aku dukung kamu 🌱',mood:'support'})});
+        var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal mengirim dukungan.');
+        toast('Dukungan terkirim.');
+        closeSupportModal();
+        await refreshFriendData({silent:true});await loadAchievements(true);await loadNotifications(true);
+        if((window.__VKM_PAGE_ID||'')==='pg-profile'&&window.__VKM_PROFILE_KEY)await loadFriendProfilePage(window.__VKM_PROFILE_KEY,true);
+    }catch(e){toast(e.message||'Gagal mengirim dukungan.')}
+}
+
+function initSocialFeatures(){
+    document.querySelectorAll('.mood-option').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.mood-option').forEach(function(x){x.classList.remove('active')});btn.classList.add('active');socialState.mood=btn.dataset.mood||'tenang';});});
+    var moodSave=document.getElementById('mood-save');if(moodSave)moodSave.addEventListener('click',saveMoodCheckin);
+    var notifRefresh=document.getElementById('notif-refresh');if(notifRefresh)notifRefresh.addEventListener('click',function(){loadNotifications(false)});
+    var notifAll=document.getElementById('notif-read-all');if(notifAll)notifAll.addEventListener('click',markAllNotificationsRead);
+    document.addEventListener('click',function(e){
+        var n=e.target.closest('[data-notif-read]');if(n){markNotificationRead(n.dataset.notifRead);return;}
+        var sc=e.target.closest('[data-support-close]');if(sc){closeSupportModal();return;}
+        var tpl=e.target.closest('[data-support-message]');if(tpl){var m=document.getElementById('support-message');if(m)m.value=tpl.dataset.supportMessage||'';return;}
+    });
+    var send=document.getElementById('support-send');if(send)send.addEventListener('click',sendSupportMessage);
+    document.querySelectorAll('.calm-duration-btn').forEach(function(btn){btn.addEventListener('click',function(){if(socialState.calmRunning)return;document.querySelectorAll('.calm-duration-btn').forEach(function(x){x.classList.remove('active')});btn.classList.add('active');setCalmDuration(Number(btn.dataset.duration||60));});});
+    var calmStart=document.getElementById('calm-start');if(calmStart)calmStart.addEventListener('click',startCalmSession);
+    var achievementRefresh=document.getElementById('achievement-refresh');if(achievementRefresh)achievementRefresh.addEventListener('click',function(){loadAchievements(false)});
+    setCalmDuration(60);
+    loadNotifications(true);loadMoodSummary(true);loadCalmStats(true);loadAchievements(true);
+    clearInterval(socialState.notifTimer);
+    socialState.notifTimer=setInterval(function(){if(!document.hidden)loadNotifications(true)},10000);
+}
+
+            initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();initSocialFeatures();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
         </script>
     </body>
 </html>
