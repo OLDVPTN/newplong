@@ -4720,8 +4720,8 @@
             <button class="<%= pageId === 'pg-garden' ? 'nb on' : 'nb' %>" data-page="pg-garden"><img class="nav-img" src="/assets/nav/garden.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Kebun</span></button>
             <button class="<%= pageId === 'pg-vent' ? 'nb on' : 'nb' %>" data-page="pg-vent"><img class="nav-img" src="/assets/nav/vent.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Curhat (voice)</span></button>
             <!---<button class="<%= pageId === 'pg-art' ? 'nb on' : 'nb' %>" data-page="pg-art"><img class="nav-img" src="/assets/nav/art.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Art</span></button>-->
-            <!---<button class="<%= pageId === 'pg-redeem' ? 'nb on' : 'nb' %>" data-page="pg-redeem"><img class="nav-img" src="/assets/nav/redeem.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Redeem</span></button>-->
             <button class="<%= pageId === 'pg-assist' ? 'nb on' : 'nb' %>" data-page="pg-assist"><img class="nav-img" src="/assets/nav/chat.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Curhat (chat)</span></button>
+            <!---<button class="<%= pageId === 'pg-redeem' ? 'nb on' : 'nb' %>" data-page="pg-redeem"><img class="nav-img" src="/assets/nav/redeem.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Redeem</span></button>-->
             <!--<button class="<%= pageId === 'pg-avatar' ? 'nb on' : 'nb' %>" data-page="pg-avatar"><img class="nav-img" src="/assets/nav/avatar.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Kostumisasi</span></button>-->
             <button class="<%= pageId === 'pg-account' ? 'nb on' : 'nb' %>" data-page="pg-account"><img class="nav-img" src="/assets/nav/account.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Akun</span></button>
         </nav>
@@ -4863,7 +4863,7 @@ var EMO={marah:{label:"Marah",color:"#DC2626",hue:0,icon:"fa-fire",desc:"Api Cha
             }
             function updateHeroGreeting(){
                 var el=document.getElementById("hero-greeting");
-                if(el)el.textContent="Hai VokaMon User *(˶ᵔᗜᵔ˶)👋"+getStoredUserName();
+                if(el)el.textContent=`Hai ${getStoredUserName} (˶ᵔᗜᵔ˶)👋`;
             }
 
             var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,bond:0,worker:{lastClaimAt:new Date().toISOString(),essence:{marah:0,sedih:0,galau:0,stres:0,excited:0,tenang:0},totalEarned:0,today:{date:new Date().toISOString().slice(0,10),vent:0,chat:0,garden:0,care:0,bonusClaimed:false}},accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null},gm:"qwen2.5:3b",al:"id"};
