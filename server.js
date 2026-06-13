@@ -2152,6 +2152,63 @@ app.get('/api/friends', requireAuth, async (req, res) => {
   }
 });
 
+
+app.get('/api/friends/profile/:userId', requireAuth, async (req, res) => {
+  try {
+    const me = Number(req.user.id);
+    const targetId = Number(req.params.userId);
+
+    if (!Number.isFinite(targetId) || targetId <= 0) {
+      return res.status(400).json({ ok: false, error: 'User tidak valid.' });
+    }
+
+    const rows = await query(
+      `SELECT
+          u.id AS user_id, u.name, u.username, u.bio, u.created_at, u.last_login_at,
+          f.id AS friendship_id, f.status AS friendship_status,
+          f.requester_id, f.addressee_id, f.created_at AS friendship_created_at, f.updated_at AS friendship_updated_at,
+          $1::BIGINT AS current_user_id,
+          CASE
+            WHEN u.id = $1 THEN 'self'
+            WHEN f.id IS NULL OR f.status = 'declined' THEN 'none'
+            WHEN f.status = 'accepted' THEN 'friends'
+            WHEN f.status = 'pending' AND f.requester_id = $1 THEN 'outgoing_pending'
+            WHEN f.status = 'pending' AND f.addressee_id = $1 THEN 'incoming_pending'
+            WHEN f.status = 'blocked' THEN 'blocked'
+            ELSE 'none'
+          END AS relationship
+       FROM users u
+       LEFT JOIN friendships f
+         ON ((f.requester_id = $1 AND f.addressee_id = u.id) OR (f.requester_id = u.id AND f.addressee_id = $1))
+       WHERE u.id = $2
+         AND (f.status IS NULL OR f.status <> 'blocked')
+       LIMIT 1`,
+      [me, targetId]
+    );
+
+    if (!rows.length) return res.status(404).json({ ok: false, error: 'Profil tidak ditemukan.' });
+
+    const friendCountRows = await query(
+      `SELECT COUNT(*)::INT AS total
+       FROM friendships
+       WHERE status = 'accepted'
+         AND (requester_id = $1 OR addressee_id = $1)`,
+      [targetId]
+    );
+
+    res.json({
+      ok: true,
+      user: friendUserToPublic(rows[0]),
+      stats: {
+        friends: Number(friendCountRows[0]?.total || 0)
+      }
+    });
+  } catch (error) {
+    console.error('Friend profile error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat profil.' });
+  }
+});
+
 app.post('/api/friends/request', requireAuth, async (req, res) => {
   try {
     const me = Number(req.user.id);
@@ -2300,6 +2357,11 @@ Object.entries(APP_VIEWS).forEach(([route, view]) => {
   app.get(route, (req, res) => {
     res.render(view);
   });
+});
+
+
+app.get(['/profile/:userId', '/user/:userId'], (req, res) => {
+  res.render('profile', { profileUserId: req.params.userId });
 });
 
 app.get(['/login', '/login.html'], (req, res) => {
