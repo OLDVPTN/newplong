@@ -5246,6 +5246,103 @@
                 .feature-btn,.mood-option,.calm-duration-btn,.support-templates button{touch-action:manipulation;-webkit-user-select:none;user-select:none}
             }
 
+
+            /* ===== Growth Pack: safety, quests, onboarding, garden economy, AI summary ===== */
+            .safety-hero{background:linear-gradient(135deg,#ecfeff,#f8fafc 55%,#fff7ed)}
+            .quest-hero{background:linear-gradient(135deg,#f0fdf4,#eff6ff 55%,#fff7ed)}
+            .summary-hero{background:linear-gradient(135deg,#f5f3ff,#eff6ff 55%,#fff7ed)}
+            .safety-layout,.summary-layout{
+                display:grid;
+                grid-template-columns:minmax(0,1fr) minmax(320px,.9fr);
+                gap:16px;
+            }
+            .safety-select{
+                width:100%;
+                min-height:46px;
+                border-radius:16px;
+                border:1px solid #dce7fb;
+                background:#f8fbff;
+                color:#1d2d4d;
+                padding:0 12px;
+                font-family:inherit;
+                font-size:14px;
+                outline:0;
+                margin-top:10px;
+            }
+            .safety-toggle{
+                display:flex;
+                align-items:center;
+                gap:10px;
+                margin-top:12px;
+                padding:12px;
+                border-radius:18px;
+                background:#f8fbff;
+                border:1px solid #e7eefc;
+                color:#52627f;
+                font-size:13px;
+                font-weight:900;
+            }
+            .safety-toggle input{width:18px;height:18px;accent-color:#ff9349}
+            .blocked-list{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+            .blocked-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:18px;background:#f8fbff;border:1px solid #e7eefc}
+            .blocked-item strong{display:block;color:#1d2d4d;font-size:14px}
+            .blocked-item span{display:block;color:#6f7e9c;font-size:11px;margin-top:3px}
+            .quest-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}
+            .quest-card{padding:16px;border-radius:24px;background:#fff;border:1px solid #e7eefc;box-shadow:0 10px 22px rgba(84,106,160,.06);display:flex;flex-direction:column;gap:10px;min-height:190px}
+            .quest-card.done{border-color:#bbf7d0;background:linear-gradient(180deg,#fff,#f0fdf4)}
+            .quest-card.claimed{opacity:.72}
+            .quest-card .quest-icon{width:50px;height:50px;border-radius:18px;display:grid;place-items:center;background:#fff7ed;border:1px solid #fed7aa;font-size:24px}
+            .quest-card strong{color:#1d2d4d;font-size:15px}
+            .quest-card p{margin:0;color:#66728d;font-size:12.5px;line-height:1.55}
+            .quest-card small{margin-top:auto;color:#8a97b7;font-size:11px;font-weight:900}
+            .quest-card button{width:100%}
+            .garden-economy-card{margin-top:14px!important}
+            .garden-economy-items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
+            .garden-economy-item{padding:12px;border-radius:18px;background:#f8fbff;border:1px solid #e7eefc;text-align:center}
+            .garden-economy-item strong{display:block;color:#1d2d4d;font-size:17px}
+            .garden-economy-item span{display:block;margin-top:4px;color:#6f7e9c;font-size:11px;font-weight:900}
+            .pet-reaction-card{align-self:stretch}
+            .pet-reaction-box{margin-top:12px;padding:16px;border-radius:22px;background:linear-gradient(135deg,#fff7ed,#f0fdf4);border:1px solid #e7eefc;color:#1d2d4d;font-size:15px;line-height:1.65;font-weight:800}
+            #summary-input,#report-detail{
+                width:100%;
+                resize:none;
+                margin-top:12px;
+                border:1px solid #dce7fb;
+                background:#f8fbff;
+                color:#1d2d4d;
+                outline:0;
+                border-radius:18px;
+                padding:12px;
+                font-size:15px;
+                line-height:1.65;
+            }
+            .summary-result{margin-top:10px;color:#52627f;font-size:13px;line-height:1.7}
+            .summary-result strong{display:block;color:#1d2d4d;font-size:16px;margin-bottom:8px}
+            .summary-result ul{margin:10px 0 0 18px}
+            .summary-history{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
+            .summary-history-item{padding:13px;border-radius:20px;background:#f8fbff;border:1px solid #e7eefc}
+            .summary-history-item strong{display:block;color:#1d2d4d;font-size:14px}
+            .summary-history-item p{margin:8px 0 0;color:#66728d;font-size:12px;line-height:1.55}
+            .onboarding-modal{position:fixed;inset:0;z-index:990;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(248,251,255,.78);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+            .onboarding-modal.show{display:flex}
+            .onboarding-card{width:min(520px,100%);max-height:calc(100dvh - 36px);overflow:auto;border-radius:34px;background:#fff;border:1px solid rgba(255,255,255,.9);box-shadow:0 28px 90px rgba(15,23,42,.22);padding:22px}
+            .onboarding-mark{width:66px;height:66px;border-radius:24px;display:grid;place-items:center;background:#f0fdf4;border:1px solid #bbf7d0;font-size:32px;margin-bottom:12px}
+            .onboarding-card>span{color:#15803d;font-size:12px;font-weight:900;text-transform:uppercase}
+            .onboarding-card h1{margin:6px 0;color:#16233f;font-size:30px;line-height:1.1}
+            .onboarding-card p{color:#66728d;font-size:14px;line-height:1.65;margin:0 0 14px}
+            .onboarding-card label{display:block;margin:12px 0 7px;color:#52627f;font-size:12px;font-weight:900}
+            .onboarding-card input{width:100%;min-height:46px;border-radius:16px;border:1px solid #dce7fb;background:#f8fbff;padding:0 12px;font-size:16px;outline:0}
+            .onboarding-goals{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+            .onboarding-goal,.onboarding-mood{min-height:42px;border-radius:16px;background:#f8fbff;border:1px solid #e7eefc;color:#52627f;font-size:13px;font-weight:900}
+            .onboarding-goal.active,.onboarding-mood.active{background:#fff7ed;border-color:#fed7aa;color:#c2410c}
+            @media(max-width:900px){.safety-layout,.summary-layout{grid-template-columns:1fr}}
+            @media(max-width:599px){
+                .garden-economy-items{grid-template-columns:1fr}
+                .onboarding-modal{align-items:flex-end;padding:12px}
+                .onboarding-card{border-radius:28px}
+                .onboarding-card h1{font-size:26px}
+            }
+
         </style>
     </head>
     <body class="auth-lock">
@@ -5265,6 +5362,57 @@
         </div>
 
         <div id="toast" role="alert" aria-live="polite"></div>
+
+        <div id="report-modal" class="support-modal" aria-hidden="true">
+            <div class="support-backdrop" data-report-close></div>
+            <article class="support-card" role="dialog" aria-modal="true" aria-label="Laporkan user">
+                <button class="support-close" type="button" data-report-close aria-label="Tutup"><i class="fas fa-xmark"></i></button>
+                <div class="support-head">
+                    <div class="support-emoji">🛡️</div>
+                    <div>
+                        <span>Safety Center</span>
+                        <h2 id="report-title">Laporkan user</h2>
+                        <p>Pilih alasan yang paling sesuai. Laporan disimpan untuk ditinjau admin.</p>
+                    </div>
+                </div>
+                <select id="report-reason" class="safety-select">
+                    <option value="spam">Spam</option>
+                    <option value="toxic">Toxic / kasar</option>
+                    <option value="harassment">Pelecehan</option>
+                    <option value="self_harm">Konten bahaya diri</option>
+                    <option value="other">Lainnya</option>
+                </select>
+                <textarea id="report-detail" maxlength="500" rows="4" placeholder="Detail tambahan opsional..."></textarea>
+                <button id="report-send" class="support-send" type="button"><i class="fas fa-flag"></i> Kirim Laporan</button>
+            </article>
+        </div>
+
+        <div id="onboarding-modal" class="onboarding-modal" aria-hidden="true">
+            <article class="onboarding-card" role="dialog" aria-modal="true" aria-label="Onboarding Plong">
+                <div class="onboarding-mark">🌱</div>
+                <span>Selamat datang di VokaMon</span>
+                <h1>Biar aku kenalin ruang healing-mu dulu</h1>
+                <p>Pilih tujuan awal, nama pet, dan mood pertama. Setelah selesai kamu akan dapat arah yang lebih jelas.</p>
+                <label>Tujuan utama</label>
+                <div class="onboarding-goals">
+                    <button type="button" class="onboarding-goal active" data-goal="curhat">Curhat</button>
+                    <button type="button" class="onboarding-goal" data-goal="emosi">Kelola emosi</button>
+                    <button type="button" class="onboarding-goal" data-goal="pet">Rawat pet</button>
+                    <button type="button" class="onboarding-goal" data-goal="support">Cari support</button>
+                </div>
+                <label for="onboarding-pet-name">Nama pet</label>
+                <input id="onboarding-pet-name" type="text" maxlength="24" value="Plong">
+                <label>Mood awal</label>
+                <div class="onboarding-goals">
+                    <button type="button" class="onboarding-mood active" data-mood="tenang">😌 Tenang</button>
+                    <button type="button" class="onboarding-mood" data-mood="senang">😊 Senang</button>
+                    <button type="button" class="onboarding-mood" data-mood="galau">🌧️ Galau</button>
+                    <button type="button" class="onboarding-mood" data-mood="stres">😵‍💫 Stres</button>
+                </div>
+                <button id="onboarding-finish" class="support-send" type="button"><i class="fas fa-seedling"></i> Mulai Perjalanan</button>
+            </article>
+        </div>
+
 
         <div id="support-modal" class="support-modal" aria-hidden="true">
             <div class="support-backdrop" data-support-close></div>
@@ -5368,6 +5516,9 @@
                     <button class="<%= pageId === 'pg-mood' ? 'sb on' : 'sb' %>" data-page="pg-mood"><i class="fas fa-face-smile"></i> Profil Emosi</button>
                     <button class="<%= pageId === 'pg-calm' ? 'sb on' : 'sb' %>" data-page="pg-calm"><i class="fas fa-spa"></i> Ruang Tenang</button>
                     <button class="<%= pageId === 'pg-achievements' ? 'sb on' : 'sb' %>" data-page="pg-achievements"><i class="fas fa-medal"></i> Badge</button>
+                    <button class="<%= pageId === 'pg-quests' ? 'sb on' : 'sb' %>" data-page="pg-quests"><i class="fas fa-list-check"></i> Daily Quest</button>
+                    <button class="<%= pageId === 'pg-summary' ? 'sb on' : 'sb' %>" data-page="pg-summary"><i class="fas fa-wand-magic-sparkles"></i> AI Summary</button>
+                    <button class="<%= pageId === 'pg-safety' ? 'sb on' : 'sb' %>" data-page="pg-safety"><i class="fas fa-shield-heart"></i> Safety</button>
                     <button class="<%= pageId === 'pg-redeem' ? 'sb on' : 'sb' %>" data-page="pg-redeem"><img class="nav-img" src="/assets/nav/redeem.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Redeem</button>
                     <button class="<%= pageId === 'pg-assist' ? 'sb on' : 'sb' %>" data-page="pg-assist"><img class="nav-img" src="/assets/nav/chat.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Asisten</button>
                     <button class="<%= pageId === 'pg-account' ? 'sb on' : 'sb' %>" data-page="pg-account"><img class="nav-img" src="/assets/nav/account.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Akun</button>
@@ -5470,6 +5621,9 @@
                                         <button class="foku-quick-btn" type="button" data-page="pg-notifications"><i class="fas fa-bell"></i><span>Notif</span></button>
                                         <button class="foku-quick-btn" type="button" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Teman</span></button>
                                         <button class="foku-quick-btn" type="button" data-page="pg-achievements"><i class="fas fa-medal"></i><span>Badge</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-quests"><i class="fas fa-list-check"></i><span>Quest</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-summary"><i class="fas fa-wand-magic-sparkles"></i><span>Summary</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-safety"><i class="fas fa-shield-heart"></i><span>Safety</span></button>
                                         <button class="foku-quick-btn" type="button" data-page="pg-garden"><img class="nav-img" src="/assets/nav/garden.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Garden</span></button>
                                     </div>
                                 </div>
@@ -5701,7 +5855,13 @@
                             <div class="garden-history" id="garden-history"><div class="garden-history-item">Belum ada aktivitas kebun.</div></div>
                         </div>
                     </div>
-                </section>
+                
+                    <div id="garden-economy-card" class="feature-card garden-economy-card">
+                        <div class="feature-card-head"><strong>Garden Economy</strong><span>Konversi hasil panen jadi Soul Coins.</span></div>
+                        <div id="garden-economy-items" class="garden-economy-items"></div>
+                        <button id="garden-convert" class="feature-btn primary wide" type="button"><i class="fas fa-coins"></i> Konversi Hasil Panen</button>
+                    </div>
+</section>
 
                 <!-- GARDEN SEPARATE SHEETS -->
                 <div class="garden-sheet" id="garden-seed-sheet" aria-hidden="true">
@@ -5884,6 +6044,89 @@
 
 
 
+
+                <!-- SAFETY CENTER -->
+                <section id="pg-safety" class="<%= pageId === 'pg-safety' ? 'pg on feature-page' : 'pg feature-page' %>" aria-label="Safety Center">
+                    <div class="feature-shell">
+                        <div class="feature-hero safety-hero">
+                            <div>
+                                <span class="feature-kicker"><i class="fas fa-shield-heart"></i> Safety Center</span>
+                                <h1>Ruang sosial yang lebih aman</h1>
+                                <p>Atur privasi, tutup request, blokir user, dan laporkan perilaku yang tidak nyaman.</p>
+                            </div>
+                            <div class="feature-hero-icon">🛡️</div>
+                        </div>
+                        <div class="safety-layout">
+                            <div class="feature-card">
+                                <div class="feature-card-head"><strong>Pengaturan privasi</strong><span>Kontrol siapa yang bisa berinteraksi.</span></div>
+                                <label class="feature-label">Visibilitas profil</label>
+                                <select id="safety-profile-visibility" class="safety-select">
+                                    <option value="public">Publik</option>
+                                    <option value="friends">Teman saja</option>
+                                    <option value="private">Private</option>
+                                </select>
+                                <label class="safety-toggle"><input id="safety-allow-requests" type="checkbox" checked><span>Izinkan request pertemanan</span></label>
+                                <label class="safety-toggle"><input id="safety-allow-support" type="checkbox" checked><span>Izinkan pesan dukungan dari teman</span></label>
+                                <button id="safety-save" class="feature-btn primary wide" type="button"><i class="fas fa-save"></i> Simpan Safety</button>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-card-head"><strong>User diblokir</strong><span>Relasi diblokir tidak bisa request/dukung.</span></div>
+                                <div id="blocked-list" class="blocked-list"></div>
+                                <div id="blocked-empty" class="feature-empty">Belum ada user yang diblokir.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DAILY QUEST -->
+                <section id="pg-quests" class="<%= pageId === 'pg-quests' ? 'pg on feature-page' : 'pg feature-page' %>" aria-label="Daily Quest">
+                    <div class="feature-shell">
+                        <div class="feature-hero quest-hero">
+                            <div>
+                                <span class="feature-kicker"><i class="fas fa-list-check"></i> Daily Quest</span>
+                                <h1>Alasan kecil buat balik hari ini</h1>
+                                <p>Selesaikan aktivitas healing ringan untuk mendapatkan Soul Coins, EXP pet, dan EXP kebun.</p>
+                            </div>
+                            <div class="feature-hero-icon">📋</div>
+                        </div>
+                        <div class="feature-toolbar">
+                            <div><strong id="quest-summary">Memuat quest...</strong><span>Quest reset harian mengikuti waktu server.</span></div>
+                            <button id="quest-refresh" class="feature-btn" type="button"><i class="fas fa-rotate"></i> Refresh</button>
+                        </div>
+                        <div id="quest-grid" class="quest-grid"></div>
+                    </div>
+                </section>
+
+                <!-- AI EMOTION SUMMARY -->
+                <section id="pg-summary" class="<%= pageId === 'pg-summary' ? 'pg on feature-page' : 'pg feature-page' %>" aria-label="AI Emotion Summary">
+                    <div class="feature-shell">
+                        <div class="feature-hero summary-hero">
+                            <div>
+                                <span class="feature-kicker"><i class="fas fa-wand-magic-sparkles"></i> AI Emotion Summary</span>
+                                <h1>Ubah curhat jadi insight emosi</h1>
+                                <p>Tulis curhatanmu, lalu sistem akan membuat ringkasan privat: emosi utama, pola, dan saran kecil.</p>
+                            </div>
+                            <div class="feature-hero-icon">✨</div>
+                        </div>
+                        <div class="summary-layout">
+                            <div class="feature-card">
+                                <div class="feature-card-head"><strong>Buat ringkasan</strong><span>Private untuk akunmu.</span></div>
+                                <textarea id="summary-input" rows="7" maxlength="2200" placeholder="Tulis curhatanmu di sini..."></textarea>
+                                <button id="summary-generate" class="feature-btn primary wide" type="button"><i class="fas fa-wand-magic-sparkles"></i> Buat Ringkasan Emosi</button>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-card-head"><strong>Hasil terbaru</strong><span id="summary-latest-time">Belum ada</span></div>
+                                <div id="summary-result" class="summary-result">Belum ada ringkasan. Tulis curhatanmu dulu.</div>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-card-head"><strong>Riwayat ringkasan</strong><span>12 terbaru</span></div>
+                            <div id="summary-history" class="summary-history"></div>
+                        </div>
+                    </div>
+                </section>
+
+
                 <!-- NOTIFICATIONS -->
                 <section id="pg-notifications" class="<%= pageId === 'pg-notifications' ? 'pg on feature-page' : 'pg feature-page' %>" aria-label="Notification Center">
                     <div class="feature-shell">
@@ -5945,6 +6188,10 @@
                                     <div><span>Check-in hari ini</span><strong id="emotion-today">Belum</strong></div>
                                 </div>
                                 <div id="emotion-bars" class="emotion-bars"></div>
+                            </div>
+                            <div class="feature-card pet-reaction-card">
+                                <div class="feature-card-head"><strong>Pet Reaction</strong><span>Pet merespon mood terakhirmu.</span></div>
+                                <div id="pet-reaction-box" class="pet-reaction-box">🐾 Pet menunggu check-in mood.</div>
                             </div>
                         </div>
                         <div class="feature-card">
@@ -6471,7 +6718,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
             window.__vkmAuthReady=false;
 
             function defaultStateForUser(user){
-                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,bond:0,worker:{lastClaimAt:new Date().toISOString(),essence:{marah:0,sedih:0,galau:0,stres:0,excited:0,tenang:0},totalEarned:0,today:{date:new Date().toISOString().slice(0,10),vent:0,chat:0,garden:0,care:0,bonusClaimed:false}},accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null},gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
+                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,bond:0,worker:{lastClaimAt:new Date().toISOString(),essence:{marah:0,sedih:0,galau:0,stres:0,excited:0,tenang:0},totalEarned:0,today:{date:new Date().toISOString().slice(0,10),vent:0,chat:0,garden:0,care:0,bonusClaimed:false}},accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,onboarding:{completed:false,goal:"",petName:"Plong",firstMood:"tenang"},garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null,economy:{date:new Date().toISOString().slice(0,10),convertedToday:0,totalConverted:0}},gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
             }
             function ensureDefaults(){
                 if(!state.pet)state.pet={name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50};
@@ -6658,6 +6905,9 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 "pg-mood":"/mood",
                 "pg-calm":"/calm",
                 "pg-achievements":"/achievements",
+                "pg-safety":"/safety",
+                "pg-quests":"/quests",
+                "pg-summary":"/summary",
                 "pg-redeem":"/redeem",
                 "pg-assist":"/chat",
                 "pg-account":"/account"
@@ -6688,6 +6938,10 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 if(id==="pg-mood"&&typeof loadMoodSummary==="function")loadMoodSummary(false);
                 if(id==="pg-calm"&&typeof loadCalmStats==="function")loadCalmStats(false);
                 if(id==="pg-achievements"&&typeof loadAchievements==="function")loadAchievements(false);
+                if(id==="pg-safety"&&typeof loadSafetyCenter==="function")loadSafetyCenter(false);
+                if(id==="pg-quests"&&typeof loadQuests==="function")loadQuests(false);
+                if(id==="pg-summary"&&typeof loadAiSummaries==="function")loadAiSummaries(false);
+                if(id==="pg-garden"&&typeof loadGardenEconomy==="function")loadGardenEconomy(false);
                 if(id==="pg-assist"&&typeof scrollToBottom==="function")setTimeout(scrollToBottom,80);
             }
 
@@ -7982,11 +8236,12 @@ function friendActions(user,mode){
 }
 function friendModalActions(user){
     var id=friendEsc(user.id),fid=friendEsc(user.friendshipId||''),rel=user.relationship||'none',userName=friendEsc(user.name||'Teman');
+    var safety='<button class="friend-btn" type="button" data-friend-action="report" data-user-id="'+id+'" data-user-name="'+userName+'">Report</button><button class="friend-btn danger" type="button" data-friend-action="block" data-user-id="'+id+'">Block</button>';
     if(rel==='self')return '<button class="friend-btn" type="button" disabled>Ini profil kamu</button>';
-    if(rel==='incoming_pending')return '<button class="friend-btn primary" type="button" data-friend-action="accept" data-friendship-id="'+fid+'">Terima request</button><button class="friend-btn danger" type="button" data-friend-action="decline" data-friendship-id="'+fid+'">Tolak</button>';
-    if(rel==='friends')return '<button class="friend-btn primary" type="button" data-friend-action="support" data-user-id="'+id+'" data-user-name="'+userName+'">Kirim dukungan</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Hapus teman</button>';
-    if(rel==='outgoing_pending')return '<button class="friend-btn" type="button" disabled>Menunggu diterima</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Batalkan request</button>';
-    return '<button class="friend-btn primary" type="button" data-friend-action="request" data-user-id="'+id+'">Tambah teman</button><button class="friend-btn" type="button" data-friend-profile-close>Tutup</button>';
+    if(rel==='incoming_pending')return '<button class="friend-btn primary" type="button" data-friend-action="accept" data-friendship-id="'+fid+'">Terima request</button><button class="friend-btn danger" type="button" data-friend-action="decline" data-friendship-id="'+fid+'">Tolak</button>'+safety;
+    if(rel==='friends')return '<button class="friend-btn primary" type="button" data-friend-action="support" data-user-id="'+id+'" data-user-name="'+userName+'">Kirim dukungan</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Hapus teman</button>'+safety;
+    if(rel==='outgoing_pending')return '<button class="friend-btn" type="button" disabled>Menunggu diterima</button><button class="friend-btn danger" type="button" data-friend-action="remove" data-friendship-id="'+fid+'">Batalkan request</button>'+safety;
+    return '<button class="friend-btn primary" type="button" data-friend-action="request" data-user-id="'+id+'">Tambah teman</button>'+safety;
 }
 function friendCard(user,mode){
     var tags=[];
@@ -8198,6 +8453,8 @@ async function friendAction(action,btn){
     if(!authToken){showAuth('Silakan login dulu.');return;}
     if(action==='profile'){var key=btn.dataset.profileKey||btn.dataset.userId;if(key)navigateWithLoader('/profile/'+key);return;}
     if(action==='support'){openSupportModal(btn.dataset.userId,btn.dataset.userName||'Teman');return;}
+    if(action==='report'){openReportModal(btn.dataset.userId,btn.dataset.userName||'User');return;}
+    if(action==='block'){blockUser(btn.dataset.userId);return;}
     var card=btn.closest('.friend-card')||btn.closest('.friend-profile-card');if(card)card.dataset.busy='1';
     var url='',opts={method:'POST',headers:{'Content-Type':'application/json'}};
     if(action==='request'){url='/api/friends/request';opts.body=JSON.stringify({userId:btn.dataset.userId});}
@@ -8356,6 +8613,7 @@ function renderMoodSummary(data){
     if(history)history.innerHTML=recent.slice(0,12).map(function(x){
         return '<div class="mood-history-item"><strong>'+moodEmoji(x.mood)+' '+friendEsc(x.mood)+' · '+friendEsc(x.intensity)+'/5</strong><span>'+fmtTimeAgo(x.createdAt)+'</span>'+(x.note?'<p>'+friendEsc(x.note)+'</p>':'')+'</div>';
     }).join('') || '<div class="feature-empty show">Belum ada riwayat mood.</div>';
+    if(typeof renderPetReaction==='function')renderPetReaction(today);
 }
 async function loadMoodSummary(silent){
     if(!authToken)return;
@@ -8371,7 +8629,7 @@ async function saveMoodCheckin(){
         var r=await apiFetch('/api/mood/checkin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mood:socialState.mood,intensity:range?range.value:3,note:note?note.value:''})});
         var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal menyimpan mood.');
         toast('Mood check-in tersimpan.');
-        await loadMoodSummary(true);await loadAchievements(true);await loadNotifications(true);
+        await loadMoodSummary(true);await loadAchievements(true);await loadNotifications(true);if(typeof loadQuests==='function')await loadQuests(true);
     }catch(e){toast(e.message||'Gagal menyimpan mood.')}
 }
 
@@ -8390,7 +8648,7 @@ async function completeCalmSession(){
         var r=await apiFetch('/api/calm/complete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:'breathing',durationSeconds:socialState.calmDuration})});
         var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal menyimpan sesi.');
         toast('Sesi Ruang Tenang selesai.');
-        await loadCalmStats(true);await loadAchievements(true);await loadNotifications(true);
+        await loadCalmStats(true);await loadAchievements(true);await loadNotifications(true);if(typeof loadQuests==='function')await loadQuests(true);
     }catch(e){toast(e.message||'Gagal menyimpan sesi tenang.')}
 }
 function startCalmSession(){
@@ -8464,7 +8722,7 @@ async function sendSupportMessage(){
         var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal mengirim dukungan.');
         toast('Dukungan terkirim.');
         closeSupportModal();
-        await refreshFriendData({silent:true});await loadAchievements(true);await loadNotifications(true);
+        await refreshFriendData({silent:true});await loadAchievements(true);await loadNotifications(true);if(typeof loadQuests==='function')await loadQuests(true);
         if((window.__VKM_PAGE_ID||'')==='pg-profile'&&window.__VKM_PROFILE_KEY)await loadFriendProfilePage(window.__VKM_PROFILE_KEY,true);
     }catch(e){toast(e.message||'Gagal mengirim dukungan.')}
 }
@@ -8489,7 +8747,210 @@ function initSocialFeatures(){
     socialState.notifTimer=setInterval(function(){if(!document.hidden)loadNotifications(true)},10000);
 }
 
-            initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();initSocialFeatures();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
+
+var growthState={
+    safety:null,
+    reportTarget:null,
+    reportName:'',
+    quests:[],
+    summaries:[],
+    onboardingGoal:'curhat',
+    onboardingMood:'tenang'
+};
+function petReactionForMood(mood){
+    var map={
+        tenang:['😌','Pet kamu ikut tenang. Aura hijau lembut aktif dan energi pulih pelan-pelan.'],
+        senang:['😊','Pet kamu happy dan lebih aktif. Hari ini cocok buat rawat kebun.'],
+        sedih:['🤗','Pet kamu mendekat seperti ingin menemani. Coba kirim dukungan ke teman atau buka Ruang Tenang.'],
+        marah:['🫧','Pet kamu mengajak napas pelan. Energi panas diarahkan jadi EXP kecil.'],
+        galau:['🌧️','Pet kamu duduk di sampingmu. Tidak harus langsung selesai, pelan-pelan dulu.'],
+        stres:['😵‍💫','Pet kamu menyalakan mode tenang. Saran: sesi napas 60 detik.'],
+        capek:['🥱','Pet kamu ikut istirahat. Hari ini cukup rawat hal kecil saja.'],
+        kosong:['🫥','Pet kamu memberi sinyal hangat. Mulai dari satu check-in kecil sudah cukup.'],
+        overthinking:['🌀','Pet kamu mengajak grounding 5-4-3-2-1 agar pikiran lebih pelan.']
+    };
+    return map[mood]||['🐾','Pet kamu menunggu mood check-in berikutnya.'];
+}
+function applyPetReaction(mood){
+    if(!state.pet)state.pet={name:'Plong'};
+    var r=petReactionForMood(mood);
+    state.pet.moodReaction={mood:mood,emoji:r[0],text:r[1],at:new Date().toISOString()};
+    if(['senang','tenang'].includes(mood))state.pet.happy=Math.min(100,(Number(state.pet.happy||50)+4));
+    if(['stres','marah','overthinking'].includes(mood))state.pet.energy=Math.max(0,(Number(state.pet.energy||70)-3));
+    if(['sedih','kosong','galau'].includes(mood))state.pet.bond=Math.min(100,(Number(state.pet.bond||0)+3));
+    if(typeof save==='function')save();
+}
+function renderPetReaction(today){
+    var box=document.getElementById('pet-reaction-box');if(!box)return;
+    var mood=(today&&today.mood)||(state.pet&&state.pet.moodReaction&&state.pet.moodReaction.mood)||null;
+    if(!mood){box.textContent='🐾 Pet menunggu check-in mood.';return;}
+    var r=petReactionForMood(mood);
+    box.innerHTML='<strong style="font-size:22px">'+r[0]+' '+friendEsc(mood)+'</strong><p style="margin:8px 0 0">'+friendEsc(r[1])+'</p>';
+}
+
+async function loadSafetyCenter(silent){
+    if(!authToken)return;
+    try{
+        var r=await apiFetch('/api/safety/settings');var d=await r.json();
+        if(!r.ok||!d.ok)throw new Error(d.error||'Gagal memuat safety.');
+        growthState.safety=d;
+        var v=document.getElementById('safety-profile-visibility'),req=document.getElementById('safety-allow-requests'),sup=document.getElementById('safety-allow-support');
+        if(v)v.value=d.settings.profileVisibility||'public';
+        if(req)req.checked=!!d.settings.allowFriendRequests;
+        if(sup)sup.checked=!!d.settings.allowSupportMessages;
+        renderBlockedUsers(d.blocks||[]);
+    }catch(e){if(!silent)toast(e.message||'Gagal memuat safety center.')}
+}
+function renderBlockedUsers(blocks){
+    var list=document.getElementById('blocked-list'),empty=document.getElementById('blocked-empty');
+    if(!list)return;
+    list.innerHTML=(blocks||[]).map(function(b){
+        return '<div class="blocked-item"><div><strong>'+friendEsc(b.user.name)+'</strong><span>'+friendEsc(b.user.username)+'</span></div><button class="feature-btn" type="button" data-unblock-user="'+friendEsc(b.user.id)+'">Buka</button></div>';
+    }).join('');
+    if(empty)empty.classList.toggle('show',!blocks||!blocks.length);
+}
+async function saveSafetySettings(){
+    var v=document.getElementById('safety-profile-visibility'),req=document.getElementById('safety-allow-requests'),sup=document.getElementById('safety-allow-support');
+    try{
+        var r=await apiFetch('/api/safety/settings',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({profileVisibility:v?v.value:'public',allowFriendRequests:req?req.checked:true,allowSupportMessages:sup?sup.checked:true})});
+        var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal menyimpan.');
+        toast('Safety center tersimpan.');
+        await loadSafetyCenter(true);
+    }catch(e){toast(e.message||'Gagal menyimpan safety.')}
+}
+async function blockUser(userId){
+    if(!userId||!confirm('Blokir user ini? Relasi pertemanan akan dihapus.'))return;
+    try{
+        var r=await apiFetch('/api/safety/block',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:userId})});
+        var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal blokir.');
+        toast('User diblokir.');
+        await refreshFriendData({silent:true});await loadSafetyCenter(true);
+        if((window.__VKM_PAGE_ID||'')==='pg-profile')navigateWithLoader('/friends');
+    }catch(e){toast(e.message||'Gagal blokir user.')}
+}
+async function unblockUser(userId){
+    try{
+        var r=await apiFetch('/api/safety/block/'+encodeURIComponent(userId),{method:'DELETE'});
+        var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal membuka blokir.');
+        toast('Blokir dibuka.');await loadSafetyCenter(true);
+    }catch(e){toast(e.message||'Gagal membuka blokir.')}
+}
+function openReportModal(userId,name){
+    growthState.reportTarget=userId;growthState.reportName=name||'User';
+    var modal=document.getElementById('report-modal'),title=document.getElementById('report-title'),detail=document.getElementById('report-detail');
+    if(title)title.textContent='Laporkan '+growthState.reportName;
+    if(detail)detail.value='';
+    if(modal){modal.classList.add('show');modal.setAttribute('aria-hidden','false');}
+}
+function closeReportModal(){var m=document.getElementById('report-modal');if(m){m.classList.remove('show');m.setAttribute('aria-hidden','true')}growthState.reportTarget=null}
+async function sendReport(){
+    var reason=document.getElementById('report-reason'),detail=document.getElementById('report-detail');
+    if(!growthState.reportTarget)return;
+    try{
+        var r=await apiFetch('/api/safety/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:growthState.reportTarget,reason:reason?reason.value:'other',detail:detail?detail.value:''})});
+        var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal report.');
+        toast('Laporan terkirim.');closeReportModal();await loadNotifications(true);
+    }catch(e){toast(e.message||'Gagal mengirim laporan.')}
+}
+
+function questIcon(key){return {mood_today:'🌤️',calm_today:'🫧',support_today:'🤗',garden_today:'🥕',ai_summary_today:'✨'}[key]||'📋'}
+function renderQuests(data){
+    var grid=document.getElementById('quest-grid'),sum=document.getElementById('quest-summary');if(!grid)return;
+    var quests=data.quests||[];growthState.quests=quests;
+    if(sum)sum.textContent=(data.done||0)+' selesai · '+(data.claimed||0)+' reward diklaim';
+    grid.innerHTML=quests.map(function(q){
+        return '<article class="quest-card '+(q.done?'done':'')+' '+(q.claimed?'claimed':'')+'"><div class="quest-icon">'+questIcon(q.key)+'</div><strong>'+friendEsc(q.title)+'</strong><p>'+friendEsc(q.body)+'</p><small>Reward: '+friendEsc(q.rewardCoins||0)+' coins'+(q.rewardPetExp?' · '+q.rewardPetExp+' EXP pet':'')+(q.rewardGardenExp?' · '+q.rewardGardenExp+' EXP kebun':'')+'</small><button class="feature-btn '+(q.done&&!q.claimed?'primary':'')+'" type="button" data-claim-quest="'+friendEsc(q.key)+'" '+(!q.done||q.claimed?'disabled':'')+'>'+(q.claimed?'Sudah diklaim':q.done?'Klaim reward':'Belum selesai')+'</button></article>';
+    }).join('');
+}
+async function loadQuests(silent){
+    if(!authToken)return;
+    try{var r=await apiFetch('/api/quests');var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal memuat quest.');renderQuests(d)}
+    catch(e){if(!silent)toast(e.message||'Gagal memuat quest.')}
+}
+async function claimQuest(key){
+    try{var r=await apiFetch('/api/quests/'+encodeURIComponent(key)+'/claim',{method:'POST'});var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal klaim quest.');if(d.state)applyStateFromServer(d.state);toast('Reward quest diklaim.');await loadQuests(true);await loadNotifications(true)}
+    catch(e){toast(e.message||'Gagal klaim quest.')}
+}
+
+async function loadGardenEconomy(silent){
+    if(!authToken)return;
+    try{
+        var r=await apiFetch('/api/garden/economy');var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal memuat ekonomi kebun.');
+        renderGardenEconomy(d);
+    }catch(e){if(!silent)toast(e.message||'Gagal memuat ekonomi kebun.')}
+}
+function renderGardenEconomy(data){
+    var el=document.getElementById('garden-economy-items');if(!el)return;
+    var items=(data.value&&data.value.items)||[];
+    el.innerHTML=items.map(function(i){return '<div class="garden-economy-item"><strong>'+friendEsc(i.qty)+'x</strong><span>'+friendEsc(i.key)+' · '+friendEsc(i.value)+' coins</span></div>'}).join('');
+    var btn=document.getElementById('garden-convert');if(btn)btn.disabled=!data.value||Number(data.value.total||0)<=0;
+}
+async function convertGardenHarvest(){
+    try{
+        var r=await apiFetch('/api/garden/economy/convert',{method:'POST'});var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal konversi.');
+        if(d.state)applyStateFromServer(d.state);toast(d.message||'Hasil kebun dikonversi.');renderGarden();await loadGardenEconomy(true);await loadQuests(true);await loadNotifications(true);
+    }catch(e){toast(e.message||'Gagal konversi hasil kebun.')}
+}
+
+function renderAiSummaries(list){
+    var history=document.getElementById('summary-history'),result=document.getElementById('summary-result'),time=document.getElementById('summary-latest-time');if(!history)return;
+    growthState.summaries=list||[];
+    var latest=growthState.summaries[0];
+    if(latest){
+        if(time)time.textContent=fmtTimeAgo(latest.createdAt);
+        if(result)result.innerHTML='<strong>Ringkasan terbaru</strong><p>'+friendEsc(latest.summary)+'</p><ul>'+((latest.suggestions||[]).map(function(s){return '<li>'+friendEsc(s)+'</li>'}).join(''))+'</ul>';
+    }
+    history.innerHTML=growthState.summaries.map(function(x){return '<div class="summary-history-item"><strong>'+fmtTimeAgo(x.createdAt)+'</strong><p>'+friendEsc(x.summary)+'</p></div>'}).join('')||'<div class="feature-empty show">Belum ada ringkasan.</div>';
+}
+async function loadAiSummaries(silent){
+    if(!authToken)return;
+    try{var r=await apiFetch('/api/ai/emotion-summary');var d=await r.json();if(!r.ok||!d.ok)throw new Error(d.error||'Gagal memuat summary.');renderAiSummaries(d.summaries||[])}
+    catch(e){if(!silent)toast(e.message||'Gagal memuat summary.')}
+}
+async function generateAiSummary(){
+    var input=document.getElementById('summary-input');var text=input?input.value.trim():'';
+    if(!text){toast('Tulis curhatanmu dulu.');return;}
+    try{
+        var r=await apiFetch('/api/ai/emotion-summary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:text})});var d=await r.json();
+        if(!r.ok||!d.ok)throw new Error(d.error||'Gagal membuat summary.');
+        if(input)input.value='';toast('Ringkasan emosi dibuat.');await loadAiSummaries(true);await loadQuests(true);await loadNotifications(true);
+    }catch(e){toast(e.message||'Gagal membuat ringkasan.')}
+}
+
+function showOnboardingIfNeeded(){
+    if(!state.onboarding)state.onboarding={completed:false,goal:'',petName:'Plong',firstMood:'tenang'};
+    if(state.onboarding.completed)return;
+    var modal=document.getElementById('onboarding-modal');if(modal){modal.classList.add('show');modal.setAttribute('aria-hidden','false');}
+}
+function finishOnboarding(){
+    var petName=document.getElementById('onboarding-pet-name');
+    state.onboarding={completed:true,goal:growthState.onboardingGoal,petName:(petName&&petName.value.trim())||'Plong',firstMood:growthState.onboardingMood,completedAt:new Date().toISOString()};
+    state.pet=state.pet||{};state.pet.name=state.onboarding.petName;
+    applyPetReaction(growthState.onboardingMood);
+    if(typeof save==='function')save();
+    var modal=document.getElementById('onboarding-modal');if(modal){modal.classList.remove('show');modal.setAttribute('aria-hidden','true');}
+    toast('Onboarding selesai. Selamat datang 🌱');
+}
+
+function initGrowthFeatures(){
+    document.addEventListener('click',function(e){
+        var ub=e.target.closest('[data-unblock-user]');if(ub){unblockUser(ub.dataset.unblockUser);return;}
+        var cq=e.target.closest('[data-claim-quest]');if(cq){claimQuest(cq.dataset.claimQuest);return;}
+        var rc=e.target.closest('[data-report-close]');if(rc){closeReportModal();return;}
+    });
+    var safetySave=document.getElementById('safety-save');if(safetySave)safetySave.addEventListener('click',saveSafetySettings);
+    var reportSend=document.getElementById('report-send');if(reportSend)reportSend.addEventListener('click',sendReport);
+    var questRefresh=document.getElementById('quest-refresh');if(questRefresh)questRefresh.addEventListener('click',function(){loadQuests(false)});
+    var convert=document.getElementById('garden-convert');if(convert)convert.addEventListener('click',convertGardenHarvest);
+    var summaryGenerate=document.getElementById('summary-generate');if(summaryGenerate)summaryGenerate.addEventListener('click',generateAiSummary);
+    document.querySelectorAll('.onboarding-goal').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.onboarding-goal').forEach(function(x){x.classList.remove('active')});b.classList.add('active');growthState.onboardingGoal=b.dataset.goal||'curhat';});});
+    document.querySelectorAll('.onboarding-mood').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.onboarding-mood').forEach(function(x){x.classList.remove('active')});b.classList.add('active');growthState.onboardingMood=b.dataset.mood||'tenang';});});
+    var finish=document.getElementById('onboarding-finish');if(finish)finish.addEventListener('click',finishOnboarding);
+    loadQuests(true);loadSafetyCenter(true);loadAiSummaries(true);loadGardenEconomy(true);
+    setTimeout(showOnboardingIfNeeded,900);
+}
+
+            initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();initSocialFeatures();initGrowthFeatures();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
         </script>
     </body>
 </html>
