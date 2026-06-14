@@ -3503,6 +3503,59 @@ app.get('/api/life/event', requireAuth, async (req, res) => {
 
 
 
+
+
+/* ═══════ DASHBOARD STATS PACK ═══════ */
+app.get('/api/dashboard/stats', requireAuth, async (req, res) => {
+  try {
+    const uid = Number(req.user.id);
+    const state = await getStateForUser(req.user);
+    ensureGarden(state);
+
+    const [friendRows, moodRows, calmRows, badgeRows, supportRows, summaryRows, unreadRows, questRows] = await Promise.all([
+      query(`SELECT COUNT(*)::INT AS total FROM friendships WHERE status = 'accepted' AND (requester_id = $1 OR addressee_id = $1)`, [uid]),
+      query(`SELECT COUNT(*)::INT AS total, COUNT(*) FILTER (WHERE mood_date = CURRENT_DATE)::INT AS today FROM mood_checkins WHERE user_id = $1`, [uid]),
+      query(`SELECT COUNT(*)::INT AS total, COALESCE(SUM(duration_seconds),0)::INT AS seconds FROM calm_sessions WHERE user_id = $1`, [uid]),
+      query(`SELECT COUNT(*)::INT AS total FROM achievements WHERE user_id = $1`, [uid]),
+      query(`SELECT COUNT(*)::INT AS total FROM friend_supports WHERE sender_id = $1`, [uid]),
+      query(`SELECT COUNT(*)::INT AS total FROM ai_emotion_summaries WHERE user_id = $1`, [uid]),
+      query(`SELECT COUNT(*)::INT AS total FROM notifications WHERE user_id = $1 AND is_read = FALSE`, [uid]),
+      query(`SELECT COUNT(*)::INT AS total FROM daily_quest_claims WHERE user_id = $1 AND quest_date = CURRENT_DATE`, [uid])
+    ]);
+
+    const recap = await weeklyRecapForUser(uid);
+
+    res.json({
+      ok: true,
+      stats: {
+        coins: Number(state.coins || 0),
+        friends: Number(friendRows[0]?.total || 0),
+        moodCheckins: Number(moodRows[0]?.total || 0),
+        moodToday: Number(moodRows[0]?.today || 0),
+        calmSessions: Number(calmRows[0]?.total || 0),
+        calmSeconds: Number(calmRows[0]?.seconds || 0),
+        badges: Number(badgeRows[0]?.total || 0),
+        supportsSent: Number(supportRows[0]?.total || 0),
+        aiSummaries: Number(summaryRows[0]?.total || 0),
+        unreadNotifications: Number(unreadRows[0]?.total || 0),
+        questsClaimedToday: Number(questRows[0]?.total || 0),
+        gardenLevel: Number(state.garden?.level || 1),
+        gardenExp: Number(state.garden?.exp || 0),
+        gardenExpMax: Number(state.garden?.expMax || 40),
+        waterDrops: Number(state.garden?.waterDrops || 0),
+        petLevel: Number(state.pet?.level || 1),
+        petBond: Number(state.pet?.bond || 0)
+      },
+      recap
+    });
+  } catch (error) {
+    console.error('Dashboard stats error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat statistik dashboard.' });
+  }
+});
+
+
+
 const APP_VIEWS = {
   '/': 'home',
   '/home': 'home',
@@ -3513,6 +3566,9 @@ const APP_VIEWS = {
 
   '/avatar': 'avatar',
   '/avatar.html': 'avatar',
+
+  '/pet': 'pet',
+  '/pet.html': 'pet',
 
   '/vent': 'vent',
   '/vent.html': 'vent',
