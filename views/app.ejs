@@ -5217,6 +5217,14 @@
             .friend-level span{display:block;margin-top:4px;color:#4d7c5b;font-size:10px;font-weight:900}
             .friend-level i{position:absolute;left:0;bottom:0;height:4px;background:#22c55e;border-radius:999px;font-style:normal}
 
+
+            .plong-user-avatar .face-calm .uav-eye{height:3px;border-radius:999px;top:98px}
+            .plong-user-avatar .face-focus .uav-mouth{width:20px;height:3px;border-bottom:3px solid #27314d;top:124px;border-radius:999px}
+            .plong-user-avatar .face-shy .uav-mouth{width:15px;height:8px;border-bottom:3px solid #27314d}
+            .plong-user-avatar .accessory-glasses .uav-glasses{display:block}
+            .plong-user-avatar .accessory-headset .uav-headset{display:block}
+            .plong-user-avatar .accessory-halo .uav-halo{display:block}
+
             @media(max-width:900px){
                 .mood-layout,.calm-layout,.feature-hero{grid-template-columns:1fr}
                 .feature-hero-icon{min-height:100px;font-size:54px;justify-content:flex-start;padding-left:22px}
@@ -5735,6 +5743,441 @@
                 }
             }
 
+
+            /* ===== Plong Avatar World: virtual user avatar ===== */
+            .avatar-world-page{
+                overflow-y:auto!important;
+                overflow-x:hidden!important;
+                -webkit-overflow-scrolling:touch;
+                padding:18px 18px calc(var(--nav-h) + var(--s-b) + 26px)!important;
+                background:linear-gradient(180deg,#f8fbff,#f7f8fb);
+            }
+            .avatar-world-shell{
+                width:min(100%,1180px);
+                margin:0 auto;
+                display:flex;
+                flex-direction:column;
+                gap:16px;
+            }
+            .avatar-world-hero{
+                display:grid;
+                grid-template-columns:minmax(0,1fr) 280px;
+                gap:18px;
+                align-items:center;
+                min-height:310px;
+                padding:clamp(20px,3vw,34px);
+                border-radius:34px;
+                background:
+                  radial-gradient(circle at 18% 12%,rgba(255,180,109,.28),transparent 32%),
+                  radial-gradient(circle at 84% 10%,rgba(118,169,255,.26),transparent 34%),
+                  linear-gradient(135deg,#fff7ed,#eff6ff 55%,#f5f3ff);
+                border:1px solid rgba(255,255,255,.92);
+                box-shadow:0 24px 70px rgba(62,80,114,.10);
+                overflow:hidden;
+            }
+            .avatar-world-hero span{
+                display:inline-flex;
+                align-items:center;
+                gap:8px;
+                min-height:34px;
+                padding:8px 12px;
+                border-radius:999px;
+                background:rgba(255,255,255,.84);
+                border:1px solid rgba(224,232,244,.9);
+                color:#4f6389;
+                font-size:12px;
+                font-weight:900;
+                margin-bottom:12px;
+            }
+            .avatar-world-hero h1{
+                margin:0;
+                color:#16233f;
+                font-size:clamp(32px,4.4vw,52px);
+                line-height:1.03;
+                letter-spacing:-1px;
+                max-width:760px;
+            }
+            .avatar-world-hero p{
+                margin:12px 0 0;
+                color:#5f6f8d;
+                font-size:15px;
+                line-height:1.75;
+                max-width:760px;
+            }
+            .avatar-world-actions{
+                display:flex;
+                flex-wrap:wrap;
+                gap:10px;
+                margin-top:18px;
+            }
+            .avatar-world-preview-card{
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                gap:8px;
+                padding:18px;
+                border-radius:30px;
+                background:rgba(255,255,255,.58);
+                border:1px solid rgba(255,255,255,.78);
+            }
+            .avatar-world-preview-card strong{
+                color:#16233f;
+                font-size:18px;
+                font-weight:900;
+            }
+            .avatar-world-preview-card span{
+                margin:0;
+                min-height:auto;
+                background:transparent;
+                border:0;
+                padding:0;
+                color:#66728d;
+                font-size:12px;
+            }
+            .avatar-world-layout{
+                display:grid;
+                grid-template-columns:minmax(300px,.78fr) minmax(0,1fr);
+                gap:16px;
+                align-items:start;
+            }
+            .avatar-world-panel,.avatar-world-profile-preview{
+                background:rgba(255,255,255,.94);
+                border:1px solid rgba(221,229,240,.95);
+                border-radius:28px;
+                box-shadow:0 18px 45px rgba(62,80,114,.08);
+                padding:18px;
+            }
+            .avatar-world-panel-head strong{
+                display:block;
+                color:#1d2d4d;
+                font-size:20px;
+            }
+            .avatar-world-panel-head span{
+                display:block;
+                color:#6f7e9c;
+                font-size:12px;
+                margin-top:4px;
+            }
+            .avatar-control-group{
+                margin-top:16px;
+                padding-top:14px;
+                border-top:1px solid #edf2ff;
+            }
+            .avatar-control-group label{
+                display:block;
+                color:#52627f;
+                font-size:12px;
+                font-weight:900;
+                margin-bottom:8px;
+            }
+            .avatar-option-row{
+                display:flex;
+                flex-wrap:wrap;
+                gap:8px;
+            }
+            .avatar-option-row button{
+                min-height:38px;
+                padding:0 12px;
+                border-radius:14px;
+                background:#f8fbff;
+                border:1px solid #dce7fb;
+                color:#52699b;
+                font-size:12px;
+                font-weight:900;
+            }
+            .avatar-option-row button.active{
+                background:#fff7ed;
+                border-color:#fed7aa;
+                color:#c2410c;
+                box-shadow:0 10px 18px rgba(255,147,73,.12);
+            }
+            .avatar-profile-cover{
+                min-height:330px;
+                border-radius:24px;
+                display:grid;
+                place-items:center;
+                background:
+                  radial-gradient(circle at 50% 20%,rgba(255,255,255,.78),transparent 130px),
+                  linear-gradient(135deg,#e0f2fe,#fff7ed);
+                border:1px solid #e7eefc;
+                overflow:hidden;
+            }
+            .avatar-profile-info{
+                padding:16px 4px 0;
+            }
+            .avatar-profile-info span{
+                color:#607092;
+                font-size:12px;
+                font-weight:900;
+                text-transform:uppercase;
+            }
+            .avatar-profile-info h2{
+                margin:5px 0 0;
+                color:#16233f;
+                font-size:30px;
+            }
+            .avatar-profile-info p{
+                margin:6px 0 0;
+                color:#66728d;
+                font-size:13px;
+                line-height:1.65;
+            }
+            .avatar-profile-stats{
+                display:grid;
+                grid-template-columns:repeat(3,1fr);
+                gap:10px;
+                margin-top:14px;
+            }
+            .avatar-profile-stats div{
+                padding:12px;
+                border-radius:18px;
+                background:#f8fbff;
+                border:1px solid #e7eefc;
+                text-align:center;
+            }
+            .avatar-profile-stats strong{
+                display:block;
+                color:#1d2d4d;
+                font-size:18px;
+            }
+            .avatar-profile-stats span{
+                display:block;
+                margin-top:4px;
+                color:#7a89a7;
+                font-size:10px;
+                text-transform:none;
+            }
+
+            .plong-user-avatar{
+                --skin:#f2b789;
+                --hair:#332238;
+                --outfit:#ff9349;
+                --aura:#48c78e;
+                --bg1:#dbeafe;
+                --bg2:#fff7ed;
+                position:relative;
+                width:180px;
+                height:220px;
+                display:block;
+                margin:auto;
+                isolation:isolate;
+            }
+            .plong-user-avatar.size-xl{width:190px;height:230px}
+            .plong-user-avatar.size-profile{width:230px;height:280px}
+            .plong-user-avatar.size-public{width:132px;height:160px}
+            .plong-user-avatar .uav-bg{
+                position:absolute;
+                inset:0;
+                border-radius:34px;
+                background:radial-gradient(circle at 50% 24%,var(--bg1),transparent 46%),linear-gradient(135deg,var(--bg2),#fff);
+                z-index:0;
+            }
+            .plong-user-avatar .uav-aura{
+                position:absolute;
+                left:50%;
+                top:18px;
+                width:125px;
+                height:125px;
+                transform:translateX(-50%);
+                border-radius:50%;
+                background:var(--aura);
+                opacity:.22;
+                filter:blur(15px);
+                z-index:1;
+                animation:uavAura 4s ease-in-out infinite;
+            }
+            @keyframes uavAura{0%,100%{transform:translateX(-50%) scale(.92)}50%{transform:translateX(-50%) scale(1.07)}}
+            .plong-user-avatar .uav-shadow{
+                position:absolute;
+                left:50%;
+                bottom:12px;
+                width:116px;
+                height:22px;
+                transform:translateX(-50%);
+                border-radius:50%;
+                background:rgba(43,55,90,.16);
+                filter:blur(2px);
+                z-index:2;
+            }
+            .plong-user-avatar .uav-body{
+                position:absolute;
+                left:50%;
+                bottom:28px;
+                width:102px;
+                height:94px;
+                transform:translateX(-50%);
+                background:var(--outfit);
+                border-radius:36px 36px 26px 26px;
+                border:4px solid rgba(255,255,255,.85);
+                box-shadow:0 14px 24px rgba(43,55,90,.13);
+                z-index:4;
+            }
+            .plong-user-avatar .uav-neck{
+                position:absolute;
+                left:50%;
+                bottom:112px;
+                width:34px;
+                height:28px;
+                transform:translateX(-50%);
+                background:var(--skin);
+                border-radius:0 0 16px 16px;
+                z-index:5;
+            }
+            .plong-user-avatar .uav-head{
+                position:absolute;
+                left:50%;
+                top:48px;
+                width:92px;
+                height:98px;
+                transform:translateX(-50%);
+                background:var(--skin);
+                border-radius:42% 42% 46% 46%;
+                border:4px solid rgba(255,255,255,.9);
+                box-shadow:0 16px 26px rgba(43,55,90,.12);
+                z-index:6;
+            }
+            .plong-user-avatar .uav-hair{
+                position:absolute;
+                left:50%;
+                top:34px;
+                width:102px;
+                height:64px;
+                transform:translateX(-50%);
+                background:var(--hair);
+                border-radius:48px 48px 28px 28px;
+                z-index:7;
+            }
+            .plong-user-avatar .uav-hair.short{height:48px;border-radius:42px 42px 20px 20px}
+            .plong-user-avatar .uav-hair.wavy{height:72px;border-radius:50px 50px 34px 34px;clip-path:polygon(0 0,100% 0,100% 70%,83% 60%,70% 82%,55% 62%,40% 86%,25% 60%,8% 74%)}
+            .plong-user-avatar .uav-hair.cap{height:42px;border-radius:36px 36px 18px 18px;background:#3158d4}
+            .plong-user-avatar .uav-hair.cap:after{
+                content:'';
+                position:absolute;
+                right:-18px;
+                top:22px;
+                width:36px;
+                height:12px;
+                border-radius:999px;
+                background:#3158d4;
+            }
+            .plong-user-avatar .uav-eye{
+                position:absolute;
+                top:92px;
+                width:8px;
+                height:11px;
+                border-radius:50%;
+                background:#27314d;
+                z-index:8;
+            }
+            .plong-user-avatar .uav-eye.left{left:calc(50% - 22px)}
+            .plong-user-avatar .uav-eye.right{left:calc(50% + 14px)}
+            .plong-user-avatar .uav-mouth{
+                position:absolute;
+                left:50%;
+                top:118px;
+                width:24px;
+                height:12px;
+                transform:translateX(-50%);
+                border-bottom:4px solid #27314d;
+                border-radius:0 0 20px 20px;
+                z-index:8;
+            }
+            .plong-user-avatar.face-calm .uav-eye{height:3px;border-radius:999px;top:98px}
+            .plong-user-avatar.face-focus .uav-mouth{width:20px;height:3px;border-bottom:3px solid #27314d;top:124px;border-radius:999px}
+            .plong-user-avatar.face-shy .uav-mouth{width:15px;height:8px;border-bottom:3px solid #27314d}
+            .plong-user-avatar .uav-blush{
+                position:absolute;
+                top:111px;
+                width:16px;
+                height:7px;
+                border-radius:999px;
+                background:rgba(244,114,182,.25);
+                z-index:8;
+            }
+            .plong-user-avatar .uav-blush.left{left:calc(50% - 37px)}
+            .plong-user-avatar .uav-blush.right{left:calc(50% + 21px)}
+            .plong-user-avatar .uav-arm{
+                position:absolute;
+                bottom:70px;
+                width:24px;
+                height:72px;
+                border-radius:999px;
+                background:var(--outfit);
+                z-index:3;
+                transform-origin:top center;
+            }
+            .plong-user-avatar .uav-arm.left{left:31px;transform:rotate(16deg)}
+            .plong-user-avatar .uav-arm.right{right:31px;transform:rotate(-16deg)}
+            .plong-user-avatar.pose-wave .uav-arm.right{right:24px;bottom:103px;transform:rotate(-130deg)}
+            .plong-user-avatar.pose-peace .uav-arm.left{left:24px;bottom:102px;transform:rotate(130deg)}
+            .plong-user-avatar.pose-focus .uav-arm{transform:rotate(0deg);bottom:56px}
+            .plong-user-avatar .uav-glasses{
+                position:absolute;
+                left:50%;
+                top:88px;
+                width:72px;
+                height:22px;
+                transform:translateX(-50%);
+                border:3px solid #1f2937;
+                border-left-width:4px;
+                border-right-width:4px;
+                border-radius:999px;
+                z-index:9;
+                display:none;
+            }
+            .plong-user-avatar.accessory-glasses .uav-glasses{display:block}
+            .plong-user-avatar .uav-headset{
+                position:absolute;
+                left:50%;
+                top:58px;
+                width:112px;
+                height:74px;
+                transform:translateX(-50%);
+                border:5px solid #334155;
+                border-bottom:0;
+                border-radius:60px 60px 0 0;
+                z-index:10;
+                display:none;
+            }
+            .plong-user-avatar.accessory-headset .uav-headset{display:block}
+            .plong-user-avatar .uav-halo{
+                position:absolute;
+                left:50%;
+                top:16px;
+                width:70px;
+                height:18px;
+                transform:translateX(-50%);
+                border:5px solid #facc15;
+                border-radius:50%;
+                z-index:10;
+                display:none;
+            }
+            .plong-user-avatar.accessory-halo .uav-halo{display:block}
+            .plong-user-avatar.outfit-jacket{--outfit:#2563eb}
+            .plong-user-avatar.outfit-robe{--outfit:#7c3aed}
+            .plong-user-avatar.outfit-tee{--outfit:#0d9488}
+
+
+            .plong-user-avatar .face-calm .uav-eye{height:3px;border-radius:999px;top:98px}
+            .plong-user-avatar .face-focus .uav-mouth{width:20px;height:3px;border-bottom:3px solid #27314d;top:124px;border-radius:999px}
+            .plong-user-avatar .face-shy .uav-mouth{width:15px;height:8px;border-bottom:3px solid #27314d}
+            .plong-user-avatar .accessory-glasses .uav-glasses{display:block}
+            .plong-user-avatar .accessory-headset .uav-headset{display:block}
+            .plong-user-avatar .accessory-halo .uav-halo{display:block}
+
+            @media(max-width:900px){
+                .avatar-world-hero,.avatar-world-layout{grid-template-columns:1fr}
+                .avatar-world-preview-card{max-width:360px}
+            }
+            @media(max-width:599px){
+                .avatar-world-page{padding:14px 12px calc(var(--nav-h) + var(--s-b) + 20px)!important}
+                .avatar-world-hero{border-radius:28px;padding:18px}
+                .avatar-world-hero h1{font-size:32px}
+                .avatar-profile-cover{min-height:270px}
+                .avatar-profile-stats{grid-template-columns:1fr}
+                .avatar-option-row button{flex:1 1 calc(50% - 8px)}
+            }
+
         </style>
     </head>
     <body class="auth-lock">
@@ -5808,7 +6251,7 @@
             <article class="friend-profile-card" role="dialog" aria-modal="true" aria-label="Profil pengguna">
                 <button class="friend-profile-close" type="button" data-friend-profile-close aria-label="Tutup profil"><i class="fas fa-xmark"></i></button>
                 <div class="friend-profile-cover">
-                    <img id="friend-profile-avatar" src="/assets/nav/sfriends.png" alt="">
+                    <div id="friend-profile-avatar" class="plong-user-avatar size-public"></div>
                 </div>
                 <div class="friend-profile-body">
                     <div class="friend-profile-kicker" id="friend-profile-status">Memuat profil...</div>
@@ -5874,7 +6317,8 @@
                 <nav>
                     <button class="<%= pageId === 'pg-home' ? 'sb on' : 'sb' %>" data-page="pg-home"><img class="nav-img" src="/assets/nav/home.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Dashboard</button>
                     <button class="<%= pageId === 'pg-pet' ? 'sb on' : 'sb' %>" data-page="pg-pet"><i class="fas fa-paw"></i> Pet</button>
-                    <button class="<%= pageId === 'pg-avatar' ? 'sb on' : 'sb' %>" data-page="pg-avatar"><img class="nav-img" src="/assets/nav/avatar.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Kustomisasi</button>
+                    <button class="<%= pageId === 'pg-avatar-world' ? 'sb on' : 'sb' %>" data-page="pg-avatar-world"><i class="fas fa-user-astronaut"></i> Avatar World</button>
+                    <button class="<%= pageId === 'pg-avatar' ? 'sb on' : 'sb' %>" data-page="pg-avatar"><img class="nav-img" src="/assets/nav/avatar.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Kustomisasi Pet</button>
                     <button class="<%= pageId === 'pg-vent' ? 'sb on' : 'sb' %>" data-page="pg-vent"><img class="nav-img" src="/assets/nav/vent.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Vent</button>
                     <button class="<%= pageId === 'pg-art' ? 'sb on' : 'sb' %>" data-page="pg-art"><img class="nav-img" src="/assets/nav/art.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Galeri Seni</button>
                     <button class="<%= pageId === 'pg-friends' ? 'sb on' : 'sb' %>" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Cari Teman</button>
@@ -5952,6 +6396,128 @@
                             <button type="button" class="dash-action-card" data-page="pg-quests"><i class="fas fa-list-check"></i><strong>Daily Quest</strong><span>Klaim progress harian</span></button>
                             <button type="button" class="dash-action-card" data-page="pg-notifications"><i class="fas fa-bell"></i><strong>Notifikasi</strong><span id="dash-notif-text">0 belum dibaca</span></button>
                         </section>
+                    </div>
+                </section>
+
+
+
+                <!-- AVATAR WORLD -->
+                <section id="pg-avatar-world" class="<%= pageId === 'pg-avatar-world' ? 'pg on avatar-world-page' : 'pg avatar-world-page' %>" aria-label="Avatar World">
+                    <div class="avatar-world-shell">
+                        <div class="avatar-world-hero">
+                            <div>
+                                <span><i class="fas fa-user-astronaut"></i> Plong Avatar</span>
+                                <h1>Wujud virtual dari perjalanan emosimu</h1>
+                                <p>Avatar ini berbeda dari pet. Avatar adalah identitas user di dunia Plong, sementara pet adalah pendamping emosi yang kamu rawat.</p>
+                                <div class="avatar-world-actions">
+                                    <button class="feature-btn primary" type="button" id="user-avatar-save"><i class="fas fa-save"></i> Simpan Avatar</button>
+                                    <button class="feature-btn" type="button" id="user-avatar-open-profile"><i class="fas fa-eye"></i> Lihat Profil</button>
+                                </div>
+                            </div>
+                            <div class="avatar-world-preview-card">
+                                <div id="user-avatar-preview" class="plong-user-avatar size-xl"></div>
+                                <strong id="user-avatar-name">VokaMon User</strong>
+                                <span id="user-avatar-username">@vokamon.user</span>
+                            </div>
+                        </div>
+
+                        <div class="avatar-world-layout">
+                            <aside class="avatar-world-panel">
+                                <div class="avatar-world-panel-head">
+                                    <strong>Kustomisasi Avatar</strong>
+                                    <span>Pilih style avatar layered 2D.</span>
+                                </div>
+                                <div class="avatar-control-group" data-avatar-control="skin">
+                                    <label>Warna kulit</label>
+                                    <div class="avatar-option-row">
+                                        <button type="button" data-user-avatar-option="skin:warm">Warm</button>
+                                        <button type="button" data-user-avatar-option="skin:fair">Fair</button>
+                                        <button type="button" data-user-avatar-option="skin:tan">Tan</button>
+                                        <button type="button" data-user-avatar-option="skin:deep">Deep</button>
+                                    </div>
+                                </div>
+                                <div class="avatar-control-group" data-avatar-control="hair">
+                                    <label>Rambut</label>
+                                    <div class="avatar-option-row">
+                                        <button type="button" data-user-avatar-option="hair:soft">Soft</button>
+                                        <button type="button" data-user-avatar-option="hair:short">Short</button>
+                                        <button type="button" data-user-avatar-option="hair:wavy">Wavy</button>
+                                        <button type="button" data-user-avatar-option="hair:cap">Cap</button>
+                                    </div>
+                                </div>
+                                <div class="avatar-control-group" data-avatar-control="face">
+                                    <label>Ekspresi</label>
+                                    <div class="avatar-option-row">
+                                        <button type="button" data-user-avatar-option="face:smile">Smile</button>
+                                        <button type="button" data-user-avatar-option="face:calm">Calm</button>
+                                        <button type="button" data-user-avatar-option="face:focus">Focus</button>
+                                        <button type="button" data-user-avatar-option="face:shy">Shy</button>
+                                    </div>
+                                </div>
+                                <div class="avatar-control-group" data-avatar-control="outfit">
+                                    <label>Outfit</label>
+                                    <div class="avatar-option-row">
+                                        <button type="button" data-user-avatar-option="outfit:hoodie">Hoodie</button>
+                                        <button type="button" data-user-avatar-option="outfit:jacket">Jacket</button>
+                                        <button type="button" data-user-avatar-option="outfit:robe">Robe</button>
+                                        <button type="button" data-user-avatar-option="outfit:tee">Tee</button>
+                                    </div>
+                                </div>
+                                <div class="avatar-control-group" data-avatar-control="accessory">
+                                    <label>Aksesoris</label>
+                                    <div class="avatar-option-row">
+                                        <button type="button" data-user-avatar-option="accessory:none">None</button>
+                                        <button type="button" data-user-avatar-option="accessory:glasses">Glasses</button>
+                                        <button type="button" data-user-avatar-option="accessory:headset">Headset</button>
+                                        <button type="button" data-user-avatar-option="accessory:halo">Halo</button>
+                                    </div>
+                                </div>
+                                <div class="avatar-control-group" data-avatar-control="aura">
+                                    <label>Aura emosi</label>
+                                    <div class="avatar-option-row">
+                                        <button type="button" data-user-avatar-option="aura:tenang">Tenang</button>
+                                        <button type="button" data-user-avatar-option="aura:senang">Senang</button>
+                                        <button type="button" data-user-avatar-option="aura:sedih">Sedih</button>
+                                        <button type="button" data-user-avatar-option="aura:galau">Galau</button>
+                                        <button type="button" data-user-avatar-option="aura:stres">Stres</button>
+                                    </div>
+                                </div>
+                                <div class="avatar-control-group" data-avatar-control="background">
+                                    <label>Background profil</label>
+                                    <div class="avatar-option-row">
+                                        <button type="button" data-user-avatar-option="background:sky">Sky</button>
+                                        <button type="button" data-user-avatar-option="background:garden">Garden</button>
+                                        <button type="button" data-user-avatar-option="background:night">Night</button>
+                                        <button type="button" data-user-avatar-option="background:studio">Studio</button>
+                                    </div>
+                                </div>
+                                <div class="avatar-control-group" data-avatar-control="pose">
+                                    <label>Pose</label>
+                                    <div class="avatar-option-row">
+                                        <button type="button" data-user-avatar-option="pose:idle">Idle</button>
+                                        <button type="button" data-user-avatar-option="pose:wave">Wave</button>
+                                        <button type="button" data-user-avatar-option="pose:peace">Peace</button>
+                                        <button type="button" data-user-avatar-option="pose:focus">Focus</button>
+                                    </div>
+                                </div>
+                            </aside>
+
+                            <section class="avatar-world-profile-preview">
+                                <div class="avatar-profile-cover" id="avatar-profile-cover">
+                                    <div id="user-avatar-profile-preview" class="plong-user-avatar size-profile"></div>
+                                </div>
+                                <div class="avatar-profile-info">
+                                    <span>Preview profil publik</span>
+                                    <h2 id="avatar-profile-name">VokaMon User</h2>
+                                    <p id="avatar-profile-bio">Bio user akan tampil bersama avatar virtual ini.</p>
+                                    <div class="avatar-profile-stats">
+                                        <div><strong id="avatar-profile-level">1</strong><span>Pet level</span></div>
+                                        <div><strong id="avatar-profile-badges">0</strong><span>Badge</span></div>
+                                        <div><strong id="avatar-profile-aura">Tenang</strong><span>Aura</span></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
                     </div>
                 </section>
 
@@ -6800,7 +7366,7 @@
                     <div class="profile-page-shell">
                         <article class="friend-profile-card profile-page-card">
                             <div class="friend-profile-cover">
-                                <img id="friend-page-avatar" src="/assets/nav/sfriends.png" alt="">
+                                <div id="friend-page-avatar" class="plong-user-avatar size-profile"></div>
                             </div>
                             <div class="friend-profile-body">
                                 <div class="friend-profile-kicker" id="friend-page-status">Memuat profil...</div>
@@ -6991,8 +7557,8 @@
 
         <nav id="bnav" aria-label="Navigasi">
             <button class="<%= pageId === 'pg-home' ? 'nb on' : 'nb' %>" data-page="pg-home"><img class="nav-img" src="/assets/nav/home.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Dashboard</span></button>
+            <button class="<%= pageId === 'pg-avatar-world' ? 'nb on' : 'nb' %>" data-page="pg-avatar-world"><i class="fas fa-user-astronaut"></i><span>Avatar</span></button>
             <button class="<%= pageId === 'pg-pet' ? 'nb on' : 'nb' %>" data-page="pg-pet"><i class="fas fa-paw"></i><span>Pet</span></button>
-            <button class="<%= pageId === 'pg-friends' ? 'nb on' : 'nb' %>" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Teman</span><em class="friend-nav-badge" id="friend-nav-badge">0</em></button>
             <button class="<%= pageId === 'pg-garden' ? 'nb on' : 'nb' %>" data-page="pg-garden"><img class="nav-img" src="/assets/nav/garden.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Kebun</span></button>
             <button class="<%= pageId === 'pg-assist' ? 'nb on' : 'nb' %>" data-page="pg-assist"><img class="nav-img" src="/assets/nav/chat.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Chat</span></button>
             <button class="<%= pageId === 'pg-account' ? 'nb on' : 'nb' %>" data-page="pg-account"><img class="nav-img" src="/assets/nav/account.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Akun</span></button>
@@ -7139,7 +7705,7 @@ var EMO={marah:{label:"Marah",color:"#DC2626",hue:0,icon:"fa-fire",desc:"Api Cha
                 if(el)el.textContent=`Hai ${getStoredUserName()} (˶ᵔᗜᵔ˶)👋`;
             }
 
-            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,bond:0,worker:{lastClaimAt:new Date().toISOString(),essence:{marah:0,sedih:0,galau:0,stres:0,excited:0,tenang:0},totalEarned:0,today:{date:new Date().toISOString().slice(0,10),vent:0,chat:0,garden:0,care:0,bonusClaimed:false}},accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null},gm:"qwen2.5:3b",al:"id"};
+            var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,bond:0,worker:{lastClaimAt:new Date().toISOString(),essence:{marah:0,sedih:0,galau:0,stres:0,excited:0,tenang:0},totalEarned:0,today:{date:new Date().toISOString().slice(0,10),vent:0,chat:0,garden:0,care:0,bonusClaimed:false}},accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,userAvatar:{skin:"warm",hair:"soft",face:"smile",outfit:"hoodie",accessory:"none",aura:"tenang",background:"sky",pose:"idle"},garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null},gm:"qwen2.5:3b",al:"id"};
             function save(){try{localStorage.setItem("vkm",JSON.stringify(state))}catch(e){}; if(window.__vkmAuthReady&&typeof queueSyncState==="function")queueSyncState()}
             function load(){try{var d=JSON.parse(localStorage.getItem("vkm"));if(d)for(var k in d)if(d.hasOwnProperty(k))state[k]=d[k]}catch(e){}}
             load();
@@ -7164,7 +7730,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
             window.__vkmAuthReady=false;
 
             function defaultStateForUser(user){
-                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,bond:0,worker:{lastClaimAt:new Date().toISOString(),essence:{marah:0,sedih:0,galau:0,stres:0,excited:0,tenang:0},totalEarned:0,today:{date:new Date().toISOString().slice(0,10),vent:0,chat:0,garden:0,care:0,bonusClaimed:false}},accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,onboarding:{completed:false,goal:"curhat_dulu",petName:"Plong",firstMood:"tenang"},garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null,economy:{date:new Date().toISOString().slice(0,10),convertedToday:0,totalConverted:0}},gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
+                return {coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,bond:0,worker:{lastClaimAt:new Date().toISOString(),essence:{marah:0,sedih:0,galau:0,stres:0,excited:0,tenang:0},totalEarned:0,today:{date:new Date().toISOString().slice(0,10),vent:0,chat:0,garden:0,care:0,bonusClaimed:false}},accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,userAvatar:{skin:"warm",hair:"soft",face:"smile",outfit:"hoodie",accessory:"none",aura:"tenang",background:"sky",pose:"idle"},onboarding:{completed:false,goal:"curhat_dulu",petName:"Plong",firstMood:"tenang"},garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null,economy:{date:new Date().toISOString().slice(0,10),convertedToday:0,totalConverted:0}},gm:"qwen2.5:3b",al:"id",account:{name:(user&&user.name)||"VokaMon User",username:(user&&user.username)||"@vokamon.user",bio:(user&&user.bio)||"Lagi belajar memahami emosi pelan-pelan."}};
             }
             function ensureDefaults(){
                 if(!state.pet)state.pet={name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50};
@@ -7185,6 +7751,9 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 if(typeof state.pet.energy!=="number")state.pet.energy=70;
                 if(typeof state.pet.bond!=="number")state.pet.bond=0;
                 ensurePetWorkerLocal();
+                if(!state.userAvatar)state.userAvatar={skin:"warm",hair:"soft",face:"smile",outfit:"hoodie",accessory:"none",aura:"tenang",background:"sky",pose:"idle"};
+                var uavd={skin:"warm",hair:"soft",face:"smile",outfit:"hoodie",accessory:"none",aura:"tenang",background:"sky",pose:"idle"};
+                Object.keys(uavd).forEach(function(k){if(!state.userAvatar[k])state.userAvatar[k]=uavd[k];});
                 if(!state.pet.avatar)state.pet.avatar={body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"};
                 if(!state.pet.avatarCapsule)state.pet.avatarCapsule={lastOpenAt:null,totalOpened:0};
                 var avd={body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"};
@@ -7343,6 +7912,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 "pg-home":"/",
                 "pg-garden":"/garden",
                 "pg-pet":"/pet",
+                "pg-avatar-world":"/avatar-world",
                 "pg-avatar":"/avatar",
                 "pg-vent":"/vent",
                 "pg-art":"/art",
@@ -7376,6 +7946,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 p.classList.add("on");
                 document.querySelectorAll('[data-page="'+id+'"]').forEach(function(b){b.classList.add("on")});
                 refreshUI();
+                if(id==="pg-avatar-world"&&typeof initUserAvatarWorld==="function")initUserAvatarWorld();
                 if(id==="pg-avatar"&&typeof prepareAvatarPreview==="function")prepareAvatarPreview();
                 if(id==="pg-garden"){
                     if(typeof renderGarden==="function")renderGarden();
@@ -8614,6 +9185,93 @@ var gardenBusy=false;
             setInterval(function(){renderPetWorker()},30000);
 
 
+
+function defaultUserAvatar(){
+    return {skin:"warm",hair:"soft",face:"smile",outfit:"hoodie",accessory:"none",aura:"tenang",background:"sky",pose:"idle"};
+}
+function ensureUserAvatar(){
+    if(!state.userAvatar)state.userAvatar=defaultUserAvatar();
+    var d=defaultUserAvatar();
+    Object.keys(d).forEach(function(k){if(!state.userAvatar[k])state.userAvatar[k]=d[k];});
+    return state.userAvatar;
+}
+function userAvatarVars(av){
+    av=Object.assign(defaultUserAvatar(),av||{});
+    var skin={warm:'#f2b789',fair:'#ffd9bd',tan:'#c78555',deep:'#8b573b'}[av.skin]||'#f2b789';
+    var hair={soft:'#3b243f',short:'#1f2937',wavy:'#4a2c2a',cap:'#3158d4'}[av.hair]||'#3b243f';
+    var outfit={hoodie:'#ff9349',jacket:'#2563eb',robe:'#7c3aed',tee:'#0d9488'}[av.outfit]||'#ff9349';
+    var aura={tenang:'#14b8a6',senang:'#facc15',sedih:'#60a5fa',galau:'#a78bfa',stres:'#fb923c',marah:'#ef4444'}[av.aura]||'#14b8a6';
+    var bg={
+        sky:['#dbeafe','#fff7ed'],
+        garden:['#dcfce7','#f0fdf4'],
+        night:['#c7d2fe','#1e1b4b'],
+        studio:['#f5f3ff','#f8fafc']
+    }[av.background]||['#dbeafe','#fff7ed'];
+    return {skin:skin,hair:hair,outfit:outfit,aura:aura,bg1:bg[0],bg2:bg[1]};
+}
+function userAvatarHtml(av){
+    av=Object.assign(defaultUserAvatar(),av||{});
+    var vars=userAvatarVars(av);
+    var cls=[
+        'plong-user-avatar-render',
+        'skin-'+av.skin,
+        'hair-'+av.hair,
+        'face-'+av.face,
+        'outfit-'+av.outfit,
+        'accessory-'+av.accessory,
+        'aura-'+av.aura,
+        'bg-'+av.background,
+        'pose-'+av.pose
+    ].join(' ');
+    var style='--skin:'+vars.skin+';--hair:'+vars.hair+';--outfit:'+vars.outfit+';--aura:'+vars.aura+';--bg1:'+vars.bg1+';--bg2:'+vars.bg2+';';
+    return '<div class="'+cls+'" style="'+style+'">'+
+        '<div class="uav-bg"></div><div class="uav-aura"></div><div class="uav-shadow"></div>'+
+        '<div class="uav-arm left"></div><div class="uav-arm right"></div>'+
+        '<div class="uav-body"></div><div class="uav-neck"></div><div class="uav-head"></div><div class="uav-hair '+friendEsc(av.hair)+'"></div>'+
+        '<div class="uav-eye left"></div><div class="uav-eye right"></div><div class="uav-blush left"></div><div class="uav-blush right"></div><div class="uav-mouth"></div>'+
+        '<div class="uav-glasses"></div><div class="uav-headset"></div><div class="uav-halo"></div>'+
+    '</div>';
+}
+function renderUserAvatarInto(el,av){
+    if(!el)return;
+    av=Object.assign(defaultUserAvatar(),av||{});
+    el.innerHTML=userAvatarHtml(av);
+    var vars=userAvatarVars(av);
+    el.style.setProperty('--bg1',vars.bg1);
+    el.style.setProperty('--bg2',vars.bg2);
+}
+function updateUserAvatarButtons(){
+    var av=ensureUserAvatar();
+    document.querySelectorAll('[data-user-avatar-option]').forEach(function(btn){
+        var p=String(btn.dataset.userAvatarOption||'').split(':');
+        btn.classList.toggle('active',av[p[0]]===p[1]);
+    });
+}
+function renderUserAvatarWorld(){
+    var av=ensureUserAvatar();
+    renderUserAvatarInto(document.getElementById('user-avatar-preview'),av);
+    renderUserAvatarInto(document.getElementById('user-avatar-profile-preview'),av);
+    var name=(state.account&&state.account.name)||'VokaMon User',username=(state.account&&state.account.username)||'@vokamon.user',bio=(state.account&&state.account.bio)||'Bio user akan tampil bersama avatar virtual ini.';
+    var set=function(id,v){var el=document.getElementById(id);if(el)el.textContent=v;};
+    set('user-avatar-name',name);set('user-avatar-username',username);
+    set('avatar-profile-name',name);set('avatar-profile-bio',bio);
+    set('avatar-profile-level',state.pet&&state.pet.level?state.pet.level:1);
+    set('avatar-profile-aura',(av.aura||'tenang').replace(/^./,function(c){return c.toUpperCase()}));
+    var cover=document.getElementById('avatar-profile-cover');
+    if(cover){var vars=userAvatarVars(av);cover.style.background='radial-gradient(circle at 50% 20%,rgba(255,255,255,.78),transparent 130px),linear-gradient(135deg,'+vars.bg1+','+vars.bg2+')';}
+    updateUserAvatarButtons();
+}
+function initUserAvatarWorld(){
+    ensureDefaults();
+    renderUserAvatarWorld();
+}
+function saveUserAvatarWorld(){
+    ensureUserAvatar();
+    save();
+    renderUserAvatarWorld();
+    toast('Avatar user disimpan.');
+}
+
 var friendState={
     view:'discover',
     filter:'all',
@@ -8815,7 +9473,7 @@ function closeFriendProfile(){
 function setFriendProfileLoading(){
     showFriendProfileShell();
     var avatar=document.getElementById('friend-profile-avatar'),status=document.getElementById('friend-profile-status'),name=document.getElementById('friend-profile-name'),username=document.getElementById('friend-profile-username'),bio=document.getElementById('friend-profile-bio'),friends=document.getElementById('friend-profile-friends'),joined=document.getElementById('friend-profile-joined'),actions=document.getElementById('friend-profile-actions');
-    if(avatar)avatar.src='/assets/nav/sfriends.png';
+    if(avatar)renderUserAvatarInto(avatar,defaultUserAvatar());
     if(status)status.textContent='Memuat profil...';
     if(name)name.textContent='Profil';
     if(username)username.textContent='@username';
@@ -8826,7 +9484,7 @@ function setFriendProfileLoading(){
 }
 function renderFriendProfile(user,stats){
     var avatar=document.getElementById('friend-profile-avatar'),status=document.getElementById('friend-profile-status'),name=document.getElementById('friend-profile-name'),username=document.getElementById('friend-profile-username'),bio=document.getElementById('friend-profile-bio'),friends=document.getElementById('friend-profile-friends'),joined=document.getElementById('friend-profile-joined'),actions=document.getElementById('friend-profile-actions');
-    if(avatar)avatar.src=friendAvatarFor(user);
+    if(avatar)renderUserAvatarInto(avatar,user.userAvatar||defaultUserAvatar());
     if(status)status.textContent=friendStatusText(user.relationship);
     if(name)name.textContent=user.name||'VokaMon User';
     if(username)username.textContent=user.username||'@vokamon.user';
@@ -8840,7 +9498,7 @@ function renderFriendProfile(user,stats){
 }
 function renderFriendProfilePage(user,stats){
     var avatar=document.getElementById('friend-page-avatar'),status=document.getElementById('friend-page-status'),name=document.getElementById('friend-page-name'),username=document.getElementById('friend-page-username'),bio=document.getElementById('friend-page-bio'),friends=document.getElementById('friend-page-friends'),joined=document.getElementById('friend-page-joined'),actions=document.getElementById('friend-page-actions');
-    if(avatar)avatar.src=friendAvatarFor(user);
+    if(avatar)renderUserAvatarInto(avatar,user.userAvatar||defaultUserAvatar());
     if(status)status.textContent=friendStatusText(user.relationship);
     if(name)name.textContent=user.name||'VokaMon User';
     if(username)username.textContent=user.username||'@vokamon.user';
@@ -8854,7 +9512,7 @@ function renderFriendProfilePage(user,stats){
 }
 function setFriendProfilePageLoading(){
     var avatar=document.getElementById('friend-page-avatar'),status=document.getElementById('friend-page-status'),name=document.getElementById('friend-page-name'),username=document.getElementById('friend-page-username'),bio=document.getElementById('friend-page-bio'),friends=document.getElementById('friend-page-friends'),joined=document.getElementById('friend-page-joined'),actions=document.getElementById('friend-page-actions');
-    if(avatar)avatar.src='/assets/nav/sfriends.png';
+    if(avatar)renderUserAvatarInto(avatar,defaultUserAvatar());
     if(status)status.textContent='Memuat profil...';
     if(name)name.textContent='Profil';
     if(username)username.textContent='@username';
@@ -9502,7 +10160,28 @@ function initDashboardStats(){
     dashboardState.timer=setInterval(function(){if(!document.hidden)loadDashboardStats(true)},30000);
 }
 
-            initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();initSocialFeatures();initGrowthFeatures();initLifeLoop();initDashboardStats();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
+
+function initUserAvatarWorldListeners(){
+    document.addEventListener('click',function(e){
+        var opt=e.target.closest('[data-user-avatar-option]');
+        if(opt){
+            ensureUserAvatar();
+            var p=String(opt.dataset.userAvatarOption||'').split(':');
+            if(p.length===2){state.userAvatar[p[0]]=p[1];renderUserAvatarWorld();}
+            return;
+        }
+    });
+    var saveBtn=document.getElementById('user-avatar-save');
+    if(saveBtn)saveBtn.addEventListener('click',saveUserAvatarWorld);
+    var openProfile=document.getElementById('user-avatar-open-profile');
+    if(openProfile)openProfile.addEventListener('click',function(){
+        var username=(state.account&&state.account.username)||'';
+        if(username){navigateWithLoader('/profile/'+username.replace(/^@*/,'@'));}
+        else{navigateWithLoader('/account');}
+    });
+}
+
+            initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();initSocialFeatures();initGrowthFeatures();initLifeLoop();initDashboardStats();initUserAvatarWorldListeners();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
         </script>
     </body>
 </html>
