@@ -5693,6 +5693,48 @@
                 .dash-action-grid{grid-template-columns:1fr}
             }
 
+
+            /* ===== Pet page scroll fix ===== */
+            .pg.pet-page{
+                flex:1 1 auto!important;
+                min-height:0!important;
+                height:auto!important;
+                max-height:none!important;
+                overflow-y:auto!important;
+                overflow-x:hidden!important;
+                -webkit-overflow-scrolling:touch!important;
+                overscroll-behavior-y:contain;
+                padding-bottom:calc(var(--nav-h) + var(--s-b) + 28px)!important;
+                border-radius:0!important;
+            }
+            .pg.pet-page.on{
+                display:flex!important;
+            }
+            .pg.pet-page .foku-shell{
+                min-height:auto!important;
+                padding-bottom:calc(var(--nav-h) + var(--s-b) + 34px)!important;
+            }
+            .pg.pet-page .foku-main-grid,
+            .pg.pet-page .foku-bottom-grid,
+            .pg.pet-page .life-loop-grid{
+                flex:0 0 auto;
+            }
+            @media(min-width:900px){
+                .pg.pet-page{
+                    padding-bottom:28px!important;
+                }
+                .pg.pet-page .foku-shell{
+                    padding-bottom:34px!important;
+                }
+            }
+            @supports(-webkit-touch-callout:none){
+                .pg.pet-page{
+                    height:100%!important;
+                    max-height:100%!important;
+                    overflow-y:scroll!important;
+                }
+            }
+
         </style>
     </head>
     <body class="auth-lock">
