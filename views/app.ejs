@@ -6178,6 +6178,327 @@
                 .avatar-option-row button{flex:1 1 calc(50% - 8px)}
             }
 
+
+            /* ===== Avatar World 3D blocky upgrade ===== */
+            .plong-user-avatar{
+                --bg1:#dbeafe;
+                --bg2:#fff7ed;
+                --uav-rx:-10deg;
+                --uav-ry:24deg;
+                position:relative!important;
+                display:grid!important;
+                place-items:center!important;
+                overflow:visible!important;
+                perspective:900px;
+                perspective-origin:50% 46%;
+                touch-action:none;
+                cursor:grab;
+                user-select:none;
+                -webkit-user-select:none;
+            }
+            .plong-user-avatar:active{cursor:grabbing}
+            .plong-user-avatar.size-xl{width:230px!important;height:270px!important}
+            .plong-user-avatar.size-profile{width:270px!important;height:330px!important}
+            .plong-user-avatar.size-public{width:144px!important;height:176px!important}
+
+            .uav3d-avatar{
+                --skin:#f2b789;
+                --hair:#332238;
+                --outfit:#ff9349;
+                --aura:#14b8a6;
+                --cap:#3158d4;
+                --pants:#334155;
+                --shoe:#1f2937;
+                position:absolute;
+                inset:0;
+                display:grid;
+                place-items:center;
+                transform-style:preserve-3d;
+                border-radius:34px;
+            }
+            .uav3d-bg{
+                position:absolute;
+                inset:0;
+                border-radius:34px;
+                background:
+                    radial-gradient(circle at 50% 20%,rgba(255,255,255,.88),transparent 112px),
+                    radial-gradient(circle at 28% 78%,rgba(255,180,109,.20),transparent 82px),
+                    linear-gradient(135deg,var(--bg1),var(--bg2));
+                box-shadow:inset 0 1px 0 rgba(255,255,255,.8);
+                z-index:0;
+            }
+            .uav3d-aura{
+                position:absolute;
+                left:50%;
+                top:22%;
+                width:62%;
+                height:52%;
+                transform:translateX(-50%);
+                border-radius:999px;
+                background:var(--aura);
+                opacity:.24;
+                filter:blur(24px);
+                animation:uav3dPulse 4s ease-in-out infinite;
+                z-index:1;
+            }
+            @keyframes uav3dPulse{
+                0%,100%{transform:translateX(-50%) scale(.92);opacity:.18}
+                50%{transform:translateX(-50%) scale(1.08);opacity:.28}
+            }
+            .uav3d-ground{
+                position:absolute;
+                left:50%;
+                bottom:15%;
+                width:58%;
+                height:13%;
+                transform:translateX(-50%) rotateX(68deg);
+                border-radius:50%;
+                background:radial-gradient(ellipse at center,rgba(17,24,39,.25),rgba(17,24,39,.03) 68%,transparent 72%);
+                z-index:1;
+            }
+            .uav3d-scene{
+                position:absolute;
+                inset:0;
+                display:grid;
+                place-items:center;
+                transform-style:preserve-3d;
+                z-index:3;
+            }
+            .uav3d-inner{
+                position:relative;
+                width:220px;
+                height:250px;
+                transform-style:preserve-3d;
+                transform:translateY(6px) rotateX(var(--uav-rx)) rotateY(var(--uav-ry));
+                transition:transform .25s ease;
+            }
+            .plong-user-avatar.is-dragging .uav3d-inner{transition:none}
+            .plong-user-avatar.size-public .uav3d-inner{transform:translateY(2px) scale(.66) rotateX(var(--uav-rx)) rotateY(var(--uav-ry))}
+            .plong-user-avatar.size-xl .uav3d-inner{transform:translateY(3px) scale(.88) rotateX(var(--uav-rx)) rotateY(var(--uav-ry))}
+            .plong-user-avatar.size-profile .uav3d-inner{transform:translateY(6px) scale(1.05) rotateX(var(--uav-rx)) rotateY(var(--uav-ry))}
+
+            .uav3d-cube{
+                position:absolute;
+                left:50%;
+                top:50%;
+                width:var(--w);
+                height:var(--h);
+                transform-style:preserve-3d;
+                transform:translate3d(calc(-50% + var(--x)),calc(-50% + var(--y)),var(--z));
+            }
+            .uav3d-face{
+                position:absolute;
+                left:50%;
+                top:50%;
+                width:var(--w);
+                height:var(--h);
+                transform-style:preserve-3d;
+                background:var(--c);
+                border:1px solid rgba(255,255,255,.28);
+                box-shadow:inset 0 1px 0 rgba(255,255,255,.22);
+                backface-visibility:hidden;
+            }
+            .uav3d-front{transform:translate(-50%,-50%) translateZ(calc(var(--d)/2));background:linear-gradient(145deg,rgba(255,255,255,.16),transparent 42%),var(--c)}
+            .uav3d-back{transform:translate(-50%,-50%) rotateY(180deg) translateZ(calc(var(--d)/2));filter:brightness(.75)}
+            .uav3d-left{width:var(--d);height:var(--h);transform:translate(-50%,-50%) rotateY(-90deg) translateZ(calc(var(--w)/2));filter:brightness(.72)}
+            .uav3d-right{width:var(--d);height:var(--h);transform:translate(-50%,-50%) rotateY(90deg) translateZ(calc(var(--w)/2));filter:brightness(.88)}
+            .uav3d-top{width:var(--w);height:var(--d);transform:translate(-50%,-50%) rotateX(90deg) translateZ(calc(var(--h)/2));filter:brightness(1.16)}
+            .uav3d-bottom{width:var(--w);height:var(--d);transform:translate(-50%,-50%) rotateX(-90deg) translateZ(calc(var(--h)/2));filter:brightness(.58)}
+
+            .uav3d-head .uav3d-face{border-radius:14px}
+            .uav3d-torso .uav3d-face{border-radius:14px}
+            .uav3d-neck .uav3d-face,.uav3d-arm .uav3d-face,.uav3d-hand .uav3d-face,.uav3d-leg .uav3d-face,.uav3d-shoe .uav3d-face{border-radius:8px}
+            .uav3d-hair-main .uav3d-face,.uav3d-hair-fringe .uav3d-face,.uav3d-cap-main .uav3d-face,.uav3d-cap-visor .uav3d-face{border-radius:12px}
+            .uav3d-hair-wavy-fringe .uav3d-front,.uav3d-hair-soft-fringe .uav3d-front{
+                clip-path:polygon(0 0,100% 0,100% 72%,84% 58%,68% 86%,52% 62%,36% 88%,20% 60%,0 76%);
+            }
+            .uav3d-body-line{
+                position:absolute;
+                left:50%;
+                top:18%;
+                width:46%;
+                height:3px;
+                transform:translateX(-50%);
+                border-radius:999px;
+                background:rgba(255,255,255,.55);
+            }
+            .uav3d-logo-dot{
+                position:absolute;
+                left:50%;
+                top:34%;
+                width:18px;
+                height:18px;
+                transform:translateX(-50%);
+                border-radius:8px;
+                background:rgba(255,255,255,.82);
+                box-shadow:0 0 0 4px rgba(255,255,255,.14);
+            }
+            .uav3d-tee .uav3d-front:after,
+            .uav3d-jacket .uav3d-front:after,
+            .uav3d-robe .uav3d-front:after,
+            .uav3d-hoodie .uav3d-front:after{
+                content:'';
+                position:absolute;
+                left:50%;
+                top:0;
+                width:34px;
+                height:28px;
+                transform:translateX(-50%);
+                border-radius:0 0 20px 20px;
+                background:rgba(255,255,255,.22);
+            }
+
+            .uav3d-face-ui{
+                position:absolute;
+                inset:0;
+                transform:translateZ(1px);
+            }
+            .uav3d-eye{
+                position:absolute;
+                top:35%;
+                width:8px;
+                height:11px;
+                border-radius:999px;
+                background:#1f2937;
+                box-shadow:0 1px 0 rgba(255,255,255,.3);
+            }
+            .uav3d-eye.left{left:28%}
+            .uav3d-eye.right{right:28%}
+            .uav3d-mouth{
+                position:absolute;
+                left:50%;
+                top:58%;
+                width:24px;
+                height:12px;
+                transform:translateX(-50%);
+                border-bottom:4px solid #1f2937;
+                border-radius:0 0 999px 999px;
+            }
+            .uav3d-blush{
+                position:absolute;
+                top:50%;
+                width:14px;
+                height:7px;
+                border-radius:999px;
+                background:rgba(244,114,182,.30);
+            }
+            .uav3d-blush.left{left:15%}
+            .uav3d-blush.right{right:15%}
+            .uav3d-face-ui.face-calm .uav3d-eye{height:3px;top:40%}
+            .uav3d-face-ui.face-focus .uav3d-mouth{height:3px;border-bottom:3px solid #1f2937;top:62%;border-radius:999px}
+            .uav3d-face-ui.face-shy .uav3d-mouth{width:16px;height:8px;border-bottom:3px solid #1f2937}
+
+            .uav3d-avatar.pose-wave .uav3d-arm-right{transform:translate3d(calc(-50% + 58px),calc(-50% - 18px),24px) rotateZ(-58deg) rotateX(5deg)}
+            .uav3d-avatar.pose-wave .uav3d-hand-right{transform:translate3d(calc(-50% + 84px),calc(-50% - 56px),30px) rotateZ(-58deg)}
+            .uav3d-avatar.pose-peace .uav3d-arm-left{transform:translate3d(calc(-50% - 58px),calc(-50% - 18px),24px) rotateZ(58deg) rotateX(5deg)}
+            .uav3d-avatar.pose-peace .uav3d-hand-left{transform:translate3d(calc(-50% - 84px),calc(-50% - 56px),30px) rotateZ(58deg)}
+            .uav3d-avatar.pose-focus .uav3d-arm-left{transform:translate3d(calc(-50% - 48px),calc(-50% + 30px),25px) rotateZ(74deg)}
+            .uav3d-avatar.pose-focus .uav3d-arm-right{transform:translate3d(calc(-50% + 48px),calc(-50% + 30px),25px) rotateZ(-74deg)}
+
+            .uav3d-glasses{
+                position:absolute;
+                left:50%;
+                top:64px;
+                width:72px;
+                height:25px;
+                transform:translate3d(-50%,-50%,38px);
+                z-index:30;
+                transform-style:preserve-3d;
+            }
+            .uav3d-glasses span{
+                position:absolute;
+                top:0;
+                width:26px;
+                height:20px;
+                border:4px solid #111827;
+                border-radius:10px;
+                background:rgba(255,255,255,.10);
+            }
+            .uav3d-glasses span:first-child{left:0}
+            .uav3d-glasses span:nth-child(2){right:0}
+            .uav3d-glasses b{
+                position:absolute;
+                left:50%;
+                top:9px;
+                width:16px;
+                height:4px;
+                transform:translateX(-50%);
+                background:#111827;
+                border-radius:999px;
+            }
+            .uav3d-headset{
+                position:absolute;
+                left:50%;
+                top:42px;
+                width:108px;
+                height:70px;
+                transform:translate3d(-50%,-50%,20px);
+                border:6px solid #1f2937;
+                border-bottom:0;
+                border-radius:62px 62px 0 0;
+                z-index:29;
+            }
+            .uav3d-headset span{
+                position:absolute;
+                bottom:-22px;
+                width:18px;
+                height:32px;
+                border-radius:9px;
+                background:#1f2937;
+            }
+            .uav3d-headset span:first-child{left:-8px}
+            .uav3d-headset span:nth-child(2){right:-8px}
+            .uav3d-headset b{
+                position:absolute;
+                right:-18px;
+                bottom:-24px;
+                width:36px;
+                height:6px;
+                border-radius:999px;
+                background:#1f2937;
+                transform:rotate(18deg);
+            }
+            .uav3d-halo{
+                position:absolute;
+                left:50%;
+                top:-8px;
+                width:78px;
+                height:22px;
+                transform:translate3d(-50%,-50%,20px) rotateX(72deg);
+                border:7px solid #facc15;
+                border-radius:50%;
+                box-shadow:0 0 18px rgba(250,204,21,.55);
+                z-index:30;
+            }
+
+            .uav3d-drag-hint{
+                position:absolute;
+                right:10px;
+                bottom:10px;
+                display:inline-flex;
+                align-items:center;
+                gap:5px;
+                min-height:26px;
+                padding:0 9px;
+                border-radius:999px;
+                background:rgba(255,255,255,.72);
+                border:1px solid rgba(226,232,240,.82);
+                color:#607092;
+                font-size:10px;
+                font-weight:900;
+                z-index:8;
+                pointer-events:none;
+            }
+            .plong-user-avatar.size-public .uav3d-drag-hint{display:none}
+            .plong-user-avatar.size-public .uav3d-bg{border-radius:22px}
+            .plong-user-avatar.size-public .uav3d-aura{filter:blur(14px)}
+            .plong-user-avatar.size-public .uav3d-ground{bottom:11%}
+
+            @media(max-width:599px){
+                .plong-user-avatar.size-xl{width:210px!important;height:250px!important}
+                .plong-user-avatar.size-profile{width:230px!important;height:290px!important}
+            }
+
         </style>
     </head>
     <body class="auth-lock">
@@ -6408,7 +6729,7 @@
                             <div>
                                 <span><i class="fas fa-user-astronaut"></i> Plong Avatar</span>
                                 <h1>Wujud virtual dari perjalanan emosimu</h1>
-                                <p>Avatar ini berbeda dari pet. Avatar adalah identitas user di dunia Plong, sementara pet adalah pendamping emosi yang kamu rawat.</p>
+                                <p>Avatar 3D ini berbeda dari pet. Avatar adalah identitas user di dunia Plong, sementara pet adalah pendamping emosi yang kamu rawat. Drag avatar untuk memutar.</p>
                                 <div class="avatar-world-actions">
                                     <button class="feature-btn primary" type="button" id="user-avatar-save"><i class="fas fa-save"></i> Simpan Avatar</button>
                                     <button class="feature-btn" type="button" id="user-avatar-open-profile"><i class="fas fa-eye"></i> Lihat Profil</button>
@@ -6425,7 +6746,7 @@
                             <aside class="avatar-world-panel">
                                 <div class="avatar-world-panel-head">
                                     <strong>Kustomisasi Avatar</strong>
-                                    <span>Pilih style avatar layered 2D.</span>
+                                    <span>Pilih style avatar 3D blocky yang ringan dan bisa diputar.</span>
                                 </div>
                                 <div class="avatar-control-group" data-avatar-control="skin">
                                     <label>Warna kulit</label>
@@ -9209,11 +9530,54 @@ function userAvatarVars(av){
     }[av.background]||['#dbeafe','#fff7ed'];
     return {skin:skin,hair:hair,outfit:outfit,aura:aura,bg1:bg[0],bg2:bg[1]};
 }
+function avatarCube(name,w,h,d,x,y,z,colorVar,extraClass,frontContent){
+    extraClass=extraClass||'';
+    frontContent=frontContent||'';
+    return '<div class="uav3d-cube uav3d-'+name+' '+extraClass+'" style="--w:'+w+'px;--h:'+h+'px;--d:'+d+'px;--x:'+x+'px;--y:'+y+'px;--z:'+z+'px;--c:var('+colorVar+');">'+
+        '<div class="uav3d-face uav3d-front">'+frontContent+'</div>'+
+        '<div class="uav3d-face uav3d-back"></div>'+
+        '<div class="uav3d-face uav3d-left"></div>'+
+        '<div class="uav3d-face uav3d-right"></div>'+
+        '<div class="uav3d-face uav3d-top"></div>'+
+        '<div class="uav3d-face uav3d-bottom"></div>'+
+    '</div>';
+}
+function userAvatarFaceHtml(face){
+    var eye='<span class="uav3d-eye left"></span><span class="uav3d-eye right"></span>';
+    var blush='<span class="uav3d-blush left"></span><span class="uav3d-blush right"></span>';
+    return '<div class="uav3d-face-ui face-'+friendEsc(face||'smile')+'">'+eye+blush+'<span class="uav3d-mouth"></span></div>';
+}
+function userAvatarHairHtml(av){
+    var h=String(av.hair||'soft');
+    if(h==='short'){
+        return avatarCube('hair-main',86,28,64,0,-104,7,'--hair','hair-short','')+
+               avatarCube('hair-fringe',74,16,66,0,-83,36,'--hair','hair-short-fringe','');
+    }
+    if(h==='wavy'){
+        return avatarCube('hair-main',92,34,66,0,-105,6,'--hair','hair-wavy','')+
+               avatarCube('hair-fringe',88,24,68,0,-80,34,'--hair','hair-wavy-fringe','')+
+               avatarCube('hair-side-l',18,58,42,-50,-78,8,'--hair','hair-lock','')+
+               avatarCube('hair-side-r',18,58,42,50,-78,8,'--hair','hair-lock','');
+    }
+    if(h==='cap'){
+        return avatarCube('cap-main',92,32,70,0,-106,8,'--cap','hair-cap','')+
+               avatarCube('cap-visor',56,12,34,0,-96,54,'--cap','cap-visor','');
+    }
+    return avatarCube('hair-main',90,32,66,0,-105,6,'--hair','hair-soft','')+
+           avatarCube('hair-fringe',82,24,70,0,-82,34,'--hair','hair-soft-fringe','');
+}
+function userAvatarAccessoryHtml(av){
+    var a=String(av.accessory||'none');
+    if(a==='glasses')return '<div class="uav3d-glasses"><span></span><span></span><b></b></div>';
+    if(a==='headset')return '<div class="uav3d-headset"><span></span><span></span><b></b></div>';
+    if(a==='halo')return '<div class="uav3d-halo"></div>';
+    return '';
+}
 function userAvatarHtml(av){
     av=Object.assign(defaultUserAvatar(),av||{});
     var vars=userAvatarVars(av);
     var cls=[
-        'plong-user-avatar-render',
+        'uav3d-avatar',
         'skin-'+av.skin,
         'hair-'+av.hair,
         'face-'+av.face,
@@ -9224,12 +9588,28 @@ function userAvatarHtml(av){
         'pose-'+av.pose
     ].join(' ');
     var style='--skin:'+vars.skin+';--hair:'+vars.hair+';--outfit:'+vars.outfit+';--aura:'+vars.aura+';--bg1:'+vars.bg1+';--bg2:'+vars.bg2+';';
-    return '<div class="'+cls+'" style="'+style+'">'+
-        '<div class="uav-bg"></div><div class="uav-aura"></div><div class="uav-shadow"></div>'+
-        '<div class="uav-arm left"></div><div class="uav-arm right"></div>'+
-        '<div class="uav-body"></div><div class="uav-neck"></div><div class="uav-head"></div><div class="uav-hair '+friendEsc(av.hair)+'"></div>'+
-        '<div class="uav-eye left"></div><div class="uav-eye right"></div><div class="uav-blush left"></div><div class="uav-blush right"></div><div class="uav-mouth"></div>'+
-        '<div class="uav-glasses"></div><div class="uav-headset"></div><div class="uav-halo"></div>'+
+    var face=userAvatarFaceHtml(av.face);
+    var bodyDeco='<span class="uav3d-logo-dot"></span><span class="uav3d-body-line"></span>';
+    return '<div class="'+cls+'" style="'+style+'" aria-hidden="true">'+
+        '<div class="uav3d-bg"></div><div class="uav3d-aura"></div><div class="uav3d-ground"></div>'+
+        '<div class="uav3d-scene">'+
+            '<div class="uav3d-inner">'+
+                avatarCube('leg-left',30,64,30,-25,64,0,'--pants','leg','')+
+                avatarCube('leg-right',30,64,30,25,64,0,'--pants','leg','')+
+                avatarCube('shoe-left',34,14,42,-25,101,8,'--shoe','shoe','')+
+                avatarCube('shoe-right',34,14,42,25,101,8,'--shoe','shoe','')+
+                avatarCube('torso',86,86,48,0,16,0,'--outfit','torso '+friendEsc(av.outfit),bodyDeco)+
+                avatarCube('arm-left',24,78,28,-64,19,0,'--outfit','arm arm-left','')+
+                avatarCube('arm-right',24,78,28,64,19,0,'--outfit','arm arm-right','')+
+                avatarCube('hand-left',25,22,30,-67,66,4,'--skin','hand','')+
+                avatarCube('hand-right',25,22,30,67,66,4,'--skin','hand','')+
+                avatarCube('neck',30,24,28,0,-38,0,'--skin','neck','')+
+                avatarCube('head',82,82,64,0,-78,0,'--skin','head',face)+
+                userAvatarHairHtml(av)+
+                userAvatarAccessoryHtml(av)+
+            '</div>'+
+        '</div>'+
+        '<div class="uav3d-drag-hint"><i class="fas fa-arrows-rotate"></i> drag</div>'+
     '</div>';
 }
 function renderUserAvatarInto(el,av){
@@ -9239,7 +9619,10 @@ function renderUserAvatarInto(el,av){
     var vars=userAvatarVars(av);
     el.style.setProperty('--bg1',vars.bg1);
     el.style.setProperty('--bg2',vars.bg2);
+    el.style.setProperty('--uav-rx',el.dataset.rx||'-10deg');
+    el.style.setProperty('--uav-ry',el.dataset.ry||'24deg');
 }
+
 function updateUserAvatarButtons(){
     var av=ensureUserAvatar();
     document.querySelectorAll('[data-user-avatar-option]').forEach(function(btn){
@@ -10181,7 +10564,39 @@ function initUserAvatarWorldListeners(){
     });
 }
 
-            initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();initSocialFeatures();initGrowthFeatures();initLifeLoop();initDashboardStats();initUserAvatarWorldListeners();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
+
+function initUserAvatar3DRotation(){
+    var active=null,startX=0,startY=0,startRx=-10,startRy=24;
+    function nearestAvatar(target){return target&&target.closest?target.closest('.plong-user-avatar'):null}
+    document.addEventListener('pointerdown',function(e){
+        var el=nearestAvatar(e.target);
+        if(!el||!el.querySelector('.uav3d-avatar'))return;
+        active=el;
+        startX=e.clientX;startY=e.clientY;
+        startRx=parseFloat(el.dataset.rx||'-10')||-10;
+        startRy=parseFloat(el.dataset.ry||'24')||24;
+        el.classList.add('is-dragging');
+        try{el.setPointerCapture&&el.setPointerCapture(e.pointerId)}catch(_){}
+    },{passive:true});
+    document.addEventListener('pointermove',function(e){
+        if(!active)return;
+        var dx=e.clientX-startX,dy=e.clientY-startY;
+        var ry=Math.max(-70,Math.min(70,startRy+dx*.45));
+        var rx=Math.max(-28,Math.min(18,startRx-dy*.28));
+        active.dataset.ry=String(ry);
+        active.dataset.rx=String(rx);
+        active.style.setProperty('--uav-ry',ry+'deg');
+        active.style.setProperty('--uav-rx',rx+'deg');
+    },{passive:true});
+    function endDrag(){
+        if(active)active.classList.remove('is-dragging');
+        active=null;
+    }
+    document.addEventListener('pointerup',endDrag,{passive:true});
+    document.addEventListener('pointercancel',endDrag,{passive:true});
+}
+
+            initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();initSocialFeatures();initGrowthFeatures();initLifeLoop();initDashboardStats();initUserAvatarWorldListeners();initUserAvatar3DRotation();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
         </script>
     </body>
 </html>
