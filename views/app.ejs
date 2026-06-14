@@ -6500,7 +6500,7 @@
             }
 
 
-            /* ===== Avatar World Level 1: semi-human stylized avatar ===== */
+            /* ===== Avatar World Level 2: WebGL semi-human 3D avatar ===== */
             .plong-user-avatar{
                 --bg1:#dbeafe;
                 --bg2:#fff7ed;
@@ -7078,6 +7078,70 @@
                 .uavh-inner{width:200px;height:255px}
             }
 
+
+            /* ===== Avatar World Level 2: WebGL renderer with Level 1 fallback ===== */
+            .plong-user-avatar.uav-level2-host{
+                background:transparent!important;
+            }
+            .uav-level2-wrap{
+                position:absolute;
+                inset:0;
+                border-radius:34px;
+                overflow:hidden;
+                background:
+                    radial-gradient(circle at 50% 18%,rgba(255,255,255,.88),transparent 112px),
+                    radial-gradient(circle at 24% 78%,rgba(255,180,109,.18),transparent 90px),
+                    radial-gradient(circle at 82% 74%,rgba(118,169,255,.18),transparent 82px),
+                    linear-gradient(135deg,var(--bg1),var(--bg2));
+                box-shadow:inset 0 1px 0 rgba(255,255,255,.8);
+                isolation:isolate;
+            }
+            .uav-level2-canvas{
+                position:absolute;
+                inset:0;
+                width:100%!important;
+                height:100%!important;
+                display:block;
+                z-index:4;
+                opacity:0;
+                transition:opacity .22s ease;
+                touch-action:none;
+            }
+            .uav-level2-host.uav2-rendered .uav-level2-canvas{opacity:1}
+            .uav-level2-loading{
+                position:absolute;
+                left:50%;
+                bottom:14px;
+                transform:translateX(-50%);
+                min-height:28px;
+                padding:0 10px;
+                border-radius:999px;
+                display:inline-flex;
+                align-items:center;
+                gap:7px;
+                background:rgba(255,255,255,.74);
+                border:1px solid rgba(226,232,240,.86);
+                color:#607092;
+                font-size:10px;
+                font-weight:900;
+                z-index:8;
+                pointer-events:none;
+            }
+            .uav-level2-host.uav2-rendered .uav-level2-loading{display:none}
+            .uav-level2-fallback{
+                position:absolute;
+                inset:0;
+                z-index:3;
+                opacity:1;
+                transition:opacity .22s ease;
+                pointer-events:none;
+            }
+            .uav-level2-host.uav2-rendered .uav-level2-fallback{opacity:0}
+            .uav-level2-host.uav2-error .uav-level2-loading span{font-size:0}
+            .uav-level2-host.uav2-error .uav-level2-loading span:after{content:"Fallback avatar aktif";font-size:10px}
+            .uav-level2-host.size-public .uav-level2-loading{display:none}
+            .uav-level2-host.size-public .uav-level2-wrap{border-radius:24px}
+
         </style>
     </head>
     <body class="auth-lock">
@@ -7308,7 +7372,7 @@
                             <div>
                                 <span><i class="fas fa-user-astronaut"></i> Plong Avatar</span>
                                 <h1>Wujud virtual dari perjalanan emosimu</h1>
-                                <p>Avatar semi-human ini berbeda dari pet. Avatar adalah identitas user di dunia Plong, sementara pet adalah pendamping emosi yang kamu rawat. Drag avatar untuk memutar.</p>
+                                <p>Avatar 3D Level 2 ini berbeda dari pet. Avatar adalah identitas user di dunia Plong, sementara pet adalah pendamping emosi yang kamu rawat. Drag avatar untuk memutar.</p>
                                 <div class="avatar-world-actions">
                                     <button class="feature-btn primary" type="button" id="user-avatar-save"><i class="fas fa-save"></i> Simpan Avatar</button>
                                     <button class="feature-btn" type="button" id="user-avatar-open-profile"><i class="fas fa-eye"></i> Lihat Profil</button>
@@ -7325,7 +7389,7 @@
                             <aside class="avatar-world-panel">
                                 <div class="avatar-world-panel-head">
                                     <strong>Kustomisasi Avatar</strong>
-                                    <span>Pilih style semi-human avatar yang ringan, halus, dan bisa diputar.</span>
+                                    <span>Pilih style avatar 3D WebGL yang lebih manusia, halus, dan bisa diputar.</span>
                                 </div>
                                 <div class="avatar-control-group" data-avatar-control="skin">
                                     <label>Warna kulit</label>
@@ -8463,6 +8527,192 @@
             <button class="<%= pageId === 'pg-assist' ? 'nb on' : 'nb' %>" data-page="pg-assist"><img class="nav-img" src="/assets/nav/chat.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Chat</span></button>
             <button class="<%= pageId === 'pg-account' ? 'nb on' : 'nb' %>" data-page="pg-account"><img class="nav-img" src="/assets/nav/account.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Akun</span></button>
         </nav>
+
+
+        <script type="module">
+        import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
+
+        const skinMap={warm:0xf2b789,fair:0xffd9bd,tan:0xc78555,deep:0x8b573b};
+        const hairMap={soft:0x3b243f,short:0x1f2937,wavy:0x4a2c2a,cap:0x3158d4};
+        const outfitMap={hoodie:0xff9349,jacket:0x2563eb,robe:0x7c3aed,tee:0x0d9488};
+        const auraMap={tenang:0x14b8a6,senang:0xfacc15,sedih:0x60a5fa,galau:0xa78bfa,stres:0xfb923c,marah:0xef4444};
+
+        function getColor(map,key,fb){return map[key] ?? fb}
+        function mat(color,rough=.62,metal=.03){
+            return new THREE.MeshStandardMaterial({color,roughness:rough,metalness:metal});
+        }
+        function softMat(color,opacity=.22){
+            return new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false});
+        }
+        function makeCapsule(radius,length,color){
+            if(THREE.CapsuleGeometry){
+                return new THREE.Mesh(new THREE.CapsuleGeometry(radius,length,18,28), mat(color));
+            }
+            const g=new THREE.Group();
+            const cyl=new THREE.Mesh(new THREE.CylinderGeometry(radius,radius,length,24),mat(color));
+            const top=new THREE.Mesh(new THREE.SphereGeometry(radius,24,12),mat(color));
+            const bot=new THREE.Mesh(new THREE.SphereGeometry(radius,24,12),mat(color));
+            top.position.y=length/2;bot.position.y=-length/2;
+            g.add(cyl,top,bot);return g;
+        }
+        function add(mesh,parent,x=0,y=0,z=0,rx=0,ry=0,rz=0,sx=1,sy=1,sz=1){
+            mesh.position.set(x,y,z);mesh.rotation.set(rx,ry,rz);mesh.scale.set(sx,sy,sz);parent.add(mesh);return mesh;
+        }
+        function makeRoundedHuman(av){
+            av=Object.assign({skin:"warm",hair:"soft",face:"smile",outfit:"hoodie",accessory:"none",aura:"tenang",background:"sky",pose:"idle"},av||{});
+            const skin=getColor(skinMap,av.skin,0xf2b789);
+            const hair=getColor(hairMap,av.hair,0x3b243f);
+            const outfit=getColor(outfitMap,av.outfit,0xff9349);
+            const aura=getColor(auraMap,av.aura,0x14b8a6);
+            const group=new THREE.Group();
+
+            add(new THREE.Mesh(new THREE.SphereGeometry(1.25,36,18),softMat(aura,.16)),group,0,1.15,-.04,0,0,0,1.05,1.12,.72);
+
+            const torso=makeCapsule(.42,.78,outfit);
+            add(torso,group,0,.35,0,0,0,0,1.02,1.08,.76);
+            add(new THREE.Mesh(new THREE.SphereGeometry(.44,32,16),mat(outfit)),group,0,.72,.02,0,0,0,1,.58,.64);
+            add(new THREE.Mesh(new THREE.TorusGeometry(.22,.022,10,42,Math.PI),mat(0xffffff,.7,.02)),group,0,.93,.28,Math.PI/2,0,Math.PI,1,.55,1);
+
+            add(makeCapsule(.13,.22,skin),group,0,1.1,0,0,0,0,1,.9,1);
+            add(new THREE.Mesh(new THREE.SphereGeometry(.48,44,26),mat(skin,.66,.02)),group,0,1.55,.02,0,0,0,.92,1.04,.86);
+            add(new THREE.Mesh(new THREE.SphereGeometry(.09,18,10),mat(skin)),group,-.43,1.55,.02,0,0,0,.72,1.05,.48);
+            add(new THREE.Mesh(new THREE.SphereGeometry(.09,18,10),mat(skin)),group,.43,1.55,.02,0,0,0,.72,1.05,.48);
+
+            add(new THREE.Mesh(new THREE.SphereGeometry(.52,36,18,0,Math.PI*2,0,Math.PI*.58),mat(av.hair==="cap"?0x3158d4:hair,.56,.02)),group,0,1.75,.02,0,0,0,1,.72,.95);
+
+            if(av.hair==="soft"||av.hair==="wavy"){
+                const bangCount=av.hair==="wavy"?5:4;
+                for(let i=0;i<bangCount;i++){
+                    add(new THREE.Mesh(new THREE.SphereGeometry(.12,16,8),mat(hair)),group,(i-(bangCount-1)/2)*.17,1.61,.39,0,0,(i%2?-.26:.22),1,av.hair==="wavy"?1.4:1.05,.62);
+                }
+                if(av.hair==="wavy"){
+                    add(makeCapsule(.08,.42,hair),group,-.45,1.39,.02,.1,0,.16,1,1,1);
+                    add(makeCapsule(.08,.42,hair),group,.45,1.39,.02,.1,0,-.16,1,1,1);
+                }
+            }
+            if(av.hair==="short"){
+                add(new THREE.Mesh(new THREE.SphereGeometry(.46,28,14,0,Math.PI*2,0,Math.PI*.42),mat(hair)),group,0,1.68,.04,0,0,0,1,.62,.9);
+            }
+            if(av.hair==="cap"){
+                add(new THREE.Mesh(new THREE.BoxGeometry(.45,.06,.22),mat(0x3158d4)),group,0,1.67,.42,.05,0,0,1,1,1);
+            }
+
+            const eyeMat=mat(0x1f2937,.48,.02);
+            const eyeY=av.face==="calm"?1.56:1.58;
+            add(new THREE.Mesh(new THREE.SphereGeometry(.038,16,8),eyeMat),group,-.16,eyeY,.43,0,0,0,av.face==="calm"?1.6:1,av.face==="calm"?.25:1,1);
+            add(new THREE.Mesh(new THREE.SphereGeometry(.038,16,8),eyeMat),group,.16,eyeY,.43,0,0,0,av.face==="calm"?1.6:1,av.face==="calm"?.25:1,1);
+
+            const browMat=mat(0x1f2937,.58,.02);
+            add(new THREE.Mesh(new THREE.BoxGeometry(.14,.018,.018),browMat),group,-.16,1.7,.43,0,0,av.face==="focus"?.25:-.12);
+            add(new THREE.Mesh(new THREE.BoxGeometry(.14,.018,.018),browMat),group,.16,1.7,.43,0,0,av.face==="focus"?-.25:.12);
+            add(new THREE.Mesh(new THREE.SphereGeometry(.027,12,8),mat(0xb7795d,.72,.01)),group,0,1.50,.465,0,0,0,.7,1.2,.35);
+
+            const mouthColor=mat(0x7f1d1d,.55,.01);
+            if(av.face==="focus"){
+                add(new THREE.Mesh(new THREE.BoxGeometry(.16,.018,.014),mouthColor),group,0,1.40,.455);
+            }else{
+                const mouth=new THREE.Mesh(new THREE.TorusGeometry(.085,.012,8,24,Math.PI),mouthColor);
+                add(mouth,group,0,1.43,.455,0,0,Math.PI);
+                if(av.face==="shy")mouth.scale.set(.65,.55,.65);
+            }
+
+            add(new THREE.Mesh(new THREE.SphereGeometry(.055,12,8),softMat(0xf472b6,.34)),group,-.27,1.46,.43,0,0,0,1,.42,.18);
+            add(new THREE.Mesh(new THREE.SphereGeometry(.055,12,8),softMat(0xf472b6,.34)),group,.27,1.46,.43,0,0,0,1,.42,.18);
+
+            let armLY=.48,armRY=.48,armLRz=.26,armRRz=-.26;
+            if(av.pose==="wave"){armRY=.82;armRRz=-2.35}
+            if(av.pose==="peace"){armLY=.82;armLRz=2.35}
+            if(av.pose==="focus"){armLY=.35;armRY=.35;armLRz=1.25;armRRz=-1.25}
+            add(makeCapsule(.105,.72,outfit),group,-.55,armLY,.02,0,0,armLRz);
+            add(makeCapsule(.105,.72,outfit),group,.55,armRY,.02,0,0,armRRz);
+            add(new THREE.Mesh(new THREE.SphereGeometry(.11,18,10),mat(skin)),group,-.67,av.pose==="peace"?1.12:.10,.04);
+            add(new THREE.Mesh(new THREE.SphereGeometry(.11,18,10),mat(skin)),group,.67,av.pose==="wave"?1.12:.10,.04);
+
+            add(makeCapsule(.12,.64,0x334155),group,-.18,-.48,0,0,0,.04);
+            add(makeCapsule(.12,.64,0x334155),group,.18,-.48,0,0,0,-.04);
+            add(new THREE.Mesh(new THREE.BoxGeometry(.26,.10,.38),mat(0x1f2937)),group,-.18,-.86,.08,0,0,0,1,1,1);
+            add(new THREE.Mesh(new THREE.BoxGeometry(.26,.10,.38),mat(0x1f2937)),group,.18,-.86,.08,0,0,0,1,1,1);
+
+            if(av.accessory==="glasses"){
+                const ringMat=mat(0x111827,.45,.03);
+                add(new THREE.Mesh(new THREE.TorusGeometry(.105,.012,10,24),ringMat),group,-.16,1.58,.48,0,0,0,1,.72,1);
+                add(new THREE.Mesh(new THREE.TorusGeometry(.105,.012,10,24),ringMat),group,.16,1.58,.48,0,0,0,1,.72,1);
+                add(new THREE.Mesh(new THREE.BoxGeometry(.09,.016,.016),ringMat),group,0,1.58,.49);
+            }
+            if(av.accessory==="headset"){
+                const hm=mat(0x1f2937,.5,.02);
+                add(new THREE.Mesh(new THREE.TorusGeometry(.48,.022,10,52,Math.PI),hm),group,0,1.64,.02,0,Math.PI/2,0,1,1,1);
+                add(new THREE.Mesh(new THREE.BoxGeometry(.09,.24,.10),hm),group,-.48,1.52,.06);
+                add(new THREE.Mesh(new THREE.BoxGeometry(.09,.24,.10),hm),group,.48,1.52,.06);
+                add(new THREE.Mesh(new THREE.BoxGeometry(.26,.018,.018),hm),group,.34,1.37,.30,0,0,-.35);
+            }
+            if(av.accessory==="halo"){
+                add(new THREE.Mesh(new THREE.TorusGeometry(.32,.018,12,60),new THREE.MeshBasicMaterial({color:0xfacc15})),group,0,2.12,.02,Math.PI/2,0,0,1,.42,1);
+            }
+            return group;
+        }
+
+        function renderAvatar3D(host,av){
+            const canvas=host.querySelector(".uav-level2-canvas");
+            if(!canvas)return;
+            const old=host.__plAvatar3D;
+            if(old&&old.dispose)old.dispose();
+            const scene=new THREE.Scene();
+            const camera=new THREE.PerspectiveCamera(32,1,.1,100);
+            camera.position.set(0,.75,5.1);
+            const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:"high-performance"});
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+            renderer.outputColorSpace=THREE.SRGBColorSpace;
+            scene.add(new THREE.HemisphereLight(0xffffff,0x8aa0c7,2.3));
+            const key=new THREE.DirectionalLight(0xffffff,2.2);key.position.set(3,4,5);scene.add(key);
+            const fill=new THREE.DirectionalLight(0x9ec5ff,1.2);fill.position.set(-3,2,4);scene.add(fill);
+            const floor=new THREE.Mesh(new THREE.CircleGeometry(1.32,64),new THREE.MeshBasicMaterial({color:0x1f2937,transparent:true,opacity:.08,depthWrite:false}));
+            floor.rotation.x=-Math.PI/2;floor.position.y=-1.02;floor.position.z=.02;scene.add(floor);
+            const avatar=makeRoundedHuman(av);scene.add(avatar);
+
+            let targetY=.18,targetX=.02,dragging=false,sx=0,sy=0,baseY=targetY,baseX=targetX;
+            avatar.rotation.y=targetY;avatar.rotation.x=targetX;
+            function resize(){
+                const rect=host.getBoundingClientRect();
+                const w=Math.max(80,Math.floor(rect.width));
+                const h=Math.max(100,Math.floor(rect.height));
+                renderer.setSize(w,h,false);
+                camera.aspect=w/h;camera.updateProjectionMatrix();
+            }
+            const ro=new ResizeObserver(resize);ro.observe(host);resize();
+            canvas.addEventListener("pointerdown",(e)=>{dragging=true;sx=e.clientX;sy=e.clientY;baseY=targetY;baseX=targetX;try{canvas.setPointerCapture(e.pointerId)}catch(_){}} ,{passive:true});
+            canvas.addEventListener("pointermove",(e)=>{if(!dragging)return;targetY=Math.max(-.95,Math.min(.95,baseY+(e.clientX-sx)*.008));targetX=Math.max(-.24,Math.min(.20,baseX-(e.clientY-sy)*.004));},{passive:true});
+            const end=()=>dragging=false;canvas.addEventListener("pointerup",end,{passive:true});canvas.addEventListener("pointercancel",end,{passive:true});
+            let raf=0,disposed=false,t=0;
+            function animate(){
+                if(disposed)return;t+=.016;
+                avatar.rotation.y+=(targetY-avatar.rotation.y)*.12;
+                avatar.rotation.x+=(targetX-avatar.rotation.x)*.12;
+                avatar.position.y=Math.sin(t*1.7)*.018;
+                renderer.render(scene,camera);
+                raf=requestAnimationFrame(animate);
+            }
+            animate();
+            host.classList.remove("uav2-error");host.classList.add("uav2-rendered");
+            host.__plAvatar3D={dispose(){
+                disposed=true;cancelAnimationFrame(raf);ro.disconnect();
+                scene.traverse((o)=>{if(o.geometry)o.geometry.dispose();if(o.material){if(Array.isArray(o.material))o.material.forEach(m=>m.dispose&&m.dispose());else o.material.dispose&&o.material.dispose();}});
+                renderer.dispose();
+            }};
+        }
+
+        window.PlAvatar3D={render:renderAvatar3D};
+        function hydrateAll(){
+            document.querySelectorAll(".uav-level2-host").forEach((host)=>{
+                const canvas=host.querySelector(".uav-level2-canvas");
+                if(!canvas)return;
+                let av={};try{av=JSON.parse(canvas.dataset.avatar||"{}")}catch(_){}
+                try{renderAvatar3D(host,av)}catch(error){console.warn("Avatar 3D fallback:",error);host.classList.add("uav2-error")}
+            });
+        }
+        hydrateAll();
+        new MutationObserver(()=>hydrateAll()).observe(document.documentElement,{childList:true,subtree:true});
+        </script>
 
         <script>
             window.__VKM_PAGE_ID="<%= pageId %>";
@@ -10183,12 +10433,35 @@ function userAvatarHtml(av){
 function renderUserAvatarInto(el,av){
     if(!el)return;
     av=Object.assign(defaultUserAvatar(),av||{});
-    el.innerHTML=userAvatarHtml(av);
     var vars=userAvatarVars(av);
+    el.innerHTML='<div class="uav-level2-wrap">'+
+        '<canvas class="uav-level2-canvas" aria-label="Avatar 3D"></canvas>'+
+        '<div class="uav-level2-loading"><i class="fas fa-cube"></i><span>Memuat avatar 3D...</span></div>'+
+        '<div class="uav-level2-fallback"></div>'+
+    '</div>';
     el.style.setProperty('--bg1',vars.bg1);
     el.style.setProperty('--bg2',vars.bg2);
     el.style.setProperty('--uav-rx',el.dataset.rx||'-4deg');
     el.style.setProperty('--uav-ry',el.dataset.ry||'12deg');
+    var wrap=el.querySelector('.uav-level2-wrap');
+    var canvas=el.querySelector('.uav-level2-canvas');
+    var fallback=el.querySelector('.uav-level2-fallback');
+    if(wrap){
+        wrap.style.setProperty('--skin',vars.skin);
+        wrap.style.setProperty('--hair',vars.hair);
+        wrap.style.setProperty('--outfit',vars.outfit);
+        wrap.style.setProperty('--aura',vars.aura);
+        wrap.style.setProperty('--bg1',vars.bg1);
+        wrap.style.setProperty('--bg2',vars.bg2);
+    }
+    if(fallback)fallback.innerHTML=userAvatarHtml(av);
+    if(canvas)canvas.dataset.avatar=JSON.stringify(av);
+    el.classList.add('uav-level2-host');
+    if(window.PlAvatar3D&&typeof window.PlAvatar3D.render==='function'){
+        window.PlAvatar3D.render(el,av);
+    }else{
+        el.classList.add('uav-level2-pending');
+    }
 }
 
 function updateUserAvatarButtons(){
