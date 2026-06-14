@@ -7372,7 +7372,7 @@
                             <div>
                                 <span><i class="fas fa-user-astronaut"></i> Plong Avatar</span>
                                 <h1>Wujud virtual dari perjalanan emosimu</h1>
-                                <p>Avatar 3D Level 2 ini berbeda dari pet. Avatar adalah identitas user di dunia Plong, sementara pet adalah pendamping emosi yang kamu rawat. Drag avatar untuk memutar.</p>
+                                <p>Avatar 3D Premium ini lebih game-like: badan lebih rapi, rambut/outfit lebih detail, lighting lebih halus, dan tetap identitas Plong sendiri. Drag avatar untuk memutar.</p>
                                 <div class="avatar-world-actions">
                                     <button class="feature-btn primary" type="button" id="user-avatar-save"><i class="fas fa-save"></i> Simpan Avatar</button>
                                     <button class="feature-btn" type="button" id="user-avatar-open-profile"><i class="fas fa-eye"></i> Lihat Profil</button>
@@ -7389,7 +7389,7 @@
                             <aside class="avatar-world-panel">
                                 <div class="avatar-world-panel-head">
                                     <strong>Kustomisasi Avatar</strong>
-                                    <span>Pilih style avatar 3D WebGL yang lebih manusia, halus, dan bisa diputar.</span>
+                                    <span>Pilih style avatar 3D premium yang lebih kompleks, game-like, dan bisa diputar.</span>
                                 </div>
                                 <div class="avatar-control-group" data-avatar-control="skin">
                                     <label>Warna kulit</label>
@@ -8565,108 +8565,176 @@
             const outfit=getColor(outfitMap,av.outfit,0xff9349);
             const aura=getColor(auraMap,av.aura,0x14b8a6);
             const group=new THREE.Group();
+            group.name="PlongVerse Premium Avatar";
 
-            add(new THREE.Mesh(new THREE.SphereGeometry(1.25,36,18),softMat(aura,.16)),group,0,1.15,-.04,0,0,0,1.05,1.12,.72);
-
-            const torso=makeCapsule(.42,.78,outfit);
-            add(torso,group,0,.35,0,0,0,0,1.02,1.08,.76);
-            add(new THREE.Mesh(new THREE.SphereGeometry(.44,32,16),mat(outfit)),group,0,.72,.02,0,0,0,1,.58,.64);
-            add(new THREE.Mesh(new THREE.TorusGeometry(.22,.022,10,42,Math.PI),mat(0xffffff,.7,.02)),group,0,.93,.28,Math.PI/2,0,Math.PI,1,.55,1);
-
-            add(makeCapsule(.13,.22,skin),group,0,1.1,0,0,0,0,1,.9,1);
-            add(new THREE.Mesh(new THREE.SphereGeometry(.48,44,26),mat(skin,.66,.02)),group,0,1.55,.02,0,0,0,.92,1.04,.86);
-            add(new THREE.Mesh(new THREE.SphereGeometry(.09,18,10),mat(skin)),group,-.43,1.55,.02,0,0,0,.72,1.05,.48);
-            add(new THREE.Mesh(new THREE.SphereGeometry(.09,18,10),mat(skin)),group,.43,1.55,.02,0,0,0,.72,1.05,.48);
-
-            add(new THREE.Mesh(new THREE.SphereGeometry(.52,36,18,0,Math.PI*2,0,Math.PI*.58),mat(av.hair==="cap"?0x3158d4:hair,.56,.02)),group,0,1.75,.02,0,0,0,1,.72,.95);
-
-            if(av.hair==="soft"||av.hair==="wavy"){
-                const bangCount=av.hair==="wavy"?5:4;
-                for(let i=0;i<bangCount;i++){
-                    add(new THREE.Mesh(new THREE.SphereGeometry(.12,16,8),mat(hair)),group,(i-(bangCount-1)/2)*.17,1.61,.39,0,0,(i%2?-.26:.22),1,av.hair==="wavy"?1.4:1.05,.62);
-                }
-                if(av.hair==="wavy"){
-                    add(makeCapsule(.08,.42,hair),group,-.45,1.39,.02,.1,0,.16,1,1,1);
-                    add(makeCapsule(.08,.42,hair),group,.45,1.39,.02,.1,0,-.16,1,1,1);
-                }
+            const darken=(hex,f=.72)=>{
+                const c=new THREE.Color(hex);c.multiplyScalar(f);return c.getHex();
+            };
+            const lighten=(hex,f=.18)=>{
+                const c=new THREE.Color(hex);c.lerp(new THREE.Color(0xffffff),f);return c.getHex();
+            };
+            const m=(hex,rough=.58,metal=.02)=>new THREE.MeshStandardMaterial({color:hex,roughness:rough,metalness:metal});
+            const outlineMat=new THREE.LineBasicMaterial({color:0x1e293b,transparent:true,opacity:.18});
+            function block(w,h,d,color,name){
+                const g=new THREE.Group();g.name=name||"block";
+                const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m(color,.54,.025));
+                mesh.castShadow=true;mesh.receiveShadow=true;g.add(mesh);
+                const edge=new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry,35),outlineMat);
+                edge.scale.set(1.003,1.003,1.003);g.add(edge);
+                return g;
             }
-            if(av.hair==="short"){
-                add(new THREE.Mesh(new THREE.SphereGeometry(.46,28,14,0,Math.PI*2,0,Math.PI*.42),mat(hair)),group,0,1.68,.04,0,0,0,1,.62,.9);
+            function sphere(r,color,name,sx=1,sy=1,sz=1){
+                const mesh=new THREE.Mesh(new THREE.SphereGeometry(r,36,20),m(color,.58,.015));
+                mesh.name=name||"sphere";mesh.scale.set(sx,sy,sz);mesh.castShadow=true;mesh.receiveShadow=true;return mesh;
             }
-            if(av.hair==="cap"){
-                add(new THREE.Mesh(new THREE.BoxGeometry(.45,.06,.22),mat(0x3158d4)),group,0,1.67,.42,.05,0,0,1,1,1);
+            function capsule(r,l,color,name){
+                const mesh=makeCapsule(r,l,color);mesh.name=name||"capsule";mesh.castShadow=true;mesh.receiveShadow=true;return mesh;
+            }
+            function put(obj,x,y,z,rx=0,ry=0,rz=0,sx=1,sy=1,sz=1,parent=group){
+                obj.position.set(x,y,z);obj.rotation.set(rx,ry,rz);obj.scale.set(sx,sy,sz);parent.add(obj);return obj;
             }
 
-            const eyeMat=mat(0x1f2937,.48,.02);
-            const eyeY=av.face==="calm"?1.56:1.58;
-            add(new THREE.Mesh(new THREE.SphereGeometry(.038,16,8),eyeMat),group,-.16,eyeY,.43,0,0,0,av.face==="calm"?1.6:1,av.face==="calm"?.25:1,1);
-            add(new THREE.Mesh(new THREE.SphereGeometry(.038,16,8),eyeMat),group,.16,eyeY,.43,0,0,0,av.face==="calm"?1.6:1,av.face==="calm"?.25:1,1);
+            // soft aura and platform
+            put(new THREE.Mesh(new THREE.SphereGeometry(1.42,42,20),softMat(aura,.15)),0,1.08,-.08,0,0,0,1.08,1.16,.62);
+            const ringMat=new THREE.MeshBasicMaterial({color:aura,transparent:true,opacity:.24,side:THREE.DoubleSide});
+            const ring1=new THREE.Mesh(new THREE.TorusGeometry(1.05,.012,8,96),ringMat);
+            put(ring1,0,.16,0,Math.PI/2.7,.22,.16,1,.55,1);
+            const ring2=new THREE.Mesh(new THREE.TorusGeometry(.76,.010,8,96),ringMat);
+            put(ring2,0,.55,0,Math.PI/2.8,-.35,-.22,1,.52,1);
+            const floor=new THREE.Mesh(new THREE.CircleGeometry(1.18,72),new THREE.MeshBasicMaterial({color:0x0f172a,transparent:true,opacity:.09,depthWrite:false}));
+            put(floor,0,-1.06,.08,-Math.PI/2,0,0);
 
-            const browMat=mat(0x1f2937,.58,.02);
-            add(new THREE.Mesh(new THREE.BoxGeometry(.14,.018,.018),browMat),group,-.16,1.7,.43,0,0,av.face==="focus"?.25:-.12);
-            add(new THREE.Mesh(new THREE.BoxGeometry(.14,.018,.018),browMat),group,.16,1.7,.43,0,0,av.face==="focus"?-.25:.12);
-            add(new THREE.Mesh(new THREE.SphereGeometry(.027,12,8),mat(0xb7795d,.72,.01)),group,0,1.50,.465,0,0,0,.7,1.2,.35);
+            // Legs and shoes: game-like but polished
+            const pantsColor=0x334155;
+            put(block(.25,.78,.30,pantsColor,"leg-left"),-.18,-.55,0,0,0,.025);
+            put(block(.25,.78,.30,pantsColor,"leg-right"),.18,-.55,0,0,0,-.025);
+            put(block(.34,.14,.48,0x111827,"shoe-left"),-.18,-1.01,.08,0,0,0,1,1,1);
+            put(block(.34,.14,.48,0x111827,"shoe-right"),.18,-1.01,.08,0,0,0,1,1,1);
 
-            const mouthColor=mat(0x7f1d1d,.55,.01);
-            if(av.face==="focus"){
-                add(new THREE.Mesh(new THREE.BoxGeometry(.16,.018,.014),mouthColor),group,0,1.40,.455);
+            // Torso: layered outfit with chest panels
+            const torso=block(.94,.92,.48,outfit,"premium-torso");
+            put(torso,0,.25,0,0,0,0);
+            const upper=sphere(.47,lighten(outfit,.08),"upper-chest",1.02,.48,.58);
+            put(upper,0,.75,.03,0,0,0);
+            put(block(.28,.70,.035,lighten(outfit,.22),"front-panel-left"),-.18,.26,.255,0,0,.04);
+            put(block(.28,.70,.035,lighten(outfit,.10),"front-panel-right"),.18,.26,.257,0,0,-.04);
+            put(block(.26,.06,.04,0xffffff,"name-plate"),0,.43,.282,0,0,0);
+            const emblem=sphere(.055,0xffffff,"emblem",1,1,.18);put(emblem,0,.22,.30);
+
+            // Collar / hood variants
+            if(av.outfit==="hoodie"){
+                put(new THREE.Mesh(new THREE.TorusGeometry(.28,.026,10,52,Math.PI),m(lighten(outfit,.3))),0,.88,.26,Math.PI/2,0,Math.PI,1,.5,1);
+                put(block(.032,.28,.035,0xffffff,"draw-left"),-.09,.72,.30,0,0,.12);
+                put(block(.032,.28,.035,0xffffff,"draw-right"),.09,.72,.30,0,0,-.12);
+            }else if(av.outfit==="jacket"){
+                put(block(.045,.84,.04,0xffffff,"zipper"),0,.28,.31);
+                put(block(.30,.08,.04,0xffffff,"jacket-left"),-.21,.78,.30,0,0,.22);
+                put(block(.30,.08,.04,0xffffff,"jacket-right"),.21,.78,.30,0,0,-.22);
+            }else if(av.outfit==="robe"){
+                put(block(.08,.86,.045,0xffffff,"robe-line"),0,.28,.31);
+                put(new THREE.Mesh(new THREE.TorusGeometry(.31,.022,10,52,Math.PI),m(0xffffff)),0,.84,.27,Math.PI/2,0,Math.PI,1,.45,1);
             }else{
-                const mouth=new THREE.Mesh(new THREE.TorusGeometry(.085,.012,8,24,Math.PI),mouthColor);
-                add(mouth,group,0,1.43,.455,0,0,Math.PI);
-                if(av.face==="shy")mouth.scale.set(.65,.55,.65);
+                put(new THREE.Mesh(new THREE.TorusGeometry(.22,.020,10,42,Math.PI),m(0xffffff)),0,.86,.27,Math.PI/2,0,Math.PI,1,.45,1);
             }
 
-            add(new THREE.Mesh(new THREE.SphereGeometry(.055,12,8),softMat(0xf472b6,.34)),group,-.27,1.46,.43,0,0,0,1,.42,.18);
-            add(new THREE.Mesh(new THREE.SphereGeometry(.055,12,8),softMat(0xf472b6,.34)),group,.27,1.46,.43,0,0,0,1,.42,.18);
+            // Arms with shoulders/hands
+            let armLY=.31,armRY=.31,armLRz=.08,armRRz=-.08,handLY=-.17,handRY=-.17;
+            if(av.pose==="wave"){armRY=.68;armRRz=-1.95;handRY=1.04}
+            if(av.pose==="peace"){armLY=.68;armLRz=1.95;handLY=1.04}
+            if(av.pose==="focus"){armLY=.21;armRY=.21;armLRz=1.12;armRRz=-1.12;handLY=.02;handRY=.02}
+            put(sphere(.16,lighten(outfit,.04),"shoulder-left",1,.9,.9),-.58,.71,0);
+            put(sphere(.16,lighten(outfit,.04),"shoulder-right",1,.9,.9),.58,.71,0);
+            put(block(.22,.78,.28,outfit,"arm-left"),-.67,armLY,0,0,0,armLRz);
+            put(block(.22,.78,.28,outfit,"arm-right"),.67,armRY,0,0,0,armRRz);
+            put(sphere(.125,skin,"hand-left"),-.73,handLY,.06,0,0,0,1,1,.92);
+            put(sphere(.125,skin,"hand-right"),.73,handRY,.06,0,0,0,1,1,.92);
 
-            let armLY=.48,armRY=.48,armLRz=.26,armRRz=-.26;
-            if(av.pose==="wave"){armRY=.82;armRRz=-2.35}
-            if(av.pose==="peace"){armLY=.82;armLRz=2.35}
-            if(av.pose==="focus"){armLY=.35;armRY=.35;armLRz=1.25;armRRz=-1.25}
-            add(makeCapsule(.105,.72,outfit),group,-.55,armLY,.02,0,0,armLRz);
-            add(makeCapsule(.105,.72,outfit),group,.55,armRY,.02,0,0,armRRz);
-            add(new THREE.Mesh(new THREE.SphereGeometry(.11,18,10),mat(skin)),group,-.67,av.pose==="peace"?1.12:.10,.04);
-            add(new THREE.Mesh(new THREE.SphereGeometry(.11,18,10),mat(skin)),group,.67,av.pose==="wave"?1.12:.10,.04);
+            // Neck/head: premium stylized human
+            put(capsule(.13,.24,skin,"neck"),0,1.03,0,0,0,0,1,.9,1);
+            const head=sphere(.48,skin,"premium-head",.94,1.04,.88);
+            put(head,0,1.48,.03);
+            put(sphere(.082,skin,"ear-left",.62,1.06,.46),-.43,1.48,.02);
+            put(sphere(.082,skin,"ear-right",.62,1.06,.46),.43,1.48,.02);
 
-            add(makeCapsule(.12,.64,0x334155),group,-.18,-.48,0,0,0,.04);
-            add(makeCapsule(.12,.64,0x334155),group,.18,-.48,0,0,0,-.04);
-            add(new THREE.Mesh(new THREE.BoxGeometry(.26,.10,.38),mat(0x1f2937)),group,-.18,-.86,.08,0,0,0,1,1,1);
-            add(new THREE.Mesh(new THREE.BoxGeometry(.26,.10,.38),mat(0x1f2937)),group,.18,-.86,.08,0,0,0,1,1,1);
+            // Hair: more detailed pieces
+            const hairBaseColor=av.hair==="cap"?0x3158d4:hair;
+            put(sphere(.52,hairBaseColor,"hair-cap",1.02,.54,.92),0,1.72,.02);
+            if(av.hair==="soft"){
+                put(block(.86,.18,.18,hair,"soft-fringe"),0,1.58,.42,0,0,0);
+                for(let i=0;i<5;i++){
+                    put(sphere(.105,hair,"soft-bang-"+i,.85,1.25,.55),(i-2)*.16,1.55,.48,0,0,(i%2?-.16:.16));
+                }
+                put(sphere(.23,lighten(hair,.16),"hair-shine",1,.28,.28),-.18,1.79,.43,0,0,-.16);
+            }else if(av.hair==="short"){
+                put(block(.76,.14,.18,hair,"short-fringe"),0,1.59,.43,0,0,0);
+                put(sphere(.20,lighten(hair,.12),"short-shine",1,.24,.26),-.16,1.78,.42);
+            }else if(av.hair==="wavy"){
+                put(block(.90,.20,.18,hair,"wavy-fringe"),0,1.58,.43,0,0,0);
+                for(let i=0;i<6;i++){
+                    put(sphere(.112,hair,"wavy-bang-"+i,.82,1.55,.55),(i-2.5)*.145,1.53,.49,0,0,(i%2?-.25:.22));
+                }
+                put(capsule(.075,.45,hair,"wavy-lock-left"),-.45,1.33,.08,.08,0,.16);
+                put(capsule(.075,.45,hair,"wavy-lock-right"),.45,1.33,.08,.08,0,-.16);
+            }else if(av.hair==="cap"){
+                put(block(.52,.08,.30,0x3158d4,"cap-visor"),0,1.62,.47,.04,0,0);
+                put(block(.18,.035,.04,0xffffff,"cap-mark"),0,1.74,.49);
+            }
 
+            // Face more readable
+            const eyeMat=m(0x111827,.42,.02);
+            const eyeY=av.face==="calm"?1.49:1.52;
+            put(sphere(.038,0x111827,"eye-left",1,av.face==="calm"?.28:1,1),-.16,eyeY,.45);
+            put(sphere(.038,0x111827,"eye-right",1,av.face==="calm"?.28:1,1),.16,eyeY,.45);
+            put(block(.14,.018,.018,0x111827,"brow-left"),-.16,1.65,.45,0,0,av.face==="focus"?.25:-.09);
+            put(block(.14,.018,.018,0x111827,"brow-right"),.16,1.65,.45,0,0,av.face==="focus"?-.25:.09);
+            put(sphere(.026,darken(skin,.78),"nose",.72,1.15,.35),0,1.45,.485);
+            if(av.face==="focus"){
+                put(block(.17,.018,.012,0x7f1d1d,"mouth-flat"),0,1.36,.475);
+            }else{
+                const mouth=new THREE.Mesh(new THREE.TorusGeometry(.083,.010,8,28,Math.PI),m(0x7f1d1d,.5,.01));
+                put(mouth,0,1.39,.475,0,0,Math.PI, av.face==="shy"?.68:1, av.face==="shy"?.55:1,1);
+            }
+            put(sphere(.055,0xf472b6,"blush-left",1,.40,.12),-.27,1.42,.455);
+            put(sphere(.055,0xf472b6,"blush-right",1,.40,.12),.27,1.42,.455);
+
+            // Accessories
             if(av.accessory==="glasses"){
-                const ringMat=mat(0x111827,.45,.03);
-                add(new THREE.Mesh(new THREE.TorusGeometry(.105,.012,10,24),ringMat),group,-.16,1.58,.48,0,0,0,1,.72,1);
-                add(new THREE.Mesh(new THREE.TorusGeometry(.105,.012,10,24),ringMat),group,.16,1.58,.48,0,0,0,1,.72,1);
-                add(new THREE.Mesh(new THREE.BoxGeometry(.09,.016,.016),ringMat),group,0,1.58,.49);
+                const gm=m(0x111827,.42,.02);
+                put(new THREE.Mesh(new THREE.TorusGeometry(.105,.012,10,26),gm),-.16,1.52,.50,0,0,0,1,.72,1);
+                put(new THREE.Mesh(new THREE.TorusGeometry(.105,.012,10,26),gm),.16,1.52,.50,0,0,0,1,.72,1);
+                put(block(.09,.016,.016,0x111827,"glasses-bridge"),0,1.52,.505);
             }
             if(av.accessory==="headset"){
-                const hm=mat(0x1f2937,.5,.02);
-                add(new THREE.Mesh(new THREE.TorusGeometry(.48,.022,10,52,Math.PI),hm),group,0,1.64,.02,0,Math.PI/2,0,1,1,1);
-                add(new THREE.Mesh(new THREE.BoxGeometry(.09,.24,.10),hm),group,-.48,1.52,.06);
-                add(new THREE.Mesh(new THREE.BoxGeometry(.09,.24,.10),hm),group,.48,1.52,.06);
-                add(new THREE.Mesh(new THREE.BoxGeometry(.26,.018,.018),hm),group,.34,1.37,.30,0,0,-.35);
+                const hm=m(0x111827,.48,.02);
+                put(new THREE.Mesh(new THREE.TorusGeometry(.48,.024,10,64,Math.PI),hm),0,1.61,.02,0,Math.PI/2,0,1,1,1);
+                put(block(.10,.25,.12,0x111827,"headset-left"),-.49,1.48,.07);
+                put(block(.10,.25,.12,0x111827,"headset-right"),.49,1.48,.07);
+                put(block(.29,.018,.018,0x111827,"headset-mic"),.34,1.34,.33,0,0,-.34);
             }
             if(av.accessory==="halo"){
-                add(new THREE.Mesh(new THREE.TorusGeometry(.32,.018,12,60),new THREE.MeshBasicMaterial({color:0xfacc15})),group,0,2.12,.02,Math.PI/2,0,0,1,.42,1);
+                put(new THREE.Mesh(new THREE.TorusGeometry(.32,.018,12,64),new THREE.MeshBasicMaterial({color:0xfacc15})),0,2.06,.02,Math.PI/2,0,0,1,.42,1);
             }
+
+            // Game avatar scale / center
+            group.scale.set(1.04,1.04,1.04);
             return group;
         }
 
-        function renderAvatar3D(host,av){
+function renderAvatar3D(host,av){
             const canvas=host.querySelector(".uav-level2-canvas");
             if(!canvas)return;
             const old=host.__plAvatar3D;
             if(old&&old.dispose)old.dispose();
             const scene=new THREE.Scene();
             const camera=new THREE.PerspectiveCamera(32,1,.1,100);
-            camera.position.set(0,.75,5.1);
+            camera.position.set(0,.62,4.75);
             const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:"high-performance"});
             renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
             renderer.outputColorSpace=THREE.SRGBColorSpace;
-            scene.add(new THREE.HemisphereLight(0xffffff,0x8aa0c7,2.3));
-            const key=new THREE.DirectionalLight(0xffffff,2.2);key.position.set(3,4,5);scene.add(key);
-            const fill=new THREE.DirectionalLight(0x9ec5ff,1.2);fill.position.set(-3,2,4);scene.add(fill);
-            const floor=new THREE.Mesh(new THREE.CircleGeometry(1.32,64),new THREE.MeshBasicMaterial({color:0x1f2937,transparent:true,opacity:.08,depthWrite:false}));
+            scene.add(new THREE.HemisphereLight(0xffffff,0x8aa0c7,2.8));
+            const key=new THREE.DirectionalLight(0xffffff,2.7);key.position.set(3,4.5,5);scene.add(key);
+            const fill=new THREE.DirectionalLight(0x9ec5ff,1.45);fill.position.set(-3,2,4);scene.add(fill);
+            const floor=new THREE.Mesh(new THREE.CircleGeometry(1.45,72),new THREE.MeshBasicMaterial({color:0x1f2937,transparent:true,opacity:.08,depthWrite:false}));
             floor.rotation.x=-Math.PI/2;floor.position.y=-1.02;floor.position.z=.02;scene.add(floor);
             const avatar=makeRoundedHuman(av);scene.add(avatar);
 
@@ -8681,7 +8749,7 @@
             }
             const ro=new ResizeObserver(resize);ro.observe(host);resize();
             canvas.addEventListener("pointerdown",(e)=>{dragging=true;sx=e.clientX;sy=e.clientY;baseY=targetY;baseX=targetX;try{canvas.setPointerCapture(e.pointerId)}catch(_){}} ,{passive:true});
-            canvas.addEventListener("pointermove",(e)=>{if(!dragging)return;targetY=Math.max(-.95,Math.min(.95,baseY+(e.clientX-sx)*.008));targetX=Math.max(-.24,Math.min(.20,baseX-(e.clientY-sy)*.004));},{passive:true});
+            canvas.addEventListener("pointermove",(e)=>{if(!dragging)return;targetY=Math.max(-1.15,Math.min(1.15,baseY+(e.clientX-sx)*.008));targetX=Math.max(-.24,Math.min(.20,baseX-(e.clientY-sy)*.004));},{passive:true});
             const end=()=>dragging=false;canvas.addEventListener("pointerup",end,{passive:true});canvas.addEventListener("pointercancel",end,{passive:true});
             let raf=0,disposed=false,t=0;
             function animate(){
