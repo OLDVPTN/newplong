@@ -299,6 +299,30 @@ async function initDb() {
   `);
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_ai_summaries_user_created ON ai_emotion_summaries(user_id, created_at DESC);`);
 
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS daily_surprise_claims (
+      id BIGSERIAL PRIMARY KEY,
+      user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      claim_date DATE NOT NULL DEFAULT CURRENT_DATE,
+      reward_key VARCHAR(80) NOT NULL,
+      reward_json JSONB NOT NULL DEFAULT '{}'::jsonb,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      UNIQUE(user_id, claim_date)
+    );
+  `);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_daily_surprise_user_date ON daily_surprise_claims(user_id, claim_date DESC);`);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS weekly_recap_views (
+      id BIGSERIAL PRIMARY KEY,
+      user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      week_key VARCHAR(20) NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      UNIQUE(user_id, week_key)
+    );
+  `);
+
+
 
 
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);`);
@@ -514,6 +538,190 @@ function analyzeEmotionText(text = '') {
     suggestions: suggestions.slice(0, 3)
   };
 }
+
+
+function todayKey(date = new Date()) {
+  return date.toISOString().slice(0, 10);
+}
+
+function weekKey(date = new Date()) {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+}
+
+function seasonalEventInfo(date = new Date()) {
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  if (month === 6) return {
+    key: 'hujan_tenang',
+    title: 'Event Hujan Tenang',
+    body: 'Selesaikan check-in mood dan ruang tenang untuk mengumpulkan tetes tenang.',
+    icon: '🌧️',
+    bonus: '+20% reward Daily Journey'
+  };
+  if (month === 12) return {
+    key: 'bunga_akhir_tahun',
+    title: 'Event Bunga Akhir Tahun',
+    body: 'Ubah emosi berat tahun ini menjadi bunga refleksi dan hadiah kecil.',
+    icon: '🌸',
+    bonus: 'Mystery seed lebih sering muncul'
+  };
+  if ((month === 3 || month === 4) && day <= 20) return {
+    key: 'ramadhan_healing',
+    title: 'Event Ramadhan Healing',
+    body: 'Jaga emosi pelan-pelan, kumpulkan energi sabar, dan rawat pet dari refleksi harian.',
+    icon: '🌙',
+    bonus: '+1 calm crystal'
+  };
+  return {
+    key: 'bunga_emosi',
+    title: 'Event Bunga Emosi',
+    body: 'Setiap mood harian memberi warna berbeda untuk pet dan kebun emosimu.',
+    icon: '🌼',
+    bonus: 'Surprise reward harian aktif'
+  };
+}
+
+function petRoutineMessage(state = {}, date = new Date()) {
+  const hour = date.getHours();
+  const petName = state?.pet?.name || 'Plong';
+  const lastMood = state?.pet?.moodReaction?.mood || null;
+  const moodMap = {
+    tenang: 'Aku ikut tenang hari ini. Mau rawat kebun sebentar?',
+    senang: 'Energi kamu hangat. Aku jadi lebih ceria!',
+    sedih: 'Aku di sini. Nggak harus kuat terus kok.',
+    marah: 'Tarik napas dulu, aku temani pelan-pelan.',
+    galau: 'Kita tidak perlu langsung punya jawaban hari ini.',
+    stres: 'Aku nyalakan mode tenang. Satu sesi napas dulu yuk.',
+    kosong: 'Balik lagi ke sini saja sudah langkah baik.',
+    overthinking: 'Pikiran ramai ya? Grounding sebentar yuk.'
+  };
+  let phase = 'siang';
+  let greeting = `Hai, aku ${petName}.`;
+  if (hour < 5) { phase = 'malam'; greeting = 'Malam tenang.'; }
+  else if (hour < 11) { phase = 'pagi'; greeting = 'Pagi, aku sudah bangun.'; }
+  else if (hour < 17) { phase = 'siang'; greeting = 'Siang, aku masih nemenin.'; }
+  else if (hour < 21) { phase = 'sore'; greeting = 'Sore, waktunya pelan-pelan.'; }
+  else { phase = 'malam'; greeting = 'Malam, hari ini cukup dulu.'; }
+
+  return {
+    phase,
+    title: greeting,
+    body: moodMap[lastMood] || 'Ceritakan satu hal kecil yang kamu rasakan hari ini, nanti energinya jadi progress buatku.',
+    mood: lastMood || 'belum check-in',
+    icon: lastMood ? (analyzeEmotionText(lastMood).primary === 'tenang' ? '😌' : '🐾') : '🐾'
+  };
+}
+
+function journeyForToday(state = {}, moodSummary = {}, date = new Date()) {
+  const event = seasonalEventInfo(date);
+  const d = date.getDay();
+  const dominant = moodSummary?.dominant || state?.pet?.moodReaction?.mood || 'tenang';
+  const journeys = [
+    { key: 'release_one_weight', title: 'Lepaskan satu hal berat', body: 'Tulis atau ceritakan satu hal yang terasa mengganjal hari ini.', page: 'pg-assist', action: 'Curhat sekarang', icon: '🫧' },
+    { key: 'feed_pet_emotion', title: 'Beri makan pet dari emosimu', body: 'Check-in mood lalu lihat reaksi pet pendamping emosimu.', page: 'pg-mood', action: 'Check-in mood', icon: '🐾' },
+    { key: 'grow_emotion_flower', title: 'Tanam warna emosimu', body: `Mood ${dominant} bisa jadi energi untuk kebun kecilmu.`, page: 'pg-garden', action: 'Lihat kebun', icon: '🌱' },
+    { key: 'calm_reset', title: 'Reset napas 60 detik', body: 'Satu menit cukup untuk bikin hari terasa sedikit lebih pelan.', page: 'pg-calm', action: 'Masuk Ruang Tenang', icon: '🌬️' },
+    { key: 'support_buddy', title: 'Kirim dukungan kecil', body: 'Satu pesan hangat bisa bikin teman merasa tidak sendiri.', page: 'pg-friends', action: 'Cari teman', icon: '🤗' },
+    { key: 'emotion_summary', title: 'Ubah curhat jadi insight', body: 'Buat ringkasan emosi supaya kamu tahu pola yang sedang muncul.', page: 'pg-summary', action: 'Buat summary', icon: '✨' },
+    { key: 'weekly_reflect', title: 'Lihat progress minggu ini', body: 'Rayakan langkah kecilmu, walaupun minggu ini belum sempurna.', page: 'pg-home', action: 'Lihat recap', icon: '📖' }
+  ];
+  const chosen = journeys[d % journeys.length];
+  return { ...chosen, eventKey: event.key, eventTitle: event.title };
+}
+
+function surpriseCatalog() {
+  return [
+    { key: 'soul_coin_pouch', title: 'Kantung Soul Coins', icon: '🪙', coins: 18, petExp: 4, gardenExp: 0, waterDrops: 0 },
+    { key: 'warm_pet_snack', title: 'Snack Hangat Pet', icon: '🍪', coins: 8, petExp: 14, gardenExp: 0, waterDrops: 0 },
+    { key: 'mystery_seed', title: 'Mystery Seed', icon: '🌱', coins: 10, petExp: 4, gardenExp: 12, waterDrops: 4 },
+    { key: 'calm_crystal', title: 'Calm Crystal', icon: '🫧', coins: 12, petExp: 8, gardenExp: 6, waterDrops: 0 },
+    { key: 'rain_drop_bonus', title: 'Tetes Hujan Tenang', icon: '💧', coins: 6, petExp: 4, gardenExp: 8, waterDrops: 12 }
+  ];
+}
+
+function pickDailySurprise(userId, date = new Date()) {
+  const catalog = surpriseCatalog();
+  const seed = `${userId}-${todayKey(date)}`;
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) hash = ((hash << 5) - hash + seed.charCodeAt(i)) | 0;
+  return catalog[Math.abs(hash) % catalog.length];
+}
+
+async function applySurpriseReward(userId, reward) {
+  const user = await getUserById(userId);
+  if (!user) return null;
+  const state = await getStateForUser(user);
+  state.coins = Math.max(0, Math.floor(Number(state.coins || 0))) + Math.max(0, Number(reward.coins || 0));
+  if (reward.petExp) addPetExp(state, reward.petExp);
+  ensureGarden(state);
+  if (reward.gardenExp) addGardenExp(state.garden, reward.gardenExp);
+  if (reward.waterDrops) state.garden.waterDrops = Math.max(0, Math.floor(Number(state.garden.waterDrops || 0))) + Number(reward.waterDrops || 0);
+  state.surprises = state.surprises || { totalClaimed: 0, lastClaimedAt: null };
+  state.surprises.totalClaimed = Number(state.surprises.totalClaimed || 0) + 1;
+  state.surprises.lastClaimedAt = new Date().toISOString();
+  await saveStateForUser(userId, state);
+  return state;
+}
+
+async function weeklyRecapForUser(userId) {
+  const uid = Number(userId);
+  const [moods, calm, supports, summaries, achievements] = await Promise.all([
+    query(`SELECT mood, COUNT(*)::INT AS total, ROUND(AVG(intensity)::numeric,1) AS avg_intensity
+           FROM mood_checkins WHERE user_id = $1 AND mood_date >= CURRENT_DATE - INTERVAL '6 days'
+           GROUP BY mood ORDER BY total DESC, avg_intensity DESC`, [uid]),
+    query(`SELECT COUNT(*)::INT AS total, COALESCE(SUM(duration_seconds),0)::INT AS seconds
+           FROM calm_sessions WHERE user_id = $1 AND created_at >= NOW() - INTERVAL '7 days'`, [uid]),
+    query(`SELECT COUNT(*)::INT AS total FROM friend_supports WHERE sender_id = $1 AND created_at >= NOW() - INTERVAL '7 days'`, [uid]),
+    query(`SELECT COUNT(*)::INT AS total FROM ai_emotion_summaries WHERE user_id = $1 AND created_at >= NOW() - INTERVAL '7 days'`, [uid]),
+    query(`SELECT COUNT(*)::INT AS total FROM achievements WHERE user_id = $1 AND unlocked_at >= NOW() - INTERVAL '7 days'`, [uid])
+  ]);
+
+  const dominant = moods[0]?.mood || 'belum banyak data';
+  const moodCount = moods.reduce((sum, row) => sum + Number(row.total || 0), 0);
+  const calmTotal = Number(calm[0]?.total || 0);
+  const calmSeconds = Number(calm[0]?.seconds || 0);
+  const supportTotal = Number(supports[0]?.total || 0);
+  const summaryTotal = Number(summaries[0]?.total || 0);
+  const badgeTotal = Number(achievements[0]?.total || 0);
+
+  let line = `Minggu ini kamu mencatat ${moodCount} mood check-in.`;
+  if (moodCount) line += ` Mood yang paling sering muncul: ${dominant}.`;
+  if (calmTotal) line += ` Kamu juga menyelesaikan ${calmTotal} sesi Ruang Tenang.`;
+  if (supportTotal) line += ` Kamu mengirim ${supportTotal} dukungan ke teman.`;
+  if (!moodCount && !calmTotal && !supportTotal) line = 'Minggu ini masih kosong. Balik hari ini saja sudah cukup untuk mulai lagi.';
+
+  return {
+    weekKey: weekKey(new Date()),
+    dominantMood: dominant,
+    moodCheckins: moodCount,
+    calmSessions: calmTotal,
+    calmSeconds,
+    supportsSent: supportTotal,
+    aiSummaries: summaryTotal,
+    badgesUnlocked: badgeTotal,
+    message: line,
+    moodBreakdown: moods.map((m) => ({ mood: m.mood, total: Number(m.total || 0), avgIntensity: Number(m.avg_intensity || 0) }))
+  };
+}
+
+async function moodSummaryMini(userId) {
+  const rows = await query(
+    `SELECT mood, COUNT(*)::INT AS total
+     FROM mood_checkins
+     WHERE user_id = $1 AND mood_date >= CURRENT_DATE - INTERVAL '6 days'
+     GROUP BY mood
+     ORDER BY total DESC
+     LIMIT 1`,
+    [Number(userId)]
+  );
+  return { dominant: rows[0]?.mood || null };
+}
+
 
 function questCatalog() {
   return [
@@ -3199,6 +3407,100 @@ app.get('/api/ai/emotion-summary', requireAuth, async (req, res) => {
     res.status(500).json({ ok: false, error: 'Gagal memuat ringkasan emosi.' });
   }
 });
+
+
+
+
+/* ═══════ LIFE LOOP PACK: PET ROUTINE, JOURNEY, RECAP, SURPRISE, EVENT ═══════ */
+
+app.get('/api/life/home', requireAuth, async (req, res) => {
+  try {
+    const state = await getStateForUser(req.user);
+    const moodMini = await moodSummaryMini(req.user.id);
+    const routine = petRoutineMessage(state, new Date());
+    const event = seasonalEventInfo(new Date());
+    const journey = journeyForToday(state, moodMini, new Date());
+    const recap = await weeklyRecapForUser(req.user.id);
+
+    const claimedRows = await query(
+      `SELECT reward_key, reward_json, created_at
+       FROM daily_surprise_claims
+       WHERE user_id = $1 AND claim_date = CURRENT_DATE
+       LIMIT 1`,
+      [req.user.id]
+    );
+    const surprisePreview = pickDailySurprise(req.user.id, new Date());
+    const surprise = claimedRows[0]
+      ? { claimed: true, rewardKey: claimedRows[0].reward_key, reward: claimedRows[0].reward_json, claimedAt: claimedRows[0].created_at }
+      : { claimed: false, rewardKey: surprisePreview.key, reward: { title: 'Hadiah kejutan hari ini', icon: '🎁' } };
+
+    const nextActions = [
+      { title: 'Curhat ringan', body: 'Lepaskan satu hal yang terasa berat.', page: 'pg-assist', icon: '💬' },
+      { title: 'Check-in mood', body: 'Beri energi emosi untuk pet dan kebun.', page: 'pg-mood', icon: '🌤️' },
+      { title: 'Ruang Tenang', body: 'Reset napas 60 detik.', page: 'pg-calm', icon: '🫧' }
+    ];
+
+    res.json({ ok: true, routine, event, journey, recap, surprise, nextActions });
+  } catch (error) {
+    console.error('Life home error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat life loop.' });
+  }
+});
+
+app.post('/api/life/surprise/claim', requireAuth, async (req, res) => {
+  try {
+    const existing = await query(
+      `SELECT reward_key, reward_json, created_at
+       FROM daily_surprise_claims
+       WHERE user_id = $1 AND claim_date = CURRENT_DATE
+       LIMIT 1`,
+      [req.user.id]
+    );
+    if (existing.length) {
+      return res.status(409).json({ ok: false, error: 'Surprise reward hari ini sudah diklaim.', reward: existing[0].reward_json });
+    }
+
+    const reward = pickDailySurprise(req.user.id, new Date());
+    const state = await applySurpriseReward(req.user.id, reward);
+    await query(
+      `INSERT INTO daily_surprise_claims (user_id, claim_date, reward_key, reward_json, created_at)
+       VALUES ($1, CURRENT_DATE, $2, $3::jsonb, NOW())`,
+      [req.user.id, reward.key, JSON.stringify(reward)]
+    );
+    await createNotification(req.user.id, 'surprise', 'Surprise reward terbuka', `${reward.icon} ${reward.title}: +${reward.coins || 0} Soul Coins.`, { rewardKey: reward.key });
+
+    res.json({ ok: true, message: `${reward.icon} ${reward.title} berhasil diklaim.`, reward, state });
+  } catch (error) {
+    if (error.code === '23505') return res.status(409).json({ ok: false, error: 'Surprise reward hari ini sudah diklaim.' });
+    console.error('Surprise claim error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal klaim surprise reward.' });
+  }
+});
+
+app.get('/api/life/weekly-recap', requireAuth, async (req, res) => {
+  try {
+    const recap = await weeklyRecapForUser(req.user.id);
+    await query(
+      `INSERT INTO weekly_recap_views (user_id, week_key, created_at)
+       VALUES ($1, $2, NOW())
+       ON CONFLICT (user_id, week_key) DO NOTHING`,
+      [req.user.id, recap.weekKey]
+    );
+    res.json({ ok: true, recap });
+  } catch (error) {
+    console.error('Weekly recap error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat weekly recap.' });
+  }
+});
+
+app.get('/api/life/event', requireAuth, async (req, res) => {
+  try {
+    res.json({ ok: true, event: seasonalEventInfo(new Date()) });
+  } catch (error) {
+    res.status(500).json({ ok: false, error: 'Gagal memuat event.' });
+  }
+});
+
 
 
 const APP_VIEWS = {
