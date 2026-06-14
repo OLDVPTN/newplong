@@ -5515,352 +5515,6 @@
                 .life-recap-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
             }
 
-
-            /* ===== Account page inspired by mobile VIP/profile layout ===== */
-            #pg-account.account-vip-page{
-                display:flex;
-                flex-direction:column;
-                gap:0;
-                overflow-y:auto;
-                -webkit-overflow-scrolling:touch;
-                overscroll-behavior-y:contain;
-                padding:0 0 calc(var(--nav-h) + var(--s-b) + 18px)!important;
-                background:#fff;
-            }
-            .acct-mobile-shell{
-                width:min(100%,760px);
-                margin:0 auto;
-                padding:0 14px 18px;
-            }
-            .acct-cover-card{
-                position:relative;
-                margin:0 -14px;
-                min-height:430px;
-                overflow:hidden;
-                border-radius:0 0 38px 38px;
-                background:linear-gradient(135deg,#fff8ec,#fff 48%,#eef3ff);
-                box-shadow:0 16px 42px rgba(98,113,154,.10);
-            }
-            .acct-cover-bg{
-                position:absolute;
-                inset:0;
-                background:
-                    radial-gradient(circle at 48% 8%,rgba(255,122,165,.24),transparent 34%),
-                    radial-gradient(circle at 86% 18%,rgba(116,143,255,.24),transparent 30%),
-                    radial-gradient(circle at 10% 26%,rgba(255,183,77,.18),transparent 28%),
-                    linear-gradient(135deg,rgba(255,255,255,.35),rgba(255,255,255,.86));
-            }
-            .acct-cover-bg:before{
-                content:'P';
-                position:absolute;
-                left:50%;top:12px;
-                transform:translateX(-50%) rotate(-8deg);
-                font-size:260px;
-                line-height:.8;
-                font-weight:900;
-                color:rgba(255,122,165,.12);
-                font-family:system-ui,sans-serif;
-            }
-            .acct-floating-edit{
-                position:absolute;
-                top:calc(var(--s-t) + 22px);
-                right:24px;
-                z-index:2;
-                width:42px;height:42px;
-                border:0;
-                border-radius:16px;
-                background:rgba(255,255,255,.7);
-                color:#1f2937;
-                box-shadow:0 12px 26px rgba(62,80,114,.12);
-                -webkit-backdrop-filter:blur(14px);
-                backdrop-filter:blur(14px);
-            }
-            .acct-profile-center{
-                position:relative;
-                z-index:1;
-                min-height:300px;
-                padding:calc(var(--s-t) + 78px) 28px 20px;
-                display:flex;
-                flex-direction:column;
-                align-items:center;
-                text-align:center;
-            }
-            .acct-avatar-ring{
-                width:128px;height:128px;
-                border-radius:50%;
-                display:grid;place-items:center;
-                background:rgba(255,255,255,.72);
-                border:1px solid rgba(255,255,255,.92);
-                box-shadow:0 22px 55px rgba(46,58,93,.18);
-                padding:7px;
-            }
-            .acct-avatar.big{
-                width:114px;height:114px;
-                border-radius:50%;
-                background:linear-gradient(135deg,#ff8a65,#ff5f8f 48%,#7c83ff);
-                color:#fff;
-                display:flex;align-items:center;justify-content:center;
-                font-weight:900;
-                font-size:44px;
-                letter-spacing:-1px;
-                text-shadow:0 2px 12px rgba(0,0,0,.18);
-            }
-            .acct-profile-center h1{
-                margin:18px 0 0;
-                color:#1f2937;
-                font-size:36px;
-                line-height:1.05;
-                font-weight:900;
-                letter-spacing:-.7px;
-            }
-            .acct-profile-center p{
-                margin:10px 0 0;
-                color:#8b8f9c;
-                font-size:18px;
-                font-weight:700;
-            }
-            .acct-profile-center small{
-                display:block;
-                margin-top:7px;
-                color:#6b7280;
-                font-size:13px;
-                font-weight:800;
-            }
-            .acct-bio-pill{
-                max-width:520px;
-                margin-top:12px;
-                padding:8px 13px;
-                border-radius:999px;
-                background:rgba(255,255,255,.7);
-                color:#5f6f8d;
-                font-size:12px;
-                font-weight:800;
-                line-height:1.45;
-                border:1px solid rgba(255,255,255,.86);
-            }
-            .acct-social-row{
-                position:relative;
-                z-index:1;
-                display:grid;
-                grid-template-columns:repeat(4,1fr);
-                margin:10px 26px 0;
-                padding:16px 0 24px;
-            }
-            .acct-social-row div{
-                text-align:center;
-                min-width:0;
-                border-right:1px solid rgba(148,163,184,.36);
-            }
-            .acct-social-row div:last-child{border-right:0}
-            .acct-social-row strong{
-                display:block;
-                color:#111827;
-                font-size:31px;
-                line-height:1;
-                font-weight:900;
-                letter-spacing:-.4px;
-            }
-            .acct-social-row span{
-                display:block;
-                margin-top:8px;
-                color:#1f2937;
-                font-size:20px;
-                line-height:1.1;
-                font-weight:500;
-            }
-            .acct-vip-strip{
-                width:100%;
-                min-height:86px;
-                margin:22px 0 18px;
-                border:0;
-                border-radius:24px;
-                padding:0 18px;
-                display:grid;
-                grid-template-columns:auto minmax(0,1fr) auto;
-                align-items:center;
-                gap:12px;
-                color:#fff;
-                text-align:left;
-                background:linear-gradient(100deg,#ff736d 0%,#ff6ba9 50%,#8d85ff 100%);
-                box-shadow:0 18px 42px rgba(255,99,135,.22);
-            }
-            .acct-vip-logo{
-                font-size:38px;
-                font-weight:900;
-                font-style:italic;
-                text-shadow:0 4px 16px rgba(0,0,0,.16);
-            }
-            .acct-vip-strip strong{
-                font-size:25px;
-                line-height:1.15;
-                font-weight:900;
-                letter-spacing:-.4px;
-                overflow:hidden;
-                text-overflow:ellipsis;
-            }
-            .acct-vip-strip em{
-                min-width:88px;
-                min-height:54px;
-                padding:0 18px;
-                border-radius:999px;
-                background:rgba(255,255,255,.88);
-                color:#7c6ff2;
-                display:grid;
-                place-items:center;
-                font-size:22px;
-                font-style:normal;
-                font-weight:900;
-            }
-            .acct-check-card{
-                padding:20px 16px 18px;
-                border-radius:24px;
-                background:linear-gradient(100deg,#fff9ed,#fff1f7 100%);
-                box-shadow:0 18px 45px rgba(255,159,111,.12);
-                border:1px solid rgba(255,255,255,.9);
-                overflow:hidden;
-            }
-            .acct-check-head{
-                display:flex;
-                justify-content:space-between;
-                align-items:flex-start;
-                gap:14px;
-            }
-            .acct-check-head strong{
-                display:block;
-                color:#22252d;
-                font-size:26px;
-                line-height:1.18;
-                font-weight:900;
-            }
-            .acct-check-head strong b{color:#ff7a1a}
-            .acct-check-head span{
-                display:inline-flex;
-                margin-top:8px;
-                padding:7px 12px;
-                border-radius:999px;
-                background:#ff8a1f;
-                color:#fff;
-                font-size:13px;
-                font-weight:800;
-            }
-            .acct-check-head button{
-                min-width:112px;
-                min-height:56px;
-                border:0;
-                border-radius:999px;
-                color:#fff;
-                background:linear-gradient(110deg,#ff8a1f,#f32ba4);
-                font-size:18px;
-                font-weight:900;
-                box-shadow:0 14px 28px rgba(247,87,95,.22);
-            }
-            .acct-check-head button[disabled]{filter:grayscale(.22);opacity:.75}
-            .acct-check-days{
-                display:grid;
-                grid-template-columns:repeat(7,minmax(76px,1fr));
-                gap:9px;
-                margin-top:14px;
-                overflow-x:auto;
-                -webkit-overflow-scrolling:touch;
-                padding-bottom:2px;
-            }
-            .acct-check-days div{
-                min-height:130px;
-                border-radius:14px;
-                background:rgba(255,255,255,.72);
-                border:1px solid rgba(255,255,255,.86);
-                display:flex;
-                flex-direction:column;
-                align-items:center;
-                justify-content:center;
-                gap:7px;
-                color:#d88a20;
-                font-weight:900;
-            }
-            .acct-check-days div.active{
-                background:#fff;
-                border-color:#ffcc88;
-                box-shadow:0 10px 20px rgba(255,173,77,.16);
-            }
-            .acct-check-days span{font-size:16px;white-space:nowrap}
-            .acct-check-days i{
-                width:52px;height:52px;
-                display:grid;place-items:center;
-                border-radius:50%;
-                font-size:25px;
-                background:radial-gradient(circle,#fff7c2,#ffc94b);
-                box-shadow:inset 0 0 0 6px rgba(255,255,255,.34),0 7px 15px rgba(255,175,54,.18);
-                font-style:normal;
-            }
-            .acct-check-days b{font-size:17px;color:#df8a1c}
-            .acct-event-banner{
-                margin-top:18px;
-                min-height:150px;
-                border-radius:16px;
-                overflow:hidden;
-                padding:22px 24px;
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                gap:12px;
-                color:#fff;
-                background:
-                    radial-gradient(circle at 88% 30%,rgba(255,213,79,.42),transparent 22%),
-                    linear-gradient(110deg,#221568,#302682 55%,#5838b5);
-                box-shadow:0 18px 36px rgba(39,24,113,.22);
-            }
-            .acct-event-banner span{font-size:12px;text-transform:uppercase;letter-spacing:.5px;font-weight:900;color:#ffd166}
-            .acct-event-banner strong{display:block;margin-top:4px;font-size:30px;line-height:1.05;font-weight:900;max-width:480px}
-            .acct-event-banner p{margin:8px 0 0;color:rgba(255,255,255,.78);font-size:14px;line-height:1.5}
-            .acct-event-banner i{font-size:70px;color:#ffd166;filter:drop-shadow(0 12px 18px rgba(0,0,0,.18))}
-            .acct-mini-grid{
-                display:grid;
-                grid-template-columns:repeat(4,1fr);
-                gap:10px;
-                margin-top:18px;
-            }
-            .acct-mini-card{
-                padding:14px;
-                border-radius:20px;
-                background:rgba(255,255,255,.96);
-                border:1px solid #edf2ff;
-                box-shadow:0 10px 24px rgba(84,106,160,.06);
-            }
-            .acct-mini-card span{display:block;color:#7b88a6;font-size:11px;font-weight:900}
-            .acct-mini-card strong{display:block;margin-top:5px;color:#1d2d4d;font-size:21px;font-weight:900}
-            .acct-edit-card{margin-top:18px}
-            .acct-safe-note{font-size:10px;color:var(--t4);margin-top:9px;line-height:1.5}
-            @media(max-width:700px){
-                .acct-mobile-shell{padding:0 12px calc(var(--nav-h) + var(--s-b) + 18px)}
-                .acct-cover-card{margin:0 -12px;min-height:420px;border-radius:0 0 34px 34px}
-                .acct-profile-center{padding:calc(var(--s-t) + 72px) 16px 12px}
-                .acct-social-row{margin:8px 10px 0;padding:14px 0 22px}
-                .acct-social-row strong{font-size:27px}
-                .acct-social-row span{font-size:20px}
-                .acct-vip-strip{min-height:84px;border-radius:22px;margin-top:20px}
-                .acct-vip-strip strong{font-size:23px}
-                .acct-vip-strip em{min-width:78px;min-height:52px;font-size:20px}
-                .acct-check-head strong{font-size:23px}
-                .acct-check-days{grid-template-columns:repeat(7,76px)}
-                .acct-event-banner strong{font-size:27px}
-                .acct-mini-grid{grid-template-columns:repeat(2,1fr)}
-            }
-            @media(max-width:430px){
-                .acct-avatar-ring{width:118px;height:118px}.acct-avatar.big{width:104px;height:104px;font-size:40px}
-                .acct-profile-center h1{font-size:34px}
-                .acct-profile-center p{font-size:17px}
-                .acct-social-row span{font-size:17px}.acct-social-row strong{font-size:25px}
-                .acct-vip-strip{grid-template-columns:auto minmax(0,1fr) auto;padding:0 14px;gap:10px}
-                .acct-vip-logo{font-size:34px}.acct-vip-strip strong{font-size:20px}.acct-vip-strip em{min-width:68px;font-size:18px}
-                .acct-check-card{padding:18px 12px}.acct-check-head strong{font-size:21px}.acct-check-head button{min-width:94px;min-height:50px;font-size:16px}
-                .acct-check-days div{min-height:118px}.acct-check-days span{font-size:14px}.acct-check-days i{width:46px;height:46px;font-size:22px}
-                .acct-event-banner{padding:18px;min-height:128px}.acct-event-banner strong{font-size:24px}.acct-event-banner i{font-size:52px}
-            }
-            @supports(-webkit-touch-callout:none){
-                .account-vip-page input,.account-vip-page textarea{font-size:16px!important}
-                .acct-check-days{scrollbar-width:none}.acct-check-days::-webkit-scrollbar{display:none}
-            }
-
         </style>
     </head>
     <body class="auth-lock">
@@ -7022,109 +6676,68 @@
                 </section>
 
                 <!-- ACCOUNT -->
-                <section id="pg-account" class="<%= pageId === 'pg-account' ? 'pg on account-vip-page' : 'pg account-vip-page' %>" aria-label="Akun">
-                    <div class="acct-mobile-shell">
-                        <div class="acct-cover-card">
-                            <div class="acct-cover-bg" aria-hidden="true"></div>
-                            <button id="acc-edit-jump" class="acct-floating-edit" type="button" aria-label="Edit profil"><i class="fas fa-pen"></i></button>
-                            <div class="acct-profile-center">
-                                <div class="acct-avatar-ring">
-                                    <div class="acct-avatar big" id="acct-avatar">V</div>
-                                </div>
-                                <h1 id="acct-name-display">VokaMon User</h1>
-                                <p id="acct-id-display">id: -</p>
-                                <small id="acct-username-display">@vokamon.user</small>
-                                <div class="acct-bio-pill" id="acct-bio-display">Lagi belajar memahami emosi pelan-pelan.</div>
-                            </div>
-
-                            <div class="acct-social-row">
-                                <div><strong id="acct-social-friends">0</strong><span>Teman</span></div>
-                                <div><strong id="acct-social-following">0</strong><span>Mengikuti</span></div>
-                                <div><strong id="acct-social-followers">0</strong><span>Pengikut</span></div>
-                                <div><strong id="acct-social-visitors">0</strong><span>Pengunjung</span></div>
-                            </div>
+                <section id="pg-account" class="<%= pageId === 'pg-account' ? 'pg on' : 'pg' %>" aria-label="Akun">
+                    <div class="ph">
+                        <div>
+                            <h1 class="pt">Akun</h1>
+                            <p class="ps">Profil dan progress tersimpan di PostgreSQL</p>
                         </div>
+                    </div>
 
-                        <button class="acct-vip-strip" type="button" data-page="pg-achievements">
-                            <span class="acct-vip-logo">V</span>
-                            <strong>buka Plong+ nikmati benefit khusus</strong>
-                            <em>Buka</em>
-                        </button>
-
-                        <div class="acct-check-card">
-                            <div class="acct-check-head">
-                                <div>
-                                    <strong>Sudah cek in <b id="acct-checkin-streak">0</b> hari</strong>
-                                    <span id="acct-checkin-status">Terima reward hari ini</span>
-                                </div>
-                                <button id="acct-checkin-btn" type="button">Cek in</button>
-                            </div>
-                            <div class="acct-check-days" id="acct-checkin-days">
-                                <div data-day="1"><span>1 hari</span><i>💛</i><b>+1</b></div>
-                                <div data-day="2"><span>2 hari</span><i>💛</i><b>+1</b></div>
-                                <div data-day="3"><span>3 hari</span><i>💛</i><b>+1</b></div>
-                                <div data-day="4"><span>4 hari</span><i>💛</i><b>+2</b></div>
-                                <div data-day="5"><span>5 hari</span><i>💛</i><b>+2</b></div>
-                                <div data-day="6"><span>6 hari</span><i>💛</i><b>+2</b></div>
-                                <div data-day="7"><span>7 hari</span><i>💛</i><b>+3</b></div>
-                            </div>
+                    <div class="acct-card acct-hero">
+                        <div class="acct-avatar" id="acct-avatar">V</div>
+                        <div style="min-width:0;flex:1">
+                            <div class="acct-name" id="acct-name-display">VokaMon User</div>
+                            <div class="acct-user" id="acct-username-display">@vokamon.user</div>
+                            <div class="acct-bio" id="acct-bio-display">Lagi belajar memahami emosi pelan-pelan.</div>
                         </div>
+                    </div>
 
-                        <div class="acct-event-banner" data-page="pg-quests">
-                            <div>
-                                <span>Event aktif</span>
-                                <strong>Menjadi lebih ringan lewat misi harian</strong>
-                                <p>Check-in, curhat, rawat pet, dan kumpulkan Soul Coins.</p>
+                    <div class="acct-grid">
+                        <div class="acct-stat"><span>Soul Coins</span><strong id="acct-coins">0</strong></div>
+                        <div class="acct-stat"><span>Level Plong</span><strong id="acct-level">1</strong></div>
+                        <div class="acct-stat"><span>Total Vent</span><strong id="acct-vent">0</strong></div>
+                        <div class="acct-stat"><span>Karya Emosi</span><strong id="acct-art">0</strong></div>
+                    </div>
+
+                    <div class="acct-card">
+                        <div class="acct-title">Edit Profil</div>
+                        <div class="acct-form">
+                            <div class="acct-field">
+                                <label for="acc-name">Nama tampilan</label>
+                                <input id="acc-name" type="text" maxlength="32" placeholder="Nama kamu">
                             </div>
-                            <i class="fas fa-crown"></i>
-                        </div>
-
-                        <div class="acct-mini-grid">
-                            <div class="acct-mini-card"><span>Soul Coins</span><strong id="acct-coins">0</strong></div>
-                            <div class="acct-mini-card"><span>Level Plong</span><strong id="acct-level">1</strong></div>
-                            <div class="acct-mini-card"><span>Total Vent</span><strong id="acct-vent">0</strong></div>
-                            <div class="acct-mini-card"><span>Karya Emosi</span><strong id="acct-art">0</strong></div>
-                        </div>
-
-                        <div class="acct-card acct-edit-card" id="account-edit-card">
-                            <div class="acct-title">Edit Profil</div>
-                            <div class="acct-form">
-                                <div class="acct-field">
-                                    <label for="acc-name">Nama tampilan</label>
-                                    <input id="acc-name" type="text" maxlength="32" placeholder="Nama kamu">
-                                </div>
-                                <div class="acct-field">
-                                    <label for="acc-username">Username</label>
-                                    <input id="acc-username" type="text" maxlength="28" placeholder="@username">
-                                </div>
-                                <div class="acct-field">
-                                    <label for="acc-bio">Bio singkat</label>
-                                    <textarea id="acc-bio" rows="3" maxlength="120" placeholder="Tulis bio singkat..."></textarea>
-                                </div>
-                                <div class="acct-actions">
-                                    <button class="acct-btn primary" id="acc-save" type="button"><i class="fas fa-save"></i> Simpan profil</button>
-                                </div>
+                            <div class="acct-field">
+                                <label for="acc-username">Username</label>
+                                <input id="acc-username" type="text" maxlength="28" placeholder="@username">
                             </div>
-                        </div>
-
-                        <div class="acct-card">
-                            <div class="acct-title">Preferensi Asisten</div>
-                            <div class="acct-pref">
-                                <div class="acct-pref-row"><span>Model aktif</span><strong id="acct-model">Curhat Santai</strong></div>
-                                <div class="acct-pref-row"><span>Bahasa</span><strong id="acct-lang">Indonesia santai</strong></div>
-                                <div class="acct-pref-row"><span>Riwayat chat</span><strong id="acct-chat">0 pesan</strong></div>
+                            <div class="acct-field">
+                                <label for="acc-bio">Bio singkat</label>
+                                <textarea id="acc-bio" rows="3" maxlength="120" placeholder="Tulis bio singkat..."></textarea>
                             </div>
-                        </div>
-
-                        <div class="acct-card">
-                            <div class="acct-title">Aksi</div>
                             <div class="acct-actions">
-                                <button class="acct-btn" id="acc-clear-chat" type="button"><i class="fas fa-broom"></i> Hapus chat</button>
-                                <button class="acct-btn" id="acc-logout" type="button"><i class="fas fa-right-from-bracket"></i> Logout</button>
-                                <button class="acct-btn danger" id="acc-reset" type="button"><i class="fas fa-trash"></i> Reset data</button>
+                                <button class="acct-btn primary" id="acc-save" type="button"><i class="fas fa-save"></i> Simpan profil</button>
                             </div>
-                            <p class="acct-safe-note">Data akun dan progress disimpan ke PostgreSQL saat kamu login. Cache lokal tetap dipakai agar aplikasi terasa cepat.</p>
                         </div>
+                    </div>
+
+                    <div class="acct-card">
+                        <div class="acct-title">Preferensi Asisten</div>
+                        <div class="acct-pref">
+                            <div class="acct-pref-row"><span>Model aktif</span><strong id="acct-model">Curhat Santai</strong></div>
+                            <div class="acct-pref-row"><span>Bahasa</span><strong id="acct-lang">Indonesia santai</strong></div>
+                            <div class="acct-pref-row"><span>Riwayat chat</span><strong id="acct-chat">0 pesan</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="acct-card">
+                        <div class="acct-title">Aksi</div>
+                        <div class="acct-actions">
+                            <button class="acct-btn" id="acc-clear-chat" type="button"><i class="fas fa-broom"></i> Hapus chat</button>
+                            <button class="acct-btn" id="acc-logout" type="button"><i class="fas fa-right-from-bracket"></i> Logout</button>
+                            <button class="acct-btn danger" id="acc-reset" type="button"><i class="fas fa-trash"></i> Reset data</button>
+                        </div>
+                        <p style="font-size:10px;color:var(--t4);margin-top:9px;line-height:1.5">Data akun dan progress disimpan ke PostgreSQL saat kamu login. Cache lokal tetap dipakai agar aplikasi terasa cepat.</p>
                     </div>
                 </section>
 
@@ -7533,10 +7146,6 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 if(id==="pg-quests"&&typeof loadQuests==="function")loadQuests(false);
                 if(id==="pg-summary"&&typeof loadAiSummaries==="function")loadAiSummaries(false);
                 if(id==="pg-home"&&typeof loadLifeLoop==="function")loadLifeLoop(false);
-                if(id==="pg-account"){
-                    if(typeof renderAccount==="function")renderAccount();
-                    if(typeof refreshFriendData==="function")refreshFriendData({silent:true});
-                }
                 if(id==="pg-garden"&&typeof loadGardenEconomy==="function")loadGardenEconomy(false);
                 if(id==="pg-assist"&&typeof scrollToBottom==="function")setTimeout(scrollToBottom,80);
             }
@@ -8579,67 +8188,12 @@ var gardenBusy=false;
             function accVal(id,val){var e=document.getElementById(id);if(e&&document.activeElement!==e)e.value=val}
             function initials(name){name=(name||"VokaMon User").trim();var parts=name.split(/\s+/).filter(Boolean);return ((parts[0]||"V")[0]+(parts[1]?parts[1][0]:"")).toUpperCase()}
             function totalVents(){return Object.values(state.emotions||{}).reduce(function(a,b){return a+(Number(b)||0)},0)}
-            function accountCheckinReward(day){
-                day=Math.max(1,Math.min(7,Number(day)||1));
-                return day<=3?1:day<=6?2:3;
-            }
-            function todayIso(){return new Date().toISOString().slice(0,10)}
-            function ensureAccountCheckin(){
-                if(!state.accountCheckin||typeof state.accountCheckin!=="object")state.accountCheckin={streak:0,lastDate:null,total:0};
-                state.accountCheckin.streak=Math.max(0,Math.floor(Number(state.accountCheckin.streak||0)));
-                state.accountCheckin.total=Math.max(0,Math.floor(Number(state.accountCheckin.total||0)));
-                return state.accountCheckin;
-            }
-            function accountSocialStats(){
-                var friends=0,following=0,followers=0;
-                try{
-                    if(typeof friendState!=="undefined"&&friendState){
-                        friends=Array.isArray(friendState.friends)?friendState.friends.length:0;
-                        following=Array.isArray(friendState.outgoing)?friendState.outgoing.length:0;
-                        followers=Array.isArray(friendState.incoming)?friendState.incoming.length:0;
-                    }
-                }catch(e){}
-                var visitors=Number((state.accountStats&&state.accountStats.visitors)||0);
-                if(!visitors)visitors=Math.max(0,Number(state.accountCheckin&&state.accountCheckin.total||0)+Number(state.vents&&state.vents.length||0));
-                return {friends:friends,following:following,followers:followers,visitors:visitors};
-            }
-            function renderAccountCheckin(){
-                var ck=ensureAccountCheckin(),today=todayIso(),claimed=ck.lastDate===today;
-                var visualDay=Math.max(1,Math.min(7,(claimed?ck.streak+1:ck.streak+1)));
-                accTxt("acct-checkin-streak",ck.streak||0);
-                var status=document.getElementById("acct-checkin-status"),btn=document.getElementById("acct-checkin-btn");
-                if(status)status.textContent=claimed?"Sudah diterima hari ini":"Terima hari ini";
-                if(btn){btn.disabled=claimed;btn.textContent=claimed?"Sudah":"Cek in";}
-                document.querySelectorAll('#acct-checkin-days [data-day]').forEach(function(el){
-                    var day=Number(el.dataset.day||0);
-                    el.classList.toggle('active',day<=Math.max(1,Math.min(7,ck.streak||0))||day===visualDay&&!claimed);
-                });
-            }
-            function claimAccountCheckin(){
-                var ck=ensureAccountCheckin(),today=todayIso();
-                if(ck.lastDate===today){toast("Check-in hari ini sudah diterima");return;}
-                var yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);var y=yesterday.toISOString().slice(0,10);
-                ck.streak=(ck.lastDate===y)?(ck.streak+1):1;
-                if(ck.streak>7)ck.streak=1;
-                ck.lastDate=today;ck.total=(ck.total||0)+1;
-                var reward=accountCheckinReward(ck.streak);
-                state.coins=Math.max(0,Math.floor(Number(state.coins||0)))+reward;
-                if(state.pet){state.pet.happy=Math.min(100,Number(state.pet.happy||50)+3);state.pet.bond=Math.min(100,Number(state.pet.bond||0)+2)}
-                save();refreshUI();renderAccount();toast("Check-in berhasil +"+reward+" Soul Coins");
-            }
             function renderAccount(){
                 var acc=state.account||{name:"VokaMon User",username:"@vokamon.user",bio:"Lagi belajar memahami emosi pelan-pelan."};
-                var idText="id: "+((authUser&&authUser.id)||"-");
-                var stats=accountSocialStats();
                 accTxt("acct-avatar",initials(acc.name));
                 accTxt("acct-name-display",acc.name||"VokaMon User");
-                accTxt("acct-id-display",idText);
                 accTxt("acct-username-display",acc.username||"@vokamon.user");
                 accTxt("acct-bio-display",acc.bio||"Lagi belajar memahami emosi pelan-pelan.");
-                accTxt("acct-social-friends",stats.friends);
-                accTxt("acct-social-following",stats.following);
-                accTxt("acct-social-followers",stats.followers);
-                accTxt("acct-social-visitors",stats.visitors);
                 accTxt("acct-coins",state.coins||0);
                 accTxt("acct-level",state.pet&&state.pet.level?state.pet.level:1);
                 accTxt("acct-vent",totalVents());
@@ -8650,12 +8204,9 @@ var gardenBusy=false;
                 accVal("acc-name",acc.name||"");
                 accVal("acc-username",acc.username||"");
                 accVal("acc-bio",acc.bio||"");
-                renderAccountCheckin();
             }
             function initAccount(){
-                var saveBtn=document.getElementById("acc-save"),clearBtn=document.getElementById("acc-clear-chat"),logoutBtn=document.getElementById("acc-logout"),resetBtn=document.getElementById("acc-reset"),editBtn=document.getElementById("acc-edit-jump"),checkBtn=document.getElementById("acct-checkin-btn");
-                if(editBtn)editBtn.addEventListener("click",function(){var card=document.getElementById("account-edit-card");if(card)card.scrollIntoView({behavior:"smooth",block:"start"});});
-                if(checkBtn)checkBtn.addEventListener("click",claimAccountCheckin);
+                var saveBtn=document.getElementById("acc-save"),clearBtn=document.getElementById("acc-clear-chat"),logoutBtn=document.getElementById("acc-logout"),resetBtn=document.getElementById("acc-reset");
                 if(saveBtn)saveBtn.addEventListener("click",function(){
                     var n=document.getElementById("acc-name"),u=document.getElementById("acc-username"),b=document.getElementById("acc-bio");
                     var username=(u&&u.value.trim())||"@vokamon.user";
@@ -8931,7 +8482,6 @@ function updateFriendBadges(){
         nb.textContent=incoming>99?'99+':incoming;
         nb.classList.toggle('show',incoming>0);
     }
-    if((window.__VKM_PAGE_ID||'')==='pg-account'&&typeof renderAccount==='function')renderAccount();
 }
 function setFriendLastSync(){
     var el=document.getElementById('friend-last-sync');
