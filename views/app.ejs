@@ -5515,6 +5515,184 @@
                 .life-recap-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
             }
 
+
+            /* ===== Dashboard stats + separated pet page ===== */
+            .dashboard-stats-page{
+                background:linear-gradient(180deg,#f8fbff,#f7f8fb);
+            }
+            .dash-shell{
+                gap:16px;
+            }
+            .dash-topbar .foku-greet strong{
+                letter-spacing:-.5px;
+            }
+            .dash-hero-stats{
+                display:grid;
+                grid-template-columns:1.1fr .9fr;
+                gap:14px;
+            }
+            .dash-profile-card,.dash-focus-card,.dash-stat-card,.dash-action-card{
+                position:relative;
+                overflow:hidden;
+                border-radius:30px;
+                border:1px solid rgba(255,255,255,.92);
+                background:rgba(255,255,255,.95);
+                box-shadow:0 20px 60px rgba(39,79,156,.10);
+            }
+            .dash-profile-card{
+                min-height:210px;
+                display:grid;
+                grid-template-columns:96px minmax(0,1fr) auto;
+                gap:16px;
+                align-items:center;
+                padding:22px;
+            }
+            .dash-profile-bg{
+                position:absolute;
+                inset:0;
+                background:
+                  radial-gradient(circle at 18% 15%,rgba(255,180,109,.24),transparent 34%),
+                  radial-gradient(circle at 85% 12%,rgba(118,169,255,.24),transparent 38%),
+                  linear-gradient(135deg,#fff7ed,#eff6ff 56%,#f0fdf4);
+                opacity:.96;
+            }
+            .dash-profile-avatar{
+                position:relative;
+                z-index:1;
+                width:92px;
+                height:92px;
+                border-radius:50%;
+                display:grid;
+                place-items:center;
+                background:#fff;
+                border:5px solid rgba(255,255,255,.85);
+                box-shadow:0 16px 34px rgba(39,79,156,.12);
+                overflow:hidden;
+            }
+            .dash-profile-avatar img{width:68%;height:68%;object-fit:contain}
+            .dash-profile-card>div:not(.dash-profile-bg),.dash-profile-card button{position:relative;z-index:1}
+            .dash-profile-card span,.dash-focus-card span{
+                display:block;
+                color:#61708f;
+                font-size:12px;
+                font-weight:900;
+                text-transform:uppercase;
+                letter-spacing:.35px;
+            }
+            .dash-profile-card strong,.dash-focus-card strong{
+                display:block;
+                margin-top:5px;
+                color:#16233f;
+                font-size:clamp(24px,3vw,36px);
+                line-height:1.1;
+                letter-spacing:-.7px;
+            }
+            .dash-profile-card p,.dash-focus-card p{
+                margin:8px 0 0;
+                color:#5f6f8d;
+                font-size:13px;
+                line-height:1.65;
+            }
+            .dash-focus-card{
+                padding:22px;
+                display:flex;
+                flex-direction:column;
+                align-items:flex-start;
+                justify-content:space-between;
+                gap:14px;
+                background:linear-gradient(135deg,#f5f3ff,#fff 58%,#fff7ed);
+            }
+            .dash-stat-grid{
+                display:grid;
+                grid-template-columns:repeat(4,minmax(0,1fr));
+                gap:12px;
+            }
+            .dash-stat-card{
+                min-height:150px;
+                padding:16px;
+                display:flex;
+                flex-direction:column;
+                align-items:flex-start;
+                justify-content:space-between;
+                gap:8px;
+            }
+            .dash-stat-card i{
+                width:46px;
+                height:46px;
+                border-radius:17px;
+                display:grid;
+                place-items:center;
+                background:#f8fbff;
+                border:1px solid #e7eefc;
+                color:#4268df;
+                font-size:18px;
+            }
+            .dash-stat-card span{
+                color:#61708f;
+                font-size:12px;
+                font-weight:900;
+            }
+            .dash-stat-card strong{
+                color:#16233f;
+                font-size:30px;
+                line-height:1;
+                letter-spacing:-.7px;
+            }
+            .dash-stat-card small{
+                color:#8a97b7;
+                font-size:11px;
+                font-weight:800;
+            }
+            .dash-action-grid{
+                display:grid;
+                grid-template-columns:repeat(4,minmax(0,1fr));
+                gap:12px;
+            }
+            .dash-action-card{
+                min-height:120px;
+                padding:16px;
+                text-align:left;
+                display:flex;
+                flex-direction:column;
+                align-items:flex-start;
+                justify-content:center;
+                gap:8px;
+                border:1px solid rgba(226,232,240,.9);
+                color:#1d2d4d;
+                touch-action:manipulation;
+            }
+            .dash-action-card i{
+                width:42px;
+                height:42px;
+                border-radius:15px;
+                display:grid;
+                place-items:center;
+                background:#fff7ed;
+                color:#ea580c;
+                font-size:17px;
+            }
+            .dash-action-card strong{font-size:15px;color:#16233f}
+            .dash-action-card span{font-size:12px;color:#6f7e9c;line-height:1.45}
+            .pet-page .pet-life-grid{
+                margin-bottom:16px;
+            }
+            @media(max-width:1000px){
+                .dash-hero-stats{grid-template-columns:1fr}
+                .dash-stat-grid,.dash-action-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+                .dash-profile-card{grid-template-columns:82px minmax(0,1fr)}
+                .dash-profile-card button{grid-column:1/-1;width:100%}
+            }
+            @media(max-width:599px){
+                .dash-shell{gap:12px}
+                .dash-profile-card,.dash-focus-card,.dash-stat-card,.dash-action-card{border-radius:24px}
+                .dash-profile-card{grid-template-columns:1fr;text-align:center;justify-items:center;padding:20px 16px}
+                .dash-profile-card strong{font-size:30px}
+                .dash-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+                .dash-stat-card{min-height:132px;padding:14px}
+                .dash-stat-card strong{font-size:26px}
+                .dash-action-grid{grid-template-columns:1fr}
+            }
+
         </style>
     </head>
     <body class="auth-lock">
@@ -5652,8 +5830,9 @@
                     <div><div class="logo-t">VokaMon</div></div>
                 </div>
                 <nav>
-                    <button class="<%= pageId === 'pg-home' ? 'sb on' : 'sb' %>" data-page="pg-home"><img class="nav-img" src="/assets/nav/home.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Beranda</button>
-                    <button class="<%= pageId === 'pg-avatar' ? 'sb on' : 'sb' %>" data-page="pg-avatar"><img class="nav-img" src="/assets/nav/avatar.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Avatar</button>
+                    <button class="<%= pageId === 'pg-home' ? 'sb on' : 'sb' %>" data-page="pg-home"><img class="nav-img" src="/assets/nav/home.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Dashboard</button>
+                    <button class="<%= pageId === 'pg-pet' ? 'sb on' : 'sb' %>" data-page="pg-pet"><i class="fas fa-paw"></i> Pet</button>
+                    <button class="<%= pageId === 'pg-avatar' ? 'sb on' : 'sb' %>" data-page="pg-avatar"><img class="nav-img" src="/assets/nav/avatar.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Kustomisasi</button>
                     <button class="<%= pageId === 'pg-vent' ? 'sb on' : 'sb' %>" data-page="pg-vent"><img class="nav-img" src="/assets/nav/vent.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Vent</button>
                     <button class="<%= pageId === 'pg-art' ? 'sb on' : 'sb' %>" data-page="pg-art"><img class="nav-img" src="/assets/nav/art.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Galeri Seni</button>
                     <button class="<%= pageId === 'pg-friends' ? 'sb on' : 'sb' %>" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"> Cari Teman</button>
@@ -5680,21 +5859,77 @@
                 </div>-->
 
                 <!-- HOME -->
-                <section id="pg-home" class="<%= pageId === 'pg-home' ? 'pg on home-foku' : 'pg home-foku' %>" aria-label="Beranda">
-                    <div class="foku-shell">
-                        <div class="foku-topbar">
+                <section id="pg-home" class="<%= pageId === 'pg-home' ? 'pg on home-foku dashboard-stats-page' : 'pg home-foku dashboard-stats-page' %>" aria-label="Dashboard">
+                    <div class="foku-shell dash-shell">
+                        <div class="foku-topbar dash-topbar">
                             <div class="foku-greet">
-                                <span>Good afternoon</span>
-                                <strong>Ruang yang tenang untukmu</strong>
+                                <span>Dashboard</span>
+                                <strong>Statistik Pengguna</strong>
                                 <small id="foku-date">01 March 2026</small>
                             </div>
                             <div class="foku-points-pill">
-                                <i class="fas fa-fire-flame-curved"></i>
+                                <i class="fas fa-coins"></i>
+                                <span id="dash-coins-pill">0</span>
+                            </div>
+                        </div>
+
+                        <section class="dash-hero-stats" aria-label="Ringkasan statistik">
+                            <article class="dash-profile-card">
+                                <div class="dash-profile-bg"></div>
+                                <div class="dash-profile-avatar"><img src="/assets/nav/account.png" alt="" loading="lazy" decoding="async"></div>
+                                <div>
+                                    <span>Halo,</span>
+                                    <strong id="dash-user-name">VokaMon User</strong>
+                                    <p id="dash-user-bio">Statistik perjalanan emosimu tampil di sini.</p>
+                                </div>
+                                <button class="feature-btn" type="button" data-page="pg-account"><i class="fas fa-user-pen"></i> Edit Profil</button>
+                            </article>
+
+                            <article class="dash-focus-card">
+                                <span>Weekly Recap</span>
+                                <strong id="dash-recap-title">Progress minggu ini</strong>
+                                <p id="dash-recap-body">Data mingguan akan muncul setelah kamu mulai check-in atau memakai fitur Plong.</p>
+                                <button class="feature-btn primary" type="button" data-page="pg-mood"><i class="fas fa-face-smile"></i> Check-in Mood</button>
+                            </article>
+                        </section>
+
+                        <section class="dash-stat-grid" aria-label="Statistik utama">
+                            <article class="dash-stat-card"><i class="fas fa-coins"></i><span>Soul Coins</span><strong id="dash-stat-coins">0</strong><small>Total saldo aktif</small></article>
+                            <article class="dash-stat-card"><i class="fas fa-user-group"></i><span>Teman</span><strong id="dash-stat-friends">0</strong><small>Relasi accepted</small></article>
+                            <article class="dash-stat-card"><i class="fas fa-face-smile"></i><span>Mood Check-in</span><strong id="dash-stat-mood">0</strong><small id="dash-stat-mood-small">0 hari ini</small></article>
+                            <article class="dash-stat-card"><i class="fas fa-spa"></i><span>Ruang Tenang</span><strong id="dash-stat-calm">0</strong><small id="dash-stat-calm-small">0 detik</small></article>
+                            <article class="dash-stat-card"><i class="fas fa-medal"></i><span>Badge</span><strong id="dash-stat-badges">0</strong><small>Achievement terbuka</small></article>
+                            <article class="dash-stat-card"><i class="fas fa-seedling"></i><span>Level Kebun</span><strong id="dash-stat-garden">1</strong><small id="dash-stat-garden-small">0/40 EXP</small></article>
+                            <article class="dash-stat-card"><i class="fas fa-hands-holding-heart"></i><span>Dukungan</span><strong id="dash-stat-support">0</strong><small>Terkirim ke teman</small></article>
+                            <article class="dash-stat-card"><i class="fas fa-wand-magic-sparkles"></i><span>AI Summary</span><strong id="dash-stat-summary">0</strong><small>Ringkasan emosi</small></article>
+                        </section>
+
+                        <section class="dash-action-grid">
+                            <button type="button" class="dash-action-card" data-page="pg-pet"><i class="fas fa-paw"></i><strong>Buka Pet</strong><span>Rawat pendamping emosimu</span></button>
+                            <button type="button" class="dash-action-card" data-page="pg-garden"><i class="fas fa-seedling"></i><strong>Buka Kebun</strong><span>Lihat progress tanaman</span></button>
+                            <button type="button" class="dash-action-card" data-page="pg-quests"><i class="fas fa-list-check"></i><strong>Daily Quest</strong><span>Klaim progress harian</span></button>
+                            <button type="button" class="dash-action-card" data-page="pg-notifications"><i class="fas fa-bell"></i><strong>Notifikasi</strong><span id="dash-notif-text">0 belum dibaca</span></button>
+                        </section>
+                    </div>
+                </section>
+
+
+                <!-- PET -->
+                <section id="pg-pet" class="<%= pageId === 'pg-pet' ? 'pg on home-foku pet-page' : 'pg home-foku pet-page' %>" aria-label="Pet">
+                    <div class="foku-shell">
+                        <div class="foku-topbar">
+                            <div class="foku-greet">
+                                <span>Pet Companion</span>
+                                <strong>Rawat pet dari emosimu</strong>
+                                <small>Pet tumbuh dari check-in, curhat, dan progress harianmu.</small>
+                            </div>
+                            <div class="foku-points-pill">
+                                <i class="fas fa-paw"></i>
                                 <span id="pet-level-display">1</span>
                             </div>
                         </div>
 
-                        <section class="life-loop-grid" aria-label="Life Loop">
+                        <section class="life-loop-grid pet-life-grid" aria-label="Pet Life">
                             <article class="life-card life-pet-pulse">
                                 <div class="life-card-top">
                                     <span id="life-routine-phase">Pet Routine</span>
@@ -5723,33 +5958,6 @@
                                 </div>
                                 <p id="life-surprise-body">Buka satu hadiah kecil setiap hari.</p>
                                 <button id="life-surprise-claim" class="life-primary" type="button"><i class="fas fa-gift"></i> Buka hadiah</button>
-                            </article>
-                        </section>
-
-                        <section class="life-wide-grid" aria-label="Event dan Recap">
-                            <article class="life-wide-card event-card">
-                                <div class="life-wide-icon" id="life-event-icon">🌼</div>
-                                <div>
-                                    <span>Event aktif</span>
-                                    <strong id="life-event-title">Event Bunga Emosi</strong>
-                                    <p id="life-event-body">Setiap mood harian memberi warna berbeda untuk pet dan kebun emosimu.</p>
-                                    <small id="life-event-bonus">Surprise reward harian aktif</small>
-                                </div>
-                            </article>
-
-                            <article class="life-wide-card recap-card">
-                                <div class="life-wide-icon">📖</div>
-                                <div>
-                                    <span>Weekly Recap</span>
-                                    <strong id="life-recap-title">Progress minggu ini</strong>
-                                    <p id="life-recap-body">Minggu ini masih menunggu langkah kecil pertamamu.</p>
-                                    <div class="life-recap-stats">
-                                        <b><span id="life-recap-mood">0</span><small>Mood</small></b>
-                                        <b><span id="life-recap-calm">0</span><small>Tenang</small></b>
-                                        <b><span id="life-recap-support">0</span><small>Support</small></b>
-                                        <b><span id="life-recap-badge">0</span><small>Badge</small></b>
-                                    </div>
-                                </div>
                             </article>
                         </section>
 
@@ -5791,7 +5999,7 @@
 
                                 <div class="foku-primary-action">
                                     <button class="foku-primary-btn" id="pet-calm" type="button"><i class="fas fa-play"></i> Start calm session</button>
-                                    <small>5 min · 10 min · customizable</small>
+                                    <small>Pet bisa pulih lewat sesi tenang dan mood check-in</small>
                                 </div>
                             </section>
 
@@ -5819,45 +6027,40 @@
 
                                     <div class="foku-quick-actions">
                                         <button class="foku-quick-btn" id="pet-play" type="button"><img class="nav-img" src="/assets/nav/avatar.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Pet</span></button>
-                                        <button class="foku-quick-btn" type="button" data-page="pg-assist"><img class="nav-img" src="/assets/nav/chat.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Chat AI</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-avatar"><img class="nav-img" src="/assets/nav/avatar.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Kustom</span></button>
                                         <button class="foku-quick-btn" type="button" data-page="pg-mood"><i class="fas fa-face-smile"></i><span>Check-in</span></button>
                                         <button class="foku-quick-btn" type="button" data-page="pg-calm"><i class="fas fa-spa"></i><span>Tenang</span></button>
-                                        <button class="foku-quick-btn" type="button" data-page="pg-notifications"><i class="fas fa-bell"></i><span>Notif</span></button>
-                                        <button class="foku-quick-btn" type="button" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Teman</span></button>
-                                        <button class="foku-quick-btn" type="button" data-page="pg-achievements"><i class="fas fa-medal"></i><span>Badge</span></button>
-                                        <button class="foku-quick-btn" type="button" data-page="pg-quests"><i class="fas fa-list-check"></i><span>Quest</span></button>
-                                        <button class="foku-quick-btn" type="button" data-page="pg-summary"><i class="fas fa-wand-magic-sparkles"></i><span>Summary</span></button>
-                                        <button class="foku-quick-btn" type="button" data-page="pg-safety"><i class="fas fa-shield-heart"></i><span>Safety</span></button>
                                         <button class="foku-quick-btn" type="button" data-page="pg-garden"><img class="nav-img" src="/assets/nav/garden.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Garden</span></button>
+                                        <button class="foku-quick-btn" type="button" data-page="pg-quests"><i class="fas fa-list-check"></i><span>Quest</span></button>
                                     </div>
                                 </div>
 
                                 <div class="foku-side-card">
                                     <div class="foku-side-head">
                                         <div>
-                                            <span>Today's focus</span>
-                                            <strong>Small steps still count</strong>
+                                            <span>Pet Focus</span>
+                                            <strong>Small care still counts</strong>
                                         </div>
-                                        <button type="button" class="foku-inline-link" data-page="pg-art">View all <i class="fas fa-arrow-right"></i></button>
+                                        <button type="button" class="foku-inline-link" data-page="pg-mood">Mood <i class="fas fa-arrow-right"></i></button>
                                     </div>
 
                                     <div class="foku-focus-list">
                                         <div class="foku-focus-item">
                                             <div class="foku-focus-left">
-                                                <div class="foku-focus-icon"><i class="fas fa-book-open"></i></div>
+                                                <div class="foku-focus-icon"><i class="fas fa-heart"></i></div>
                                                 <div>
-                                                    <strong>Journaling</strong>
-                                                    <span>ten minutes of emotional release</span>
+                                                    <strong>Rawat dari emosi</strong>
+                                                    <span>pet tumbuh dari mood, curhat, dan sesi tenang</span>
                                                 </div>
                                             </div>
-                                            <small>10 min</small>
+                                            <small>daily</small>
                                         </div>
                                         <div class="foku-focus-progress"><span style="width:72%"></span></div>
 
                                         <div class="foku-focus-chips">
-                                            <button type="button" data-page="pg-assist">Chat</button>
-                                            <button type="button" data-page="pg-vent">Voice note</button>
-                                            <button type="button" data-page="pg-redeem">Rewards</button>
+                                            <button type="button" data-page="pg-assist">Curhat</button>
+                                            <button type="button" data-page="pg-calm">Tenang</button>
+                                            <button type="button" data-page="pg-garden">Kebun</button>
                                         </div>
                                     </div>
                                 </div>
@@ -6745,14 +6948,11 @@
         </div>
 
         <nav id="bnav" aria-label="Navigasi">
-            <button class="<%= pageId === 'pg-home' ? 'nb on' : 'nb' %>" data-page="pg-home"><img class="nav-img" src="/assets/nav/home.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Beranda</span></button>
-            <button class="<%= pageId === 'pg-friends' ? 'nb on' : 'nb' %>" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Cari Teman</span><em class="friend-nav-badge" id="friend-nav-badge">0</em></button>
+            <button class="<%= pageId === 'pg-home' ? 'nb on' : 'nb' %>" data-page="pg-home"><img class="nav-img" src="/assets/nav/home.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Dashboard</span></button>
+            <button class="<%= pageId === 'pg-pet' ? 'nb on' : 'nb' %>" data-page="pg-pet"><i class="fas fa-paw"></i><span>Pet</span></button>
+            <button class="<%= pageId === 'pg-friends' ? 'nb on' : 'nb' %>" data-page="pg-friends"><img class="nav-img" src="/assets/nav/sfriends.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Teman</span><em class="friend-nav-badge" id="friend-nav-badge">0</em></button>
             <button class="<%= pageId === 'pg-garden' ? 'nb on' : 'nb' %>" data-page="pg-garden"><img class="nav-img" src="/assets/nav/garden.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Kebun</span></button>
-            <button class="<%= pageId === 'pg-vent' ? 'nb on' : 'nb' %>" data-page="pg-vent"><img class="nav-img" src="/assets/nav/vent.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Voice</span></button>
-            <!---<button class="<%= pageId === 'pg-art' ? 'nb on' : 'nb' %>" data-page="pg-art"><img class="nav-img" src="/assets/nav/art.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Art</span></button>-->
             <button class="<%= pageId === 'pg-assist' ? 'nb on' : 'nb' %>" data-page="pg-assist"><img class="nav-img" src="/assets/nav/chat.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Chat</span></button>
-            <button class="<%= pageId === 'pg-redeem' ? 'nb on' : 'nb' %>" data-page="pg-redeem"><img class="nav-img" src="/assets/nav/redeem.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Reward</span></button>
-            <!--<button class="<%= pageId === 'pg-avatar' ? 'nb on' : 'nb' %>" data-page="pg-avatar"><img class="nav-img" src="/assets/nav/avatar.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Kostumisasi</span></button>-->
             <button class="<%= pageId === 'pg-account' ? 'nb on' : 'nb' %>" data-page="pg-account"><img class="nav-img" src="/assets/nav/account.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Akun</span></button>
         </nav>
 
@@ -7100,6 +7300,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
             var VKM_PAGE_ROUTES={
                 "pg-home":"/",
                 "pg-garden":"/garden",
+                "pg-pet":"/pet",
                 "pg-avatar":"/avatar",
                 "pg-vent":"/vent",
                 "pg-art":"/art",
@@ -7145,7 +7346,8 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 if(id==="pg-safety"&&typeof loadSafetyCenter==="function")loadSafetyCenter(false);
                 if(id==="pg-quests"&&typeof loadQuests==="function")loadQuests(false);
                 if(id==="pg-summary"&&typeof loadAiSummaries==="function")loadAiSummaries(false);
-                if(id==="pg-home"&&typeof loadLifeLoop==="function")loadLifeLoop(false);
+                if(id==="pg-home"&&typeof loadDashboardStats==="function")loadDashboardStats(false);
+                if(id==="pg-pet"&&typeof loadLifeLoop==="function")loadLifeLoop(false);
                 if(id==="pg-garden"&&typeof loadGardenEconomy==="function")loadGardenEconomy(false);
                 if(id==="pg-assist"&&typeof scrollToBottom==="function")setTimeout(scrollToBottom,80);
             }
@@ -9207,7 +9409,58 @@ function initLifeLoop(){
     document.addEventListener('visibilitychange',function(){if(!document.hidden)loadLifeLoop(true)});
 }
 
-            initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();initSocialFeatures();initGrowthFeatures();initLifeLoop();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
+
+var dashboardState={loading:false,data:null,timer:null};
+function formatDurationSeconds(seconds){
+    seconds=Number(seconds||0);
+    if(seconds<60)return seconds+' detik';
+    var m=Math.floor(seconds/60),h=Math.floor(m/60);
+    if(h>0)return h+' jam '+(m%60)+' menit';
+    return m+' menit';
+}
+function setDashText(id,text){var el=document.getElementById(id);if(el)el.textContent=text;}
+function renderDashboardStats(data){
+    if(!data||!data.stats)return;
+    dashboardState.data=data;
+    var s=data.stats,recap=data.recap||{};
+    var name=(state.account&&state.account.name)||(authUser&&authUser.name)||'VokaMon User';
+    var bio=(state.account&&state.account.bio)||(authUser&&authUser.bio)||'Statistik perjalanan emosimu tampil di sini.';
+    setDashText('dash-user-name',name);
+    setDashText('dash-user-bio',bio);
+    setDashText('dash-coins-pill',s.coins||0);
+    setDashText('dash-stat-coins',s.coins||0);
+    setDashText('dash-stat-friends',s.friends||0);
+    setDashText('dash-stat-mood',s.moodCheckins||0);
+    setDashText('dash-stat-mood-small',(s.moodToday||0)+' hari ini');
+    setDashText('dash-stat-calm',s.calmSessions||0);
+    setDashText('dash-stat-calm-small',formatDurationSeconds(s.calmSeconds||0));
+    setDashText('dash-stat-badges',s.badges||0);
+    setDashText('dash-stat-garden',s.gardenLevel||1);
+    setDashText('dash-stat-garden-small',(s.gardenExp||0)+'/'+(s.gardenExpMax||40)+' EXP · '+(s.waterDrops||0)+' air');
+    setDashText('dash-stat-support',s.supportsSent||0);
+    setDashText('dash-stat-summary',s.aiSummaries||0);
+    setDashText('dash-notif-text',(s.unreadNotifications||0)+' belum dibaca');
+    setDashText('dash-recap-title','Progress minggu ini');
+    setDashText('dash-recap-body',recap.message||'Data mingguan akan muncul setelah kamu mulai check-in atau memakai fitur Plong.');
+}
+async function loadDashboardStats(silent){
+    if(!authToken||dashboardState.loading)return;
+    dashboardState.loading=true;
+    try{
+        var r=await apiFetch('/api/dashboard/stats');
+        var d=await r.json();
+        if(!r.ok||!d.ok)throw new Error(d.error||'Gagal memuat dashboard.');
+        renderDashboardStats(d);
+    }catch(e){if(!silent)toast(e.message||'Gagal memuat dashboard.')}
+    finally{dashboardState.loading=false;}
+}
+function initDashboardStats(){
+    loadDashboardStats(true);
+    clearInterval(dashboardState.timer);
+    dashboardState.timer=setInterval(function(){if(!document.hidden)loadDashboardStats(true)},30000);
+}
+
+            initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();initSocialFeatures();initGrowthFeatures();initLifeLoop();initDashboardStats();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
         </script>
     </body>
 </html>
