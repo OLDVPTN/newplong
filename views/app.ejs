@@ -7142,6 +7142,12 @@
             .uav-level2-host.size-public .uav-level2-loading{display:none}
             .uav-level2-host.size-public .uav-level2-wrap{border-radius:24px}
 
+            .uav-level2-fallback{display:grid;place-items:center;background:transparent}
+            .uav-level2-placeholder{width:72px;height:72px;border-radius:22px;display:grid;place-items:center;background:rgba(255,255,255,.78);border:1px solid rgba(226,232,240,.9);color:#64748b;font-size:22px;font-weight:900;box-shadow:0 10px 20px rgba(15,23,42,.08)}
+            .uav-level2-error{position:absolute;left:50%;bottom:44px;transform:translateX(-50%);padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.78);color:#b91c1c;font-size:10px;font-weight:800;min-height:24px;display:flex;align-items:center}
+            .uav-level2-host.uav2-rendered .uav-level2-error{display:none}
+
+
         </style>
     </head>
     <body class="auth-lock">
@@ -8528,267 +8534,97 @@
             <button class="<%= pageId === 'pg-account' ? 'nb on' : 'nb' %>" data-page="pg-account"><img class="nav-img" src="/assets/nav/account.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Akun</span></button>
         </nav>
 
-
-                <script type="importmap">
-        {
-          "imports": {
-            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-          }
-        }
-        </script>
         <script type="module">
-        import * as THREE from "three";
-        import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-        import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
+        import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
+        import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
 
         const DREX_AVATAR_URL="/assets/models/drex-avatar/Default.glb";
         const skinMap={warm:0xf2b789,fair:0xffd9bd,tan:0xc78555,deep:0x8b573b};
         const hairMap={soft:0x3b243f,short:0x1f2937,wavy:0x4a2c2a,cap:0x3158d4};
         const outfitMap={hoodie:0xff9349,jacket:0x2563eb,robe:0x7c3aed,tee:0x0d9488};
         const auraMap={tenang:0x14b8a6,senang:0xfacc15,sedih:0x60a5fa,galau:0xa78bfa,stres:0xfb923c,marah:0xef4444};
-        let drexPromise=null;
 
         function getColor(map,key,fb){return map[key] ?? fb}
-        function makeMat(color,opacity=.18){
-            return new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false});
-        }
-        function cloneMaterial(mat){
-            if(Array.isArray(mat))return mat.map(m=>m.clone());
-            return mat&&mat.clone?mat.clone():mat;
-        }
+        function cloneMaterial(mat){if(Array.isArray(mat))return mat.map(m=>m.clone());return mat&&mat.clone?mat.clone():mat;}
         function tintMaterial(material,color,amount=.35){
-            const apply=(m)=>{
-                if(!m)return;
-                if(m.color&&typeof m.color.lerp==="function"){
-                    const target=new THREE.Color(color);
-                    m.color.lerp(target,amount);
-                    m.needsUpdate=true;
-                }
-                if("roughness" in m)m.roughness=Math.min(1,Math.max(.45,m.roughness||.65));
-                if("metalness" in m)m.metalness=Math.min(.08,Math.max(0,m.metalness||0));
-            };
-            if(Array.isArray(material))material.forEach(apply);else apply(material);
+            const apply=(m)=>{if(!m)return; if(m.color&&typeof m.color.lerp==='function'){m.color.lerp(new THREE.Color(color),amount);m.needsUpdate=true;} if('roughness' in m)m.roughness=Math.min(1,Math.max(.45,m.roughness||.65)); if('metalness' in m)m.metalness=Math.min(.08,Math.max(0,m.metalness||0));};
+            if(Array.isArray(material))material.forEach(apply); else apply(material);
         }
-        function loadDrexModel(){
-            if(drexPromise)return drexPromise;
-            const loader=new GLTFLoader();
-            drexPromise=new Promise((resolve,reject)=>{
-                loader.load(DREX_AVATAR_URL,resolve,undefined,reject);
-            });
-            return drexPromise;
+        function makeAura(av){
+            const aura=getColor(auraMap,av.aura,0x14b8a6);
+            const group=new THREE.Group();
+            const auraMesh=new THREE.Mesh(new THREE.SphereGeometry(1.45,42,20),new THREE.MeshBasicMaterial({color:aura,transparent:true,opacity:.13,depthWrite:false}));
+            auraMesh.scale.set(1.1,1.2,.58); auraMesh.position.set(0,.74,-.18); group.add(auraMesh);
+            const ringMat=new THREE.MeshBasicMaterial({color:aura,transparent:true,opacity:.22,side:THREE.DoubleSide,depthWrite:false});
+            const ring1=new THREE.Mesh(new THREE.TorusGeometry(1.05,.012,8,96),ringMat); ring1.rotation.set(Math.PI/2.7,.22,.16); ring1.scale.y=.55; ring1.position.y=.05; group.add(ring1);
+            const ring2=new THREE.Mesh(new THREE.TorusGeometry(.74,.010,8,96),ringMat); ring2.rotation.set(Math.PI/2.8,-.35,-.22); ring2.scale.y=.52; ring2.position.y=.55; group.add(ring2);
+            const floor=new THREE.Mesh(new THREE.CircleGeometry(1.38,72),new THREE.MeshBasicMaterial({color:0x0f172a,transparent:true,opacity:.10,depthWrite:false})); floor.rotation.x=-Math.PI/2; floor.position.set(0,-1.08,.08); group.add(floor);
+            return group;
         }
         function normalizeModel(model){
             model.updateMatrixWorld(true);
             const box=new THREE.Box3().setFromObject(model);
-            const size=new THREE.Vector3();
-            const center=new THREE.Vector3();
-            box.getSize(size);
-            box.getCenter(center);
+            const size=new THREE.Vector3(); const center=new THREE.Vector3();
+            box.getSize(size); box.getCenter(center);
             model.position.sub(center);
-            const targetHeight=2.78;
-            const scale=size.y>0?targetHeight/size.y:1;
-            model.scale.setScalar(scale);
-            model.position.y+=.28;
-            model.rotation.y=Math.PI;
+            const scale=size.y>0?2.78/size.y:1;
+            model.scale.setScalar(scale); model.position.y+=.28; model.rotation.y=Math.PI;
             return model;
         }
         function applyAvatarCustomization(model,av){
-            const skin=getColor(skinMap,av.skin,0xf2b789);
-            const hair=getColor(hairMap,av.hair,0x3b243f);
-            const outfit=getColor(outfitMap,av.outfit,0xff9349);
-            const bottom=0x334155;
-            const shoe=0x111827;
-
+            const skin=getColor(skinMap,av.skin,0xf2b789), hair=getColor(hairMap,av.hair,0x3b243f), outfit=getColor(outfitMap,av.outfit,0xff9349), bottom=0x334155, shoe=0x111827;
             model.traverse((o)=>{
-                if(!o.isMesh)return;
-                o.castShadow=true;
-                o.receiveShadow=true;
-                o.material=cloneMaterial(o.material);
-                const n=String(o.name||"").toLowerCase();
-
-                if(n.includes("hair")){
-                    tintMaterial(o.material,hair,.72);
-                }else if(n.includes("outfit_top")||n.includes("body")){
-                    tintMaterial(o.material,outfit,.38);
-                }else if(n.includes("outfit_bottom")){
-                    tintMaterial(o.material,bottom,.42);
-                }else if(n.includes("footwear")){
-                    tintMaterial(o.material,shoe,.45);
-                }else if(n.includes("head")||n.includes("eye")===false && n.includes("wolf3d")){
-                    tintMaterial(o.material,skin,.12);
-                }
+                if(!o.isMesh)return; o.castShadow=true; o.receiveShadow=true; o.material=cloneMaterial(o.material);
+                const n=String(o.name||'').toLowerCase();
+                if(n.includes('hair')) tintMaterial(o.material,hair,.72);
+                else if(n.includes('outfit_top')||n==='wolf3d_body') tintMaterial(o.material,outfit,.38);
+                else if(n.includes('outfit_bottom')) tintMaterial(o.material,bottom,.42);
+                else if(n.includes('footwear')) tintMaterial(o.material,shoe,.45);
+                else if(n.includes('head')) tintMaterial(o.material,skin,.12);
             });
-        }
-        function createAuraScene(av){
-            const aura=getColor(auraMap,av.aura,0x14b8a6);
-            const group=new THREE.Group();
-            const auraMesh=new THREE.Mesh(new THREE.SphereGeometry(1.45,42,20),makeMat(aura,.13));
-            auraMesh.scale.set(1.1,1.2,.58);
-            auraMesh.position.set(0,.74,-.18);
-            group.add(auraMesh);
-
-            const ringMat=new THREE.MeshBasicMaterial({color:aura,transparent:true,opacity:.22,side:THREE.DoubleSide,depthWrite:false});
-            const ring1=new THREE.Mesh(new THREE.TorusGeometry(1.05,.012,8,96),ringMat);
-            ring1.rotation.set(Math.PI/2.7,.22,.16);
-            ring1.scale.y=.55;
-            ring1.position.y=.05;
-            group.add(ring1);
-
-            const ring2=new THREE.Mesh(new THREE.TorusGeometry(.74,.010,8,96),ringMat);
-            ring2.rotation.set(Math.PI/2.8,-.35,-.22);
-            ring2.scale.y=.52;
-            ring2.position.y=.55;
-            group.add(ring2);
-
-            const floor=new THREE.Mesh(
-                new THREE.CircleGeometry(1.38,72),
-                new THREE.MeshBasicMaterial({color:0x0f172a,transparent:true,opacity:.10,depthWrite:false})
-            );
-            floor.rotation.x=-Math.PI/2;
-            floor.position.set(0,-1.08,.08);
-            group.add(floor);
-            return group;
         }
         async function buildAvatarGroup(av){
-            const gltf=await loadDrexModel();
-            const root=SkeletonUtils.clone(gltf.scene);
-            applyAvatarCustomization(root,av);
-            normalizeModel(root);
-
-            const group=new THREE.Group();
-            group.add(createAuraScene(av));
-            group.add(root);
-
-            if(gltf.animations&&gltf.animations.length){
-                group.userData.animations=gltf.animations;
-            }
-            return group;
+            const loader=new GLTFLoader();
+            const gltf=await loader.loadAsync(DREX_AVATAR_URL);
+            const root=gltf.scene;
+            applyAvatarCustomization(root,av); normalizeModel(root);
+            const group=new THREE.Group(); group.add(makeAura(av)); group.add(root); return group;
         }
         function renderAvatar3D(host,av){
-            const canvas=host.querySelector(".uav-level2-canvas");
-            if(!canvas)return;
-            const signature=canvas.dataset.avatar||"{}";
+            const canvas=host.querySelector('.uav-level2-canvas'); if(!canvas)return;
+            const signature=canvas.dataset.avatar||'{}';
             if(host.dataset.uavHydrated===signature&&host.__plAvatar3D)return;
-
-            const old=host.__plAvatar3D;
-            if(old&&old.dispose)old.dispose();
+            if(host.__plAvatar3D&&host.__plAvatar3D.dispose)host.__plAvatar3D.dispose();
 
             const scene=new THREE.Scene();
-            const camera=new THREE.PerspectiveCamera(30,1,.1,100);
-            camera.position.set(0,.58,4.85);
-
-            const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:"high-performance"});
+            const camera=new THREE.PerspectiveCamera(30,1,.1,100); camera.position.set(0,.58,4.85);
+            const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'high-performance'});
             renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
             renderer.outputColorSpace=THREE.SRGBColorSpace;
-            renderer.shadowMap.enabled=true;
-            renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-
+            renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
             scene.add(new THREE.HemisphereLight(0xffffff,0x8aa0c7,2.9));
-            const key=new THREE.DirectionalLight(0xffffff,2.9);
-            key.position.set(3,4.5,5);
-            key.castShadow=true;
-            scene.add(key);
+            const key=new THREE.DirectionalLight(0xffffff,2.9); key.position.set(3,4.5,5); key.castShadow=true; scene.add(key);
+            const fill=new THREE.DirectionalLight(0x9ec5ff,1.5); fill.position.set(-3,2,4); scene.add(fill);
 
-            const fill=new THREE.DirectionalLight(0x9ec5ff,1.5);
-            fill.position.set(-3,2,4);
-            scene.add(fill);
-
-            let avatar=null;
-            let mixer=null;
-            let disposed=false;
-            let raf=0;
-            let t=0;
-            let targetY=.18,targetX=.02,dragging=false,sx=0,sy=0,baseY=targetY,baseX=targetX;
-
-            function resize(){
-                const rect=host.getBoundingClientRect();
-                const w=Math.max(80,Math.floor(rect.width));
-                const h=Math.max(100,Math.floor(rect.height));
-                renderer.setSize(w,h,false);
-                camera.aspect=w/h;
-                camera.updateProjectionMatrix();
-            }
-            const ro=new ResizeObserver(resize);
-            ro.observe(host);
-            resize();
-
-            canvas.addEventListener("pointerdown",(e)=>{
-                dragging=true;sx=e.clientX;sy=e.clientY;baseY=targetY;baseX=targetX;
-                try{canvas.setPointerCapture(e.pointerId)}catch(_){}
-            },{passive:true});
-            canvas.addEventListener("pointermove",(e)=>{
-                if(!dragging)return;
-                targetY=Math.max(-1.15,Math.min(1.15,baseY+(e.clientX-sx)*.008));
-                targetX=Math.max(-.24,Math.min(.20,baseX-(e.clientY-sy)*.004));
-            },{passive:true});
-            const end=()=>dragging=false;
-            canvas.addEventListener("pointerup",end,{passive:true});
-            canvas.addEventListener("pointercancel",end,{passive:true});
-
-            function animate(){
-                if(disposed)return;
-                t+=.016;
-                if(avatar){
-                    avatar.rotation.y+=(targetY-avatar.rotation.y)*.11;
-                    avatar.rotation.x+=(targetX-avatar.rotation.x)*.11;
-                    avatar.position.y=Math.sin(t*1.55)*.018;
-                    const pose=av.pose||"idle";
-                    const rightArm=avatar.getObjectByName("RightArm")||avatar.getObjectByName("rightArm");
-                    const leftArm=avatar.getObjectByName("LeftArm")||avatar.getObjectByName("leftArm");
-                    if(mixer)mixer.update(.016);
-                }
-                renderer.render(scene,camera);
-                raf=requestAnimationFrame(animate);
-            }
-            animate();
-
+            let avatar=null,disposed=false,raf=0,t=0,targetY=.18,targetX=.02,dragging=false,sx=0,sy=0,baseY=targetY,baseX=targetX;
+            function resize(){ const rect=host.getBoundingClientRect(); const w=Math.max(80,Math.floor(rect.width)); const h=Math.max(100,Math.floor(rect.height)); renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+            const ro=new ResizeObserver(resize); ro.observe(host); resize();
+            canvas.onpointerdown=(e)=>{dragging=true;sx=e.clientX;sy=e.clientY;baseY=targetY;baseX=targetX; try{canvas.setPointerCapture(e.pointerId)}catch(_){}};
+            canvas.onpointermove=(e)=>{ if(!dragging)return; targetY=Math.max(-1.15,Math.min(1.15,baseY+(e.clientX-sx)*.008)); targetX=Math.max(-.24,Math.min(.20,baseX-(e.clientY-sy)*.004)); };
+            const end=()=>dragging=false; canvas.onpointerup=end; canvas.onpointercancel=end;
+            function animate(){ if(disposed)return; t+=.016; if(avatar){ avatar.rotation.y+=(targetY-avatar.rotation.y)*.11; avatar.rotation.x+=(targetX-avatar.rotation.x)*.11; avatar.position.y=Math.sin(t*1.55)*.018; } renderer.render(scene,camera); raf=requestAnimationFrame(animate); } animate();
             host.dataset.uavHydrated=signature;
-            host.__plAvatar3D={dispose(){
-                disposed=true;
-                cancelAnimationFrame(raf);
-                ro.disconnect();
-                scene.traverse((o)=>{
-                    if(o.geometry)o.geometry.dispose();
-                    if(o.material){
-                        if(Array.isArray(o.material))o.material.forEach(m=>m.dispose&&m.dispose());
-                        else o.material.dispose&&o.material.dispose();
-                    }
-                });
-                renderer.dispose();
-            }};
+            host.__plAvatar3D={dispose(){ disposed=true; cancelAnimationFrame(raf); ro.disconnect(); scene.traverse((o)=>{ if(o.geometry)o.geometry.dispose(); if(o.material){ if(Array.isArray(o.material))o.material.forEach(m=>m.dispose&&m.dispose()); else o.material.dispose&&o.material.dispose(); }}); renderer.dispose(); }};
 
-            buildAvatarGroup(av).then((group)=>{
-                if(disposed)return;
-                avatar=group;
-                scene.add(avatar);
-                if(group.userData.animations&&group.userData.animations.length){
-                    mixer=new THREE.AnimationMixer(group);
-                    const clip=group.userData.animations[0];
-                    mixer.clipAction(clip).play();
-                }
-                host.classList.remove("uav2-error","uav-level2-pending");
-                host.classList.add("uav2-rendered");
-            }).catch((error)=>{
-                console.warn("GLB avatar fallback:",error);
-                host.classList.add("uav2-error");
-            });
+            buildAvatarGroup(av).then((group)=>{ if(disposed)return; avatar=group; scene.add(avatar); host.classList.remove('uav2-error','uav-level2-pending'); host.classList.add('uav2-rendered'); }).catch((error)=>{ console.error('GLB avatar gagal dimuat:', error); host.classList.add('uav2-error'); const err=host.querySelector('.uav-level2-error'); if(err) err.textContent='Model GLB gagal dimuat'; });
         }
 
         window.PlAvatar3D={render:renderAvatar3D};
-
-        function hydrateAll(){
-            document.querySelectorAll(".uav-level2-host").forEach((host)=>{
-                const canvas=host.querySelector(".uav-level2-canvas");
-                if(!canvas)return;
-                let av={};
-                try{av=JSON.parse(canvas.dataset.avatar||"{}")}catch(_){}
-                try{renderAvatar3D(host,av)}catch(error){console.warn("Avatar 3D fallback:",error);host.classList.add("uav2-error")}
-            });
-        }
+        function hydrateAll(){ document.querySelectorAll('.uav-level2-host').forEach((host)=>{ const canvas=host.querySelector('.uav-level2-canvas'); if(!canvas)return; let av={}; try{av=JSON.parse(canvas.dataset.avatar||'{}')}catch(_){} try{renderAvatar3D(host,av)}catch(error){ console.error('Avatar 3D fallback:', error); host.classList.add('uav2-error'); } }); }
         hydrateAll();
         new MutationObserver(()=>hydrateAll()).observe(document.documentElement,{childList:true,subtree:true});
         </script>
+
 
 
 
@@ -10532,7 +10368,7 @@ function renderUserAvatarInto(el,av){
         wrap.style.setProperty('--bg1',vars.bg1);
         wrap.style.setProperty('--bg2',vars.bg2);
     }
-    if(fallback)fallback.innerHTML=userAvatarHtml(av);
+    if(fallback)fallback.innerHTML='<div class="uav-level2-placeholder"><span>3D</span></div><div class="uav-level2-error"></div>';
     if(canvas)canvas.dataset.avatar=JSON.stringify(av);
     el.classList.add('uav-level2-host');
     if(window.PlAvatar3D&&typeof window.PlAvatar3D.render==='function'){
