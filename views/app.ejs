@@ -5329,6 +5329,192 @@
                 .garden-economy-items{grid-template-columns:1fr}
             }
 
+
+            /* ===== Life Loop Pack: pet routine, journey, event, recap, surprise ===== */
+            .life-loop-grid{
+                display:grid;
+                grid-template-columns:1.05fr 1fr .9fr;
+                gap:14px;
+                margin:0 0 16px;
+            }
+            .life-wide-grid{
+                display:grid;
+                grid-template-columns:1fr 1.15fr;
+                gap:14px;
+                margin:0 0 16px;
+            }
+            .life-card,.life-wide-card{
+                position:relative;
+                overflow:hidden;
+                border-radius:30px;
+                border:1px solid rgba(255,255,255,.92);
+                background:rgba(255,255,255,.95);
+                box-shadow:0 20px 60px rgba(39,79,156,.10);
+            }
+            .life-card{
+                min-height:190px;
+                padding:18px;
+                display:flex;
+                flex-direction:column;
+                justify-content:space-between;
+                gap:14px;
+            }
+            .life-card:before,.life-wide-card:before{
+                content:"";
+                position:absolute;
+                inset:-40% -20% auto auto;
+                width:160px;
+                height:160px;
+                border-radius:50%;
+                background:rgba(255,180,109,.18);
+                filter:blur(2px);
+            }
+            .life-pet-pulse{background:linear-gradient(135deg,#fff,#f0fdf4)}
+            .life-journey-card{background:linear-gradient(135deg,#fff7ed,#eff6ff)}
+            .life-surprise-card{background:linear-gradient(135deg,#f5f3ff,#fff7ed)}
+            .life-card-top{
+                position:relative;
+                z-index:1;
+            }
+            .life-card-top span,.life-wide-card span{
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                color:#607092;
+                font-size:11px;
+                font-weight:900;
+                text-transform:uppercase;
+                letter-spacing:.3px;
+            }
+            .life-card-top strong,.life-wide-card strong{
+                display:block;
+                margin-top:6px;
+                color:#16233f;
+                font-size:20px;
+                line-height:1.18;
+                letter-spacing:-.25px;
+            }
+            .life-card p,.life-wide-card p{
+                position:relative;
+                z-index:1;
+                margin:0;
+                color:#5f6f8d;
+                font-size:13px;
+                line-height:1.65;
+            }
+            .life-chip-row{
+                position:relative;
+                z-index:1;
+                display:flex;
+                flex-wrap:wrap;
+                gap:8px;
+            }
+            .life-action-chip,.life-primary{
+                min-height:40px;
+                border-radius:14px;
+                border:1px solid #dce7fb;
+                background:#fff;
+                color:#4268df;
+                padding:0 12px;
+                font-size:12px;
+                font-weight:900;
+                display:inline-flex;
+                align-items:center;
+                justify-content:center;
+                gap:7px;
+                touch-action:manipulation;
+            }
+            .life-primary{
+                position:relative;
+                z-index:1;
+                width:max-content;
+                max-width:100%;
+                background:linear-gradient(180deg,#ffb46d,#ff9349);
+                border-color:#ff9349;
+                color:#fff;
+                box-shadow:0 10px 18px rgba(255,147,73,.18);
+            }
+            .life-primary[disabled]{
+                opacity:.7;
+                filter:grayscale(.15);
+                cursor:not-allowed;
+            }
+            .life-wide-card{
+                min-height:156px;
+                padding:18px;
+                display:grid;
+                grid-template-columns:70px minmax(0,1fr);
+                gap:14px;
+                align-items:center;
+            }
+            .event-card{background:linear-gradient(135deg,#fff7ed,#f0fdf4)}
+            .recap-card{background:linear-gradient(135deg,#eff6ff,#fff)}
+            .life-wide-icon{
+                width:66px;
+                height:66px;
+                border-radius:24px;
+                display:grid;
+                place-items:center;
+                font-size:32px;
+                background:rgba(255,255,255,.68);
+                border:1px solid rgba(255,255,255,.88);
+                box-shadow:0 14px 30px rgba(84,106,160,.10);
+            }
+            .life-wide-card small{
+                display:inline-flex;
+                margin-top:8px;
+                padding:6px 10px;
+                border-radius:999px;
+                background:rgba(255,255,255,.72);
+                color:#4f6389;
+                font-size:11px;
+                font-weight:900;
+            }
+            .life-recap-stats{
+                margin-top:12px;
+                display:grid;
+                grid-template-columns:repeat(4,minmax(0,1fr));
+                gap:8px;
+            }
+            .life-recap-stats b{
+                padding:9px 7px;
+                border-radius:16px;
+                background:rgba(255,255,255,.74);
+                border:1px solid rgba(226,232,240,.85);
+                text-align:center;
+                color:#1d2d4d;
+            }
+            .life-recap-stats span{
+                display:block;
+                color:#1d2d4d;
+                font-size:17px;
+                font-weight:900;
+                text-transform:none;
+                letter-spacing:0;
+            }
+            .life-recap-stats small{
+                display:block;
+                margin:3px 0 0;
+                padding:0;
+                background:transparent;
+                border-radius:0;
+                color:#7b88a6;
+                font-size:10px;
+            }
+            @media(max-width:1100px){
+                .life-loop-grid{grid-template-columns:1fr 1fr}
+                .life-surprise-card{grid-column:1/-1}
+                .life-wide-grid{grid-template-columns:1fr}
+            }
+            @media(max-width:599px){
+                .life-loop-grid,.life-wide-grid{grid-template-columns:1fr;gap:10px;margin-bottom:12px}
+                .life-card{min-height:155px;border-radius:24px;padding:15px}
+                .life-wide-card{grid-template-columns:52px minmax(0,1fr);border-radius:24px;padding:14px}
+                .life-wide-icon{width:50px;height:50px;border-radius:18px;font-size:25px}
+                .life-card-top strong,.life-wide-card strong{font-size:18px}
+                .life-recap-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+            }
+
         </style>
     </head>
     <body class="auth-lock">
@@ -5508,6 +5694,65 @@
                             </div>
                         </div>
 
+                        <section class="life-loop-grid" aria-label="Life Loop">
+                            <article class="life-card life-pet-pulse">
+                                <div class="life-card-top">
+                                    <span id="life-routine-phase">Pet Routine</span>
+                                    <strong id="life-routine-title">Pet menunggumu</strong>
+                                </div>
+                                <p id="life-routine-body">Ceritakan satu hal kecil yang kamu rasakan hari ini.</p>
+                                <div class="life-chip-row">
+                                    <button class="life-action-chip" type="button" data-page="pg-mood"><i class="fas fa-face-smile"></i> Check-in</button>
+                                    <button class="life-action-chip" type="button" data-page="pg-assist"><i class="fas fa-comment-dots"></i> Curhat</button>
+                                </div>
+                            </article>
+
+                            <article class="life-card life-journey-card">
+                                <div class="life-card-top">
+                                    <span>Daily Emotional Journey</span>
+                                    <strong id="life-journey-title">Misi emosi hari ini</strong>
+                                </div>
+                                <p id="life-journey-body">Satu langkah kecil sudah cukup.</p>
+                                <button id="life-journey-action" class="life-primary" type="button" data-page="pg-mood">Mulai</button>
+                            </article>
+
+                            <article class="life-card life-surprise-card">
+                                <div class="life-card-top">
+                                    <span>Surprise Reward</span>
+                                    <strong id="life-surprise-title">Hadiah harian</strong>
+                                </div>
+                                <p id="life-surprise-body">Buka satu hadiah kecil setiap hari.</p>
+                                <button id="life-surprise-claim" class="life-primary" type="button"><i class="fas fa-gift"></i> Buka hadiah</button>
+                            </article>
+                        </section>
+
+                        <section class="life-wide-grid" aria-label="Event dan Recap">
+                            <article class="life-wide-card event-card">
+                                <div class="life-wide-icon" id="life-event-icon">🌼</div>
+                                <div>
+                                    <span>Event aktif</span>
+                                    <strong id="life-event-title">Event Bunga Emosi</strong>
+                                    <p id="life-event-body">Setiap mood harian memberi warna berbeda untuk pet dan kebun emosimu.</p>
+                                    <small id="life-event-bonus">Surprise reward harian aktif</small>
+                                </div>
+                            </article>
+
+                            <article class="life-wide-card recap-card">
+                                <div class="life-wide-icon">📖</div>
+                                <div>
+                                    <span>Weekly Recap</span>
+                                    <strong id="life-recap-title">Progress minggu ini</strong>
+                                    <p id="life-recap-body">Minggu ini masih menunggu langkah kecil pertamamu.</p>
+                                    <div class="life-recap-stats">
+                                        <b><span id="life-recap-mood">0</span><small>Mood</small></b>
+                                        <b><span id="life-recap-calm">0</span><small>Tenang</small></b>
+                                        <b><span id="life-recap-support">0</span><small>Support</small></b>
+                                        <b><span id="life-recap-badge">0</span><small>Badge</small></b>
+                                    </div>
+                                </div>
+                            </article>
+                        </section>
+
                         <div class="foku-main-grid">
                             <section class="foku-hero-card">
                                 <div class="foku-pet-card">
@@ -5517,8 +5762,8 @@
                                             <p class="foku-status" id="pet-mood-text">I am ready to calm you down ✨</p>
                                         </div>
                                         <div class="foku-message-bubble">
-                                            <span>Ready to listen!</span>
-                                            <strong>Let’s make today lighter.</strong>
+                                            <span id="home-pet-bubble-small">Ready to listen!</span>
+                                            <strong id="home-pet-bubble-strong">Let’s make today lighter.</strong>
                                         </div>
                                     </div>
 
@@ -6900,6 +7145,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 if(id==="pg-safety"&&typeof loadSafetyCenter==="function")loadSafetyCenter(false);
                 if(id==="pg-quests"&&typeof loadQuests==="function")loadQuests(false);
                 if(id==="pg-summary"&&typeof loadAiSummaries==="function")loadAiSummaries(false);
+                if(id==="pg-home"&&typeof loadLifeLoop==="function")loadLifeLoop(false);
                 if(id==="pg-garden"&&typeof loadGardenEconomy==="function")loadGardenEconomy(false);
                 if(id==="pg-assist"&&typeof scrollToBottom==="function")setTimeout(scrollToBottom,80);
             }
@@ -8889,7 +9135,79 @@ function initGrowthFeatures(){
     loadQuests(true);loadSafetyCenter(true);loadAiSummaries(true);loadGardenEconomy(true);
 }
 
-            initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();initSocialFeatures();initGrowthFeatures();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
+
+var lifeState={data:null,loading:false,timer:null};
+function renderLifeLoop(data){
+    if(!data)return;
+    lifeState.data=data;
+    var routine=data.routine||{},journey=data.journey||{},event=data.event||{},recap=data.recap||{},surprise=data.surprise||{};
+    var setText=function(id,text){var el=document.getElementById(id);if(el)el.textContent=text;};
+
+    setText('life-routine-phase',(routine.phase||'pet routine').toUpperCase());
+    setText('life-routine-title',routine.title||'Pet menunggumu');
+    setText('life-routine-body',routine.body||'Ceritakan satu hal kecil hari ini.');
+    setText('home-pet-bubble-small',routine.mood?('Mood: '+routine.mood):'Ready to listen!');
+    setText('home-pet-bubble-strong',routine.body||'Let’s make today lighter.');
+
+    setText('life-journey-title',(journey.icon||'🫧')+' '+(journey.title||'Misi emosi hari ini'));
+    setText('life-journey-body',journey.body||'Satu langkah kecil sudah cukup.');
+    var journeyBtn=document.getElementById('life-journey-action');
+    if(journeyBtn){journeyBtn.textContent=journey.action||'Mulai';journeyBtn.dataset.page=journey.page||'pg-mood';}
+
+    setText('life-event-icon',event.icon||'🌼');
+    setText('life-event-title',event.title||'Event Bunga Emosi');
+    setText('life-event-body',event.body||'Setiap mood harian memberi warna berbeda.');
+    setText('life-event-bonus',event.bonus||'Surprise reward harian aktif');
+
+    setText('life-recap-title','Progress minggu ini');
+    setText('life-recap-body',recap.message||'Minggu ini masih menunggu langkah kecil pertamamu.');
+    setText('life-recap-mood',recap.moodCheckins||0);
+    setText('life-recap-calm',recap.calmSessions||0);
+    setText('life-recap-support',recap.supportsSent||0);
+    setText('life-recap-badge',recap.badgesUnlocked||0);
+
+    var sTitle=document.getElementById('life-surprise-title'),sBody=document.getElementById('life-surprise-body'),sBtn=document.getElementById('life-surprise-claim');
+    if(surprise.claimed){
+        var reward=surprise.reward||{};
+        if(sTitle)sTitle.textContent=(reward.icon||'🎁')+' '+(reward.title||'Hadiah sudah dibuka');
+        if(sBody)sBody.textContent='Kamu sudah membuka surprise reward hari ini. Balik lagi besok ya.';
+        if(sBtn){sBtn.disabled=true;sBtn.innerHTML='<i class="fas fa-check"></i> Sudah dibuka';}
+    }else{
+        if(sTitle)sTitle.textContent='Hadiah kejutan hari ini';
+        if(sBody)sBody.textContent='Buka satu hadiah kecil. Isinya bisa coins, EXP, air kebun, atau seed bonus.';
+        if(sBtn){sBtn.disabled=false;sBtn.innerHTML='<i class="fas fa-gift"></i> Buka hadiah';}
+    }
+}
+async function loadLifeLoop(silent){
+    if(!authToken||lifeState.loading)return;
+    lifeState.loading=true;
+    try{
+        var r=await apiFetch('/api/life/home');var d=await r.json();
+        if(!r.ok||!d.ok)throw new Error(d.error||'Gagal memuat life loop.');
+        renderLifeLoop(d);
+    }catch(e){if(!silent)toast(e.message||'Gagal memuat life loop.')}
+    finally{lifeState.loading=false;}
+}
+async function claimLifeSurprise(){
+    if(!authToken){showAuth('Silakan login dulu.');return;}
+    var btn=document.getElementById('life-surprise-claim');if(btn)btn.disabled=true;
+    try{
+        var r=await apiFetch('/api/life/surprise/claim',{method:'POST'});var d=await r.json();
+        if(!r.ok||!d.ok)throw new Error(d.error||'Gagal membuka hadiah.');
+        if(d.state)applyStateFromServer(d.state);
+        toast(d.message||'Surprise reward terbuka.');
+        await loadLifeLoop(true);await loadNotifications(true);if(typeof loadQuests==='function')await loadQuests(true);
+    }catch(e){toast(e.message||'Gagal membuka hadiah.');if(btn)btn.disabled=false;}
+}
+function initLifeLoop(){
+    var btn=document.getElementById('life-surprise-claim');if(btn)btn.addEventListener('click',claimLifeSurprise);
+    loadLifeLoop(true);
+    clearInterval(lifeState.timer);
+    lifeState.timer=setInterval(function(){if(!document.hidden)loadLifeLoop(true)},30000);
+    document.addEventListener('visibilitychange',function(){if(!document.hidden)loadLifeLoop(true)});
+}
+
+            initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();initSocialFeatures();initGrowthFeatures();initLifeLoop();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
         </script>
     </body>
 </html>
