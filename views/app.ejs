@@ -6499,6 +6499,585 @@
                 .plong-user-avatar.size-profile{width:230px!important;height:290px!important}
             }
 
+
+            /* ===== Avatar World Level 1: semi-human stylized avatar ===== */
+            .plong-user-avatar{
+                --bg1:#dbeafe;
+                --bg2:#fff7ed;
+                --uav-rx:-4deg;
+                --uav-ry:12deg;
+                position:relative!important;
+                display:grid!important;
+                place-items:center!important;
+                overflow:visible!important;
+                perspective:760px;
+                perspective-origin:50% 44%;
+                touch-action:none;
+                cursor:grab;
+                user-select:none;
+                -webkit-user-select:none;
+            }
+            .plong-user-avatar:active{cursor:grabbing}
+            .plong-user-avatar.size-xl{width:230px!important;height:285px!important}
+            .plong-user-avatar.size-profile{width:280px!important;height:350px!important}
+            .plong-user-avatar.size-public{width:150px!important;height:188px!important}
+
+            .uav-human-avatar{
+                --skin:#f2b789;
+                --hair:#332238;
+                --outfit:#ff9349;
+                --aura:#14b8a6;
+                position:absolute;
+                inset:0;
+                display:grid;
+                place-items:center;
+                border-radius:34px;
+                isolation:isolate;
+                transform-style:preserve-3d;
+            }
+            .uavh-bg{
+                position:absolute;
+                inset:0;
+                border-radius:34px;
+                background:
+                    radial-gradient(circle at 50% 18%,rgba(255,255,255,.88),transparent 112px),
+                    radial-gradient(circle at 24% 78%,rgba(255,180,109,.18),transparent 90px),
+                    radial-gradient(circle at 82% 74%,rgba(118,169,255,.18),transparent 82px),
+                    linear-gradient(135deg,var(--bg1),var(--bg2));
+                box-shadow:inset 0 1px 0 rgba(255,255,255,.8);
+                z-index:0;
+            }
+            .uavh-aura{
+                position:absolute;
+                left:50%;
+                top:18%;
+                width:58%;
+                height:54%;
+                transform:translateX(-50%);
+                border-radius:999px;
+                background:var(--aura);
+                opacity:.24;
+                filter:blur(24px);
+                animation:uavhAura 4s ease-in-out infinite;
+                z-index:1;
+            }
+            .uavh-orbit{
+                position:absolute;
+                left:50%;
+                top:44%;
+                border:1px solid color-mix(in srgb, var(--aura) 42%, transparent);
+                border-radius:50%;
+                transform:translate(-50%,-50%) rotateX(68deg) rotateZ(18deg);
+                opacity:.32;
+                z-index:2;
+            }
+            .uavh-orbit.one{width:65%;height:30%}
+            .uavh-orbit.two{width:48%;height:22%;transform:translate(-50%,-50%) rotateX(68deg) rotateZ(-22deg)}
+            @keyframes uavhAura{
+                0%,100%{transform:translateX(-50%) scale(.94);opacity:.20}
+                50%{transform:translateX(-50%) scale(1.08);opacity:.30}
+            }
+            .uavh-ground{
+                position:absolute;
+                left:50%;
+                bottom:12%;
+                width:62%;
+                height:12%;
+                transform:translateX(-50%);
+                border-radius:50%;
+                background:radial-gradient(ellipse at center,rgba(17,24,39,.24),rgba(17,24,39,.04) 68%,transparent 72%);
+                filter:blur(1px);
+                z-index:2;
+            }
+            .uavh-stage{
+                position:absolute;
+                inset:0;
+                display:grid;
+                place-items:center;
+                z-index:4;
+                transform-style:preserve-3d;
+            }
+            .uavh-inner{
+                position:relative;
+                width:210px;
+                height:265px;
+                transform-style:preserve-3d;
+                transform:translateY(7px) rotateX(var(--uav-rx)) rotateY(var(--uav-ry));
+                transition:transform .25s ease;
+            }
+            .plong-user-avatar.is-dragging .uavh-inner{transition:none}
+            .plong-user-avatar.size-xl .uavh-inner{transform:translateY(5px) scale(.9) rotateX(var(--uav-rx)) rotateY(var(--uav-ry))}
+            .plong-user-avatar.size-profile .uavh-inner{transform:translateY(10px) scale(1.05) rotateX(var(--uav-rx)) rotateY(var(--uav-ry))}
+            .plong-user-avatar.size-public .uavh-inner{transform:translateY(2px) scale(.62) rotateX(var(--uav-rx)) rotateY(var(--uav-ry))}
+
+            .uavh-leg{
+                position:absolute;
+                top:174px;
+                width:29px;
+                height:68px;
+                border-radius:16px 16px 20px 20px;
+                background:linear-gradient(160deg,#43536c,#263449);
+                box-shadow:inset 5px 0 rgba(255,255,255,.08), inset -6px 0 rgba(0,0,0,.09);
+                z-index:4;
+            }
+            .uavh-leg.left{left:72px;transform:rotate(2deg)}
+            .uavh-leg.right{right:72px;transform:rotate(-2deg)}
+            .uavh-shoe{
+                position:absolute;
+                top:232px;
+                width:42px;
+                height:18px;
+                border-radius:999px 999px 12px 12px;
+                background:#1f2937;
+                box-shadow:0 8px 12px rgba(17,24,39,.16);
+                z-index:6;
+            }
+            .uavh-shoe.left{left:63px}
+            .uavh-shoe.right{right:63px}
+
+            .uavh-body{
+                position:absolute;
+                left:50%;
+                top:112px;
+                width:92px;
+                height:92px;
+                transform:translateX(-50%);
+                border-radius:42px 42px 32px 32px;
+                background:
+                    radial-gradient(circle at 30% 16%,rgba(255,255,255,.24),transparent 32%),
+                    linear-gradient(160deg,color-mix(in srgb,var(--outfit) 92%,#fff 8%),color-mix(in srgb,var(--outfit) 84%,#111 16%));
+                border:1px solid rgba(255,255,255,.35);
+                box-shadow:0 16px 26px rgba(43,55,90,.14), inset -8px -8px 18px rgba(0,0,0,.08), inset 8px 5px 18px rgba(255,255,255,.12);
+                z-index:8;
+            }
+            .uavh-body:before{
+                content:'';
+                position:absolute;
+                left:50%;
+                top:-11px;
+                width:50px;
+                height:28px;
+                transform:translateX(-50%);
+                border-radius:0 0 28px 28px;
+                background:rgba(255,255,255,.20);
+            }
+            .uavh-body-highlight{
+                position:absolute;
+                left:20px;
+                top:18px;
+                width:24px;
+                height:54px;
+                border-radius:999px;
+                background:rgba(255,255,255,.14);
+                filter:blur(.2px);
+            }
+            .uavh-emblem{
+                position:absolute;
+                left:50%;
+                top:36px;
+                width:20px;
+                height:20px;
+                transform:translateX(-50%);
+                border-radius:9px;
+                background:rgba(255,255,255,.76);
+                box-shadow:0 0 0 5px rgba(255,255,255,.12);
+            }
+            .uavh-collar{
+                position:absolute;
+                left:50%;
+                top:3px;
+                width:44px;
+                height:28px;
+                transform:translateX(-50%);
+                z-index:2;
+            }
+            .uavh-collar.hoodie:before,.uavh-collar.hoodie:after{
+                content:'';
+                position:absolute;
+                top:0;
+                width:22px;
+                height:30px;
+                border-radius:0 0 18px 18px;
+                background:rgba(255,255,255,.20);
+            }
+            .uavh-collar.hoodie:before{left:0;transform:rotate(18deg)}
+            .uavh-collar.hoodie:after{right:0;transform:rotate(-18deg)}
+            .uavh-collar.jacket:before,.uavh-collar.jacket:after{
+                content:'';
+                position:absolute;
+                top:0;
+                width:20px;
+                height:52px;
+                background:rgba(255,255,255,.18);
+                border-radius:0 0 14px 14px;
+            }
+            .uavh-collar.jacket:before{left:2px;transform:skewX(-12deg)}
+            .uavh-collar.jacket:after{right:2px;transform:skewX(12deg)}
+            .uavh-collar.robe{
+                width:68px;
+                height:68px;
+                border-left:5px solid rgba(255,255,255,.28);
+                border-right:5px solid rgba(255,255,255,.18);
+                border-radius:0 0 28px 28px;
+            }
+            .uavh-collar.tee{
+                width:42px;
+                height:18px;
+                border-radius:0 0 999px 999px;
+                background:rgba(255,255,255,.22);
+            }
+
+            .uavh-neck{
+                position:absolute;
+                left:50%;
+                top:91px;
+                width:32px;
+                height:34px;
+                transform:translateX(-50%);
+                background:linear-gradient(160deg,var(--skin),color-mix(in srgb,var(--skin) 84%,#7c2d12 16%));
+                border-radius:0 0 16px 16px;
+                z-index:7;
+            }
+            .uavh-head{
+                position:absolute;
+                left:50%;
+                top:35px;
+                width:92px;
+                height:104px;
+                transform:translateX(-50%);
+                border-radius:45% 45% 48% 48%;
+                background:
+                    radial-gradient(circle at 32% 26%,rgba(255,255,255,.34),transparent 26%),
+                    linear-gradient(160deg,var(--skin),color-mix(in srgb,var(--skin) 86%,#7c2d12 14%));
+                border:1px solid rgba(255,255,255,.52);
+                box-shadow:0 18px 30px rgba(43,55,90,.15), inset -8px -6px 18px rgba(0,0,0,.06);
+                z-index:12;
+            }
+            .uavh-ear{
+                position:absolute;
+                top:75px;
+                width:17px;
+                height:26px;
+                border-radius:999px;
+                background:var(--skin);
+                box-shadow:inset -3px -3px 8px rgba(0,0,0,.08);
+                z-index:10;
+            }
+            .uavh-ear.left{left:48px}
+            .uavh-ear.right{right:48px}
+
+            .uavh-hair{
+                position:absolute;
+                left:50%;
+                top:22px;
+                width:104px;
+                height:74px;
+                transform:translateX(-50%);
+                z-index:15;
+            }
+            .uavh-hair span{
+                position:absolute;
+                inset:0;
+                border-radius:52px 52px 26px 26px;
+                background:
+                    radial-gradient(circle at 28% 22%,rgba(255,255,255,.16),transparent 28%),
+                    linear-gradient(155deg,color-mix(in srgb,var(--hair) 86%,#fff 14%),var(--hair));
+                box-shadow:0 10px 18px rgba(43,55,90,.12), inset -8px -8px 18px rgba(0,0,0,.12);
+            }
+            .uavh-hair b,.uavh-hair i{
+                position:absolute;
+                display:block;
+                background:var(--hair);
+                filter:brightness(.9);
+            }
+            .uavh-hair.hair-soft b{
+                left:10px;
+                top:44px;
+                width:88px;
+                height:36px;
+                border-radius:14px 14px 32px 32px;
+                clip-path:polygon(0 0,100% 0,100% 52%,82% 44%,68% 88%,52% 46%,38% 92%,22% 46%,0 62%);
+            }
+            .uavh-hair.hair-soft i{
+                left:16px;
+                top:10px;
+                width:44px;
+                height:26px;
+                border-radius:999px;
+                background:rgba(255,255,255,.12);
+                transform:rotate(-16deg);
+            }
+            .uavh-hair.hair-short{height:56px}
+            .uavh-hair.hair-short span{border-radius:50px 50px 20px 20px}
+            .uavh-hair.hair-short b{
+                left:14px;
+                top:40px;
+                width:76px;
+                height:20px;
+                border-radius:0 0 24px 24px;
+                clip-path:polygon(0 0,100% 0,90% 70%,70% 35%,56% 82%,38% 36%,24% 74%,0 42%);
+            }
+            .uavh-hair.hair-wavy{height:86px}
+            .uavh-hair.hair-wavy span{border-radius:54px 54px 30px 30px}
+            .uavh-hair.hair-wavy b{
+                left:8px;
+                top:44px;
+                width:92px;
+                height:44px;
+                border-radius:12px 12px 34px 34px;
+                clip-path:polygon(0 0,100% 0,100% 62%,86% 50%,72% 90%,58% 54%,44% 94%,30% 52%,16% 86%,0 60%);
+            }
+            .uavh-hair.hair-wavy i{
+                left:16px;
+                top:10px;
+                width:58px;
+                height:26px;
+                border-radius:999px;
+                background:rgba(255,255,255,.12);
+                transform:rotate(-12deg);
+            }
+            .uavh-side-lock{
+                position:absolute;
+                top:76px;
+                width:18px;
+                height:54px;
+                border-radius:999px;
+                background:var(--hair);
+                z-index:14;
+            }
+            .uavh-side-lock.left{left:43px;transform:rotate(8deg)}
+            .uavh-side-lock.right{right:43px;transform:rotate(-8deg)}
+            .uavh-hair.hair-cap span{
+                height:45px;
+                border-radius:42px 42px 18px 18px;
+                background:#3158d4;
+            }
+            .uavh-hair.hair-cap b{
+                right:-13px;
+                top:35px;
+                width:48px;
+                height:16px;
+                border-radius:999px;
+                background:#3158d4;
+                transform:rotate(7deg);
+            }
+
+            .uavh-face-ui{
+                position:absolute;
+                inset:0;
+                z-index:20;
+            }
+            .uavh-eye{
+                position:absolute;
+                top:42px;
+                width:9px;
+                height:13px;
+                border-radius:999px;
+                background:#1f2937;
+                box-shadow:0 1px 0 rgba(255,255,255,.35);
+            }
+            .uavh-eye.left{left:27px}
+            .uavh-eye.right{right:27px}
+            .uavh-brow{
+                position:absolute;
+                top:33px;
+                width:17px;
+                height:4px;
+                border-radius:999px;
+                background:rgba(31,41,55,.55);
+            }
+            .uavh-brow.left{left:22px;transform:rotate(-7deg)}
+            .uavh-brow.right{right:22px;transform:rotate(7deg)}
+            .uavh-nose{
+                position:absolute;
+                left:50%;
+                top:50px;
+                width:8px;
+                height:16px;
+                transform:translateX(-50%);
+                border-radius:999px;
+                background:rgba(124,45,18,.14);
+            }
+            .uavh-mouth{
+                position:absolute;
+                left:50%;
+                top:72px;
+                width:25px;
+                height:13px;
+                transform:translateX(-50%);
+                border-bottom:4px solid #1f2937;
+                border-radius:0 0 999px 999px;
+            }
+            .uavh-blush{
+                position:absolute;
+                top:63px;
+                width:17px;
+                height:8px;
+                border-radius:999px;
+                background:rgba(244,114,182,.26);
+            }
+            .uavh-blush.left{left:14px}
+            .uavh-blush.right{right:14px}
+            .uavh-face-ui.face-calm .uavh-eye{height:3px;top:47px}
+            .uavh-face-ui.face-calm .uavh-mouth{width:22px;height:8px;border-bottom:3px solid #1f2937;top:76px}
+            .uavh-face-ui.face-focus .uavh-brow.left{transform:rotate(10deg)}
+            .uavh-face-ui.face-focus .uavh-brow.right{transform:rotate(-10deg)}
+            .uavh-face-ui.face-focus .uavh-mouth{height:3px;border-bottom:3px solid #1f2937;top:78px;border-radius:999px}
+            .uavh-face-ui.face-shy .uavh-mouth{width:15px;height:8px;border-bottom:3px solid #1f2937}
+
+            .uavh-arm{
+                position:absolute;
+                top:119px;
+                width:24px;
+                height:78px;
+                border-radius:999px;
+                background:linear-gradient(170deg,var(--outfit),color-mix(in srgb,var(--outfit) 82%,#111 18%));
+                box-shadow:inset 4px 0 rgba(255,255,255,.10), inset -5px -5px 12px rgba(0,0,0,.08);
+                z-index:7;
+                transform-origin:top center;
+            }
+            .uavh-arm.left{left:44px;transform:rotate(12deg)}
+            .uavh-arm.right{right:44px;transform:rotate(-12deg)}
+            .uavh-arm span{
+                position:absolute;
+                left:50%;
+                bottom:-11px;
+                width:25px;
+                height:25px;
+                transform:translateX(-50%);
+                border-radius:50%;
+                background:var(--skin);
+                box-shadow:inset -3px -3px 8px rgba(0,0,0,.08);
+            }
+            .uav-human-avatar.pose-wave .uavh-arm.right{
+                top:92px;
+                right:38px;
+                transform:rotate(-120deg);
+            }
+            .uav-human-avatar.pose-wave .uavh-arm.right span{animation:uavhWave 1.2s ease-in-out infinite}
+            @keyframes uavhWave{0%,100%{transform:translateX(-50%) rotate(0deg)}50%{transform:translateX(-50%) rotate(14deg)}}
+            .uav-human-avatar.pose-peace .uavh-arm.left{
+                top:92px;
+                left:38px;
+                transform:rotate(120deg);
+            }
+            .uav-human-avatar.pose-focus .uavh-arm.left{
+                left:59px;
+                top:133px;
+                height:62px;
+                transform:rotate(72deg);
+            }
+            .uav-human-avatar.pose-focus .uavh-arm.right{
+                right:59px;
+                top:133px;
+                height:62px;
+                transform:rotate(-72deg);
+            }
+
+            .uavh-glasses{
+                position:absolute;
+                left:50%;
+                top:78px;
+                width:76px;
+                height:24px;
+                transform:translateX(-50%);
+                z-index:24;
+            }
+            .uavh-glasses span{
+                position:absolute;
+                top:0;
+                width:28px;
+                height:21px;
+                border:4px solid #111827;
+                border-radius:11px;
+                background:rgba(255,255,255,.10);
+            }
+            .uavh-glasses span:first-child{left:0}
+            .uavh-glasses span:nth-child(2){right:0}
+            .uavh-glasses b{
+                position:absolute;
+                left:50%;
+                top:9px;
+                width:16px;
+                height:4px;
+                transform:translateX(-50%);
+                background:#111827;
+                border-radius:999px;
+            }
+            .uavh-headset{
+                position:absolute;
+                left:50%;
+                top:58px;
+                width:116px;
+                height:82px;
+                transform:translateX(-50%);
+                border:6px solid #1f2937;
+                border-bottom:0;
+                border-radius:64px 64px 0 0;
+                z-index:25;
+            }
+            .uavh-headset span{
+                position:absolute;
+                bottom:-26px;
+                width:19px;
+                height:36px;
+                border-radius:10px;
+                background:#1f2937;
+            }
+            .uavh-headset span:first-child{left:-8px}
+            .uavh-headset span:nth-child(2){right:-8px}
+            .uavh-headset b{
+                position:absolute;
+                right:-20px;
+                bottom:-29px;
+                width:38px;
+                height:6px;
+                border-radius:999px;
+                background:#1f2937;
+                transform:rotate(18deg);
+            }
+            .uavh-halo{
+                position:absolute;
+                left:50%;
+                top:12px;
+                width:78px;
+                height:22px;
+                transform:translateX(-50%) rotateX(66deg);
+                border:7px solid #facc15;
+                border-radius:50%;
+                box-shadow:0 0 18px rgba(250,204,21,.55);
+                z-index:28;
+            }
+
+            .uav3d-drag-hint{
+                position:absolute;
+                right:10px;
+                bottom:10px;
+                display:inline-flex;
+                align-items:center;
+                gap:5px;
+                min-height:26px;
+                padding:0 9px;
+                border-radius:999px;
+                background:rgba(255,255,255,.72);
+                border:1px solid rgba(226,232,240,.82);
+                color:#607092;
+                font-size:10px;
+                font-weight:900;
+                z-index:8;
+                pointer-events:none;
+            }
+            .plong-user-avatar.size-public .uav3d-drag-hint{display:none}
+            .plong-user-avatar.size-public .uavh-bg{border-radius:24px}
+            .plong-user-avatar.size-public .uavh-aura{filter:blur(15px)}
+            .plong-user-avatar.size-public .uavh-orbit{display:none}
+
+            @media(max-width:599px){
+                .plong-user-avatar.size-xl{width:215px!important;height:268px!important}
+                .plong-user-avatar.size-profile{width:240px!important;height:305px!important}
+                .uavh-inner{width:200px;height:255px}
+            }
+
         </style>
     </head>
     <body class="auth-lock">
@@ -6729,7 +7308,7 @@
                             <div>
                                 <span><i class="fas fa-user-astronaut"></i> Plong Avatar</span>
                                 <h1>Wujud virtual dari perjalanan emosimu</h1>
-                                <p>Avatar 3D ini berbeda dari pet. Avatar adalah identitas user di dunia Plong, sementara pet adalah pendamping emosi yang kamu rawat. Drag avatar untuk memutar.</p>
+                                <p>Avatar semi-human ini berbeda dari pet. Avatar adalah identitas user di dunia Plong, sementara pet adalah pendamping emosi yang kamu rawat. Drag avatar untuk memutar.</p>
                                 <div class="avatar-world-actions">
                                     <button class="feature-btn primary" type="button" id="user-avatar-save"><i class="fas fa-save"></i> Simpan Avatar</button>
                                     <button class="feature-btn" type="button" id="user-avatar-open-profile"><i class="fas fa-eye"></i> Lihat Profil</button>
@@ -6746,7 +7325,7 @@
                             <aside class="avatar-world-panel">
                                 <div class="avatar-world-panel-head">
                                     <strong>Kustomisasi Avatar</strong>
-                                    <span>Pilih style avatar 3D blocky yang ringan dan bisa diputar.</span>
+                                    <span>Pilih style semi-human avatar yang ringan, halus, dan bisa diputar.</span>
                                 </div>
                                 <div class="avatar-control-group" data-avatar-control="skin">
                                     <label>Warna kulit</label>
@@ -9530,54 +10109,49 @@ function userAvatarVars(av){
     }[av.background]||['#dbeafe','#fff7ed'];
     return {skin:skin,hair:hair,outfit:outfit,aura:aura,bg1:bg[0],bg2:bg[1]};
 }
-function avatarCube(name,w,h,d,x,y,z,colorVar,extraClass,frontContent){
-    extraClass=extraClass||'';
-    frontContent=frontContent||'';
-    return '<div class="uav3d-cube uav3d-'+name+' '+extraClass+'" style="--w:'+w+'px;--h:'+h+'px;--d:'+d+'px;--x:'+x+'px;--y:'+y+'px;--z:'+z+'px;--c:var('+colorVar+');">'+
-        '<div class="uav3d-face uav3d-front">'+frontContent+'</div>'+
-        '<div class="uav3d-face uav3d-back"></div>'+
-        '<div class="uav3d-face uav3d-left"></div>'+
-        '<div class="uav3d-face uav3d-right"></div>'+
-        '<div class="uav3d-face uav3d-top"></div>'+
-        '<div class="uav3d-face uav3d-bottom"></div>'+
+function userAvatarHumanFaceHtml(face){
+    face=String(face||'smile');
+    return '<div class="uavh-face-ui face-'+friendEsc(face)+'">'+
+        '<span class="uavh-brow left"></span><span class="uavh-brow right"></span>'+
+        '<span class="uavh-eye left"></span><span class="uavh-eye right"></span>'+
+        '<span class="uavh-nose"></span><span class="uavh-mouth"></span>'+
+        '<span class="uavh-blush left"></span><span class="uavh-blush right"></span>'+
     '</div>';
 }
-function userAvatarFaceHtml(face){
-    var eye='<span class="uav3d-eye left"></span><span class="uav3d-eye right"></span>';
-    var blush='<span class="uav3d-blush left"></span><span class="uav3d-blush right"></span>';
-    return '<div class="uav3d-face-ui face-'+friendEsc(face||'smile')+'">'+eye+blush+'<span class="uav3d-mouth"></span></div>';
-}
-function userAvatarHairHtml(av){
+function userAvatarHumanHairHtml(av){
     var h=String(av.hair||'soft');
     if(h==='short'){
-        return avatarCube('hair-main',86,28,64,0,-104,7,'--hair','hair-short','')+
-               avatarCube('hair-fringe',74,16,66,0,-83,36,'--hair','hair-short-fringe','');
+        return '<div class="uavh-hair hair-short"><span></span><b></b></div>';
     }
     if(h==='wavy'){
-        return avatarCube('hair-main',92,34,66,0,-105,6,'--hair','hair-wavy','')+
-               avatarCube('hair-fringe',88,24,68,0,-80,34,'--hair','hair-wavy-fringe','')+
-               avatarCube('hair-side-l',18,58,42,-50,-78,8,'--hair','hair-lock','')+
-               avatarCube('hair-side-r',18,58,42,50,-78,8,'--hair','hair-lock','');
+        return '<div class="uavh-hair hair-wavy"><span></span><b></b><i></i></div><div class="uavh-side-lock left"></div><div class="uavh-side-lock right"></div>';
     }
     if(h==='cap'){
-        return avatarCube('cap-main',92,32,70,0,-106,8,'--cap','hair-cap','')+
-               avatarCube('cap-visor',56,12,34,0,-96,54,'--cap','cap-visor','');
+        return '<div class="uavh-hair hair-cap"><span></span><b></b></div>';
     }
-    return avatarCube('hair-main',90,32,66,0,-105,6,'--hair','hair-soft','')+
-           avatarCube('hair-fringe',82,24,70,0,-82,34,'--hair','hair-soft-fringe','');
+    return '<div class="uavh-hair hair-soft"><span></span><b></b><i></i></div>';
 }
-function userAvatarAccessoryHtml(av){
+function userAvatarHumanAccessoryHtml(av){
     var a=String(av.accessory||'none');
-    if(a==='glasses')return '<div class="uav3d-glasses"><span></span><span></span><b></b></div>';
-    if(a==='headset')return '<div class="uav3d-headset"><span></span><span></span><b></b></div>';
-    if(a==='halo')return '<div class="uav3d-halo"></div>';
+    if(a==='glasses')return '<div class="uavh-glasses"><span></span><span></span><b></b></div>';
+    if(a==='headset')return '<div class="uavh-headset"><span></span><span></span><b></b></div>';
+    if(a==='halo')return '<div class="uavh-halo"></div>';
     return '';
+}
+function userAvatarHumanOutfitHtml(av){
+    var outfit=String(av.outfit||'hoodie');
+    var collar=outfit==='robe'?'uavh-collar robe':outfit==='jacket'?'uavh-collar jacket':outfit==='tee'?'uavh-collar tee':'uavh-collar hoodie';
+    return '<div class="uavh-body outfit-'+friendEsc(outfit)+'">'+
+        '<div class="'+collar+'"></div>'+
+        '<span class="uavh-body-highlight"></span>'+
+        '<span class="uavh-emblem"></span>'+
+    '</div>';
 }
 function userAvatarHtml(av){
     av=Object.assign(defaultUserAvatar(),av||{});
     var vars=userAvatarVars(av);
     var cls=[
-        'uav3d-avatar',
+        'uav-human-avatar',
         'skin-'+av.skin,
         'hair-'+av.hair,
         'face-'+av.face,
@@ -9588,25 +10162,19 @@ function userAvatarHtml(av){
         'pose-'+av.pose
     ].join(' ');
     var style='--skin:'+vars.skin+';--hair:'+vars.hair+';--outfit:'+vars.outfit+';--aura:'+vars.aura+';--bg1:'+vars.bg1+';--bg2:'+vars.bg2+';';
-    var face=userAvatarFaceHtml(av.face);
-    var bodyDeco='<span class="uav3d-logo-dot"></span><span class="uav3d-body-line"></span>';
     return '<div class="'+cls+'" style="'+style+'" aria-hidden="true">'+
-        '<div class="uav3d-bg"></div><div class="uav3d-aura"></div><div class="uav3d-ground"></div>'+
-        '<div class="uav3d-scene">'+
-            '<div class="uav3d-inner">'+
-                avatarCube('leg-left',30,64,30,-25,64,0,'--pants','leg','')+
-                avatarCube('leg-right',30,64,30,25,64,0,'--pants','leg','')+
-                avatarCube('shoe-left',34,14,42,-25,101,8,'--shoe','shoe','')+
-                avatarCube('shoe-right',34,14,42,25,101,8,'--shoe','shoe','')+
-                avatarCube('torso',86,86,48,0,16,0,'--outfit','torso '+friendEsc(av.outfit),bodyDeco)+
-                avatarCube('arm-left',24,78,28,-64,19,0,'--outfit','arm arm-left','')+
-                avatarCube('arm-right',24,78,28,64,19,0,'--outfit','arm arm-right','')+
-                avatarCube('hand-left',25,22,30,-67,66,4,'--skin','hand','')+
-                avatarCube('hand-right',25,22,30,67,66,4,'--skin','hand','')+
-                avatarCube('neck',30,24,28,0,-38,0,'--skin','neck','')+
-                avatarCube('head',82,82,64,0,-78,0,'--skin','head',face)+
-                userAvatarHairHtml(av)+
-                userAvatarAccessoryHtml(av)+
+        '<div class="uavh-bg"></div><div class="uavh-aura"></div><div class="uavh-orbit one"></div><div class="uavh-orbit two"></div><div class="uavh-ground"></div>'+
+        '<div class="uavh-stage">'+
+            '<div class="uavh-inner">'+
+                '<div class="uavh-leg left"></div><div class="uavh-leg right"></div>'+
+                '<div class="uavh-shoe left"></div><div class="uavh-shoe right"></div>'+
+                userAvatarHumanOutfitHtml(av)+
+                '<div class="uavh-arm left"><span></span></div><div class="uavh-arm right"><span></span></div>'+
+                '<div class="uavh-neck"></div>'+
+                '<div class="uavh-ear left"></div><div class="uavh-ear right"></div>'+
+                '<div class="uavh-head">'+userAvatarHumanFaceHtml(av.face)+'</div>'+
+                userAvatarHumanHairHtml(av)+
+                userAvatarHumanAccessoryHtml(av)+
             '</div>'+
         '</div>'+
         '<div class="uav3d-drag-hint"><i class="fas fa-arrows-rotate"></i> drag</div>'+
@@ -9619,8 +10187,8 @@ function renderUserAvatarInto(el,av){
     var vars=userAvatarVars(av);
     el.style.setProperty('--bg1',vars.bg1);
     el.style.setProperty('--bg2',vars.bg2);
-    el.style.setProperty('--uav-rx',el.dataset.rx||'-10deg');
-    el.style.setProperty('--uav-ry',el.dataset.ry||'24deg');
+    el.style.setProperty('--uav-rx',el.dataset.rx||'-4deg');
+    el.style.setProperty('--uav-ry',el.dataset.ry||'12deg');
 }
 
 function updateUserAvatarButtons(){
@@ -10570,19 +11138,19 @@ function initUserAvatar3DRotation(){
     function nearestAvatar(target){return target&&target.closest?target.closest('.plong-user-avatar'):null}
     document.addEventListener('pointerdown',function(e){
         var el=nearestAvatar(e.target);
-        if(!el||!el.querySelector('.uav3d-avatar'))return;
+        if(!el||(!el.querySelector('.uav3d-avatar')&&!el.querySelector('.uav-human-avatar')))return;
         active=el;
         startX=e.clientX;startY=e.clientY;
-        startRx=parseFloat(el.dataset.rx||'-10')||-10;
-        startRy=parseFloat(el.dataset.ry||'24')||24;
+        startRx=parseFloat(el.dataset.rx||'-4')||-4;
+        startRy=parseFloat(el.dataset.ry||'12')||12;
         el.classList.add('is-dragging');
         try{el.setPointerCapture&&el.setPointerCapture(e.pointerId)}catch(_){}
     },{passive:true});
     document.addEventListener('pointermove',function(e){
         if(!active)return;
         var dx=e.clientX-startX,dy=e.clientY-startY;
-        var ry=Math.max(-70,Math.min(70,startRy+dx*.45));
-        var rx=Math.max(-28,Math.min(18,startRx-dy*.28));
+        var ry=Math.max(-42,Math.min(42,startRy+dx*.32));
+        var rx=Math.max(-14,Math.min(12,startRx-dy*.18));
         active.dataset.ry=String(ry);
         active.dataset.rx=String(rx);
         active.style.setProperty('--uav-ry',ry+'deg');
