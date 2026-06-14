@@ -857,6 +857,16 @@ function defaultAppState(user = {}) {
     inventory: [],
     redeemHistory: [],
     lastCrystal: null,
+    userAvatar: {
+      skin: 'warm',
+      hair: 'soft',
+      face: 'smile',
+      outfit: 'hoodie',
+      accessory: 'none',
+      aura: 'tenang',
+      background: 'sky',
+      pose: 'idle'
+    },
     onboarding: { completed: false, goal: 'curhat_dulu', petName: 'Plong', firstMood: 'tenang' },
     garden: defaultGarden(),
     gm: 'qwen2.5:3b',
@@ -1268,6 +1278,7 @@ function ensureGameState(state, user) {
   next.pet = { ...base.pet, ...(next.pet || {}) };
   next.pet.avatar = { ...base.pet.avatar, ...(next.pet.avatar || {}) };
   next.account = { ...base.account, ...(next.account || {}) };
+  next.userAvatar = { ...base.userAvatar, ...(next.userAvatar || {}) };
   next.emotions = { ...base.emotions, ...(next.emotions || {}) };
   next.art = Array.isArray(next.art) ? next.art : [];
   next.ch = Array.isArray(next.ch) ? next.ch : [];
@@ -2775,9 +2786,20 @@ app.get('/api/friends/profile/:profileKey', requireAuth, async (req, res) => {
       [targetUserId]
     );
 
+    const avatarRows = await query(
+      `SELECT state_json->'userAvatar' AS user_avatar
+       FROM user_states
+       WHERE user_id = $1
+       LIMIT 1`,
+      [targetUserId]
+    );
+
+    const publicUser = friendUserToPublic(rows[0]);
+    publicUser.userAvatar = avatarRows[0]?.user_avatar || defaultAppState({}).userAvatar;
+
     res.json({
       ok: true,
-      user: friendUserToPublic(rows[0]),
+      user: publicUser,
       stats: {
         friends: Number(friendCountRows[0]?.total || 0)
       }
@@ -3566,6 +3588,9 @@ const APP_VIEWS = {
 
   '/avatar': 'avatar',
   '/avatar.html': 'avatar',
+
+  '/avatar-world': 'avatarWorld',
+  '/avatar-world.html': 'avatarWorld',
 
   '/pet': 'pet',
   '/pet.html': 'pet',
