@@ -8534,9 +8534,17 @@
             <button class="<%= pageId === 'pg-account' ? 'nb on' : 'nb' %>" data-page="pg-account"><img class="nav-img" src="/assets/nav/account.png" alt="" loading="lazy" decoding="async" aria-hidden="true"><span>Akun</span></button>
         </nav>
 
-        <script type="module">
-        import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
-        import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
+                <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+          }
+        }
+        </script>
+<script type="module">
+        import * as THREE from "three";
+        import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
         const DREX_AVATAR_URL="/assets/models/drex-avatar/Default.glb";
         const skinMap={warm:0xf2b789,fair:0xffd9bd,tan:0xc78555,deep:0x8b573b};
