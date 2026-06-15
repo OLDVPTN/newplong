@@ -7437,6 +7437,79 @@
                 border-radius: 4px;
                 border: 1px solid var(--bd2);
             }
+
+            /* ===== Z.ai Avatar GLB renderer fix ===== */
+            #avatar-3d-canvas-container{
+                position:relative;
+                min-height:420px;
+                overflow:hidden;
+                background:
+                    radial-gradient(circle at 50% 18%,rgba(255,255,255,.78),transparent 110px),
+                    radial-gradient(circle at 24% 78%,rgba(255,180,109,.16),transparent 90px),
+                    radial-gradient(circle at 82% 74%,rgba(118,169,255,.16),transparent 82px),
+                    linear-gradient(135deg,#dbeafe,#fff7ed);
+            }
+            #avatar-3d-canvas-container .avatar-3d-webgl-canvas{
+                position:absolute;
+                inset:0;
+                width:100%!important;
+                height:100%!important;
+                display:block;
+                touch-action:none;
+                cursor:grab;
+            }
+            #avatar-3d-canvas-container .avatar-3d-webgl-canvas:active{cursor:grabbing}
+            #avatar-3d-canvas-container.loaded .avatar-3d-loading{display:none!important}
+            #avatar-3d-canvas-container .avatar-3d-error{
+                position:absolute;
+                left:50%;
+                bottom:16px;
+                transform:translateX(-50%);
+                min-height:28px;
+                padding:0 12px;
+                border-radius:999px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:rgba(255,255,255,.82);
+                border:1px solid rgba(226,232,240,.9);
+                color:#b45309;
+                font-size:11px;
+                font-weight:900;
+                z-index:5;
+                pointer-events:none;
+            }
+            .avatar-3d-config-chip{
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                min-height:26px;
+                padding:0 8px;
+                border-radius:999px;
+                background:rgba(255,255,255,.72);
+                border:1px solid rgba(226,232,240,.9);
+                color:#475569;
+                font-size:11px;
+                font-weight:900;
+                margin:3px;
+            }
+            .avatar-3d-config-chip b{
+                width:14px;
+                height:14px;
+                border-radius:999px;
+                border:1px solid rgba(15,23,42,.15);
+                display:inline-block;
+            }
+            .avatar-3d-btn.active,
+            .avatar-3d-color-btn.active{
+                outline:3px solid rgba(20,184,166,.35);
+                border-color:#14b8a6!important;
+                box-shadow:0 0 0 4px rgba(20,184,166,.12),0 10px 22px rgba(15,23,42,.14);
+            }
+            @media(max-width:640px){
+                #avatar-3d-canvas-container{min-height:340px}
+            }
+
         </style>
 
     </head>
@@ -8870,6 +8943,7 @@
         }
         </script>
 
+        
         <script type="module">
         import * as THREE from "three";
         import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -8880,8 +8954,21 @@
         const outfitMap={hoodie:0xff9349,jacket:0x2563eb,robe:0x7c3aed,tee:0x0d9488};
         const outfitBottomMap={hoodie:0x334155,jacket:0x1e3a8a,robe:0x4c1d95,tee:0x14532d};
         const auraMap={tenang:0x14b8a6,senang:0xfacc15,sedih:0x60a5fa,galau:0xa78bfa,stres:0xfb923c,marah:0xef4444};
+        const defaultGlbColors={skin:"#F5E6D3",hair:"#1A1A1A",top:"#2980B9",bottom:"#2C3E50",shoe:"#1A1A1A",aura:"#14b8a6"};
 
         function getColor(map,key,fb){return map[key] ?? fb}
+        function hexToNumber(value, fallback){
+            if(typeof value==="number")return value;
+            if(typeof value==="string"){
+                const clean=value.trim().replace(/^#/,"");
+                if(/^[0-9a-fA-F]{6}$/.test(clean))return parseInt(clean,16);
+            }
+            return fallback;
+        }
+        function colorToCss(value,fallback="#ffffff"){
+            if(typeof value==="string" && /^#[0-9a-fA-F]{6}$/.test(value.trim()))return value.trim();
+            return fallback;
+        }
         function cloneMaterial(mat){
             if(Array.isArray(mat))return mat.map(m=>m.clone());
             return mat&&mat.clone?mat.clone():mat;
@@ -8898,35 +8985,43 @@
             };
             if(Array.isArray(material))material.forEach(apply); else apply(material);
         }
-        function findAll(root,pred){
-            const items=[];
-            root.traverse((o)=>{ if(pred(o))items.push(o); });
-            return items;
+        function findState(){
+            try{
+                const raw=localStorage.getItem("vkm");
+                return raw?JSON.parse(raw):{};
+            }catch(_){return {}}
         }
-        function applyMorph(root,name,value){
-            root.traverse((o)=>{
-                if(!o.isMesh||!o.morphTargetDictionary||!o.morphTargetInfluences)return;
-                const idx=o.morphTargetDictionary[name];
-                if(typeof idx==="number")o.morphTargetInfluences[idx]=value;
-            });
+        function saveStatePatch(patch){
+            try{
+                const current=findState();
+                const next=Object.assign({},current,patch);
+                localStorage.setItem("vkm",JSON.stringify(next));
+                if(window.state){
+                    Object.keys(patch).forEach((k)=>{window.state[k]=patch[k];});
+                    if(typeof window.queueSyncState==="function")window.queueSyncState();
+                }
+            }catch(_){}
         }
-        function setBone(root,name,rx,ry,rz){
-            const bone=root.getObjectByName(name);
-            if(bone)bone.rotation.set(rx||0,ry||0,rz||0);
-            return bone;
+        function normalizeGlbConfig(config){
+            const saved=findState();
+            const fromState=(window.state&&window.state.userAvatarGLB)||saved.userAvatarGLB||{};
+            const av=(window.state&&window.state.userAvatar)||saved.userAvatar||{};
+            return Object.assign(
+                {},
+                defaultGlbColors,
+                {
+                    skin: av.skinColor || fromState.skin,
+                    hair: av.hairColor || fromState.hair,
+                    top: av.topColor || fromState.top,
+                    bottom: av.bottomColor || fromState.bottom,
+                    shoe: av.shoeColor || fromState.shoe,
+                    aura: av.auraColor || fromState.aura
+                },
+                config||{}
+            );
         }
-        function resetPose(root){
-            [
-                "Head","Neck","Spine","Spine1","Spine2",
-                "LeftShoulder","LeftArm","LeftForeArm","LeftHand",
-                "RightShoulder","RightArm","RightForeArm","RightHand"
-            ].forEach((name)=>{
-                const bone=root.getObjectByName(name);
-                if(bone)bone.rotation.set(0,0,0);
-            });
-        }
-        function makeAura(av){
-            const aura=getColor(auraMap,av.aura,0x14b8a6);
+        function makeAura(config){
+            const aura=hexToNumber(config.aura,getColor(auraMap,config.aura,0x14b8a6));
             const group=new THREE.Group();
             const auraMesh=new THREE.Mesh(
                 new THREE.SphereGeometry(1.45,42,20),
@@ -9019,78 +9114,88 @@
             halo.scale.y=.45;
             return halo;
         }
-        function buildWavyLocks(color){
-            const g=new THREE.Group();
-            const mat=new THREE.MeshStandardMaterial({color,roughness:.62,metalness:.02});
-            const left=new THREE.Mesh(new THREE.CapsuleGeometry(.04,.18,8,16),mat);
-            const right=new THREE.Mesh(new THREE.CapsuleGeometry(.04,.18,8,16),mat);
-            left.position.set(-.18,-.02,.10);
-            right.position.set(.18,-.02,.10);
-            left.rotation.z=.18;
-            right.rotation.z=-.18;
-            g.add(left,right);
-            return g;
-        }
-        function attachExtras(root,av){
-            const extras=new THREE.Group();
-            extras.name="AvatarCustomExtras";
+        function attachExtras(root,config){
+            const saved=findState();
+            const av=(window.state&&window.state.userAvatar)||saved.userAvatar||{};
+            const hairMode=av.hair || "soft";
+            const accessory=av.accessory || "none";
+            const hairColor=hexToNumber(config.hair,0x1a1a1a);
 
             const headBone=root.getObjectByName("Head") || root;
             const headMount=new THREE.Group();
             headMount.position.set(0,.09,.02);
             headBone.add(headMount);
-            extras.userData.headMount=headMount;
 
             const hairMesh=root.getObjectByName("Wolf3D_Hair");
             if(hairMesh){
                 hairMesh.visible=true;
                 hairMesh.scale.set(1,1,1);
-                if(av.hair==="short"){
+                if(hairMode==="short"){
                     hairMesh.scale.set(.92,.82,.92);
                     hairMesh.position.y=-.01;
-                }else if(av.hair==="wavy"){
+                }else if(hairMode==="wavy"){
                     hairMesh.scale.set(1.05,1.12,1.02);
-                    const locks=buildWavyLocks(getColor(hairMap,av.hair,0x5b3428));
-                    locks.position.set(0,.04,.0);
-                    headMount.add(locks);
-                }else if(av.hair==="cap"){
+                    const mat=new THREE.MeshStandardMaterial({color:hairColor,roughness:.62,metalness:.02});
+                    const left=new THREE.Mesh(new THREE.CapsuleGeometry(.04,.18,8,16),mat);
+                    const right=new THREE.Mesh(new THREE.CapsuleGeometry(.04,.18,8,16),mat);
+                    left.position.set(-.18,-.02,.10);
+                    right.position.set(.18,-.02,.10);
+                    left.rotation.z=.18;
+                    right.rotation.z=-.18;
+                    headMount.add(left,right);
+                }else if(hairMode==="cap"){
                     hairMesh.visible=false;
-                    const cap=buildCap(getColor(hairMap,av.hair,0x3158d4));
+                    const cap=buildCap(hairColor);
                     cap.position.set(0,.14,.02);
                     headMount.add(cap);
                 }
             }
 
-            if(av.accessory==="glasses"){
+            if(accessory==="glasses"){
                 const glasses=buildGlasses();
                 glasses.position.set(0,.02,.30);
                 headMount.add(glasses);
-            }else if(av.accessory==="headset"){
+            }else if(accessory==="headset"){
                 const headset=buildHeadset();
                 headset.position.set(0,.12,.04);
                 headMount.add(headset);
-            }else if(av.accessory==="halo"){
+            }else if(accessory==="halo"){
                 const halo=buildHalo();
                 halo.position.set(0,.46,0);
                 headMount.add(halo);
             }
-
-            root.userData.customExtras=extras;
-            return extras;
         }
-        function applyFace(root,av){
+        function applyMorph(root,name,value){
+            root.traverse((o)=>{
+                if(!o.isMesh||!o.morphTargetDictionary||!o.morphTargetInfluences)return;
+                const idx=o.morphTargetDictionary[name];
+                if(typeof idx==="number")o.morphTargetInfluences[idx]=value;
+            });
+        }
+        function setBone(root,name,rx,ry,rz){
+            const bone=root.getObjectByName(name);
+            if(bone)bone.rotation.set(rx||0,ry||0,rz||0);
+        }
+        function resetPose(root){
+            ["Head","Neck","Spine","Spine1","Spine2","LeftShoulder","LeftArm","LeftForeArm","LeftHand","RightShoulder","RightArm","RightForeArm","RightHand"].forEach((name)=>{
+                const bone=root.getObjectByName(name);
+                if(bone)bone.rotation.set(0,0,0);
+            });
+        }
+        function applyFaceAndPose(root){
+            const saved=findState();
+            const av=(window.state&&window.state.userAvatar)||saved.userAvatar||{};
             const face=String(av.face||"smile");
+            const pose=String(av.pose||"idle");
+
             applyMorph(root,"mouthSmile",0);
             applyMorph(root,"mouthOpen",0);
-
             if(face==="smile"){
                 applyMorph(root,"mouthSmile",0.95);
                 applyMorph(root,"mouthOpen",0.08);
             }else if(face==="calm"){
                 applyMorph(root,"mouthSmile",0.15);
-                applyMorph(root,"mouthOpen",0.0);
             }else if(face==="focus"){
-                applyMorph(root,"mouthSmile",0.0);
                 applyMorph(root,"mouthOpen",0.03);
                 const head=root.getObjectByName("Head");
                 if(head)head.rotation.x=-0.03;
@@ -9098,11 +9203,9 @@
                 applyMorph(root,"mouthSmile",0.45);
                 applyMorph(root,"mouthOpen",0.16);
                 const head=root.getObjectByName("Head");
-                if(head){ head.rotation.z=-0.05; }
+                if(head)head.rotation.z=-0.05;
             }
-        }
-        function applyPose(root,av){
-            const pose=String(av.pose||"idle");
+
             resetPose(root);
             if(pose==="wave"){
                 setBone(root,"RightShoulder",0,0,-0.2);
@@ -9126,12 +9229,12 @@
                 setBone(root,"RightArm",0,0,-.06);
             }
         }
-        function applyAvatarCustomization(root,av){
-            const skin=getColor(skinMap,av.skin,0xf2b789);
-            const hair=getColor(hairMap,av.hair,0x3b243f);
-            const outfit=getColor(outfitMap,av.outfit,0xff9349);
-            const bottom=getColor(outfitBottomMap,av.outfit,0x334155);
-            const shoe=0x111827;
+        function applyAvatarCustomization(root,config){
+            const skin=hexToNumber(config.skin,0xf2b789);
+            const hair=hexToNumber(config.hair,0x1a1a1a);
+            const top=hexToNumber(config.top,0x2980b9);
+            const bottom=hexToNumber(config.bottom,0x2c3e50);
+            const shoe=hexToNumber(config.shoe,0x1a1a1a);
 
             root.traverse((o)=>{
                 if(!o.isMesh)return;
@@ -9140,42 +9243,34 @@
                 o.material=cloneMaterial(o.material);
                 const n=String(o.name||"").toLowerCase();
                 if(n.includes("hair")){
-                    tintMaterial(o.material,hair,.78);
+                    tintMaterial(o.material,hair,.82);
                 }else if(n.includes("outfit_top")){
-                    tintMaterial(o.material,outfit,.55);
+                    tintMaterial(o.material,top,.72);
                 }else if(n.includes("outfit_bottom")){
-                    tintMaterial(o.material,bottom,.52);
+                    tintMaterial(o.material,bottom,.72);
                 }else if(n.includes("footwear")){
-                    tintMaterial(o.material,shoe,.45);
+                    tintMaterial(o.material,shoe,.72);
                 }else if(n.includes("head") || n.includes("body")){
-                    tintMaterial(o.material,skin,.22);
+                    tintMaterial(o.material,skin,.32);
                 }
             });
 
-            applyFace(root,av);
-            applyPose(root,av);
+            applyFaceAndPose(root);
+            attachExtras(root,config);
         }
-        async function buildAvatarGroup(av){
+        async function buildAvatarGroup(config){
             const loader=new GLTFLoader();
             const gltf=await loader.loadAsync(DREX_AVATAR_URL);
             const root=gltf.scene;
-            applyAvatarCustomization(root,av);
+            applyAvatarCustomization(root,config);
             normalizeModel(root);
 
             const group=new THREE.Group();
-            group.add(makeAura(av));
+            group.add(makeAura(config));
             group.add(root);
-            group.add(attachExtras(root,av));
-            group.userData.model=root;
             return group;
         }
-        function renderAvatar3D(host,av){
-            const canvas=host.querySelector(".uav-level2-canvas");
-            if(!canvas)return;
-            const signature=canvas.dataset.avatar||"{}";
-            if(host.dataset.uavHydrated===signature&&host.__plAvatar3D)return;
-            if(host.__plAvatar3D&&host.__plAvatar3D.dispose)host.__plAvatar3D.dispose();
-
+        function setupRenderer(host,canvas){
             const scene=new THREE.Scene();
             const camera=new THREE.PerspectiveCamera(30,1,.1,100);
             camera.position.set(0,.58,4.85);
@@ -9197,6 +9292,7 @@
 
             let avatar=null, disposed=false, raf=0, t=0;
             let targetY=.18,targetX=.02,dragging=false,sx=0,sy=0,baseY=targetY,baseX=targetX;
+            let autoRotate=false;
 
             function resize(){
                 const rect=host.getBoundingClientRect();
@@ -9218,17 +9314,22 @@
             };
             canvas.onpointermove=(e)=>{
                 if(!dragging)return;
-                targetY=Math.max(-1.15,Math.min(1.15,baseY+(e.clientX-sx)*.008));
-                targetX=Math.max(-.24,Math.min(.20,baseX-(e.clientY-sy)*.004));
+                targetY=Math.max(-1.25,Math.min(1.25,baseY+(e.clientX-sx)*.008));
+                targetX=Math.max(-.30,Math.min(.24,baseX-(e.clientY-sy)*.004));
             };
             const end=()=>dragging=false;
             canvas.onpointerup=end;
             canvas.onpointercancel=end;
-            canvas.onpointerleave=()=>{ if(!dragging)return; dragging=false; };
+            canvas.onpointerleave=()=>{dragging=false;};
+            canvas.onwheel=(e)=>{
+                e.preventDefault();
+                camera.position.z=Math.max(3.2,Math.min(6.4,camera.position.z+e.deltaY*.003));
+            };
 
             function animate(){
                 if(disposed)return;
                 t+=.016;
+                if(autoRotate && !dragging)targetY+=.006;
                 if(avatar){
                     avatar.rotation.y+=(targetY-avatar.rotation.y)*.11;
                     avatar.rotation.x+=(targetX-avatar.rotation.x)*.11;
@@ -9239,39 +9340,171 @@
             }
             animate();
 
-            host.dataset.uavHydrated=signature;
-            host.__plAvatar3D={dispose(){
-                disposed=true;
-                cancelAnimationFrame(raf);
-                ro.disconnect();
-                scene.traverse((o)=>{
-                    if(o.geometry)o.geometry.dispose();
-                    if(o.material){
-                        if(Array.isArray(o.material))o.material.forEach(m=>m.dispose&&m.dispose());
-                        else o.material.dispose&&o.material.dispose();
-                    }
-                });
-                renderer.dispose();
-            }};
+            return {
+                setAvatar(group){
+                    if(avatar)scene.remove(avatar);
+                    avatar=group;
+                    scene.add(avatar);
+                },
+                setAutoRotate(v){autoRotate=!!v;},
+                dispose(){
+                    disposed=true;
+                    cancelAnimationFrame(raf);
+                    ro.disconnect();
+                    scene.traverse((o)=>{
+                        if(o.geometry)o.geometry.dispose();
+                        if(o.material){
+                            if(Array.isArray(o.material))o.material.forEach(m=>m.dispose&&m.dispose());
+                            else o.material.dispose&&o.material.dispose();
+                        }
+                    });
+                    renderer.dispose();
+                }
+            };
+        }
 
-            buildAvatarGroup(av).then((group)=>{
-                if(disposed)return;
-                avatar=group;
-                scene.add(avatar);
+        function renderAvatar3D(host,av){
+            const canvas=host.querySelector(".uav-level2-canvas");
+            if(!canvas)return;
+            const config=normalizeGlbConfig(av);
+            const signature=JSON.stringify(config)+(JSON.stringify((window.state&&window.state.userAvatar)||{}));
+            if(host.dataset.uavHydrated===signature&&host.__plAvatar3D)return;
+
+            if(!host.__plAvatar3DRenderer){
+                host.__plAvatar3DRenderer=setupRenderer(host,canvas);
+            }
+            host.dataset.uavHydrated=signature;
+            buildAvatarGroup(config).then((group)=>{
+                host.__plAvatar3DRenderer.setAvatar(group);
                 host.classList.remove("uav2-error","uav-level2-pending");
                 host.classList.add("uav2-rendered");
-                const err=host.querySelector(".uav-level2-error");
-                if(err)err.textContent="";
             }).catch((error)=>{
                 console.error("GLB avatar gagal dimuat:", error);
                 host.classList.add("uav2-error");
-                const err=host.querySelector(".uav-level2-error");
-                if(err)err.textContent="Model GLB gagal dimuat";
             });
+            host.__plAvatar3D={dispose(){ if(host.__plAvatar3DRenderer){host.__plAvatar3DRenderer.dispose();host.__plAvatar3DRenderer=null;} }};
+        }
+
+        function mountZaiAvatarWorld(){
+            const container=document.getElementById("avatar-3d-canvas-container");
+            if(!container)return;
+            if(container.dataset.zaiMounted==="1")return;
+            container.dataset.zaiMounted="1";
+            container.innerHTML='<canvas class="avatar-3d-webgl-canvas"></canvas><div class="avatar-3d-error" id="avatar-3d-error"></div>';
+            const canvas=container.querySelector("canvas");
+            const renderer=setupRenderer(container,canvas);
+
+            let config=normalizeGlbConfig();
+            let activeRequest=0;
+            function setLoading(text){
+                const err=document.getElementById("avatar-3d-error");
+                if(err)err.textContent=text||"";
+            }
+            function renderNow(){
+                activeRequest++;
+                const req=activeRequest;
+                setLoading("Memuat model GLB...");
+                buildAvatarGroup(config).then((group)=>{
+                    if(req!==activeRequest)return;
+                    renderer.setAvatar(group);
+                    container.classList.add("loaded");
+                    setLoading("");
+                    updatePreview();
+                }).catch((error)=>{
+                    console.error("Avatar 3D gagal dimuat:",error);
+                    setLoading("Model GLB gagal dimuat. Cek path /assets/models/drex-avatar/Default.glb");
+                });
+            }
+            function updatePreview(){
+                const preview=document.getElementById("avatar-3d-config-preview");
+                if(!preview)return;
+                preview.innerHTML=["skin","hair","top","bottom","shoe"].map((key)=>{
+                    const color=colorToCss(config[key],"#ffffff");
+                    return '<span class="avatar-3d-config-chip"><b style="background:'+color+'"></b>'+key+'</span>';
+                }).join("");
+            }
+            function setActiveButtons(){
+                document.querySelectorAll(".avatar-3d-color-btn").forEach((btn)=>{
+                    const color=String(btn.dataset.color||"").toLowerCase();
+                    const type=String(btn.dataset.type||"");
+                    btn.style.background=color||"#fff";
+                    btn.classList.toggle("active",String(config[type]||"").toLowerCase()===color);
+                });
+            }
+            function applyColor(type,color){
+                if(!type||!color)return;
+                config[type]=color;
+                setActiveButtons();
+                renderNow();
+            }
+
+            document.querySelectorAll(".avatar-3d-color-btn").forEach((btn)=>{
+                btn.style.background=btn.dataset.color||"#fff";
+                btn.addEventListener("click",()=>applyColor(btn.dataset.type,btn.dataset.color));
+            });
+
+            document.querySelectorAll(".avatar-3d-tab").forEach((tab)=>{
+                tab.addEventListener("click",()=>{
+                    const name=tab.dataset.tab;
+                    document.querySelectorAll(".avatar-3d-tab").forEach((t)=>t.classList.toggle("active",t===tab));
+                    document.querySelectorAll(".avatar-3d-tab-content").forEach((content)=>{
+                        content.style.display=content.id==="avatar-3d-tab-"+name?"block":"none";
+                    });
+                });
+            });
+
+            const rotateBtn=document.getElementById("avatar-3d-rotate-toggle");
+            if(rotateBtn){
+                let rot=false;
+                rotateBtn.addEventListener("click",()=>{
+                    rot=!rot;
+                    rotateBtn.classList.toggle("active",rot);
+                    renderer.setAutoRotate(rot);
+                });
+            }
+            const saveBtn=document.getElementById("avatar-3d-save");
+            if(saveBtn){
+                saveBtn.addEventListener("click",()=>{
+                    saveStatePatch({userAvatarGLB:config});
+                    if(typeof window.toast==="function")window.toast("Avatar GLB disimpan.");
+                    else alert("Avatar GLB disimpan.");
+                });
+            }
+            const resetBtn=document.getElementById("avatar-3d-reset");
+            if(resetBtn){
+                resetBtn.addEventListener("click",()=>{
+                    config=normalizeGlbConfig(defaultGlbColors);
+                    setActiveButtons();
+                    renderNow();
+                });
+            }
+            const randomBtn=document.getElementById("avatar-3d-random");
+            if(randomBtn){
+                randomBtn.addEventListener("click",()=>{
+                    const palette={
+                        skin:["#F5E6D3","#E8D4C4","#D4B896","#C4A484","#A67B5B","#8B6914","#5C3A21"],
+                        hair:["#1A1A1A","#2C1810","#5D4037","#8D6E63","#D4AF37","#C0392B","#A52A2A","#808080","#C0C0C0","#2980B9","#8E44AD","#E91E63"],
+                        top:["#2C3E50","#1A1A1A","#FFFFFF","#808080","#C0392B","#2980B9","#27AE60","#F39C12","#8E44AD","#E91E63","#16A085","#E67E22"],
+                        bottom:["#2C3E50","#1A1A1A","#FFFFFF","#808080","#C0392B","#2980B9","#27AE60","#F39C12","#8E44AD","#E91E63","#16A085","#E67E22"],
+                        shoe:["#2C3E50","#1A1A1A","#FFFFFF","#808080","#C0392B","#2980B9","#27AE60","#F39C12","#8E44AD","#E91E63","#16A085","#E67E22"]
+                    };
+                    Object.keys(palette).forEach((key)=>{
+                        config[key]=palette[key][Math.floor(Math.random()*palette[key].length)];
+                    });
+                    setActiveButtons();
+                    renderNow();
+                });
+            }
+
+            setActiveButtons();
+            updatePreview();
+            renderNow();
+            window.PlAvatar3D_ZAI={render:renderNow,getConfig:()=>config,setConfig:(c)=>{config=normalizeGlbConfig(c);setActiveButtons();renderNow();}};
         }
 
         window.PlAvatar3D={render:renderAvatar3D};
-        function hydrateAll(){
+
+        function hydrateLegacyHosts(){
             document.querySelectorAll(".uav-level2-host").forEach((host)=>{
                 const canvas=host.querySelector(".uav-level2-canvas");
                 if(!canvas)return;
@@ -9281,14 +9514,21 @@
                 catch(error){
                     console.error("Avatar 3D error:", error);
                     host.classList.add("uav2-error");
-                    const err=host.querySelector(".uav-level2-error");
-                    if(err)err.textContent="Avatar gagal dirender";
                 }
             });
         }
-        hydrateAll();
-        new MutationObserver(()=>hydrateAll()).observe(document.documentElement,{childList:true,subtree:true});
+        function bootAvatar3D(){
+            mountZaiAvatarWorld();
+            hydrateLegacyHosts();
+        }
+        if(document.readyState==="loading"){
+            document.addEventListener("DOMContentLoaded",bootAvatar3D);
+        }else{
+            bootAvatar3D();
+        }
+        new MutationObserver(()=>bootAvatar3D()).observe(document.documentElement,{childList:true,subtree:true});
         </script>
+
 
 
 
