@@ -7147,8 +7147,298 @@
             .uav-level2-error{position:absolute;left:50%;bottom:44px;transform:translateX(-50%);padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.78);color:#b91c1c;font-size:10px;font-weight:800;min-height:24px;display:flex;align-items:center}
             .uav-level2-host.uav2-rendered .uav-level2-error{display:none}
 
+            /* Avatar World 3D Customization Styles */
+            .avatar-world-3d-container {
+                padding: 20px;
+                background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                min-height: calc(100vh - 140px);
+            }
 
+            .avatar-world-header {
+                text-align: center;
+                margin-bottom: 24px;
+                background: white;
+                padding: 20px;
+                border-radius: 16px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            }
+
+            .avatar-world-header span {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 12px;
+                font-weight: 700;
+                color: var(--ac);
+                margin-bottom: 8px;
+            }
+
+            .avatar-world-header h1 {
+                font-size: 24px;
+                font-weight: 800;
+                color: var(--t1);
+                margin-bottom: 6px;
+            }
+
+            .avatar-world-header p {
+                font-size: 13px;
+                color: var(--t3);
+            }
+
+            .avatar-world-actions {
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+                margin-top: 16px;
+            }
+
+            .avatar-world-actions .feature-btn {
+                padding: 10px 20px;
+                border-radius: 8px;
+                font-size: 13px;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                transition: all 0.2s;
+            }
+
+            .avatar-world-3d-layout {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            @media (min-width: 1024px) {
+                .avatar-world-3d-layout {
+                    grid-template-columns: 1fr 380px;
+                }
+            }
+
+            .avatar-3d-viewer {
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                overflow: hidden;
+            }
+
+            .avatar-3d-canvas {
+                width: 100%;
+                height: 500px;
+                background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+                position: relative;
+            }
+
+            .avatar-3d-loading {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                color: var(--t3);
+                font-size: 14px;
+            }
+
+            .avatar-3d-loading i {
+                font-size: 32px;
+                margin-bottom: 12px;
+                color: var(--ac);
+            }
+
+            .avatar-3d-controls {
+                padding: 12px 16px;
+                border-top: 1px solid var(--bd1);
+                display: flex;
+                gap: 8px;
+                justify-content: center;
+            }
+
+            .avatar-3d-btn {
+                padding: 8px 16px;
+                background: var(--bg3);
+                border: 1px solid var(--bd1);
+                border-radius: 8px;
+                color: var(--t2);
+                font-size: 13px;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .avatar-3d-btn:hover {
+                background: var(--bg4);
+                transform: translateY(-1px);
+            }
+
+            .avatar-3d-btn.active {
+                background: var(--ac-bg);
+                border-color: var(--ac);
+                color: var(--ac);
+            }
+
+            .avatar-3d-hint {
+                padding: 12px 16px;
+                background: var(--tl-bg);
+                border-top: 1px solid var(--bd1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                color: var(--t3);
+                font-size: 12px;
+            }
+
+            .avatar-3d-hint i {
+                color: var(--tl);
+            }
+
+            .avatar-3d-panel {
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                padding: 20px;
+                max-height: 700px;
+                overflow-y: auto;
+            }
+
+            .avatar-3d-panel-header {
+                margin-bottom: 20px;
+            }
+
+            .avatar-3d-panel-header h3 {
+                font-size: 18px;
+                font-weight: 700;
+                color: var(--t1);
+                margin-bottom: 4px;
+            }
+
+            .avatar-3d-panel-header p {
+                font-size: 12px;
+                color: var(--t3);
+            }
+
+            .avatar-3d-tabs {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+                margin-bottom: 20px;
+            }
+
+            .avatar-3d-tab {
+                padding: 12px 8px;
+                background: var(--bg2);
+                border: 2px solid var(--bd1);
+                border-radius: 10px;
+                color: var(--t3);
+                font-size: 12px;
+                font-weight: 600;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .avatar-3d-tab:hover {
+                border-color: var(--ac-bd);
+                background: var(--ac-bg);
+                color: var(--ac);
+            }
+
+            .avatar-3d-tab.active {
+                border-color: var(--ac);
+                background: var(--ac-bg);
+                color: var(--ac);
+            }
+
+            .avatar-3d-tab i {
+                font-size: 18px;
+            }
+
+            .avatar-3d-tab-content h4 {
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--t1);
+                margin-bottom: 12px;
+            }
+
+            .avatar-3d-color-grid {
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            @media (max-width: 640px) {
+                .avatar-3d-color-grid {
+                    grid-template-columns: repeat(4, 1fr);
+                }
+            }
+
+            .avatar-3d-color-btn {
+                width: 100%;
+                aspect-ratio: 1;
+                border-radius: 10px;
+                border: 2px solid var(--bd1);
+                cursor: pointer;
+                transition: all 0.2s;
+                position: relative;
+            }
+
+            .avatar-3d-color-btn:hover {
+                transform: scale(1.1);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .avatar-3d-color-btn.active {
+                border-color: var(--ac);
+                box-shadow: 0 0 0 3px var(--ac-bg), 0 4px 12px rgba(232, 77, 26, 0.3);
+            }
+
+            .avatar-3d-current-config {
+                padding: 16px;
+                background: var(--bg3);
+                border-radius: 10px;
+                margin-top: 20px;
+            }
+
+            .avatar-3d-current-config span {
+                display: block;
+                font-size: 12px;
+                font-weight: 600;
+                color: var(--t2);
+                margin-bottom: 8px;
+            }
+
+            #avatar-3d-config-preview {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .config-preview-item {
+                padding: 6px 12px;
+                background: white;
+                border-radius: 6px;
+                font-size: 11px;
+                color: var(--t3);
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .config-preview-item .color-preview {
+                width: 16px;
+                height: 16px;
+                border-radius: 4px;
+                border: 1px solid var(--bd2);
+            }
         </style>
+
     </head>
     <body class="auth-lock">
         <div id="page-loader" class="page-loader show" aria-live="polite" aria-label="Memuat halaman">
@@ -7371,125 +7661,162 @@
 
 
 
-                <!-- AVATAR WORLD -->
+                <!-- AVATAR WORLD - 3D Customization -->
                 <section id="pg-avatar-world" class="<%= pageId === 'pg-avatar-world' ? 'pg on avatar-world-page' : 'pg avatar-world-page' %>" aria-label="Avatar World">
-                    <div class="avatar-world-shell">
-                        <div class="avatar-world-hero">
+                    <div class="avatar-world-3d-container">
+                        <div class="avatar-world-header">
                             <div>
-                                <span><i class="fas fa-user-astronaut"></i> Plong Avatar</span>
-                                <h1>Wujud virtual dari perjalanan emosimu</h1>
-                                <p>Avatar ini memakai model GLB premium yang kamu upload. Model tampil sebagai karakter 3D utama di Avatar World dan profil publik. Drag avatar untuk memutar.</p>
-                                <div class="avatar-world-actions">
-                                    <button class="feature-btn primary" type="button" id="user-avatar-save"><i class="fas fa-save"></i> Simpan Avatar</button>
-                                    <button class="feature-btn" type="button" id="user-avatar-open-profile"><i class="fas fa-eye"></i> Lihat Profil</button>
-                                </div>
+                                <span><i class="fas fa-user-astronaut"></i> Avatar World 3D</span>
+                                <h1>Kustomisasi Avatar Seperti Roblox!</h1>
+                                <p>Buat avatar 3D unikmu dengan berbagai pilihan warna dan gaya. Drag untuk memutar, scroll untuk zoom.</p>
                             </div>
-                            <div class="avatar-world-preview-card">
-                                <div id="user-avatar-preview" class="plong-user-avatar size-xl"></div>
-                                <strong id="user-avatar-name">VokaMon User</strong>
-                                <span id="user-avatar-username">@vokamon.user</span>
+                            <div class="avatar-world-actions">
+                                <button class="feature-btn primary" type="button" id="avatar-3d-save">
+                                    <i class="fas fa-save"></i> Simpan Avatar
+                                </button>
+                                <button class="feature-btn" type="button" id="avatar-3d-reset">
+                                    <i class="fas fa-undo"></i> Reset
+                                </button>
+                                <button class="feature-btn" type="button" id="avatar-3d-random">
+                                    <i class="fas fa-random"></i> Random
+                                </button>
                             </div>
                         </div>
 
-                        <div class="avatar-world-layout">
-                            <aside class="avatar-world-panel">
-                                <div class="avatar-world-panel-head">
-                                    <strong>Kustomisasi Avatar</strong>
-                                    <span>Kustomisasi warna/aura untuk model GLB. Detail model mengikuti file 3D yang kamu upload.</span>
-                                </div>
-                                <div class="avatar-control-group" data-avatar-control="skin">
-                                    <label>Warna kulit</label>
-                                    <div class="avatar-option-row">
-                                        <button type="button" data-user-avatar-option="skin:warm">Warm</button>
-                                        <button type="button" data-user-avatar-option="skin:fair">Fair</button>
-                                        <button type="button" data-user-avatar-option="skin:tan">Tan</button>
-                                        <button type="button" data-user-avatar-option="skin:deep">Deep</button>
+                        <div class="avatar-world-3d-layout">
+                            <!-- 3D Viewer -->
+                            <div class="avatar-3d-viewer">
+                                <div id="avatar-3d-canvas-container" class="avatar-3d-canvas">
+                                    <div class="avatar-3d-loading">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        <span>Memuat avatar 3D...</span>
                                     </div>
                                 </div>
-                                <div class="avatar-control-group" data-avatar-control="hair">
-                                    <label>Rambut</label>
-                                    <div class="avatar-option-row">
-                                        <button type="button" data-user-avatar-option="hair:soft">Soft</button>
-                                        <button type="button" data-user-avatar-option="hair:short">Short</button>
-                                        <button type="button" data-user-avatar-option="hair:wavy">Wavy</button>
-                                        <button type="button" data-user-avatar-option="hair:cap">Cap</button>
+                                <div class="avatar-3d-controls">
+                                    <button type="button" id="avatar-3d-rotate-toggle" class="avatar-3d-btn">
+                                        <i class="fas fa-sync"></i>
+                                        <span>Putar Otomatis</span>
+                                    </button>
+                                </div>
+                                <div class="avatar-3d-hint">
+                                    <i class="fas fa-hand-pointer"></i>
+                                    <span>Drag untuk memutar • Scroll untuk zoom</span>
+                                </div>
+                            </div>
+
+                            <!-- Customization Panel -->
+                            <aside class="avatar-3d-panel">
+                                <div class="avatar-3d-panel-header">
+                                    <h3>Kustomisasi Avatar</h3>
+                                    <p>Pilih warna dan gaya untuk avatar 3D kamu</p>
+                                </div>
+
+                                <div class="avatar-3d-tabs">
+                                    <button type="button" class="avatar-3d-tab active" data-tab="body">
+                                        <i class="fas fa-user"></i>
+                                        <span>Body</span>
+                                    </button>
+                                    <button type="button" class="avatar-3d-tab" data-tab="hair">
+                                        <i class="fas fa-cut"></i>
+                                        <span>Rambut</span>
+                                    </button>
+                                    <button type="button" class="avatar-3d-tab" data-tab="clothes">
+                                        <i class="fas fa-tshirt"></i>
+                                        <span>Baju</span>
+                                    </button>
+                                </div>
+
+                                <div class="avatar-3d-tab-content" id="avatar-3d-tab-body">
+                                    <h4>Warna Kulit</h4>
+                                    <div class="avatar-3d-color-grid">
+                                        <button type="button" class="avatar-3d-color-btn" data-type="skin" data-color="#F5E6D3" title="Terang"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="skin" data-color="#E8D4C4" title="Muda"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="skin" data-color="#D4B896" title="Sedang Terang"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="skin" data-color="#C4A484" title="Sedang"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="skin" data-color="#A67B5B" title="Sedang Gelap"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="skin" data-color="#8B6914" title="Gelap"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="skin" data-color="#5C3A21" title="Sangat Gelap"></button>
                                     </div>
                                 </div>
-                                <div class="avatar-control-group" data-avatar-control="face">
-                                    <label>Ekspresi</label>
-                                    <div class="avatar-option-row">
-                                        <button type="button" data-user-avatar-option="face:smile">Smile</button>
-                                        <button type="button" data-user-avatar-option="face:calm">Calm</button>
-                                        <button type="button" data-user-avatar-option="face:focus">Focus</button>
-                                        <button type="button" data-user-avatar-option="face:shy">Shy</button>
+
+                                <div class="avatar-3d-tab-content" id="avatar-3d-tab-hair" style="display: none;">
+                                    <h4>Warna Rambut</h4>
+                                    <div class="avatar-3d-color-grid">
+                                        <button type="button" class="avatar-3d-color-btn" data-type="hair" data-color="#1A1A1A" title="Hitam"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="hair" data-color="#2C1810" title="Coklat Gelap"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="hair" data-color="#5D4037" title="Coklat"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="hair" data-color="#8D6E63" title="Coklat Muda"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="hair" data-color="#D4AF37" title="Blond"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="hair" data-color="#C0392B" title="Merah"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="hair" data-color="#A52A2A" title="Merah Keemasan"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="hair" data-color="#808080" title="Abu-abu"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="hair" data-color="#C0C0C0" title="Silver"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="hair" data-color="#2980B9" title="Biru"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="hair" data-color="#8E44AD" title="Ungu"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="hair" data-color="#E91E63" title="Pink"></button>
                                     </div>
                                 </div>
-                                <div class="avatar-control-group" data-avatar-control="outfit">
-                                    <label>Outfit</label>
-                                    <div class="avatar-option-row">
-                                        <button type="button" data-user-avatar-option="outfit:hoodie">Hoodie</button>
-                                        <button type="button" data-user-avatar-option="outfit:jacket">Jacket</button>
-                                        <button type="button" data-user-avatar-option="outfit:robe">Robe</button>
-                                        <button type="button" data-user-avatar-option="outfit:tee">Tee</button>
+
+                                <div class="avatar-3d-tab-content" id="avatar-3d-tab-clothes" style="display: none;">
+                                    <h4>Warna Baju</h4>
+                                    <div class="avatar-3d-color-grid">
+                                        <button type="button" class="avatar-3d-color-btn" data-type="top" data-color="#2C3E50" title="Navy"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="top" data-color="#1A1A1A" title="Hitam"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="top" data-color="#FFFFFF" title="Putih"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="top" data-color="#808080" title="Abu-abu"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="top" data-color="#C0392B" title="Merah"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="top" data-color="#2980B9" title="Biru"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="top" data-color="#27AE60" title="Hijau"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="top" data-color="#F39C12" title="Kuning"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="top" data-color="#8E44AD" title="Ungu"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="top" data-color="#E91E63" title="Pink"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="top" data-color="#16A085" title="Teal"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="top" data-color="#E67E22" title="Oranye"></button>
+                                    </div>
+
+                                    <h4>Warna Celana</h4>
+                                    <div class="avatar-3d-color-grid">
+                                        <button type="button" class="avatar-3d-color-btn" data-type="bottom" data-color="#2C3E50" title="Navy"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="bottom" data-color="#1A1A1A" title="Hitam"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="bottom" data-color="#FFFFFF" title="Putih"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="bottom" data-color="#808080" title="Abu-abu"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="bottom" data-color="#C0392B" title="Merah"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="bottom" data-color="#2980B9" title="Biru"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="bottom" data-color="#27AE60" title="Hijau"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="bottom" data-color="#F39C12" title="Kuning"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="bottom" data-color="#8E44AD" title="Ungu"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="bottom" data-color="#E91E63" title="Pink"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="bottom" data-color="#16A085" title="Teal"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="bottom" data-color="#E67E22" title="Oranye"></button>
+                                    </div>
+
+                                    <h4>Warna Sepatu</h4>
+                                    <div class="avatar-3d-color-grid">
+                                        <button type="button" class="avatar-3d-color-btn" data-type="shoe" data-color="#2C3E50" title="Navy"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="shoe" data-color="#1A1A1A" title="Hitam"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="shoe" data-color="#FFFFFF" title="Putih"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="shoe" data-color="#808080" title="Abu-abu"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="shoe" data-color="#C0392B" title="Merah"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="shoe" data-color="#2980B9" title="Biru"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="shoe" data-color="#27AE60" title="Hijau"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="shoe" data-color="#F39C12" title="Kuning"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="shoe" data-color="#8E44AD" title="Ungu"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="shoe" data-color="#E91E63" title="Pink"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="shoe" data-color="#16A085" title="Teal"></button>
+                                        <button type="button" class="avatar-3d-color-btn" data-type="shoe" data-color="#E67E22" title="Oranye"></button>
                                     </div>
                                 </div>
-                                <div class="avatar-control-group" data-avatar-control="accessory">
-                                    <label>Aksesoris</label>
-                                    <div class="avatar-option-row">
-                                        <button type="button" data-user-avatar-option="accessory:none">None</button>
-                                        <button type="button" data-user-avatar-option="accessory:glasses">Glasses</button>
-                                        <button type="button" data-user-avatar-option="accessory:headset">Headset</button>
-                                        <button type="button" data-user-avatar-option="accessory:halo">Halo</button>
-                                    </div>
-                                </div>
-                                <div class="avatar-control-group" data-avatar-control="aura">
-                                    <label>Aura emosi</label>
-                                    <div class="avatar-option-row">
-                                        <button type="button" data-user-avatar-option="aura:tenang">Tenang</button>
-                                        <button type="button" data-user-avatar-option="aura:senang">Senang</button>
-                                        <button type="button" data-user-avatar-option="aura:sedih">Sedih</button>
-                                        <button type="button" data-user-avatar-option="aura:galau">Galau</button>
-                                        <button type="button" data-user-avatar-option="aura:stres">Stres</button>
-                                    </div>
-                                </div>
-                                <div class="avatar-control-group" data-avatar-control="background">
-                                    <label>Background profil</label>
-                                    <div class="avatar-option-row">
-                                        <button type="button" data-user-avatar-option="background:sky">Sky</button>
-                                        <button type="button" data-user-avatar-option="background:garden">Garden</button>
-                                        <button type="button" data-user-avatar-option="background:night">Night</button>
-                                        <button type="button" data-user-avatar-option="background:studio">Studio</button>
-                                    </div>
-                                </div>
-                                <div class="avatar-control-group" data-avatar-control="pose">
-                                    <label>Pose</label>
-                                    <div class="avatar-option-row">
-                                        <button type="button" data-user-avatar-option="pose:idle">Idle</button>
-                                        <button type="button" data-user-avatar-option="pose:wave">Wave</button>
-                                        <button type="button" data-user-avatar-option="pose:peace">Peace</button>
-                                        <button type="button" data-user-avatar-option="pose:focus">Focus</button>
-                                    </div>
+
+                                <div class="avatar-3d-current-config">
+                                    <span>Konfigurasi Saat Ini:</span>
+                                    <div id="avatar-3d-config-preview"></div>
                                 </div>
                             </aside>
-
-                            <section class="avatar-world-profile-preview">
-                                <div class="avatar-profile-cover" id="avatar-profile-cover">
-                                    <div id="user-avatar-profile-preview" class="plong-user-avatar size-profile"></div>
-                                </div>
-                                <div class="avatar-profile-info">
-                                    <span>Preview profil publik</span>
-                                    <h2 id="avatar-profile-name">VokaMon User</h2>
-                                    <p id="avatar-profile-bio">Bio user akan tampil bersama avatar virtual ini.</p>
-                                    <div class="avatar-profile-stats">
-                                        <div><strong id="avatar-profile-level">1</strong><span>Pet level</span></div>
-                                        <div><strong id="avatar-profile-badges">0</strong><span>Badge</span></div>
-                                        <div><strong id="avatar-profile-aura">Tenang</strong><span>Aura</span></div>
-                                    </div>
-                                </div>
-                            </section>
                         </div>
                     </div>
                 </section>
+
+                <!-- OLD AVATAR WORLD - Kept for reference -->
 
 
                 <!-- PET -->
@@ -11691,6 +12018,14 @@ function initUserAvatar3DRotation(){
 }
 
             initAvatarCustomizer();initAccount();renderGarden();initFriendFinder();initSocialFeatures();initGrowthFeatures();initLifeLoop();initDashboardStats();initUserAvatarWorldListeners();initUserAvatar3DRotation();sP("tenang");wI();go(window.__VKM_PAGE_ID||"pg-home");refreshUI();bootAuth();
+
+        // Avatar 3D Customization
+        if (document.getElementById('pg-avatar-world')) {
+            const script = document.createElement('script');
+            script.type = 'module';
+            script.src = '/js/avatar-3d.js';
+            document.body.appendChild(script);
+        }
         </script>
     </body>
 </html>
