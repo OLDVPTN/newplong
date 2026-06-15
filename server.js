@@ -322,6 +322,22 @@ async function initDb() {
     );
   `);
 
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS avatar_configurations (
+      id BIGSERIAL PRIMARY KEY,
+      user_id BIGINT NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+      skin_tone VARCHAR(7) NOT NULL DEFAULT '#E8D4C4',
+      hair_color VARCHAR(7) NOT NULL DEFAULT '#2C1810',
+      hair_style VARCHAR(10) NOT NULL DEFAULT '18',
+      top_color VARCHAR(7) NOT NULL DEFAULT '#2980B9',
+      bottom_color VARCHAR(7) NOT NULL DEFAULT '#2C3E50',
+      shoe_color VARCHAR(7) NOT NULL DEFAULT '#1A1A1A',
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_avatar_configurations_user ON avatar_configurations(user_id);`);
+
 
 
 
@@ -2363,6 +2379,113 @@ app.put('/api/pet/avatar', requireAuth, async (req, res) => {
   } catch (error) {
     console.error('Pet avatar error:', error);
     res.status(500).json({ ok: false, error: 'Gagal menyimpan avatar pet.' });
+  }
+});
+
+// 3D Avatar Configuration API
+app.get('/api/avatar/config', requireAuth, async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT * FROM avatar_configurations WHERE user_id = $1',
+      [req.user.id]
+    );
+
+    if (result.rows.length === 0) {
+      // Return default configuration if not found
+      return res.json({
+        ok: true,
+        avatar: {
+          skin_tone: '#E8D4C4',
+          hair_color: '#2C1810',
+          hair_style: '18',
+          top_color: '#2980B9',
+          bottom_color: '#2C3E50',
+          shoe_color: '#1A1A1A'
+        }
+      });
+    }
+
+    const avatar = result.rows[0];
+    res.json({
+      ok: true,
+      avatar: {
+        skin_tone: avatar.skin_tone,
+        hair_color: avatar.hair_color,
+        hair_style: avatar.hair_style,
+        top_color: avatar.top_color,
+        bottom_color: avatar.bottom_color,
+        shoe_color: avatar.shoe_color
+      }
+    });
+  } catch (error) {
+    console.error('Avatar config get error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal memuat konfigurasi avatar.' });
+  }
+});
+
+app.post('/api/avatar/config', requireAuth, async (req, res) => {
+  try {
+    const { skin_tone, hair_color, hair_style, top_color, bottom_color, shoe_color } = req.body;
+
+    // Validate hex colors
+    const isValidHex = (color) => /^#[0-9A-F]{6}$/i.test(color);
+
+    if (skin_tone && !isValidHex(skin_tone)) {
+      return res.status(400).json({ ok: false, error: 'Warna kulit tidak valid.' });
+    }
+    if (hair_color && !isValidHex(hair_color)) {
+      return res.status(400).json({ ok: false, error: 'Warna rambut tidak valid.' });
+    }
+    if (top_color && !isValidHex(top_color)) {
+      return res.status(400).json({ ok: false, error: 'Warna baju tidak valid.' });
+    }
+    if (bottom_color && !isValidHex(bottom_color)) {
+      return res.status(400).json({ ok: false, error: 'Warna celana tidak valid.' });
+    }
+    if (shoe_color && !isValidHex(shoe_color)) {
+      return res.status(400).json({ ok: false, error: 'Warna sepatu tidak valid.' });
+    }
+
+    // Upsert configuration
+    const result = await pool.query(
+      `INSERT INTO avatar_configurations (user_id, skin_tone, hair_color, hair_style, top_color, bottom_color, shoe_color, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+       ON CONFLICT (user_id) DO UPDATE
+       SET skin_tone = COALESCE(EXCLUDED.skin_tone, avatar_configurations.skin_tone),
+           hair_color = COALESCE(EXCLUDED.hair_color, avatar_configurations.hair_color),
+           hair_style = COALESCE(EXCLUDED.hair_style, avatar_configurations.hair_style),
+           top_color = COALESCE(EXCLUDED.top_color, avatar_configurations.top_color),
+           bottom_color = COALESCE(EXCLUDED.bottom_color, avatar_configurations.bottom_color),
+           shoe_color = COALESCE(EXCLUDED.shoe_color, avatar_configurations.shoe_color),
+           updated_at = NOW()
+       RETURNING *`,
+      [
+        req.user.id,
+        skin_tone || '#E8D4C4',
+        hair_color || '#2C1810',
+        hair_style || '18',
+        top_color || '#2980B9',
+        bottom_color || '#2C3E50',
+        shoe_color || '#1A1A1A'
+      ]
+    );
+
+    const avatar = result.rows[0];
+    res.json({
+      ok: true,
+      avatar: {
+        skin_tone: avatar.skin_tone,
+        hair_color: avatar.hair_color,
+        hair_style: avatar.hair_style,
+        top_color: avatar.top_color,
+        bottom_color: avatar.bottom_color,
+        shoe_color: avatar.shoe_color
+      },
+      message: 'Konfigurasi avatar berhasil disimpan.'
+    });
+  } catch (error) {
+    console.error('Avatar config save error:', error);
+    res.status(500).json({ ok: false, error: 'Gagal menyimpan konfigurasi avatar.' });
   }
 });
 
