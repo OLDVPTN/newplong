@@ -1,0 +1,1 @@
+{"version":3,"file":"SubtitleRenderer.d.ts","sourceRoot":"","sources":["../src/SubtitleRenderer.ts"],"names":[],"mappings":"AAAA;;GAEG;AAEH,qBAAa,gBAAgB;IAC3B,OAAO,CAAC,SAAS,CAAa;IAC9B,OAAO,CAAC,eAAe,CAA2B;IAClD,OAAO,CAAC,aAAa,CAAsB;gBAE/B,SAAS,CAAC,EAAE,WAAW;IAenC,IAAI,CAAC,IAAI,EAAE,MAAM,GAAG,IAAI;IAuBxB,IAAI,IAAI,IAAI;IAcZ,OAAO,IAAI,IAAI;CAWhB"}
