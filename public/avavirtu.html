@@ -3,44 +3,212 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AvatarSpeaker - 基本的な使い方</title>
+
+  <title>AvatarSpeaker - ElevenLabs Pure HTML Test</title>
+
   <style>
     body {
       margin: 0;
       padding: 20px;
       font-family: sans-serif;
+      background: #f4f6f8;
     }
+
+    h1 {
+      text-align: center;
+      font-size: 24px;
+    }
+
     #avatar-container {
       width: 400px;
       height: 600px;
       border: 1px solid #ccc;
       margin: 20px auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+
+      background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2f9e8780-1e9b-4920-85b8-bb5270cb1e1e/dfy67xw-53329316-5576-4651-884d-56d8a8c85bc2.jpg/v1/fill/w_1280,h_1792,q_75,strp/anime_japanese_beach_house_summer_poster_by_nico2713_dfy67xw-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTc5MiIsInBhdGgiOiIvZi8yZjllODc4MC0xZTliLTQ5MjAtODViOC1iYjUyNzBjYjFlMWUvZGZ5Njd4dy01MzMyOTMxNi01NTc2LTQ2NTEtODg0ZC01NmQ4YThjODViYzIuanBnIiwid2lkdGgiOiI8PTEyODAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.6v8dwJ2IlzuTGPH-y580esWyfTJbwMvjHcSS8aKyRlM");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
+
+    #avatar-container canvas {
+      background: transparent !important;
+    }
+
+    #avatar-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #ffffff;
+      z-index: 10;
+      font-size: 15px;
+      color: #555;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    #avatar-loading.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .spinner {
+      width: 38px;
+      height: 38px;
+      border: 4px solid #ddd;
+      border-top-color: #333;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    #subtitle-container {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      min-height: 42px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.58);
+      color: white;
+      font-size: 15px;
+      line-height: 1.4;
+      z-index: 5;
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .chat-box {
+      max-width: 560px;
+      margin: 20px auto 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    #message-input {
+      flex: 1;
+      padding: 12px 14px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      outline: none;
+    }
+
+    #message-input:focus {
+      border-color: #111827;
+    }
+
+    button {
+      padding: 10px 18px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border: 0;
+      border-radius: 12px;
+      background: #111827;
+      color: white;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     .controls {
       text-align: center;
       margin: 20px;
     }
-    button {
-      padding: 10px 20px;
-      margin: 5px;
-      font-size: 16px;
-      cursor: pointer;
+
+    #status-text {
+      text-align: center;
+      color: #555;
+      font-size: 14px;
+      min-height: 20px;
+    }
+
+    .warning {
+      max-width: 560px;
+      margin: 10px auto;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #fff7ed;
+      color: #9a3412;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 12px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      #avatar-container {
+        width: 100%;
+        max-width: 400px;
+        height: 560px;
+      }
+
+      .chat-box {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
     }
   </style>
 </head>
+
 <body>
-  <h1>AvatarSpeaker - 基本的な使い方</h1>
+  <h1>AvatarSpeaker - ElevenLabs Pure HTML Test</h1>
+
+  <div class="warning">
+    Ini hanya untuk testing. API key ElevenLabs yang ditaruh di HTML bisa terlihat di browser, jadi jangan dipakai untuk production/public.
+  </div>
   
-  <div id="avatar-container"></div>
-  
-  <div class="controls">
-    <button onclick="window.sayHello()">挨拶</button>
-    <button onclick="window.smile()">笑顔</button>
-    <button onclick="window.bow()">お辞儀</button>
-    <button onclick="window.playAnimation()">アニメーション</button>
+  <div id="avatar-container">
+    <div id="avatar-loading">
+      <div class="spinner"></div>
+      <div id="loading-text">Memuat avatar 3D...</div>
+    </div>
+
+    <div id="subtitle-container">Avatar sedang dimuat...</div>
   </div>
 
-  <!-- Import maps for dependencies -->
+  <div class="chat-box">
+    <input id="message-input" type="text" placeholder="Ketik pesan untuk avatar..." disabled>
+    <button id="send-message" disabled>Kirim</button>
+  </div>
+
+  <div id="status-text"></div>
+  
+  <div class="controls">
+    <button id="btn-hello" onclick="window.sayHello()" disabled>挨拶</button>
+    <button id="btn-smile" onclick="window.smile()" disabled>笑顔</button>
+    <button id="btn-bow" onclick="window.bow()" disabled>お辞儀</button>
+    <button id="btn-animation" onclick="window.playAnimation()" disabled>アニメーション</button>
+  </div>
+
   <script type="importmap">
     {
       "imports": {
@@ -52,45 +220,248 @@
   </script>
 
   <script type="module">
-    import { AvatarSpeaker } from './dist/index.esm.js'
+    import { AvatarSpeaker } from '../dist/index.esm.js'
 
-    const ai = new AvatarSpeaker({
-      avatar: './assets/avatars/AvatarTest.vrm',
-      canvas: document.querySelector('#avatar-container')
-    })
+    // ===============================
+    // ISI INI DULU UNTUK TESTING
+    // ===============================
+    const ELEVENLABS_API_KEY = '5947c6ebecf21ba78192815b70232f4e7271ca4e293b19f4bd33be6e494e1c4c'
+    const ELEVENLABS_VOICE_ID = 'cgSgspJ2msm6clMCkdW9'
 
-    await ai.ready()
+    const ELEVENLABS_MODEL_ID = 'eleven_multilingual_v2'
 
-    window.sayHello = () => {
-      ai.say('こんにちは！')
+    const loading = document.querySelector('#avatar-loading')
+    const loadingText = document.querySelector('#loading-text')
+    const subtitle = document.querySelector('#subtitle-container')
+    const buttons = document.querySelectorAll('button')
+    const messageInput = document.querySelector('#message-input')
+    const sendButton = document.querySelector('#send-message')
+    const statusText = document.querySelector('#status-text')
+
+    let ai = null
+    let isSpeaking = false
+    let currentAudio = null
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
     }
 
-    window.smile = () => {
-      ai.smile()
+    function setButtonsDisabled(value) {
+      buttons.forEach(button => {
+        button.disabled = value
+      })
+
+      messageInput.disabled = value
+      sendButton.disabled = value
     }
 
-    window.bow = () => {
-      ai.bow()
+    function hideLoading() {
+      loading.classList.add('hidden')
+      setButtonsDisabled(false)
     }
 
-    window.playAnimation = () => {
-      ai.animate('/assets/animations/VRMA_02(挨拶).vrma')
+    function showError(message) {
+      loadingText.textContent = message
+      subtitle.textContent = message
+
+      const spinner = loading.querySelector('.spinner')
+      if (spinner) {
+        spinner.style.display = 'none'
+      }
     }
 
-   await ai.animate("/assets/animations/VRMA_02(挨拶).vrma")
+    function setStatus(message) {
+      statusText.textContent = message || ''
+    }
 
-   function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
+    function validateElevenLabsConfig() {
+      if (
+        !ELEVENLABS_API_KEY ||
+        ELEVENLABS_API_KEY === 'ISI_API_KEY_ELEVENLABS_KAMU' ||
+        !ELEVENLABS_VOICE_ID ||
+        ELEVENLABS_VOICE_ID === 'ISI_VOICE_ID_KAMU'
+      ) {
+        throw new Error('API key atau Voice ID ElevenLabs belum diisi.')
+      }
+    }
 
-await sleep(5000)
-await ai.animate("/assets/animations/VRMA_01(全身を見せる).vrma") 
-await sleep(5000)
-await ai.animate("/assets/animations/VRMA_01(全身を見せる).vrma")
-await sleep(5000)
-await ai.animate("/assets/animations/VRMA_01(全身を見せる).vrma")
-await sleep(5000)
-await ai.animate("/assets/animations/VRMA_01(全身を見せる).vrma")  
+    async function generateElevenLabsAudio(text) {
+      validateElevenLabsConfig()
+
+      const response = await fetch(
+        `https://api.elevenlabs.io/v1/text-to-speech/${ELEVENLABS_VOICE_ID}?output_format=mp3_44100_128`,
+        {
+          method: 'POST',
+          headers: {
+            'xi-api-key': ELEVENLABS_API_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            text,
+            model_id: ELEVENLABS_MODEL_ID,
+            voice_settings: {
+              stability: 0.45,
+              similarity_boost: 0.75,
+              style: 0.3,
+              use_speaker_boost: true
+            }
+          })
+        }
+      )
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error('ElevenLabs error:', errorText)
+
+        throw new Error('Gagal generate suara dari ElevenLabs.')
+      }
+
+      const audioBlob = await response.blob()
+      return URL.createObjectURL(audioBlob)
+    }
+
+    async function playAvatarSpeech(text, audioUrl) {
+      if (currentAudio) {
+        currentAudio.pause()
+        currentAudio.currentTime = 0
+        currentAudio = null
+      }
+
+      const audio = new Audio(audioUrl)
+      currentAudio = audio
+
+      /*
+        Beberapa versi AvatarSpeaker support:
+        ai.say(text, { audio })
+
+        Kalau ternyata error, kode ini otomatis fallback:
+        audio.play() + ai.say(text)
+      */
+      try {
+        await ai.say(text, { audio })
+      } catch (error) {
+        console.warn('ai.say(text, { audio }) gagal, pakai fallback manual:', error)
+
+        ai.say(text)
+        await audio.play()
+      }
+    }
+
+    async function speakWithElevenLabs(text) {
+      if (!ai) return
+
+      const cleanText = text.trim()
+
+      if (!cleanText) return
+
+      if (cleanText.length > 500) {
+        alert('Teks terlalu panjang. Untuk testing, maksimal 500 karakter dulu.')
+        return
+      }
+
+      if (isSpeaking) {
+        setStatus('Avatar masih berbicara...')
+        return
+      }
+
+      let audioUrl = null
+
+      try {
+        isSpeaking = true
+        setButtonsDisabled(true)
+
+        subtitle.textContent = cleanText
+        setStatus('Membuat suara dari ElevenLabs...')
+
+        audioUrl = await generateElevenLabsAudio(cleanText)
+
+        setStatus('Avatar sedang berbicara...')
+
+        await playAvatarSpeech(cleanText, audioUrl)
+
+      } catch (error) {
+        console.error(error)
+
+        subtitle.textContent = 'Gagal membuat suara. Cek API key, Voice ID, quota, internet, atau CORS.'
+        setStatus('Gagal membuat suara avatar.')
+
+        // Fallback agar avatar tetap bereaksi walaupun audio gagal
+        try {
+          ai.say(cleanText)
+        } catch (fallbackError) {
+          console.error('Fallback ai.say juga gagal:', fallbackError)
+        }
+
+      } finally {
+        if (audioUrl) {
+          URL.revokeObjectURL(audioUrl)
+        }
+
+        isSpeaking = false
+        setButtonsDisabled(false)
+        setStatus('')
+        messageInput.focus()
+      }
+    }
+
+    async function startAvatar() {
+      try {
+        ai = new AvatarSpeaker({
+          avatar: '/assets/avatars/AvatarTest.vrm',
+          canvas: document.querySelector('#avatar-container'),
+          subtitleContainer: subtitle
+        })
+
+        loadingText.textContent = 'Memuat avatar 3D...'
+
+        await ai.ready()
+        await sleep(300)
+
+        hideLoading()
+
+        subtitle.textContent = 'Avatar siap. Ketik pesan untuk membuat avatar berbicara.'
+
+        window.sayHello = async () => {
+          await speakWithElevenLabs('こんにちは！はじめまして。')
+        }
+
+        window.smile = () => {
+          ai.smile()
+        }
+
+        window.bow = async () => {
+          await ai.bow()
+        }
+
+        window.playAnimation = async () => {
+          await ai.animate('/assets/animations/VRMA_02(挨拶).vrma')
+        }
+
+        sendButton.addEventListener('click', async () => {
+          const text = messageInput.value.trim()
+
+          if (!text) return
+
+          messageInput.value = ''
+          await speakWithElevenLabs(text)
+        })
+
+        messageInput.addEventListener('keydown', async (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault()
+            sendButton.click()
+          }
+        })
+
+        await ai.animate('/assets/animations/VRMA_02(挨拶).vrma')
+
+      } catch (error) {
+        console.error(error)
+        showError('Gagal memuat avatar. Cek file VRM, path, dist, atau CORS.')
+      }
+    }
+
+    startAvatar()
   </script>
 </body>
 </html>
