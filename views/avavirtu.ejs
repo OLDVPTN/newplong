@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AvatarSpeaker - 基本的な使い方</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+    }
+    #avatar-container {
+      width: 400px;
+      height: 600px;
+      border: 1px solid #ccc;
+      margin: 20px auto;
+    }
+    .controls {
+      text-align: center;
+      margin: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>AvatarSpeaker - 基本的な使い方</h1>
+  
+  <div id="avatar-container"></div>
+  
+  <div class="controls">
+    <button onclick="window.sayHello()">挨拶</button>
+    <button onclick="window.smile()">笑顔</button>
+    <button onclick="window.bow()">お辞儀</button>
+    <button onclick="window.playAnimation()">アニメーション</button>
+  </div>
+
+  <!-- Import maps for dependencies -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "@pixiv/three-vrm": "https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@3.4.4/lib/three-vrm.module.js",
+        "@pixiv/three-vrm-animation": "https://cdn.jsdelivr.net/npm/@pixiv/three-vrm-animation@3.4.4/lib/three-vrm-animation.module.js"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import { AvatarSpeaker } from './dist/index.esm.js'
+
+    const ai = new AvatarSpeaker({
+      avatar: '/assets/avatars/AvatarTest.vrm',
+      canvas: document.querySelector('#avatar-container')
+    })
+
+    await ai.ready()
+
+    window.sayHello = () => {
+      ai.say('こんにちは！')
+    }
+
+    window.smile = () => {
+      ai.smile()
+    }
+
+    window.bow = () => {
+      ai.bow()
+    }
+
+    window.playAnimation = () => {
+      ai.animate('/assets/animations/VRMA_02(挨拶).vrma')
+    }
+
+   await ai.animate("/assets/animations/VRMA_02(挨拶).vrma")
+
+   function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+await sleep(5000)
+await ai.animate("/assets/animations/VRMA_01(全身を見せる).vrma") 
+await sleep(5000)
+await ai.animate("/assets/animations/VRMA_01(全身を見せる).vrma")
+await sleep(5000)
+await ai.animate("/assets/animations/VRMA_01(全身を見せる).vrma")
+await sleep(5000)
+await ai.animate("/assets/animations/VRMA_01(全身を見せる).vrma")  
+  </script>
+</body>
+</html>
