@@ -1,0 +1,4 @@
+/**
+ * AvatarSpeaker types definitions
+ */
+export {};
