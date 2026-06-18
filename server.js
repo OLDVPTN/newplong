@@ -2764,6 +2764,69 @@ app.post('/api/chat', aiLimiter, requireAuth, async (req, res) => {
 });
 
 
+
+app.post('/api/tts/elevenlabs', aiLimiter, requireAuth, async (req, res) => {
+  try {
+    const text = String(req.body.text || '').trim().slice(0, 900);
+    if (!text) return res.status(400).json({ ok: false, error: 'Teks voice masih kosong.' });
+
+    const apiKey = process.env.ELEVENLABS_API_KEY;
+    const voiceId = process.env.ELEVENLABS_VOICE_ID;
+    const modelId = process.env.ELEVENLABS_MODEL_ID || 'eleven_multilingual_v2';
+
+    if (!apiKey || !voiceId) {
+      return res.status(501).json({
+        ok: false,
+        error: 'ElevenLabs belum dikonfigurasi. Isi ELEVENLABS_API_KEY dan ELEVENLABS_VOICE_ID di ENV server.'
+      });
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), Number(process.env.TTS_TIMEOUT_MS || 45000));
+
+    const ttsRes = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`, {
+      method: 'POST',
+      headers: {
+        'xi-api-key': apiKey,
+        'Content-Type': 'application/json',
+        'Accept': 'audio/mpeg'
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        text,
+        model_id: modelId,
+        voice_settings: {
+          stability: Number(process.env.ELEVENLABS_STABILITY || 0.45),
+          similarity_boost: Number(process.env.ELEVENLABS_SIMILARITY_BOOST || 0.75),
+          style: Number(process.env.ELEVENLABS_STYLE || 0.3),
+          use_speaker_boost: true
+        }
+      })
+    });
+
+    clearTimeout(timeout);
+
+    if (!ttsRes.ok) {
+      const errorText = await ttsRes.text().catch(() => '');
+      console.error('ElevenLabs TTS error:', errorText);
+      return res.status(ttsRes.status).json({ ok: false, error: 'Gagal generate suara dari ElevenLabs.' });
+    }
+
+    const audioBuffer = Buffer.from(await ttsRes.arrayBuffer());
+    res.setHeader('Content-Type', 'audio/mpeg');
+    res.setHeader('Cache-Control', 'no-store');
+    return res.send(audioBuffer);
+  } catch (error) {
+    console.error('TTS error:', error);
+    if (error.name === 'AbortError') {
+      return res.status(504).json({ ok: false, error: 'TTS timeout.' });
+    }
+    return res.status(500).json({ ok: false, error: error.message || 'Gagal membuat suara avatar.' });
+  }
+});
+
+
+
 app.get('/api/friends/search', requireAuth, async (req, res) => {
   try {
     const me = Number(req.user.id);
