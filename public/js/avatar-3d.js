@@ -11,6 +11,56 @@ const AVATAR_3D_CONFIG = {
     shoeColor: '#1A1A1A'
 };
 
+function getAvatarAuthToken() {
+    try {
+        return localStorage.getItem('vkm_token') || '';
+    } catch (error) {
+        return '';
+    }
+}
+
+function getAvatarAuthHeaders(extra = {}) {
+    const token = getAvatarAuthToken();
+    return token ? { ...extra, Authorization: `Bearer ${token}` } : extra;
+}
+
+function getLocalAvatarConfig() {
+    try {
+        const raw = localStorage.getItem('vkm_avatar_3d_config');
+        return raw ? JSON.parse(raw) : null;
+    } catch (error) {
+        return null;
+    }
+}
+
+function saveLocalAvatarConfig(config) {
+    try {
+        localStorage.setItem('vkm_avatar_3d_config', JSON.stringify(config));
+    } catch (error) {}
+}
+
+function applyAvatarConfigData(avatar) {
+    if (!avatar) return;
+    AVATAR_3D_CONFIG.skinTone = avatar.skin_tone || avatar.skinTone || AVATAR_3D_CONFIG.skinTone;
+    AVATAR_3D_CONFIG.hairColor = avatar.hair_color || avatar.hairColor || AVATAR_3D_CONFIG.hairColor;
+    AVATAR_3D_CONFIG.hairStyle = avatar.hair_style || avatar.hairStyle || AVATAR_3D_CONFIG.hairStyle;
+    AVATAR_3D_CONFIG.topColor = avatar.top_color || avatar.topColor || AVATAR_3D_CONFIG.topColor;
+    AVATAR_3D_CONFIG.bottomColor = avatar.bottom_color || avatar.bottomColor || AVATAR_3D_CONFIG.bottomColor;
+    AVATAR_3D_CONFIG.shoeColor = avatar.shoe_color || avatar.shoeColor || AVATAR_3D_CONFIG.shoeColor;
+}
+
+function currentAvatarPayload() {
+    return {
+        skin_tone: AVATAR_3D_CONFIG.skinTone,
+        hair_color: AVATAR_3D_CONFIG.hairColor,
+        hair_style: AVATAR_3D_CONFIG.hairStyle,
+        top_color: AVATAR_3D_CONFIG.topColor,
+        bottom_color: AVATAR_3D_CONFIG.bottomColor,
+        shoe_color: AVATAR_3D_CONFIG.shoeColor
+    };
+}
+
+
 let avatar3DScene = null;
 let avatar3DRenderer = null;
 let avatar3DCamera = null;
@@ -376,21 +426,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (saveBtn) {
         saveBtn.addEventListener('click', async () => {
             try {
+                const payload = currentAvatarPayload();
+                saveLocalAvatarConfig(payload);
+
+                const token = getAvatarAuthToken();
+                if (!token) {
+                    showToast('Avatar disimpan di perangkat ini. Login untuk sinkron ke akun.');
+                    return;
+                }
+
                 const response = await fetch('/api/avatar/config', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        skin_tone: AVATAR_3D_CONFIG.skinTone,
-                        hair_color: AVATAR_3D_CONFIG.hairColor,
-                        hair_style: AVATAR_3D_CONFIG.hairStyle,
-                        top_color: AVATAR_3D_CONFIG.topColor,
-                        bottom_color: AVATAR_3D_CONFIG.bottomColor,
-                        shoe_color: AVATAR_3D_CONFIG.shoeColor
-                    })
+                    headers: getAvatarAuthHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify(payload)
                 });
 
                 if (response.ok) {
                     showToast('Avatar berhasil disimpan!');
+                } else if (response.status === 401) {
+                    showToast('Sesi login berakhir. Avatar tetap disimpan lokal.', 'error');
                 } else {
                     throw new Error('Gagal menyimpan avatar');
                 }
@@ -408,23 +462,36 @@ document.addEventListener('DOMContentLoaded', () => {
 // Load saved configuration
 async function loadAvatar3DConfig() {
     try {
-        const response = await fetch('/api/avatar/config');
+        const localConfig = getLocalAvatarConfig();
+        if (localConfig) {
+            applyAvatarConfigData(localConfig);
+            updateAvatar3DColors();
+            updateAvatar3DColorButtons();
+        }
+
+        const token = getAvatarAuthToken();
+        if (!token) {
+            return;
+        }
+
+        const response = await fetch('/api/avatar/config', {
+            headers: getAvatarAuthHeaders()
+        });
+
         if (response.ok) {
             const data = await response.json();
             if (data.avatar) {
-                AVATAR_3D_CONFIG.skinTone = data.avatar.skin_tone || AVATAR_3D_CONFIG.skinTone;
-                AVATAR_3D_CONFIG.hairColor = data.avatar.hair_color || AVATAR_3D_CONFIG.hairColor;
-                AVATAR_3D_CONFIG.hairStyle = data.avatar.hair_style || AVATAR_3D_CONFIG.hairStyle;
-                AVATAR_3D_CONFIG.topColor = data.avatar.top_color || AVATAR_3D_CONFIG.topColor;
-                AVATAR_3D_CONFIG.bottomColor = data.avatar.bottom_color || AVATAR_3D_CONFIG.bottomColor;
-                AVATAR_3D_CONFIG.shoeColor = data.avatar.shoe_color || AVATAR_3D_CONFIG.shoeColor;
-
+                applyAvatarConfigData(data.avatar);
+                saveLocalAvatarConfig(currentAvatarPayload());
                 updateAvatar3DColors();
                 updateAvatar3DColorButtons();
             }
+        } else if (response.status === 401) {
+            // User belum login atau token expired. Jangan spam console dengan error.
+            return;
         }
     } catch (error) {
-        console.error('Error loading avatar config:', error);
+        console.warn('Avatar config memakai fallback lokal:', error);
     }
 }
 
