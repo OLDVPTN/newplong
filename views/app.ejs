@@ -7928,6 +7928,97 @@
                 to{transform:rotate(360deg)}
             }
 
+
+            /* Vent iOS Safari viewport fix */
+            @supports(-webkit-touch-callout:none){
+                #pg-vent.vent-clean-ui{
+                    flex:1 1 auto!important;
+                    height:100%!important;
+                    min-height:0!important;
+                    padding:0!important;
+                    overflow:hidden!important;
+                }
+                #pg-vent.vent-clean-ui.on{
+                    display:flex!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-stage{
+                    height:100%!important;
+                    min-height:0!important;
+                    max-height:100%!important;
+                    overflow:hidden!important;
+                    background-position:center!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-bottom{
+                    position:fixed!important;
+                    left:50%!important;
+                    bottom:calc(var(--nav-h) + var(--s-b) + 10px)!important;
+                    transform:translateX(-50%)!important;
+                    width:min(90%,720px)!important;
+                    z-index:260!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-listen-card{
+                    min-height:64px!important;
+                    border-radius:24px!important;
+                    padding:9px 13px 9px 9px!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-listen-icon{
+                    width:48px!important;
+                    height:48px!important;
+                    border-radius:17px!important;
+                    font-size:19px!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-listen-copy strong{
+                    font-size:17px!important;
+                }
+                #pg-vent.vent-clean-ui .vent-subtitle-container{
+                    font-size:13px!important;
+                    line-height:1.25!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-controls{
+                    grid-template-columns:1fr 96px!important;
+                    gap:8px!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-controls:not(.is-recording){
+                    grid-template-columns:1fr!important;
+                }
+                #pg-vent.vent-clean-ui .vent-rec-wrap.vent-clean-mic-pill{
+                    height:54px!important;
+                }
+                #pg-vent.vent-clean-ui #rec-btn{
+                    width:50px!important;
+                    height:50px!important;
+                    font-size:24px!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-stop{
+                    height:52px!important;
+                    font-size:13px!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-meta{
+                    display:none!important;
+                }
+            }
+            @media(max-width:899px){
+                #pg-vent.vent-clean-ui.on{
+                    display:flex!important;
+                    flex:1 1 auto!important;
+                    height:100%!important;
+                    min-height:0!important;
+                    overflow:hidden!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-stage{
+                    height:100%!important;
+                    min-height:0!important;
+                    max-height:100%!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-bottom{
+                    position:fixed!important;
+                    left:50%!important;
+                    bottom:calc(var(--nav-h) + var(--s-b) + 10px)!important;
+                    transform:translateX(-50%)!important;
+                    z-index:260!important;
+                }
+            }
+
         </style>
 
     </head>
@@ -10029,27 +10120,44 @@
             return pageVisible && rect.width>120 && rect.height>180;
         }
 
+        function isIOSVentViewport(){
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+        }
+
         function applyVentFullBodyFraming(){
             try{
                 const renderer=ventAvatar&&ventAvatar.renderer;
                 if(!renderer)return;
+                const ios=isIOSVentViewport();
+                const small=window.matchMedia&&window.matchMedia('(max-width:899px)').matches;
 
                 if(renderer.camera){
-                    renderer.camera.fov=32;
-                    renderer.camera.position.set(0,1.02,3.05);
-                    renderer.camera.lookAt(0,0.78,0);
+                    if(ios&&small){
+                        renderer.camera.fov=30;
+                        renderer.camera.position.set(0,1.16,4.15);
+                        renderer.camera.lookAt(0,0.72,0);
+                    }else{
+                        renderer.camera.fov=32;
+                        renderer.camera.position.set(0,1.02,3.05);
+                        renderer.camera.lookAt(0,0.78,0);
+                    }
                     renderer.camera.updateProjectionMatrix();
                 }
 
                 const vrm=renderer.vrm;
                 if(vrm&&vrm.scene){
-                    vrm.scene.scale.set(1.22,1.22,1.22);
-                    vrm.scene.position.set(0,-1.04,0);
+                    if(ios&&small){
+                        vrm.scene.scale.set(1.04,1.04,1.04);
+                        vrm.scene.position.set(0,-0.82,0);
+                    }else{
+                        vrm.scene.scale.set(1.22,1.22,1.22);
+                        vrm.scene.position.set(0,-1.04,0);
+                    }
                     vrm.scene.rotation.y=Math.PI;
                 }
 
                 if(renderer.controls&&renderer.controls.target){
-                    renderer.controls.target.set(0,0.78,0);
+                    renderer.controls.target.set(0,ios&&small?0.72:0.78,0);
                     renderer.controls.update&&renderer.controls.update();
                 }
             }catch(error){
@@ -10080,6 +10188,7 @@
                 console.warn('Vent avatar resize gagal:',error);
             }
             window.dispatchEvent(new Event('resize'));
+            setTimeout(()=>{try{applyVentFullBodyFraming()}catch(_){}} ,160);
         }
 
         function setVentModuleButtons(disabled){
