@@ -8091,6 +8091,552 @@
                 }
             }
 
+
+            /* ===== Vent Reference UI: dreamy avatar voice screen ===== */
+            #pg-vent.vent-reference-ui{
+                position:relative!important;
+                display:block!important;
+                padding:0!important;
+                margin:0!important;
+                overflow:hidden!important;
+                background:#7fc6ff!important;
+            }
+            #pg-vent.vent-reference-ui.on{display:block!important}
+            #pg-vent.vent-reference-ui .vent-reference-stage{
+                position:relative!important;
+                width:100%!important;
+                height:calc(var(--real-vh, 1vh) * 100 - var(--nav-h, 0px) - var(--s-b, 0px))!important;
+                min-height:640px!important;
+                border-radius:0!important;
+                overflow:hidden!important;
+                border:0!important;
+                box-shadow:none!important;
+                background:
+                    radial-gradient(circle at 50% 6%,rgba(255,255,255,.9),transparent 17%),
+                    radial-gradient(circle at 18% 16%,rgba(255,219,202,.62),transparent 20%),
+                    radial-gradient(circle at 78% 20%,rgba(255,244,220,.78),transparent 22%),
+                    linear-gradient(180deg,#7fc6ff 0%,#bfe8ff 33%,#e9f8d8 64%,#65a557 100%)!important;
+                isolation:isolate;
+            }
+            #pg-vent.vent-reference-ui .vent-reference-stage:before{
+                content:"";
+                position:absolute;
+                inset:0;
+                z-index:0;
+                pointer-events:none;
+                background:
+                    radial-gradient(ellipse at 18% 77%,rgba(255,221,130,.45) 0 4%,transparent 9%),
+                    radial-gradient(ellipse at 84% 78%,rgba(255,168,196,.42) 0 4%,transparent 9%),
+                    linear-gradient(115deg,transparent 0 40%,rgba(255,244,205,.58) 41% 43%,transparent 44%),
+                    radial-gradient(ellipse at 50% 100%,rgba(25,92,31,.54),transparent 48%);
+                filter:saturate(1.1);
+            }
+            #pg-vent.vent-reference-ui .vent-reference-stage:after{
+                content:"";
+                position:absolute;
+                left:50%;
+                bottom:0;
+                width:130%;
+                height:42%;
+                transform:translateX(-50%);
+                z-index:0;
+                pointer-events:none;
+                background:
+                    radial-gradient(ellipse at 50% 6%,rgba(255,238,200,.86),rgba(211,166,97,.55) 24%,transparent 25%),
+                    radial-gradient(ellipse at 24% 65%,rgba(255,255,255,.18),transparent 36%),
+                    radial-gradient(ellipse at 82% 68%,rgba(255,255,255,.16),transparent 35%);
+                clip-path:polygon(38% 0,62% 0,75% 100%,25% 100%);
+                opacity:.88;
+            }
+            .vent-ref-sky{
+                position:absolute;
+                inset:0;
+                z-index:0;
+                pointer-events:none;
+                background:
+                    radial-gradient(ellipse at 11% 23%,rgba(255,255,255,.86) 0 5%,transparent 11%),
+                    radial-gradient(ellipse at 23% 17%,rgba(255,245,229,.80) 0 8%,transparent 17%),
+                    radial-gradient(ellipse at 49% 7%,rgba(255,237,220,.88) 0 9%,transparent 19%),
+                    radial-gradient(ellipse at 75% 20%,rgba(255,246,226,.86) 0 10%,transparent 22%),
+                    radial-gradient(ellipse at 92% 32%,rgba(255,255,255,.70) 0 6%,transparent 15%),
+                    radial-gradient(ellipse at 8% 72%,rgba(68,137,71,.46),transparent 24%),
+                    radial-gradient(ellipse at 91% 73%,rgba(68,137,71,.42),transparent 24%);
+                filter:blur(.2px);
+            }
+            #pg-vent.vent-reference-ui .vent-reference-stage > canvas,
+            #pg-vent.vent-reference-ui .vent-reference-stage canvas:not(#wave-canvas){
+                position:absolute!important;
+                inset:0!important;
+                width:100%!important;
+                height:100%!important;
+                display:block!important;
+                z-index:1!important;
+                background:transparent!important;
+                pointer-events:auto!important;
+            }
+            .vent-ref-topbar{
+                position:absolute;
+                top:calc(24px + var(--s-t, 0px));
+                left:clamp(18px,4vw,54px);
+                right:clamp(18px,4vw,54px);
+                z-index:15;
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                pointer-events:none;
+            }
+            .vent-ref-menu{
+                width:54px;
+                height:54px;
+                border:0;
+                background:transparent;
+                color:rgba(255,255,255,.95);
+                font-size:30px;
+                display:grid;
+                place-items:center;
+                text-shadow:0 8px 24px rgba(15,23,42,.16);
+                pointer-events:auto;
+            }
+            .vent-ref-capture{
+                min-width:152px;
+                height:62px;
+                padding:0 22px;
+                border:1px solid rgba(255,255,255,.38);
+                border-radius:999px;
+                display:inline-flex;
+                align-items:center;
+                justify-content:center;
+                gap:12px;
+                background:rgba(255,255,255,.34);
+                color:white;
+                font-size:21px;
+                font-weight:900;
+                box-shadow:inset 0 1px 0 rgba(255,255,255,.38),0 16px 38px rgba(74,119,177,.12);
+                backdrop-filter:blur(18px);
+                pointer-events:auto;
+            }
+            .vent-ref-capture i{font-size:23px}
+            .vent-ref-capture:disabled{opacity:.85}
+            .vent-ref-dock{
+                position:absolute;
+                left:50%;
+                bottom:198px;
+                transform:translateX(-50%);
+                width:min(84%,760px);
+                min-height:92px;
+                border-radius:28px;
+                z-index:10;
+                display:grid;
+                grid-template-columns:repeat(3,1fr);
+                overflow:hidden;
+                background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(183,166,81,.22));
+                border:1px solid rgba(255,255,255,.34);
+                box-shadow:inset 0 1px 0 rgba(255,255,255,.38),0 22px 55px rgba(45,80,43,.22);
+                backdrop-filter:blur(18px);
+            }
+            .vent-ref-dock-item{
+                position:relative;
+                border:0;
+                background:transparent;
+                color:white;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                justify-content:center;
+                gap:8px;
+                font-size:17px;
+                font-weight:900;
+                text-shadow:0 5px 16px rgba(15,23,42,.18);
+            }
+            .vent-ref-dock-item:not(:last-child):after{
+                content:"";
+                position:absolute;
+                right:0;
+                top:26px;
+                bottom:26px;
+                width:1px;
+                background:rgba(255,255,255,.48);
+            }
+            .vent-ref-dock-item i{
+                font-size:28px;
+                filter:drop-shadow(0 9px 12px rgba(15,23,42,.12));
+            }
+            .vent-ref-dock-item:nth-child(1) i{color:#b46cff}
+            .vent-ref-dock-item:nth-child(2) i{color:#63b3ff}
+            .vent-ref-dock-item:nth-child(3) i{color:#ffc83d}
+            .vent-ref-listen-card{
+                position:absolute;
+                left:50%;
+                bottom:96px;
+                transform:translateX(-50%);
+                width:min(88%,760px);
+                min-height:92px;
+                z-index:11;
+                border-radius:999px;
+                display:flex;
+                align-items:center;
+                gap:20px;
+                padding:14px 24px 14px 16px;
+                background:linear-gradient(90deg,rgba(255,255,255,.94),rgba(255,255,255,.78));
+                border:1px solid rgba(255,255,255,.78);
+                box-shadow:0 22px 55px rgba(45,80,43,.22),inset 0 1px 0 rgba(255,255,255,.72);
+                backdrop-filter:blur(18px);
+            }
+            .vent-ref-listen-icon{
+                width:72px;
+                height:72px;
+                border-radius:999px;
+                display:grid;
+                place-items:center;
+                background:linear-gradient(135deg,#eaa8ff,#7b5cff);
+                color:white;
+                font-size:28px;
+                box-shadow:inset 0 1px 0 rgba(255,255,255,.52),0 12px 26px rgba(133,92,255,.28);
+                flex:0 0 auto;
+            }
+            .vent-ref-listen-copy{
+                min-width:0;
+                flex:1;
+                display:flex;
+                flex-direction:column;
+                justify-content:center;
+                gap:4px;
+            }
+            .vent-ref-listen-copy strong{
+                color:#272a36;
+                font-size:25px;
+                line-height:1.1;
+                letter-spacing:-.03em;
+                font-weight:1000;
+            }
+            #pg-vent.vent-reference-ui .vent-subtitle-container{
+                position:static!important;
+                width:auto!important;
+                min-height:0!important;
+                padding:0!important;
+                border-radius:0!important;
+                display:block!important;
+                text-align:left!important;
+                background:transparent!important;
+                border:0!important;
+                box-shadow:none!important;
+                color:#8a8b98!important;
+                font-size:20px!important;
+                line-height:1.25!important;
+                backdrop-filter:none!important;
+                z-index:auto!important;
+            }
+            .vent-ref-spark{
+                color:rgba(220,197,255,.88);
+                font-size:24px;
+                flex:0 0 auto;
+            }
+            .vent-ref-controls{
+                position:absolute;
+                left:50%;
+                bottom:24px;
+                transform:translateX(-50%);
+                width:min(84%,760px);
+                z-index:12;
+                display:grid;
+                grid-template-columns:minmax(0,1fr) 170px;
+                gap:22px;
+                align-items:center;
+            }
+            #pg-vent.vent-reference-ui .vent-rec-wrap.vent-ref-mic-pill{
+                position:relative!important;
+                width:100%!important;
+                height:86px!important;
+                margin:0!important;
+                border-radius:999px;
+                overflow:hidden;
+                display:flex!important;
+                align-items:center!important;
+                justify-content:center!important;
+                background:linear-gradient(90deg,rgba(194,115,255,.82),rgba(116,167,255,.86));
+                border:1px solid rgba(255,255,255,.44);
+                box-shadow:inset 0 1px 0 rgba(255,255,255,.46),0 18px 42px rgba(71,95,198,.28);
+                backdrop-filter:blur(16px);
+            }
+            #pg-vent.vent-reference-ui #wave-canvas{
+                position:absolute!important;
+                inset:0!important;
+                width:100%!important;
+                height:100%!important;
+                opacity:.45;
+                z-index:1!important;
+            }
+            #pg-vent.vent-reference-ui #rec-btn{
+                width:72px!important;
+                height:72px!important;
+                border-radius:999px!important;
+                display:grid!important;
+                place-items:center!important;
+                z-index:2!important;
+                font-size:34px!important;
+                color:white!important;
+                background:transparent!important;
+                box-shadow:none!important;
+                transform:none!important;
+            }
+            #pg-vent.vent-reference-ui #rec-btn.rec{
+                animation:ventRefPulse 1.1s ease infinite!important;
+            }
+            @keyframes ventRefPulse{
+                0%,100%{filter:drop-shadow(0 0 0 rgba(255,255,255,0))}
+                50%{filter:drop-shadow(0 0 22px rgba(255,255,255,.72))}
+            }
+            .vent-ref-stop{
+                height:76px;
+                border:0;
+                border-radius:999px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                gap:12px;
+                background:rgba(255,255,255,.92);
+                color:#242632;
+                font-size:20px;
+                font-weight:900;
+                box-shadow:0 18px 42px rgba(45,80,43,.18),inset 0 1px 0 rgba(255,255,255,.7);
+                backdrop-filter:blur(18px);
+            }
+            .vent-ref-stop i{
+                font-size:17px;
+            }
+            .vent-ref-meta{
+                position:absolute;
+                left:50%;
+                bottom:7px;
+                transform:translateX(-50%);
+                z-index:13;
+                color:white;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                gap:9px;
+                pointer-events:none;
+                text-shadow:0 4px 14px rgba(15,23,42,.22);
+            }
+            #pg-vent.vent-reference-ui #rec-timer,
+            #pg-vent.vent-reference-ui .vent-status-text{
+                margin:0!important;
+                min-height:0!important;
+                color:rgba(255,255,255,.88)!important;
+                font-size:11px!important;
+                font-weight:900!important;
+            }
+            #pg-vent.vent-reference-ui .vent-live-emo{
+                display:none!important;
+            }
+            .vent-ref-hidden-panel{
+                position:absolute;
+                right:16px;
+                top:100px;
+                z-index:8;
+                width:min(340px,30vw);
+                display:flex;
+                flex-direction:column;
+                gap:10px;
+                pointer-events:none;
+                opacity:.92;
+            }
+            .vent-ref-hidden-panel .vent-transcript,
+            .vent-ref-hidden-panel .vent-avatar-reply,
+            .vent-ref-hidden-panel .vent-result-box{
+                max-height:82px;
+                overflow:hidden;
+                padding:12px;
+                border-radius:20px;
+                background:rgba(255,255,255,.60);
+                border:1px solid rgba(255,255,255,.55);
+                color:#334155;
+                font-size:12px;
+                line-height:1.38;
+                box-shadow:0 14px 32px rgba(45,80,43,.12);
+                backdrop-filter:blur(16px);
+                pointer-events:auto;
+            }
+            .vent-ref-hidden-panel .vent-small-btn{
+                pointer-events:auto;
+                width:max-content;
+                align-self:flex-end;
+                min-height:34px;
+                padding:0 12px;
+                border-radius:999px;
+                background:rgba(255,255,255,.7);
+                border:1px solid rgba(255,255,255,.55);
+                color:#334155;
+                font-weight:900;
+            }
+            #pg-vent.vent-reference-ui .vent-avatar-loading{
+                z-index:30!important;
+            }
+            @media(min-width:900px){
+                #pg-vent.vent-reference-ui .vent-reference-stage{
+                    height:calc(var(--real-vh, 1vh) * 100)!important;
+                    min-height:760px!important;
+                }
+                body:has(#pg-vent.vent-reference-ui.on) #bottom-nav{
+                    opacity:.08;
+                    pointer-events:none;
+                }
+            }
+            @media(max-width:899px){
+                #pg-vent.vent-reference-ui .vent-reference-stage{
+                    height:calc(var(--real-vh, 1vh) * 100 - var(--nav-h, 0px) - var(--s-b, 0px))!important;
+                    min-height:0!important;
+                }
+                .vent-ref-topbar{
+                    top:calc(18px + var(--s-t, 0px));
+                    left:18px;
+                    right:18px;
+                }
+                .vent-ref-menu{
+                    width:44px;
+                    height:44px;
+                    font-size:25px;
+                }
+                .vent-ref-capture{
+                    min-width:132px;
+                    height:54px;
+                    font-size:18px;
+                    padding:0 18px;
+                }
+                .vent-ref-dock{
+                    bottom:188px;
+                    width:min(84%,620px);
+                    min-height:82px;
+                    border-radius:25px;
+                }
+                .vent-ref-dock-item{
+                    font-size:15px;
+                    gap:7px;
+                }
+                .vent-ref-dock-item i{font-size:24px}
+                .vent-ref-listen-card{
+                    bottom:91px;
+                    width:min(88%,620px);
+                    min-height:82px;
+                    padding:12px 18px 12px 12px;
+                    gap:14px;
+                }
+                .vent-ref-listen-icon{
+                    width:62px;
+                    height:62px;
+                    font-size:24px;
+                }
+                .vent-ref-listen-copy strong{
+                    font-size:21px;
+                }
+                #pg-vent.vent-reference-ui .vent-subtitle-container{
+                    font-size:17px!important;
+                }
+                .vent-ref-controls{
+                    bottom:20px;
+                    width:min(84%,620px);
+                    grid-template-columns:minmax(0,1fr) 136px;
+                    gap:14px;
+                }
+                #pg-vent.vent-reference-ui .vent-rec-wrap.vent-ref-mic-pill{
+                    height:76px!important;
+                }
+                #pg-vent.vent-reference-ui #rec-btn{
+                    width:66px!important;
+                    height:66px!important;
+                    font-size:30px!important;
+                }
+                .vent-ref-stop{
+                    height:68px;
+                    font-size:17px;
+                }
+                .vent-ref-hidden-panel{
+                    display:none;
+                }
+            }
+            @media(max-width:520px){
+                .vent-ref-topbar{
+                    top:calc(12px + var(--s-t, 0px));
+                    left:14px;
+                    right:14px;
+                }
+                .vent-ref-capture{
+                    min-width:118px;
+                    height:48px;
+                    font-size:16px;
+                    gap:9px;
+                }
+                .vent-ref-dock{
+                    bottom:174px;
+                    width:86%;
+                    min-height:74px;
+                    border-radius:22px;
+                }
+                .vent-ref-dock-item{
+                    font-size:13px;
+                    gap:5px;
+                }
+                .vent-ref-dock-item i{font-size:22px}
+                .vent-ref-dock-item:not(:last-child):after{
+                    top:20px;
+                    bottom:20px;
+                }
+                .vent-ref-listen-card{
+                    bottom:82px;
+                    width:88%;
+                    min-height:72px;
+                    padding:10px 14px 10px 10px;
+                    gap:11px;
+                }
+                .vent-ref-listen-icon{
+                    width:54px;
+                    height:54px;
+                    font-size:21px;
+                }
+                .vent-ref-listen-copy strong{
+                    font-size:18px;
+                }
+                #pg-vent.vent-reference-ui .vent-subtitle-container{
+                    font-size:15px!important;
+                }
+                .vent-ref-spark{
+                    font-size:18px;
+                }
+                .vent-ref-controls{
+                    bottom:15px;
+                    width:86%;
+                    grid-template-columns:minmax(0,1fr) 104px;
+                    gap:10px;
+                }
+                #pg-vent.vent-reference-ui .vent-rec-wrap.vent-ref-mic-pill{
+                    height:64px!important;
+                }
+                #pg-vent.vent-reference-ui #rec-btn{
+                    width:58px!important;
+                    height:58px!important;
+                    font-size:27px!important;
+                }
+                .vent-ref-stop{
+                    height:58px;
+                    font-size:15px;
+                    gap:8px;
+                }
+                .vent-ref-meta{
+                    display:none;
+                }
+            }
+            @media(max-height:760px){
+                .vent-ref-dock{bottom:156px;min-height:66px}
+                .vent-ref-listen-card{bottom:75px;min-height:66px}
+                .vent-ref-controls{bottom:12px}
+                .vent-ref-dock-item span{display:none}
+                .vent-ref-listen-icon{width:48px;height:48px}
+                .vent-ref-listen-copy strong{font-size:17px}
+                #pg-vent.vent-reference-ui .vent-subtitle-container{font-size:14px!important}
+                #pg-vent.vent-reference-ui .vent-rec-wrap.vent-ref-mic-pill{height:58px!important}
+                .vent-ref-stop{height:54px}
+            }
+
         </style>
 
     </head>
@@ -8986,18 +9532,17 @@
                 </section>
 
                 <!-- VENT -->
-                <section id="pg-vent" class="<%= pageId === 'pg-vent' ? 'pg on vent-voice-page vent-fullscreen-page' : 'pg vent-voice-page vent-fullscreen-page' %>" aria-label="Vent Voice">
-                    <div id="vent-avatar-container" class="vent-avatar-container vent-fullscreen-avatar">
-                        <div class="vent-fullscreen-topbar">
-                            <button type="button" class="vent-fs-back" data-page="pg-home" aria-label="Kembali">
-                                <i class="fas fa-chevron-left"></i>
+                <section id="pg-vent" class="<%= pageId === 'pg-vent' ? 'pg on vent-voice-page vent-fullscreen-page vent-reference-ui' : 'pg vent-voice-page vent-fullscreen-page vent-reference-ui' %>" aria-label="Vent Voice">
+                    <div id="vent-avatar-container" class="vent-avatar-container vent-fullscreen-avatar vent-reference-stage">
+                        <div class="vent-ref-sky"></div>
+
+                        <div class="vent-ref-topbar">
+                            <button type="button" class="vent-ref-menu" data-page="pg-home" aria-label="Menu">
+                                <i class="fas fa-bars"></i>
                             </button>
-                            <div class="vent-fs-title">
-                                <span><i class="fas fa-microphone-lines"></i> Vent Voice</span>
-                                <strong>Ngomong langsung ke avatar</strong>
-                            </div>
-                            <button type="button" id="vent-play-idle" class="vent-fs-icon-btn" disabled aria-label="Play animasi">
-                                <i class="fas fa-person-walking"></i>
+                            <button type="button" id="vent-play-idle" class="vent-ref-capture" disabled aria-label="Animasi">
+                                <i class="fas fa-camera-retro"></i>
+                                <span>Capture</span>
                             </button>
                         </div>
 
@@ -9006,45 +9551,61 @@
                             <span id="vent-loading-text">Memuat avatar 3D...</span>
                         </div>
 
-                        <div class="vent-fs-side-panel">
-                            <div class="vent-panel-block">
-                                <span class="vent-panel-kicker">Transkrip suara</span>
-                                <div id="vent-transcript" class="vent-transcript">Belum ada suara yang ditangkap.</div>
-                            </div>
-                            <div class="vent-panel-block">
-                                <span class="vent-panel-kicker">Balasan avatar</span>
-                                <div id="vent-avatar-reply" class="vent-avatar-reply">Balasan Plong akan muncul di sini.</div>
-                            </div>
-                            <div id="emo-res" class="vent-result-box" style="display:none"></div>
+                        <div class="vent-ref-dock" aria-label="Vent shortcuts">
+                            <button type="button" class="vent-ref-dock-item active">
+                                <i class="fas fa-heart"></i>
+                                <span>Perasaan</span>
+                            </button>
+                            <button type="button" class="vent-ref-dock-item">
+                                <i class="fas fa-comment-dots"></i>
+                                <span>Obrolan</span>
+                            </button>
+                            <button type="button" class="vent-ref-dock-item">
+                                <i class="fas fa-star"></i>
+                                <span>Aktivitas</span>
+                            </button>
                         </div>
 
-                        <div class="vent-fullscreen-bottom">
-                            <div id="vent-subtitle-container" class="vent-subtitle-container">Avatar sedang dimuat...</div>
+                        <div class="vent-ref-listen-card">
+                            <div class="vent-ref-listen-icon">
+                                <i class="fas fa-wave-square"></i>
+                            </div>
+                            <div class="vent-ref-listen-copy">
+                                <strong id="vent-ref-listen-title">Plong mendengarkan...</strong>
+                                <span id="vent-subtitle-container" class="vent-subtitle-container">Ceritakan perasaanmu...</span>
+                            </div>
+                            <i class="fas fa-sparkles vent-ref-spark"></i>
+                        </div>
 
-                            <div class="rw vent-rec-wrap">
+                        <div class="vent-ref-controls">
+                            <div class="rw vent-rec-wrap vent-ref-mic-pill">
                                 <canvas id="wave-canvas" width="180" height="180"></canvas>
                                 <button id="rec-btn" class="vent-mic-btn" aria-label="Mulai voice input" type="button" disabled>
                                     <i class="fas fa-microphone"></i>
                                 </button>
                             </div>
 
-                            <div class="vent-bottom-meta">
-                                <p id="rec-timer">00:00</p>
-                                <p id="vent-status-text" class="vent-status-text"></p>
-                            </div>
+                            <button type="button" id="vent-stop-speech" class="vent-ref-stop">
+                                <i class="fas fa-square"></i>
+                                <span>Stop</span>
+                            </button>
+                        </div>
 
+                        <div class="vent-ref-meta">
+                            <p id="rec-timer">00:00</p>
+                            <p id="vent-status-text" class="vent-status-text"></p>
                             <div id="live-emo" class="leb vent-live-emo">
                                 <p>Siap mendengar...</p>
                             </div>
+                        </div>
 
-                            <div class="vent-voice-actions">
-                                <button type="button" id="vent-test-voice" class="vent-small-btn" disabled>
-                                    <i class="fas fa-play"></i> Test
-                                </button>
-                                <button type="button" id="vent-stop-speech" class="vent-small-btn">
-                                    <i class="fas fa-volume-xmark"></i> Stop
-                                </button>
-                            </div>
+                        <div class="vent-ref-hidden-panel">
+                            <div id="vent-transcript" class="vent-transcript">Belum ada suara yang ditangkap.</div>
+                            <div id="vent-avatar-reply" class="vent-avatar-reply">Balasan Plong akan muncul di sini.</div>
+                            <div id="emo-res" class="vent-result-box" style="display:none"></div>
+                            <button type="button" id="vent-test-voice" class="vent-small-btn" disabled>
+                                <i class="fas fa-play"></i> Test
+                            </button>
                         </div>
                     </div>
                 </section>
@@ -10175,7 +10736,7 @@
         <script type="module">
         import { AvatarSpeaker } from '/dist/index.esm.js';
 
-        const VENT_AVATAR_PATH = '/assets/avatars/F_AVA.vrm';
+        const VENT_AVATAR_PATH = '/assets/avatars/AvatarTest.vrm';
         const VENT_IDLE_ANIMATION = '/assets/animations/VRMA_01(全身を見せる).vrma';
         const VENT_GREETING_ANIMATION = '/assets/animations/VRMA_02(挨拶).vrma';
         const VENT_IDLE_DELAY = 8000;
