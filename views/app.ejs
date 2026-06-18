@@ -8997,6 +8997,18 @@
                 .vent-clean-stop{height:50px}
             }
 
+
+            /* Stop button only appears while recording */
+            #pg-vent.vent-clean-ui .vent-clean-controls:not(.is-recording){
+                grid-template-columns:1fr!important;
+            }
+            #pg-vent.vent-clean-ui .vent-clean-controls:not(.is-recording) #vent-stop-speech{
+                display:none!important;
+            }
+            #pg-vent.vent-clean-ui .vent-clean-controls.is-recording #vent-stop-speech{
+                display:flex!important;
+            }
+
         </style>
 
     </head>
@@ -12111,6 +12123,15 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 if(anim)anim.disabled=!!value;
                 if(stop)stop.disabled=false;
             }
+            function setVentRecordingUI(isRecording){
+                var controls=document.querySelector(".vent-clean-controls");
+                if(controls)controls.classList.toggle("is-recording",!!isRecording);
+                var stop=document.getElementById("vent-stop-speech");
+                if(stop){
+                    stop.setAttribute("aria-hidden",isRecording?"false":"true");
+                    stop.tabIndex=isRecording?0:-1;
+                }
+            }
             function stopAvatarSpeech(){
                 if(window.PlongVentAvatarSpeaker&&window.PlongVentAvatarSpeaker.stop){
                     window.PlongVentAvatarSpeaker.stop();
@@ -12269,7 +12290,11 @@ var authToken=localStorage.getItem("vkm_token")||"";
             var rB=document.getElementById("rec-btn"),rT=document.getElementById("rec-timer");
             if(rB)rB.addEventListener("click",function(){if(mR&&mR.state==="recording")sR();else stR()});
             var stopVoiceBtn=document.getElementById("vent-stop-speech");
-            if(stopVoiceBtn)stopVoiceBtn.addEventListener("click",stopAvatarSpeech);
+            if(stopVoiceBtn)stopVoiceBtn.addEventListener("click",function(){
+                if(mR&&mR.state==="recording")sR();
+                else stopAvatarSpeech();
+            });
+            setVentRecordingUI(false);
             var testVoiceBtn=document.getElementById("vent-test-voice");
             if(testVoiceBtn)testVoiceBtn.addEventListener("click",function(){speakAvatarVoice("Halo, aku Plong. Sekarang kamu bisa curhat lewat suara.")});
             var idleBtn=document.getElementById("vent-play-idle");
@@ -12290,6 +12315,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                     mR.onstop=pA2;
                     mR.start();
                     speechRec=startSpeechCapture();
+                    setVentRecordingUI(true);
                     rB.classList.add("rec");
                     rB.innerHTML='<i class="fas fa-stop"></i>';
                     rS=0;
@@ -12311,6 +12337,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                     if(res)res.style.display="none";
                 }catch(e){
                     console.warn(e);
+                    setVentRecordingUI(false);
                     toast("Akses mikrofon ditolak.");
                     setVentStatus("Akses mikrofon ditolak.");
                 }
@@ -12321,6 +12348,7 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 stopSpeechCapture();
                 if(rSt)rSt.getTracks().forEach(function(t){t.stop()});
                 clearInterval(rI);
+                setVentRecordingUI(false);
                 if(rB){rB.classList.remove("rec");rB.innerHTML='<i class="fas fa-microphone"></i>';}
                 cancelAnimationFrame(wAF);
                 wI();
