@@ -10204,6 +10204,34 @@
             return pageVisible && rect.width>120 && rect.height>180;
         }
 
+        function applyVentFullBodyFraming(){
+            try{
+                const renderer=ventAvatar&&ventAvatar.renderer;
+                if(!renderer)return;
+
+                if(renderer.camera){
+                    renderer.camera.fov=36;
+                    renderer.camera.position.set(0,1.05,3.85);
+                    renderer.camera.lookAt(0,0.75,0);
+                    renderer.camera.updateProjectionMatrix();
+                }
+
+                const vrm=renderer.vrm;
+                if(vrm&&vrm.scene){
+                    vrm.scene.scale.set(1.0,1.0,1.0);
+                    vrm.scene.position.set(0,-0.92,0);
+                    vrm.scene.rotation.y=Math.PI;
+                }
+
+                if(renderer.controls&&renderer.controls.target){
+                    renderer.controls.target.set(0,0.78,0);
+                    renderer.controls.update&&renderer.controls.update();
+                }
+            }catch(error){
+                console.warn('Vent full body framing gagal:',error);
+            }
+        }
+
         function forceVentAvatarCanvasLayout(){
             const container=byId('vent-avatar-container');
             if(!container)return;
@@ -10218,8 +10246,10 @@
                 canvas.style.pointerEvents='auto';
             });
             try{
+                applyVentFullBodyFraming();
                 if(ventAvatar&&ventAvatar.renderer&&typeof ventAvatar.renderer.resize==='function'){
                     ventAvatar.renderer.resize();
+                    applyVentFullBodyFraming();
                 }
             }catch(error){
                 console.warn('Vent avatar resize gagal:',error);
@@ -10414,6 +10444,8 @@
                 ventStarting=false;
 
                 forceVentAvatarCanvasLayout();
+                setTimeout(forceVentAvatarCanvasLayout,120);
+                setTimeout(forceVentAvatarCanvasLayout,450);
                 hideVentLoading();
                 setText('vent-subtitle-container','Avatar siap. Tekan mic dan mulai bicara.');
                 setText('vent-status-text','Avatar siap mendengarkan.');
@@ -10439,6 +10471,7 @@
             stop:stopVentSpeech,
             resetIdle:resetVentIdleTimer,
             forceResize:forceVentAvatarCanvasLayout,
+            fullBody:applyVentFullBodyFraming,
             isSpeaking:()=>ventSpeaking
         };
 
