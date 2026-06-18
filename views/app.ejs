@@ -8019,6 +8019,24 @@
                 }
             }
 
+
+            /* Vent explicit WebGL canvas fix */
+            #pg-vent.vent-clean-ui #vent-avatar-canvas{
+                position:absolute!important;
+                inset:0!important;
+                width:100%!important;
+                height:100%!important;
+                display:block!important;
+                z-index:1!important;
+                background:transparent!important;
+                pointer-events:auto!important;
+                touch-action:none!important;
+                transform:translateZ(0)!important;
+                backface-visibility:hidden!important;
+                -webkit-transform:translateZ(0)!important;
+                -webkit-backface-visibility:hidden!important;
+            }
+
         </style>
 
     </head>
@@ -8916,6 +8934,7 @@
                 <!-- VENT -->
                 <section id="pg-vent" class="<%= pageId === 'pg-vent' ? 'pg on vent-voice-page vent-fullscreen-page vent-clean-ui' : 'pg vent-voice-page vent-fullscreen-page vent-clean-ui' %>" aria-label="Vent Voice">
                     <div id="vent-avatar-container" class="vent-avatar-container vent-fullscreen-avatar vent-clean-stage">
+                        <canvas id="vent-avatar-canvas" class="vent-avatar-canvas" aria-hidden="true"></canvas>
                         <div id="vent-avatar-loading" class="vent-avatar-loading">
                             <div class="spinner"></div>
                             <span id="vent-loading-text">Memuat avatar 3D...</span>
@@ -8924,7 +8943,7 @@
                         <div class="vent-clean-bottom">
                             <div class="vent-clean-listen-card">
                                 <div class="vent-clean-listen-copy">
-                                    <strong id="hero-greeting">Hai VokaMon User *(˶ᵔᗜᵔ˶)👋</strong>
+                                    <strong id="vent-hero-greeting">Hai VokaMon User *(˶ᵔᗜᵔ˶)👋</strong>
                                     <span id="vent-subtitle-container" class="vent-subtitle-container">Ceritakan perasaanmu...</span>
                                 </div>
                             </div>
@@ -10092,6 +10111,7 @@
         import { AvatarSpeaker } from '/dist/index.esm.js';
 
         const VENT_AVATAR_PATH = '/assets/avatars/F_AVA.vrm';
+        const VENT_AVATAR_PATHS = Array.from(new Set([VENT_AVATAR_PATH,'/assets/avatars/AvatarTest.vrm']));
         const VENT_IDLE_ANIMATION = '/assets/animations/VRMA_01(全身を見せる).vrma';
         const VENT_GREETING_ANIMATION = '/assets/animations/VRMA_02(挨拶).vrma';
         const VENT_IDLE_DELAY = 8000;
@@ -10110,6 +10130,63 @@
         function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
         function byId(id){return document.getElementById(id)}
         function setText(id,text){const el=byId(id);if(el)el.textContent=text||''}
+
+        function waitVentAvatarReady(instance,timeoutMs){
+            return new Promise((resolve,reject)=>{
+                let done=false;
+                const finish=(ok,value)=>{
+                    if(done)return;
+                    done=true;
+                    clearTimeout(timer);
+                    ok?resolve(value):reject(value);
+                };
+                const timer=setTimeout(()=>finish(false,new Error('Avatar load timeout')),timeoutMs||16000);
+                try{
+                    if(instance&&typeof instance.on==='function'){
+                        instance.on('error',(error)=>finish(false,error instanceof Error?error:new Error(String(error))));
+                    }
+                    instance.ready().then(()=>finish(true)).catch((error)=>finish(false,error));
+                }catch(error){
+                    finish(false,error);
+                }
+            });
+        }
+
+        function sizeVentAvatarCanvasNow(){
+            const container=byId('vent-avatar-container');
+            const canvas=byId('vent-avatar-canvas') || (container&&container.querySelector('canvas:not(#wave-canvas)'));
+            if(!container||!canvas)return;
+            const rect=container.getBoundingClientRect();
+            const width=Math.max(1,Math.round(rect.width||container.clientWidth||window.innerWidth||360));
+            const height=Math.max(1,Math.round(rect.height||container.clientHeight||window.innerHeight||640));
+            canvas.style.position='absolute';
+            canvas.style.inset='0';
+            canvas.style.width='100%';
+            canvas.style.height='100%';
+            canvas.style.display='block';
+            canvas.style.zIndex='1';
+            canvas.style.background='transparent';
+            canvas.style.pointerEvents='auto';
+            const dpr=Math.min(window.devicePixelRatio||1,2);
+            const bw=Math.max(1,Math.round(width*dpr));
+            const bh=Math.max(1,Math.round(height*dpr));
+            if(canvas.width!==bw)canvas.width=bw;
+            if(canvas.height!==bh)canvas.height=bh;
+            try{
+                const renderer=ventAvatar&&ventAvatar.renderer;
+                if(renderer&&renderer.renderer){
+                    renderer.renderer.setPixelRatio(dpr);
+                    renderer.renderer.setSize(width,height,false);
+                    if(renderer.camera){
+                        renderer.camera.aspect=width/height;
+                        renderer.camera.updateProjectionMatrix();
+                    }
+                }
+            }catch(error){
+                console.warn('Vent canvas manual resize gagal:',error);
+            }
+        }
+
 
         function isVentVisible(){
             const page=byId('pg-vent');
@@ -10168,27 +10245,31 @@
         function forceVentAvatarCanvasLayout(){
             const container=byId('vent-avatar-container');
             if(!container)return;
+            sizeVentAvatarCanvasNow();
             container.querySelectorAll('canvas').forEach((canvas)=>{
                 canvas.style.position='absolute';
                 canvas.style.inset='0';
                 canvas.style.width='100%';
                 canvas.style.height='100%';
                 canvas.style.display='block';
-                canvas.style.zIndex='1';
+                canvas.style.zIndex=canvas.id==='wave-canvas'?'1':'1';
                 canvas.style.background='transparent';
                 canvas.style.pointerEvents='auto';
             });
             try{
+                sizeVentAvatarCanvasNow();
                 applyVentFullBodyFraming();
                 if(ventAvatar&&ventAvatar.renderer&&typeof ventAvatar.renderer.resize==='function'){
                     ventAvatar.renderer.resize();
+                    sizeVentAvatarCanvasNow();
                     applyVentFullBodyFraming();
                 }
             }catch(error){
                 console.warn('Vent avatar resize gagal:',error);
             }
             window.dispatchEvent(new Event('resize'));
-            setTimeout(()=>{try{applyVentFullBodyFraming()}catch(_){}} ,160);
+            setTimeout(()=>{try{sizeVentAvatarCanvasNow();applyVentFullBodyFraming()}catch(_){}} ,160);
+            setTimeout(()=>{try{sizeVentAvatarCanvasNow();applyVentFullBodyFraming()}catch(_){}} ,520);
         }
 
         function setVentModuleButtons(disabled){
@@ -10380,15 +10461,35 @@
             setText('vent-loading-text','Memuat avatar 3D...');
 
             try{
-                ventAvatar=new AvatarSpeaker({
-                    avatar: VENT_AVATAR_PATH,
-                    canvas: container,
-                    subtitleContainer: subtitle
-                });
+                const avatarCanvas=byId('vent-avatar-canvas');
+                sizeVentAvatarCanvasNow();
 
-                watchVentResize();
-                await ventAvatar.ready();
+                let lastAvatarError=null;
+                for(const avatarPath of VENT_AVATAR_PATHS){
+                    try{
+                        if(ventAvatar&&typeof ventAvatar.destroy==='function'){
+                            try{ventAvatar.destroy()}catch(_){}
+                        }
+                        ventAvatar=new AvatarSpeaker({
+                            avatar: avatarPath,
+                            canvas: avatarCanvas || container,
+                            subtitleContainer: subtitle
+                        });
+                        watchVentResize();
+                        sizeVentAvatarCanvasNow();
+                        await waitVentAvatarReady(ventAvatar,18000);
+                        lastAvatarError=null;
+                        break;
+                    }catch(error){
+                        lastAvatarError=error;
+                        console.warn('Gagal memuat avatar path:',avatarPath,error);
+                        ventAvatar=null;
+                    }
+                }
+                if(lastAvatarError||!ventAvatar)throw lastAvatarError||new Error('Avatar gagal dimuat');
+
                 await sleep(250);
+                sizeVentAvatarCanvasNow();
 
                 ventReady=true;
                 ventStarting=false;
@@ -10424,6 +10525,17 @@
             fullBody:applyVentFullBodyFraming,
             isSpeaking:()=>ventSpeaking
         };
+
+
+        ['resize','orientationchange','pageshow','visibilitychange'].forEach((eventName)=>{
+            window.addEventListener(eventName,()=>{
+                if(isVentVisible()){
+                    setTimeout(forceVentAvatarCanvasLayout,80);
+                    setTimeout(forceVentAvatarCanvasLayout,360);
+                    setTimeout(forceVentAvatarCanvasLayout,900);
+                }
+            },{passive:true});
+        });
 
         function bootVentAvatarWhenReady(){
             startVentAvatarSpeaker();
@@ -10586,8 +10698,11 @@ var EMO={marah:{label:"Marah",color:"#DC2626",hue:0,icon:"fa-fire",desc:"Api Cha
                 return fallback;
             }
             function updateHeroGreeting(){
-                var el=document.getElementById("hero-greeting");
-                if(el)el.textContent=`Hai ${getStoredUserName()} (˶ᵔᗜᵔ˶)👋`;
+                var text=`Hai ${getStoredUserName()} (˶ᵔᗜᵔ˶)👋`;
+                ["hero-greeting","vent-hero-greeting"].forEach(function(id){
+                    var el=document.getElementById(id);
+                    if(el)el.textContent=text;
+                });
             }
 
             var state={coins:0,pet:{name:"Plong",level:1,exp:0,expMax:30,hunger:50,happy:50,energy:70,bond:0,worker:{lastClaimAt:new Date().toISOString(),essence:{marah:0,sedih:0,galau:0,stres:0,excited:0,tenang:0},totalEarned:0,today:{date:new Date().toISOString().slice(0,10),vent:0,chat:0,garden:0,care:0,bonusClaimed:false}},accessory:"",background:"",wings:false,lastCareAt:new Date().toISOString(),avatar:{body:"orange",shape:"round",eyes:"cute",mouth:"smile",accessory:"none",aura:"none"}},emotions:{tenang:0},art:[],ch:[],vents:[],inventory:[],redeemHistory:[],lastCrystal:null,userAvatar:{skin:"warm",hair:"soft",face:"smile",outfit:"hoodie",accessory:"none",aura:"tenang",background:"sky",pose:"idle"},garden:{activePlot:0,plot:null,plots:[null,null,null,null],inventory:{carrot:0,lettuce:0,tomato:0},history:[],level:1,exp:0,expMax:40,lastIdleAt:new Date().toISOString(),lastBonusAt:null},gm:"qwen2.5:3b",al:"id"};
