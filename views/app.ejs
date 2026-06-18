@@ -7879,6 +7879,55 @@
                 #pg-vent.vent-clean-ui .vent-clean-stop{height:50px}
             }
 
+
+            /* Vent loading state fix */
+            #pg-vent.vent-clean-ui #vent-avatar-loading{
+                position:absolute!important;
+                inset:0!important;
+                z-index:40!important;
+                display:flex!important;
+                flex-direction:column!important;
+                align-items:center!important;
+                justify-content:center!important;
+                gap:14px!important;
+                color:#fff!important;
+                text-align:center!important;
+                background:linear-gradient(180deg,rgba(15,23,42,.24),rgba(15,23,42,.42))!important;
+                backdrop-filter:blur(6px)!important;
+                pointer-events:auto!important;
+                opacity:1!important;
+                visibility:visible!important;
+                transition:opacity .22s ease,visibility .22s ease!important;
+            }
+            #pg-vent.vent-clean-ui #vent-avatar-loading.hidden{
+                opacity:0!important;
+                visibility:hidden!important;
+                pointer-events:none!important;
+            }
+            #pg-vent.vent-clean-ui #vent-avatar-loading .spinner{
+                width:38px!important;
+                height:38px!important;
+                border-radius:999px!important;
+                border:3px solid rgba(255,255,255,.36)!important;
+                border-top-color:#fff!important;
+                animation:ventLoadingSpin .8s linear infinite!important;
+            }
+            #pg-vent.vent-clean-ui #vent-avatar-loading span{
+                display:block!important;
+                max-width:min(86%,360px)!important;
+                padding:9px 14px!important;
+                border-radius:999px!important;
+                background:rgba(15,23,42,.42)!important;
+                border:1px solid rgba(255,255,255,.18)!important;
+                font-size:13px!important;
+                font-weight:900!important;
+                line-height:1.3!important;
+                text-shadow:0 2px 12px rgba(0,0,0,.22)!important;
+            }
+            @keyframes ventLoadingSpin{
+                to{transform:rotate(360deg)}
+            }
+
         </style>
 
     </head>
@@ -8783,11 +8832,8 @@
 
                         <div class="vent-clean-bottom">
                             <div class="vent-clean-listen-card">
-                                <div class="vent-clean-listen-icon">
-                                    <i class="fas fa-wave-square"></i>
-                                </div>
                                 <div class="vent-clean-listen-copy">
-                                    <strong id="vent-ref-listen-title">Plong mendengarkan...</strong>
+                                    <strong id="hero-greeting">Hai VokaMon User *(˶ᵔᗜᵔ˶)👋</strong>
                                     <span id="vent-subtitle-container" class="vent-subtitle-container">Ceritakan perasaanmu...</span>
                                 </div>
                             </div>
@@ -10044,14 +10090,24 @@
         }
         function hideVentLoading(){
             const loading=byId('vent-avatar-loading');
-            if(loading)loading.classList.add('hidden');
+            if(loading){
+                loading.classList.add('hidden');
+                loading.setAttribute('aria-hidden','true');
+                setTimeout(()=>{
+                    if(loading.classList.contains('hidden'))loading.style.display='none';
+                },260);
+            }
             setVentModuleButtons(false);
         }
         function showVentLoadError(message){
             const loading=byId('vent-avatar-loading');
             const loadingText=byId('vent-loading-text');
             if(loadingText)loadingText.textContent=message;
-            if(loading)loading.classList.remove('hidden');
+            if(loading){
+                loading.style.display='flex';
+                loading.classList.remove('hidden');
+                loading.setAttribute('aria-hidden','false');
+            }
             setVentModuleButtons(true);
         }
         function clearVentIdleTimer(){
@@ -10205,6 +10261,12 @@
 
             ventStarting=true;
             container.dataset.avatarSpeakerMounted='1';
+            const loading=byId('vent-avatar-loading');
+            if(loading){
+                loading.style.display='flex';
+                loading.classList.remove('hidden');
+                loading.setAttribute('aria-hidden','false');
+            }
             setVentModuleButtons(true);
             setText('vent-loading-text','Memuat avatar 3D...');
 
@@ -10226,7 +10288,7 @@
                 setTimeout(forceVentAvatarCanvasLayout,120);
                 setTimeout(forceVentAvatarCanvasLayout,450);
                 hideVentLoading();
-                setText('vent-subtitle-container','Avatar siap. Tekan mic dan mulai bicara.');
+                setText('vent-subtitle-container','Aku siap mendengarkan ceritamu. Tekan mic dan mulai bicara.');
                 setText('vent-status-text','Avatar siap mendengarkan.');
 
                 await sleep(120);
