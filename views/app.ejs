@@ -7510,6 +7510,253 @@
                 #avatar-3d-canvas-container{min-height:340px}
             }
 
+
+            /* ===== Vent Voice AvatarSpeaker ===== */
+            #pg-vent.vent-voice-page{
+                align-items:stretch!important;
+                justify-content:flex-start!important;
+                overflow-y:auto!important;
+                overflow-x:hidden!important;
+                -webkit-overflow-scrolling:touch;
+                padding:18px 18px calc(var(--nav-h) + var(--s-b) + 28px)!important;
+                background:linear-gradient(180deg,#f8fbff,#fff7f1);
+            }
+            .vent-voice-shell{
+                width:min(100%,1180px);
+                margin:0 auto;
+                display:flex;
+                flex-direction:column;
+                gap:16px;
+            }
+            .vent-voice-header{
+                display:flex;
+                align-items:flex-start;
+                justify-content:space-between;
+                gap:16px;
+                padding:22px;
+                border-radius:28px;
+                background:
+                    radial-gradient(circle at 18% 10%,rgba(255,180,109,.28),transparent 34%),
+                    radial-gradient(circle at 82% 12%,rgba(118,169,255,.22),transparent 34%),
+                    linear-gradient(135deg,#fff7ed,#eff6ff);
+                border:1px solid rgba(255,255,255,.9);
+                box-shadow:0 18px 55px rgba(62,80,114,.10);
+            }
+            .vent-voice-header span{
+                display:inline-flex;
+                align-items:center;
+                gap:8px;
+                min-height:32px;
+                padding:7px 11px;
+                border-radius:999px;
+                background:rgba(255,255,255,.72);
+                border:1px solid rgba(226,232,240,.84);
+                color:#607092;
+                font-size:12px;
+                font-weight:900;
+            }
+            .vent-voice-header h1{
+                margin:10px 0 6px;
+                font-size:clamp(24px,4vw,44px);
+                line-height:1.02;
+                letter-spacing:-.04em;
+                color:var(--t1);
+            }
+            .vent-voice-header p{
+                color:var(--t3);
+                font-size:14px;
+                max-width:620px;
+                line-height:1.55;
+            }
+            .vent-voice-pill{
+                flex:0 0 auto;
+                display:inline-flex;
+                align-items:center;
+                gap:8px;
+                min-height:38px;
+                padding:0 13px;
+                border-radius:999px;
+                background:#111827;
+                color:white;
+                font-size:12px;
+                font-weight:900;
+                box-shadow:0 12px 26px rgba(17,24,39,.16);
+            }
+            .vent-voice-grid{
+                display:grid;
+                grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);
+                gap:16px;
+                align-items:stretch;
+            }
+            .vent-avatar-card,.vent-voice-panel{
+                border-radius:30px;
+                background:rgba(255,255,255,.78);
+                border:1px solid rgba(226,232,240,.9);
+                box-shadow:0 18px 55px rgba(62,80,114,.09);
+                overflow:hidden;
+            }
+            .vent-avatar-card{
+                padding:18px;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                gap:14px;
+            }
+            .vent-avatar-container{
+                position:relative;
+                width:min(100%,420px);
+                height:560px;
+                border-radius:26px;
+                overflow:hidden;
+                background-image:
+                    linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.16)),
+                    url("https://i.pinimg.com/736x/93/60/90/936090974ccac22049a62c5dc439a491.jpg");
+                background-size:cover;
+                background-position:center;
+                box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 16px 38px rgba(30,41,59,.13);
+                border:1px solid rgba(255,255,255,.72);
+            }
+            .vent-avatar-container canvas{
+                background:transparent!important;
+            }
+            .vent-avatar-loading{
+                position:absolute;
+                inset:0;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                justify-content:center;
+                gap:12px;
+                background:rgba(255,255,255,.92);
+                color:#607092;
+                font-size:13px;
+                font-weight:900;
+                z-index:8;
+                transition:opacity .24s ease,visibility .24s ease;
+            }
+            .vent-avatar-loading.hidden{
+                opacity:0;
+                visibility:hidden;
+                pointer-events:none;
+            }
+            .vent-subtitle-container{
+                position:absolute;
+                left:14px;
+                right:14px;
+                bottom:14px;
+                min-height:46px;
+                padding:12px 14px;
+                border-radius:16px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                text-align:center;
+                background:rgba(0,0,0,.58);
+                color:white;
+                font-size:14px;
+                line-height:1.45;
+                backdrop-filter:blur(10px);
+                z-index:6;
+            }
+            .vent-live-emo{
+                min-height:32px;
+                color:var(--t3);
+                font-size:12px;
+                font-weight:800;
+            }
+            .vent-rec-wrap{margin-top:0}
+            .vent-mic-btn{width:76px!important;height:76px!important}
+            .vent-voice-actions{
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                gap:8px;
+                flex-wrap:wrap;
+            }
+            .vent-small-btn{
+                min-height:36px;
+                padding:0 12px;
+                border-radius:999px;
+                background:var(--bg2);
+                border:1px solid var(--bd1);
+                color:var(--t2);
+                font-size:12px;
+                font-weight:900;
+                display:inline-flex;
+                align-items:center;
+                gap:7px;
+            }
+            .vent-small-btn:hover{background:var(--bg3);border-color:var(--bd2)}
+            .vent-status-text{
+                min-height:20px;
+                font-size:12px;
+                color:var(--t3);
+                font-weight:800;
+                text-align:center;
+            }
+            .vent-voice-panel{
+                padding:18px;
+                display:flex;
+                flex-direction:column;
+                gap:14px;
+            }
+            .vent-panel-block{
+                border-radius:22px;
+                background:rgba(248,250,252,.78);
+                border:1px solid rgba(226,232,240,.9);
+                padding:14px;
+            }
+            .vent-panel-kicker{
+                display:block;
+                margin-bottom:8px;
+                font-size:10px;
+                text-transform:uppercase;
+                letter-spacing:.08em;
+                color:var(--t4);
+                font-weight:1000;
+            }
+            .vent-transcript,.vent-avatar-reply{
+                min-height:64px;
+                color:var(--t2);
+                font-size:13px;
+                line-height:1.55;
+                white-space:pre-wrap;
+            }
+            .vent-avatar-reply{color:var(--t1);font-weight:700}
+            .vent-result-box{
+                width:100%;
+                max-width:none!important;
+                background:var(--bg2);
+                border:1px solid var(--bd1);
+                border-radius:22px;
+                padding:16px;
+                text-align:center;
+            }
+            .vent-warning{
+                display:flex;
+                gap:8px;
+                align-items:flex-start;
+                padding:12px;
+                border-radius:18px;
+                background:#fff7ed;
+                color:#9a3412;
+                font-size:12px;
+                line-height:1.45;
+                font-weight:700;
+            }
+            .vent-warning i{margin-top:2px;flex:0 0 auto}
+            @media(max-width:899px){
+                .vent-voice-grid{grid-template-columns:1fr}
+                .vent-avatar-container{height:min(560px,70vh)}
+                .vent-voice-header{flex-direction:column}
+            }
+            @media(max-width:520px){
+                #pg-vent.vent-voice-page{padding:12px 12px calc(var(--nav-h) + var(--s-b) + 24px)!important}
+                .vent-avatar-card,.vent-voice-panel{border-radius:24px}
+                .vent-avatar-container{height:520px;border-radius:22px}
+                .vent-voice-header{padding:18px;border-radius:24px}
+            }
+
         </style>
 
     </head>
@@ -8405,13 +8652,77 @@
                 </section>
 
                 <!-- VENT -->
-                <section id="pg-vent" class="<%= pageId === 'pg-vent' ? 'pg on' : 'pg' %>" aria-label="Vent">
-                    <div class="ph"><div><h1 class="pt">Vent</h1><p class="ps">Tekan dan tahan untuk mengeluarkan suara</p></div></div>
-                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px">
-                        <div id="live-emo" class="leb"><p style="font-size:12px;color:var(--t3)">Siap mendengar...</p></div>
-                        <div class="rw"><canvas id="wave-canvas" width="180" height="180"></canvas><button id="rec-btn" aria-label="Mulai rekam suara"><i class="fas fa-microphone"></i></button></div>
-                        <p id="rec-timer">00:00</p>
-                        <div id="emo-res" style="display:none;width:100%;max-width:320px"></div>
+                <section id="pg-vent" class="<%= pageId === 'pg-vent' ? 'pg on vent-voice-page' : 'pg vent-voice-page' %>" aria-label="Vent Voice">
+                    <div class="vent-voice-shell">
+                        <div class="vent-voice-header">
+                            <div>
+                                <span><i class="fas fa-microphone-lines"></i> Vent Voice</span>
+                                <h1>Ngomong langsung ke avatar</h1>
+                                <p>Tekan mic, ceritakan unek-unekmu, lalu avatar VRM akan membalas dengan suara dan ekspresi.</p>
+                            </div>
+                            <div class="vent-voice-pill">
+                                <i class="fas fa-volume-high"></i>
+                                <span>AvatarSpeaker aktif</span>
+                            </div>
+                        </div>
+
+                        <div class="vent-voice-grid">
+                            <section class="vent-avatar-card">
+                                <div id="vent-avatar-container" class="vent-avatar-container">
+                                    <div id="vent-avatar-loading" class="vent-avatar-loading">
+                                        <div class="spinner"></div>
+                                        <span id="vent-loading-text">Memuat avatar 3D...</span>
+                                    </div>
+                                    <div id="vent-subtitle-container" class="vent-subtitle-container">Avatar sedang dimuat...</div>
+                                </div>
+
+                                <div id="live-emo" class="leb vent-live-emo">
+                                    <p>Siap mendengar...</p>
+                                </div>
+
+                                <div class="rw vent-rec-wrap">
+                                    <canvas id="wave-canvas" width="180" height="180"></canvas>
+                                    <button id="rec-btn" class="vent-mic-btn" aria-label="Mulai voice input" type="button" disabled>
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                </div>
+
+                                <p id="rec-timer">00:00</p>
+
+                                <div class="vent-voice-actions">
+                                    <button type="button" id="vent-test-voice" class="vent-small-btn" disabled>
+                                        <i class="fas fa-play"></i> Test Voice
+                                    </button>
+                                    <button type="button" id="vent-stop-speech" class="vent-small-btn">
+                                        <i class="fas fa-volume-xmark"></i> Stop
+                                    </button>
+                                    <button type="button" id="vent-play-idle" class="vent-small-btn" disabled>
+                                        <i class="fas fa-person-walking"></i> Animasi
+                                    </button>
+                                </div>
+
+                                <p id="vent-status-text" class="vent-status-text"></p>
+                            </section>
+
+                            <aside class="vent-voice-panel">
+                                <div class="vent-panel-block">
+                                    <span class="vent-panel-kicker">Transkrip suara</span>
+                                    <div id="vent-transcript" class="vent-transcript">Belum ada suara yang ditangkap.</div>
+                                </div>
+
+                                <div class="vent-panel-block">
+                                    <span class="vent-panel-kicker">Balasan avatar</span>
+                                    <div id="vent-avatar-reply" class="vent-avatar-reply">Balasan Plong akan muncul di sini.</div>
+                                </div>
+
+                                <div id="emo-res" class="vent-result-box" style="display:none"></div>
+
+                                <div class="vent-warning">
+                                    <i class="fas fa-circle-info"></i>
+                                    <span>Voice input memakai Speech Recognition browser. Voice output memakai ElevenLabs dari ENV server jika tersedia, lalu fallback ke browser voice.</span>
+                                </div>
+                            </aside>
+                        </div>
                     </div>
                 </section>
 
@@ -8938,7 +9249,9 @@
         {
           "imports": {
             "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+            "@pixiv/three-vrm": "https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@3.4.4/lib/three-vrm.module.js",
+            "@pixiv/three-vrm-animation": "https://cdn.jsdelivr.net/npm/@pixiv/three-vrm-animation@3.4.4/lib/three-vrm-animation.module.js"
           }
         }
         </script>
@@ -9532,6 +9845,212 @@
 
 
 
+
+
+
+        <script type="module">
+        import { AvatarSpeaker } from '/dist/index.esm.js';
+
+        const VENT_AVATAR_PATH = '/assets/avatars/AvatarTest.vrm';
+        const VENT_IDLE_ANIMATION = '/assets/animations/VRMA_01(全身を見せる).vrma';
+        const VENT_GREETING_ANIMATION = '/assets/animations/VRMA_02(挨拶).vrma';
+        const VENT_IDLE_DELAY = 8000;
+        const VENT_IDLE_LOOP_GAP = 1200;
+
+        let ventAvatar = null;
+        let ventReady = false;
+        let ventSpeaking = false;
+        let ventCurrentAudio = null;
+        let ventIdleTimer = null;
+        let ventIdleMode = false;
+        let ventIdleAnimating = false;
+
+        function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
+        function byId(id){return document.getElementById(id)}
+        function setText(id,text){const el=byId(id);if(el)el.textContent=text||''}
+        function setVentModuleButtons(disabled){
+            ['rec-btn','vent-test-voice','vent-play-idle'].forEach((id)=>{
+                const el=byId(id);
+                if(el)el.disabled=!!disabled;
+            });
+        }
+        function hideVentLoading(){
+            const loading=byId('vent-avatar-loading');
+            if(loading)loading.classList.add('hidden');
+            setVentModuleButtons(false);
+        }
+        function showVentLoadError(message){
+            const loading=byId('vent-avatar-loading');
+            const loadingText=byId('vent-loading-text');
+            if(loadingText)loadingText.textContent=message;
+            if(loading)loading.classList.remove('hidden');
+            setVentModuleButtons(true);
+        }
+        function clearVentIdleTimer(){
+            if(ventIdleTimer){
+                clearTimeout(ventIdleTimer);
+                ventIdleTimer=null;
+            }
+        }
+        function stopVentIdleMode(){
+            ventIdleMode=false;
+            clearVentIdleTimer();
+        }
+        function resetVentIdleTimer(){
+            if(!ventAvatar||!ventReady)return;
+            ventIdleMode=false;
+            clearVentIdleTimer();
+            if(!ventSpeaking){
+                ventIdleTimer=setTimeout(()=>startVentIdleLoop(),VENT_IDLE_DELAY);
+            }
+        }
+        async function startVentIdleLoop(){
+            if(!ventAvatar||!ventReady)return;
+            if(ventSpeaking||ventIdleAnimating){
+                resetVentIdleTimer();
+                return;
+            }
+            ventIdleMode=true;
+            ventIdleAnimating=true;
+            try{
+                while(ventIdleMode&&!ventSpeaking){
+                    await ventAvatar.animate(VENT_IDLE_ANIMATION);
+                    await sleep(VENT_IDLE_LOOP_GAP);
+                }
+            }catch(error){
+                console.warn('Animasi idle Vent gagal:',error);
+            }finally{
+                ventIdleAnimating=false;
+                if(!ventSpeaking)resetVentIdleTimer();
+            }
+        }
+        function registerVentActivity(){
+            ['mousemove','mousedown','keydown','touchstart','scroll','click'].forEach((eventName)=>{
+                window.addEventListener(eventName,()=>resetVentIdleTimer(),{passive:true});
+            });
+        }
+        function stopVentSpeech(){
+            try{speechSynthesis.cancel()}catch(_){}
+            if(ventCurrentAudio){
+                try{ventCurrentAudio.pause();ventCurrentAudio.currentTime=0}catch(_){}
+                ventCurrentAudio=null;
+            }
+            ventSpeaking=false;
+            resetVentIdleTimer();
+        }
+        async function browserSpeechFallback(text){
+            return new Promise((resolve)=>{
+                if(!('speechSynthesis' in window)){
+                    try{ventAvatar.say(text)}catch(_){}
+                    resolve();
+                    return;
+                }
+                try{speechSynthesis.cancel()}catch(_){}
+                const utter=new SpeechSynthesisUtterance(text);
+                utter.lang=(window.state&&window.state.al)==='en'?'en-US':'id-ID';
+                utter.rate=.96;
+                utter.pitch=1.04;
+                utter.volume=1;
+                utter.onstart=()=>{
+                    ventSpeaking=true;
+                    try{ventAvatar.say(text)}catch(_){}
+                };
+                utter.onend=utter.onerror=()=>{
+                    ventSpeaking=false;
+                    resolve();
+                };
+                speechSynthesis.speak(utter);
+            });
+        }
+        async function speakVentAvatar(text,audioUrl){
+            if(!ventAvatar||!ventReady)return browserSpeechFallback(text);
+            const clean=String(text||'').trim();
+            if(!clean)return;
+            stopVentIdleMode();
+            stopVentSpeech();
+            setText('vent-subtitle-container',clean);
+            ventSpeaking=true;
+            try{
+                if(audioUrl){
+                    const audio=new Audio(audioUrl);
+                    ventCurrentAudio=audio;
+                    try{
+                        await ventAvatar.say(clean,{audio});
+                    }catch(error){
+                        console.warn('AvatarSpeaker ai.say audio gagal, fallback manual:',error);
+                        try{ventAvatar.say(clean)}catch(_){}
+                        await audio.play();
+                        await new Promise((resolve)=>{audio.onended=resolve;audio.onerror=resolve;});
+                    }
+                }else{
+                    await browserSpeechFallback(clean);
+                }
+            }finally{
+                ventCurrentAudio=null;
+                ventSpeaking=false;
+                resetVentIdleTimer();
+            }
+        }
+        async function animateVentAvatar(path){
+            if(!ventAvatar||!ventReady)return;
+            try{
+                stopVentIdleMode();
+                await ventAvatar.animate(path||VENT_GREETING_ANIMATION);
+            }catch(error){
+                console.warn('Animasi Vent gagal:',error);
+            }finally{
+                resetVentIdleTimer();
+            }
+        }
+        async function startVentAvatarSpeaker(){
+            const container=byId('vent-avatar-container');
+            const subtitle=byId('vent-subtitle-container');
+            if(!container||container.dataset.avatarSpeakerMounted==='1')return;
+            container.dataset.avatarSpeakerMounted='1';
+
+            setVentModuleButtons(true);
+            setText('vent-loading-text','Memuat avatar 3D...');
+
+            try{
+                ventAvatar=new AvatarSpeaker({
+                    avatar: VENT_AVATAR_PATH,
+                    canvas: container,
+                    subtitleContainer: subtitle
+                });
+
+                await ventAvatar.ready();
+                await sleep(250);
+
+                ventReady=true;
+                hideVentLoading();
+                setText('vent-subtitle-container','Avatar siap. Tekan mic dan mulai bicara.');
+                setText('vent-status-text','Avatar siap mendengarkan.');
+                await animateVentAvatar(VENT_GREETING_ANIMATION);
+                registerVentActivity();
+                resetVentIdleTimer();
+            }catch(error){
+                console.error('Gagal memuat AvatarSpeaker Vent:',error);
+                showVentLoadError('Gagal memuat avatar. Cek AvatarTest.vrm, /dist/index.esm.js, atau CORS.');
+                setText('vent-status-text','Avatar gagal dimuat.');
+            }
+        }
+
+        window.PlongVentAvatarSpeaker={
+            ready:()=>ventReady,
+            speak:speakVentAvatar,
+            animate:animateVentAvatar,
+            stop:stopVentSpeech,
+            resetIdle:resetVentIdleTimer,
+            isSpeaking:()=>ventSpeaking
+        };
+
+        if(document.readyState==='loading'){
+            document.addEventListener('DOMContentLoaded',startVentAvatarSpeaker);
+        }else{
+            startVentAvatarSpeaker();
+        }
+        new MutationObserver(()=>startVentAvatarSpeaker()).observe(document.documentElement,{childList:true,subtree:true});
+        </script>
 
 
         <script>
@@ -10223,72 +10742,284 @@ var authToken=localStorage.getItem("vkm_token")||"";
                 if(/galau|bingung|masa depan|takut|overthinking|ragu|dilema|cemas|khawatir/.test(txt))return "galau";
                 return "tenang";
             }
+            function setVentStatus(message){
+                var el=document.getElementById("vent-status-text");
+                if(el)el.textContent=message||"";
+            }
+            function setVentSubtitle(message){
+                var el=document.getElementById("vent-subtitle-container");
+                if(el)el.textContent=message||"";
+            }
+            function setVentTranscript(message){
+                var el=document.getElementById("vent-transcript");
+                if(el)el.textContent=message||"";
+            }
+            function setVentReply(message){
+                var el=document.getElementById("vent-avatar-reply");
+                if(el)el.textContent=message||"";
+            }
+            function setVentButtonsDisabled(value){
+                if(rB)rB.disabled=!!value;
+                var test=document.getElementById("vent-test-voice");
+                var stop=document.getElementById("vent-stop-speech");
+                var anim=document.getElementById("vent-play-idle");
+                if(test)test.disabled=!!value;
+                if(anim)anim.disabled=!!value;
+                if(stop)stop.disabled=false;
+            }
+            function stopAvatarSpeech(){
+                if(window.PlongVentAvatarSpeaker&&window.PlongVentAvatarSpeaker.stop){
+                    window.PlongVentAvatarSpeaker.stop();
+                }
+                setVentStatus("");
+            }
+            async function getElevenLabsAudioUrl(text){
+                try{
+                    var r=await fetch("/api/tts/elevenlabs",{
+                        method:"POST",
+                        headers:Object.assign({"Content-Type":"application/json"},authHeaders()),
+                        body:JSON.stringify({text:String(text||"").slice(0,900)})
+                    });
+                    if(!r.ok)return null;
+                    var blob=await r.blob();
+                    return URL.createObjectURL(blob);
+                }catch(e){
+                    console.warn("ElevenLabs TTS fallback:",e);
+                    return null;
+                }
+            }
+            async function speakAvatarVoice(text){
+                var clean=String(text||"").trim();
+                if(!clean)return;
+                setVentSubtitle(clean);
+                setVentStatus("Avatar sedang menyiapkan suara...");
+                var audioUrl=await getElevenLabsAudioUrl(clean);
+                try{
+                    if(window.PlongVentAvatarSpeaker&&window.PlongVentAvatarSpeaker.speak){
+                        await window.PlongVentAvatarSpeaker.speak(clean,audioUrl);
+                    }else{
+                        var u=new SpeechSynthesisUtterance(clean);
+                        u.lang=(state.al==="en"?"en-US":"id-ID");
+                        speechSynthesis.speak(u);
+                    }
+                }finally{
+                    if(audioUrl)URL.revokeObjectURL(audioUrl);
+                    setVentStatus("");
+                }
+            }
+            function guessMoodFromTranscript(txt){
+                txt=String(txt||"").toLowerCase();
+                if(/senang banget|seneng banget|bahagia banget|happy banget|lagi senang|lagi seneng|aku senang|aku seneng|aku bahagia|semangat|excited|bersyukur|bangga/.test(txt))return "excited";
+                if(/lega banget|aku tenang|lagi tenang|rasanya plong|damai|rileks|kalem/.test(txt))return "tenang";
+                if(/marah|kesel|kesal|benci|emosi|muak|sebel|jengkel|anjing|bangsat/.test(txt))return "marah";
+                if(/sedih|nangis|menangis|kecewa|hampa|sakit hati|sendiri|kesepian/.test(txt))return "sedih";
+                if(/stres|stress|pusing|tertekan|deadline|beban|berat banget|capek|lelah|kewalahan/.test(txt))return "stres";
+                if(/galau|bingung|masa depan|takut|overthinking|ragu|dilema|cemas|khawatir/.test(txt))return "galau";
+                return "tenang";
+            }
             function startSpeechCapture(){
                 var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
                 speechText="";
-                if(!SR)return null;
+                if(!SR){
+                    setVentStatus("Browser belum mendukung voice recognition. Coba Chrome atau Edge.");
+                    return null;
+                }
                 try{
                     var rec=new SR();
                     rec.lang=(state.al==="en"?"en-US":"id-ID");
-                    rec.continuous=true;rec.interimResults=true;
-                    rec.onresult=function(e){var txt="";for(var i=0;i<e.results.length;i++){txt+=e.results[i][0].transcript+" ";}speechText=txt.trim();var live=document.getElementById("live-emo");if(live&&speechText)live.innerHTML='<p style="font-size:12px;color:var(--ac)">🎙️ '+escH(speechText.slice(-90))+'</p>';};
-                    rec.onerror=function(){};
+                    rec.continuous=true;
+                    rec.interimResults=true;
+                    rec.onresult=function(e){
+                        var finalText="",interimText="";
+                        for(var i=e.resultIndex;i<e.results.length;i++){
+                            var chunk=e.results[i][0].transcript;
+                            if(e.results[i].isFinal)finalText+=chunk+" ";
+                            else interimText+=chunk+" ";
+                        }
+                        if(finalText)speechText=(speechText+" "+finalText).trim();
+                        var shown=(speechText+" "+interimText).trim();
+                        if(shown){
+                            setVentTranscript(shown);
+                            var live=document.getElementById("live-emo");
+                            if(live)live.innerHTML='<p style="font-size:12px;color:var(--ac)">🎙️ '+escH(shown.slice(-110))+'</p>';
+                        }
+                    };
+                    rec.onerror=function(e){
+                        console.warn("Speech recognition error:",e.error);
+                        if(e.error==="not-allowed")setVentStatus("Izin mikrofon atau voice recognition ditolak.");
+                    };
                     rec.start();
                     return rec;
-                }catch(e){return null;}
+                }catch(e){
+                    console.warn(e);
+                    setVentStatus("Voice recognition gagal dimulai.");
+                    return null;
+                }
             }
-            function stopSpeechCapture(){try{if(speechRec)speechRec.stop()}catch(e){} speechRec=null;}
+            function stopSpeechCapture(){
+                try{if(speechRec)speechRec.stop()}catch(e){}
+                speechRec=null;
+            }
+            async function sendVoiceMessage(transcript){
+                transcript=String(transcript||"").trim();
+                if(!transcript){
+                    setVentStatus("Suara belum tertangkap. Coba ulangi dan bicara lebih dekat ke mic.");
+                    setVentSubtitle("Aku belum menangkap suaramu. Coba ulangi pelan-pelan.");
+                    setVentButtonsDisabled(false);
+                    return;
+                }
+                if(!authToken){showAuth("Silakan login dulu sebelum menggunakan Vent Voice.");return;}
+                setVentTranscript(transcript);
+                setVentReply("Plong sedang memahami suaramu...");
+                setVentSubtitle("Aku dengar. Sebentar ya...");
+                setVentButtonsDisabled(true);
+                setVentStatus("Mengirim voice ke Plong...");
 
-            /* RECORD */
-            var mR,aC=[],rI,rS=0,rSt,speechRec=null,speechText="";var rB=document.getElementById("rec-btn"),rT=document.getElementById("rec-timer");
-            rB.addEventListener("click",function(){if(mR&&mR.state==="recording")sR();else stR()});
-            async function stR(){
-                if(!authToken){showAuth("Silakan login dulu sebelum menggunakan Vent.");return;}
+                var reply="Aku sudah dengar. Pelan-pelan ya, kamu nggak harus memproses semuanya sekaligus.";
                 try{
-                    rSt=await navigator.mediaDevices.getUserMedia({audio:true});
-                    var AC=new(window.AudioContext||window.webkitAudioContext)();an=AC.createAnalyser();an.fftSize=256;AC.createMediaStreamSource(rSt).connect(an);
-                    mR=new MediaRecorder(rSt);aC=[];speechText="";
-                    mR.ondataavailable=function(e){aC.push(e.data)};
-                    mR.onstop=pA2;
-                    mR.start();
-                    speechRec=startSpeechCapture();
-                    rB.classList.add("rec");rB.innerHTML='<i class="fas fa-stop"></i>';rS=0;rT.textContent="00:00";
-                    rI=setInterval(function(){rS++;rT.textContent=String(Math.floor(rS/60)).padStart(2,"0")+":"+String(rS%60).padStart(2,"0");if(rS>=60)sR()},1e3);
-                    cancelAnimationFrame(wAF);wL();
-                    document.getElementById("live-emo").innerHTML='<p style="font-size:12px;color:var(--ac)">🎙️ Merekam dan mendengar emosi...</p>';
-                    document.getElementById("emo-res").style.display="none";
-                }catch(e){toast("Akses mikrofon ditolak.")}
+                    var history=(state.ch||[]).slice(-8);
+                    history.push({role:"user",parts:[{text:transcript}]});
+                    var r=await fetch("/api/chat",{
+                        method:"POST",
+                        headers:Object.assign({"Content-Type":"application/json"},authHeaders()),
+                        body:JSON.stringify({message:transcript,model:state.gm||"qwen2.5:3b",language:state.al||"id",history:history})
+                    });
+                    var data=await r.json();
+                    reply=data.reply||reply;
+                    if(data.state)applyStateFromServer(data.state);
+                    state.ch=history.concat([{role:"model",parts:[{text:reply}]}]).slice(-10);
+                    save();
+                }catch(e){
+                    console.warn("Voice chat fallback:",e);
+                }
+
+                setVentReply(reply);
+                await speakAvatarVoice(reply);
+                await analyzeVentVoice(transcript);
+                setVentButtonsDisabled(false);
+                setVentStatus("");
             }
-            function sR(){if(!mR)return;try{mR.stop()}catch(e){};stopSpeechCapture();if(rSt)rSt.getTracks().forEach(function(t){t.stop()});clearInterval(rI);rB.classList.remove("rec");rB.innerHTML='<i class="fas fa-microphone"></i>';cancelAnimationFrame(wAF);wI()}
-            async function pA2(){
-                var transcript=speechText||"";
+            async function analyzeVentVoice(transcript){
                 var live=document.getElementById("live-emo"),rE=document.getElementById("emo-res");
                 if(live)live.innerHTML='<p style="font-size:12px;color:var(--tl)">🧠 Plong lagi membaca emosimu...</p>';
                 if(rE){rE.style.display="block";rE.innerHTML='<p style="font-size:12px;color:var(--t3)">AI sedang menganalisis vent kamu...</p>';}
                 try{
-                    var res=await apiFetch("/api/vent/analyze",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({transcript:transcript,durationSeconds:rS,model:state.gm||"qwen2.5:3b",language:state.al||"id"})});
+                    var res=await apiFetch("/api/vent/analyze",{
+                        method:"POST",
+                        headers:{"Content-Type":"application/json"},
+                        body:JSON.stringify({transcript:transcript,durationSeconds:rS,model:state.gm||"qwen2.5:3b",language:state.al||"id"})
+                    });
                     var data=await res.json();
                     if(!res.ok||!data.ok)throw new Error(data.error||"Gagal analisis vent");
                     applyStateFromServer(data.state);
-                    renderVentResult(data.result);
+                    renderVentResult(Object.assign({},data.result,{transcript:transcript}));
                 }catch(e){
                     console.warn(e);
                     var dt=guessMoodFromTranscript(transcript),it=Math.floor(Math.random()*30)+60;
-                    fV(dt,it,"Aku belum bisa membaca dengan AI, jadi vent ini diproses lokal dari transkrip yang tertangkap.","Coba ulangi lagi nanti kalau server AI sudah stabil.");
+                    fV(dt,it,"Voice vent tersimpan dari transkrip yang tertangkap.","Tarik napas sebentar, lalu lanjut pelan-pelan.",transcript);
                 }
+            }
+
+            /* RECORD / VOICE */
+            var mR,aC=[],rI,rS=0,rSt,speechRec=null,speechText="";
+            var rB=document.getElementById("rec-btn"),rT=document.getElementById("rec-timer");
+            if(rB)rB.addEventListener("click",function(){if(mR&&mR.state==="recording")sR();else stR()});
+            var stopVoiceBtn=document.getElementById("vent-stop-speech");
+            if(stopVoiceBtn)stopVoiceBtn.addEventListener("click",stopAvatarSpeech);
+            var testVoiceBtn=document.getElementById("vent-test-voice");
+            if(testVoiceBtn)testVoiceBtn.addEventListener("click",function(){speakAvatarVoice("Halo, aku Plong. Sekarang kamu bisa curhat lewat suara.")});
+            var idleBtn=document.getElementById("vent-play-idle");
+            if(idleBtn)idleBtn.addEventListener("click",function(){if(window.PlongVentAvatarSpeaker)window.PlongVentAvatarSpeaker.animate('/assets/animations/VRMA_02(挨拶).vrma')});
+
+            async function stR(){
+                if(!authToken){showAuth("Silakan login dulu sebelum menggunakan Vent Voice.");return;}
+                stopAvatarSpeech();
+                try{
+                    rSt=await navigator.mediaDevices.getUserMedia({audio:true});
+                    var AC=new(window.AudioContext||window.webkitAudioContext)();
+                    an=AC.createAnalyser();
+                    an.fftSize=256;
+                    AC.createMediaStreamSource(rSt).connect(an);
+                    mR=new MediaRecorder(rSt);
+                    aC=[];speechText="";
+                    mR.ondataavailable=function(e){aC.push(e.data)};
+                    mR.onstop=pA2;
+                    mR.start();
+                    speechRec=startSpeechCapture();
+                    rB.classList.add("rec");
+                    rB.innerHTML='<i class="fas fa-stop"></i>';
+                    rS=0;
+                    if(rT)rT.textContent="00:00";
+                    rI=setInterval(function(){
+                        rS++;
+                        if(rT)rT.textContent=String(Math.floor(rS/60)).padStart(2,"0")+":"+String(rS%60).padStart(2,"0");
+                        if(rS>=90)sR();
+                    },1e3);
+                    cancelAnimationFrame(wAF);
+                    wL();
+                    setVentTranscript("Mendengarkan...");
+                    setVentReply("Aku menunggu ceritamu.");
+                    setVentSubtitle("Aku mendengarkan...");
+                    setVentStatus("Sedang merekam voice...");
+                    var live=document.getElementById("live-emo");
+                    if(live)live.innerHTML='<p style="font-size:12px;color:var(--ac)">🎙️ Merekam dan mendengar suaramu...</p>';
+                    var res=document.getElementById("emo-res");
+                    if(res)res.style.display="none";
+                }catch(e){
+                    console.warn(e);
+                    toast("Akses mikrofon ditolak.");
+                    setVentStatus("Akses mikrofon ditolak.");
+                }
+            }
+            function sR(){
+                if(!mR)return;
+                try{mR.stop()}catch(e){}
+                stopSpeechCapture();
+                if(rSt)rSt.getTracks().forEach(function(t){t.stop()});
+                clearInterval(rI);
+                if(rB){rB.classList.remove("rec");rB.innerHTML='<i class="fas fa-microphone"></i>';}
+                cancelAnimationFrame(wAF);
+                wI();
+                setVentStatus("Memproses voice...");
+            }
+            async function pA2(){
+                var transcript=speechText||"";
+                await sendVoiceMessage(transcript);
             }
             function renderVentResult(result){
                 var mood=result.mood||"tenang",cfg=EMO[mood]||EMO.tenang,coins=result.coins||0;
                 sP(mood);
                 var rE=document.getElementById("emo-res");
                 rE.style.display="block";
-                var tr=result.transcript?'<br><span style="color:var(--t4);font-size:10px">Terdengar: “'+escH(String(result.transcript).slice(0,100))+'”</span>':'';
+                var tr=result.transcript?'<br><span style="color:var(--t4);font-size:10px">Terdengar: “'+escH(String(result.transcript).slice(0,120))+'”</span>':'';
                 rE.innerHTML='<div style="font-size:26px;margin-bottom:4px"><i class="fas '+cfg.icon+'"></i></div><h3 style="font-size:15px;font-weight:800;color:'+cfg.color+';margin-bottom:2px">'+cfg.label+'</h3><p style="font-size:10px;color:var(--t3);margin-bottom:8px">Intensitas · '+(result.intensity||0)+'%</p><div style="display:flex;align-items:center;justify-content:center;gap:4px;font-weight:700;color:var(--ac);font-size:12px"><i class="fas fa-coins"></i> +'+coins+'</div><div class="vent-ai-note"><strong>'+escH(result.title||"Refleksi Plong")+'</strong><br>'+escH(result.summary||"")+'<br><span style="color:var(--t3)">'+escH(result.suggestion||"")+'</span>'+tr+'</div>';
-                document.getElementById("live-emo").innerHTML='<span style="font-size:12px;font-weight:600;color:'+cfg.color+'"><i class="fas '+cfg.icon+'"></i> '+cfg.label+'</span>';
-                var rc=rB.getBoundingClientRect();cF(rc.left+rc.width/2,rc.top,coins);uC();
+                var live=document.getElementById("live-emo");
+                if(live)live.innerHTML='<span style="font-size:12px;font-weight:600;color:'+cfg.color+'"><i class="fas '+cfg.icon+'"></i> '+cfg.label+'</span>';
+                if(rB){
+                    var rc=rB.getBoundingClientRect();
+                    if(typeof cF==="function")cF(rc.left+rc.width/2,rc.top,coins);
+                }
+                if(typeof uC==="function")uC();
                 if(result.leveledUp)toast("🎉 Plong naik level!");
             }
-            function fV(mood,intensity,summary,suggestion){var cfg=EMO[mood],coins=Math.floor(intensity/8)+5;state.coins+=coins;if(!state.emotions[mood])state.emotions[mood]=0;state.emotions[mood]++;state.pet.exp+=8;state.pet.happy=Math.min(100,state.pet.happy+10);state.pet.hunger=Math.min(100,(state.pet.hunger||50)+8);if(!state.vents)state.vents=[];state.vents.unshift({id:Date.now().toString(36),mood:mood,intensity:intensity,summary:summary||"Vent tersimpan.",suggestion:suggestion||"Pelan-pelan ya.",coins:coins,exp:8,durationSeconds:rS,createdAt:new Date().toISOString()});if(state.pet.exp>=state.pet.expMax){state.pet.level++;state.pet.exp-=state.pet.expMax;state.pet.expMax=Math.floor(state.pet.expMax*1.4);toast("🎉 Level "+state.pet.level+"!")}var art=gA(mood,intensity);state.art.unshift(art);if(state.art.length>20)state.art.pop();save();refreshUI();renderVentResult({mood:mood,intensity:intensity,coins:coins,title:"Vent lokal",summary:summary||"Vent kamu sudah tersimpan sebagai energi emosi.",suggestion:suggestion||"Ambil jeda sebentar, lalu lanjut pelan-pelan."})}
+            function fV(mood,intensity,summary,suggestion,transcript){
+                var cfg=EMO[mood]||EMO.tenang,coins=Math.floor(intensity/8)+5;
+                state.coins+=coins;
+                if(!state.emotions[mood])state.emotions[mood]=0;
+                state.emotions[mood]++;
+                state.pet.exp+=8;
+                state.pet.happy=Math.min(100,state.pet.happy+10);
+                state.pet.hunger=Math.min(100,(state.pet.hunger||50)+8);
+                if(!state.vents)state.vents=[];
+                state.vents.unshift({id:Date.now().toString(36),mood:mood,intensity:intensity,summary:summary||"Vent tersimpan.",suggestion:suggestion||"Pelan-pelan ya.",coins:coins,exp:8,durationSeconds:rS,transcript:transcript||"",createdAt:new Date().toISOString()});
+                if(state.pet.exp>=state.pet.expMax){state.pet.level++;state.pet.exp-=state.pet.expMax;state.pet.expMax=Math.floor(state.pet.expMax*1.4);toast("🎉 Level "+state.pet.level+"!")}
+                var art=gA(mood,intensity);
+                state.art.unshift(art);
+                if(state.art.length>20)state.art.pop();
+                save();
+                refreshUI();
+                renderVentResult({mood:mood,intensity:intensity,coins:coins,title:"Vent Voice lokal",summary:summary||"Vent voice kamu sudah tersimpan sebagai energi emosi.",suggestion:suggestion||"Ambil jeda sebentar, lalu lanjut pelan-pelan.",transcript:transcript||""});
+            }
 
             /* ART */
             function gA(mood){var o=document.createElement("canvas");o.width=300;o.height=300;var c=o.getContext("2d"),cfg=EMO[mood];var bg=c.createLinearGradient(0,0,300,300);bg.addColorStop(0,"#F7F7F8");bg.addColorStop(1,cfg.color+"22");c.fillStyle=bg;c.fillRect(0,0,300,300);for(var i=0;i<12;i++){var x=Math.random()*300,y=Math.random()*300,r=10+Math.random()*50;c.beginPath();if(mood==="marah")c.rect(x-r/2,y-r/2,r,r);else if(mood==="sedih")c.ellipse(x,y,r*.5,r,Math.PI/4,0,Math.PI*2);else c.arc(x,y,r,0,Math.PI*2);c.fillStyle=cfg.color+Math.floor(30+Math.random()*60).toString(16).padStart(2,"0");c.fill()}for(var j=0;j<8;j++){c.beginPath();c.moveTo(Math.random()*300,Math.random()*300);c.quadraticCurveTo(Math.random()*300,Math.random()*300,Math.random()*300,Math.random()*300);c.strokeStyle=cfg.color+"44";c.lineWidth=1+Math.random()*3;c.stroke()}c.font="bold 15px Fredoka,sans-serif";c.fillStyle=cfg.color+"88";c.fillText(cfg.label,12,288);return{id:Date.now(),mood:mood,src:o.toDataURL()}}
