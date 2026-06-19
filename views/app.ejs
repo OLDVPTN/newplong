@@ -8000,6 +8000,80 @@
                 }
             }
 
+
+            /* Vent avatar picker */
+            #pg-vent.vent-clean-ui .vent-avatar-picker{
+                position:absolute;
+                top:calc(14px + var(--s-t));
+                left:14px;
+                z-index:32;
+                display:flex;
+                align-items:center;
+                gap:6px;
+                padding:7px;
+                border-radius:999px;
+                background:rgba(255,255,255,.76);
+                border:1px solid rgba(255,255,255,.72);
+                box-shadow:0 14px 34px rgba(15,23,42,.14),inset 0 1px 0 rgba(255,255,255,.72);
+                backdrop-filter:blur(16px);
+                -webkit-backdrop-filter:blur(16px);
+                max-width:calc(100% - 28px);
+            }
+            #pg-vent.vent-clean-ui .vent-avatar-picker span{
+                padding:0 4px 0 7px;
+                color:#334155;
+                font-size:11px;
+                line-height:1;
+                font-weight:1000;
+                white-space:nowrap;
+            }
+            #pg-vent.vent-clean-ui .vent-avatar-choice{
+                min-height:30px;
+                padding:0 11px;
+                border-radius:999px;
+                background:rgba(255,255,255,.72);
+                color:#64748b;
+                border:1px solid rgba(226,232,240,.78);
+                font-size:11px;
+                font-weight:1000;
+                transition:transform .12s ease,background .12s ease,color .12s ease,border-color .12s ease;
+                -webkit-appearance:none;
+                appearance:none;
+            }
+            #pg-vent.vent-clean-ui .vent-avatar-choice:hover{
+                transform:translateY(-1px);
+                background:#fff;
+                color:#334155;
+            }
+            #pg-vent.vent-clean-ui .vent-avatar-choice.on{
+                background:linear-gradient(135deg,var(--ac),#ff8c65);
+                color:#fff;
+                border-color:rgba(232,77,26,.42);
+                box-shadow:0 8px 18px rgba(232,77,26,.18);
+            }
+            #pg-vent.vent-clean-ui .vent-avatar-choice:disabled{
+                opacity:.58;
+                cursor:wait;
+                transform:none;
+            }
+            @media(max-width:520px){
+                #pg-vent.vent-clean-ui .vent-avatar-picker{
+                    top:calc(10px + var(--s-t));
+                    left:10px;
+                    gap:5px;
+                    padding:6px;
+                }
+                #pg-vent.vent-clean-ui .vent-avatar-picker span{
+                    font-size:10px;
+                    padding-left:6px;
+                }
+                #pg-vent.vent-clean-ui .vent-avatar-choice{
+                    min-height:28px;
+                    padding:0 9px;
+                    font-size:10px;
+                }
+            }
+
 </style>
 
     </head>
@@ -8900,6 +8974,12 @@
                         <div id="vent-avatar-loading" class="vent-avatar-loading">
                             <div class="spinner"></div>
                             <span id="vent-loading-text">Memuat avatar 3D...</span>
+                        </div>
+
+                        <div class="vent-avatar-picker" aria-label="Pilih avatar Vent">
+                            <span>Avatar</span>
+                            <button type="button" class="vent-avatar-choice" data-vent-avatar="f_ava">Ava</button>
+                            <button type="button" class="vent-avatar-choice" data-vent-avatar="avatar_test">Test</button>
                         </div>
 
                         <div class="vent-clean-bottom">
@@ -10073,6 +10153,11 @@
         import { AvatarSpeaker } from '/dist/index.esm.js';
 
         const VENT_AVATAR_PATH = '/assets/avatars/F_AVA.vrm';
+        const VENT_AVATAR_STORAGE_KEY = 'vkm_vent_avatar_choice';
+        const VENT_AVATAR_OPTIONS = [
+            { id:'f_ava', label:'Ava', path:'/assets/avatars/F_AVA.vrm' },
+            { id:'avatar_test', label:'Test', path:'/assets/avatars/AvatarTest.vrm' }
+        ];
         const VENT_IDLE_ANIMATION = '/assets/animations/VRMA_01(全身を見せる).vrma';
         const VENT_GREETING_ANIMATION = '/assets/animations/VRMA_02(挨拶).vrma';
         const VENT_IDLE_DELAY = 8000;
@@ -10091,6 +10176,54 @@
         function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
         function byId(id){return document.getElementById(id)}
         function setText(id,text){const el=byId(id);if(el)el.textContent=text||''}
+
+        function getVentAvatarOption(id){
+            const fallback = VENT_AVATAR_OPTIONS[0];
+            const found = VENT_AVATAR_OPTIONS.find((item)=>item.id===id);
+            return found || fallback;
+        }
+        function getSelectedVentAvatar(){
+            let saved='';
+            try{ saved=localStorage.getItem(VENT_AVATAR_STORAGE_KEY)||''; }catch(_){}
+            return getVentAvatarOption(saved);
+        }
+        function saveSelectedVentAvatar(id){
+            const option=getVentAvatarOption(id);
+            try{ localStorage.setItem(VENT_AVATAR_STORAGE_KEY,option.id); }catch(_){}
+            return option;
+        }
+        function updateVentAvatarPicker(){
+            const active=getSelectedVentAvatar().id;
+            document.querySelectorAll('[data-vent-avatar]').forEach((button)=>{
+                button.classList.toggle('on',button.dataset.ventAvatar===active);
+                button.disabled=!!ventStarting;
+            });
+        }
+        function setVentAvatarPickerDisabled(disabled){
+            document.querySelectorAll('[data-vent-avatar]').forEach((button)=>button.disabled=!!disabled);
+        }
+        function cleanupVentAvatarCanvas(){
+            const container=byId('vent-avatar-container');
+            if(!container)return;
+            Array.from(container.children).forEach((child)=>{
+                if(child&&child.tagName==='CANVAS')child.remove();
+            });
+        }
+        function destroyVentAvatarInstance(){
+            try{ stopVentSpeech(); }catch(_){}
+            try{ stopVentIdleMode(); }catch(_){}
+            try{
+                if(ventAvatar&&ventAvatar.renderer&&typeof ventAvatar.renderer.destroy==='function'){
+                    ventAvatar.renderer.destroy();
+                }
+            }catch(error){
+                console.warn('Destroy avatar lama gagal:',error);
+            }
+            cleanupVentAvatarCanvas();
+            ventAvatar=null;
+            ventReady=false;
+        }
+
 
         function isVentVisible(){
             const page=byId('pg-vent');
@@ -10180,6 +10313,7 @@
                 const el=byId(id);
                 if(el)el.disabled=!!disabled;
             });
+            setVentAvatarPickerDisabled(!!disabled && !ventReady);
         }
         function hideVentLoading(){
             const loading=byId('vent-avatar-loading');
@@ -10336,6 +10470,80 @@
             ventResizeObserver.observe(container);
         }
 
+
+        async function switchVentAvatar(choiceId){
+            const option=saveSelectedVentAvatar(choiceId);
+            updateVentAvatarPicker();
+
+            const container=byId('vent-avatar-container');
+            const subtitle=byId('vent-subtitle-container');
+            if(!container)return;
+
+            if(ventStarting){
+                setText('vent-loading-text','Avatar sedang dimuat...');
+                return;
+            }
+
+            ventStarting=true;
+            setVentAvatarPickerDisabled(true);
+            const loading=byId('vent-avatar-loading');
+            if(loading){
+                loading.style.display='flex';
+                loading.classList.remove('hidden');
+                loading.setAttribute('aria-hidden','false');
+            }
+            setText('vent-loading-text','Mengganti avatar...');
+            setText('vent-status-text','Mengganti avatar ke '+option.label+'...');
+
+            try{
+                destroyVentAvatarInstance();
+                await sleep(80);
+                cleanupVentAvatarCanvas();
+
+                ventAvatar=new AvatarSpeaker({
+                    avatar: option.path,
+                    canvas: container,
+                    subtitleContainer: subtitle
+                });
+                container.dataset.ventAvatar=option.id;
+
+                watchVentResize();
+                await ventAvatar.ready();
+                await sleep(220);
+
+                ventReady=true;
+                ventStarting=false;
+                forceVentAvatarCanvasLayout();
+                setTimeout(forceVentAvatarCanvasLayout,180);
+                setTimeout(forceVentAvatarCanvasLayout,520);
+                hideVentLoading();
+                updateVentAvatarPicker();
+                setText('vent-subtitle-container','Avatar '+option.label+' siap. Tekan mic dan mulai bicara.');
+                setText('vent-status-text','Avatar '+option.label+' siap mendengarkan.');
+                try{await animateVentAvatar(VENT_GREETING_ANIMATION)}catch(_){}
+                resetVentIdleTimer();
+            }catch(error){
+                ventStarting=false;
+                console.error('Gagal mengganti avatar:',error);
+                showVentLoadError('Gagal mengganti avatar. Coba pilih avatar lain.');
+                updateVentAvatarPicker();
+                setText('vent-status-text','Avatar gagal diganti.');
+            }
+        }
+
+        function registerVentAvatarPicker(){
+            document.querySelectorAll('[data-vent-avatar]').forEach((button)=>{
+                if(button.dataset.boundVentAvatar)return;
+                button.dataset.boundVentAvatar='1';
+                button.addEventListener('click',()=>{
+                    const id=button.dataset.ventAvatar;
+                    if(!id || getSelectedVentAvatar().id===id)return;
+                    switchVentAvatar(id);
+                });
+            });
+            updateVentAvatarPicker();
+        }
+
         async function startVentAvatarSpeaker(){
             const container=byId('vent-avatar-container');
             const subtitle=byId('vent-subtitle-container');
@@ -10364,11 +10572,15 @@
             setText('vent-loading-text','Memuat avatar 3D...');
 
             try{
+                const selectedAvatar=getSelectedVentAvatar();
+                updateVentAvatarPicker();
+                cleanupVentAvatarCanvas();
                 ventAvatar=new AvatarSpeaker({
-                    avatar: VENT_AVATAR_PATH,
+                    avatar: selectedAvatar.path,
                     canvas: container,
                     subtitleContainer: subtitle
                 });
+                container.dataset.ventAvatar=selectedAvatar.id;
 
                 watchVentResize();
                 await ventAvatar.ready();
@@ -10381,8 +10593,10 @@
                 setTimeout(forceVentAvatarCanvasLayout,120);
                 setTimeout(forceVentAvatarCanvasLayout,450);
                 hideVentLoading();
-                setText('vent-subtitle-container','Aku siap mendengarkan ceritamu. Tekan mic dan mulai bicara.');
-                setText('vent-status-text','Avatar siap mendengarkan.');
+                updateVentAvatarPicker();
+                const activeAvatar=getSelectedVentAvatar();
+                setText('vent-subtitle-container','Avatar '+activeAvatar.label+' siap. Tekan mic dan mulai bicara.');
+                setText('vent-status-text','Avatar '+activeAvatar.label+' siap mendengarkan.');
 
                 await sleep(120);
                 forceVentAvatarCanvasLayout();
@@ -10406,9 +10620,13 @@
             resetIdle:resetVentIdleTimer,
             forceResize:forceVentAvatarCanvasLayout,
             fullBody:applyVentFullBodyFraming,
+            setAvatar:switchVentAvatar,
+            getAvatar:()=>getSelectedVentAvatar(),
+            options:()=>VENT_AVATAR_OPTIONS.slice(),
             isSpeaking:()=>ventSpeaking
         };
-function bootVentAvatarWhenReady(){
+        function bootVentAvatarWhenReady(){
+            registerVentAvatarPicker();
             startVentAvatarSpeaker();
             if(isVentVisible())forceVentAvatarCanvasLayout();
         }
