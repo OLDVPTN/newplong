@@ -8389,6 +8389,166 @@
                 }
             }
 
+
+            /* Vent iOS controls strong fix
+               CSS-only: force bottom UI into iOS visible viewport.
+               Does not change AvatarSpeaker/voice/avatar-picker functions. */
+            @supports(-webkit-touch-callout:none){
+                #pg-vent.vent-clean-ui .vent-clean-bottom,
+                #pg-vent.vent-fullscreen-page .vent-clean-bottom{
+                    position:fixed!important;
+                    left:50%!important;
+                    right:auto!important;
+                    top:auto!important;
+                    bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 14px)!important;
+                    transform:translate3d(-50%,0,0)!important;
+                    -webkit-transform:translate3d(-50%,0,0)!important;
+                    width:min(90vw,720px)!important;
+                    max-width:720px!important;
+                    z-index:999!important;
+                    display:flex!important;
+                    flex-direction:column!important;
+                    align-items:stretch!important;
+                    gap:8px!important;
+                    pointer-events:none!important;
+                    visibility:visible!important;
+                    opacity:1!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-listen-card,
+                #pg-vent.vent-clean-ui .vent-clean-controls,
+                #pg-vent.vent-fullscreen-page .vent-clean-listen-card,
+                #pg-vent.vent-fullscreen-page .vent-clean-controls{
+                    pointer-events:auto!important;
+                    visibility:visible!important;
+                    opacity:1!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-listen-card,
+                #pg-vent.vent-fullscreen-page .vent-clean-listen-card{
+                    display:flex!important;
+                    min-height:58px!important;
+                    max-height:78px!important;
+                    padding:9px 13px!important;
+                    border-radius:22px!important;
+                    overflow:hidden!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-listen-copy strong,
+                #pg-vent.vent-fullscreen-page .vent-clean-listen-copy strong{
+                    font-size:16px!important;
+                    line-height:1.1!important;
+                    white-space:nowrap!important;
+                    overflow:hidden!important;
+                    text-overflow:ellipsis!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-subtitle-container,
+                #pg-vent.vent-fullscreen-page .vent-subtitle-container{
+                    font-size:12px!important;
+                    line-height:1.22!important;
+                    display:-webkit-box!important;
+                    -webkit-line-clamp:2!important;
+                    -webkit-box-orient:vertical!important;
+                    overflow:hidden!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-controls,
+                #pg-vent.vent-fullscreen-page .vent-clean-controls{
+                    width:100%!important;
+                    display:grid!important;
+                    grid-template-columns:1fr 94px!important;
+                    gap:8px!important;
+                    align-items:center!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-controls:not(.is-recording),
+                #pg-vent.vent-fullscreen-page .vent-clean-controls:not(.is-recording){
+                    grid-template-columns:1fr!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-controls:not(.is-recording) #vent-stop-speech,
+                #pg-vent.vent-fullscreen-page .vent-clean-controls:not(.is-recording) #vent-stop-speech{
+                    display:none!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-rec-wrap.vent-clean-mic-pill,
+                #pg-vent.vent-fullscreen-page .vent-rec-wrap.vent-clean-mic-pill{
+                    height:52px!important;
+                    min-height:52px!important;
+                    width:100%!important;
+                    margin:0!important;
+                    transform:translate3d(0,0,0)!important;
+                    -webkit-transform:translate3d(0,0,0)!important;
+                }
+
+                #pg-vent.vent-clean-ui #rec-btn,
+                #pg-vent.vent-fullscreen-page #rec-btn{
+                    width:48px!important;
+                    height:48px!important;
+                    min-width:48px!important;
+                    min-height:48px!important;
+                    font-size:22px!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-stop,
+                #pg-vent.vent-fullscreen-page .vent-clean-stop{
+                    height:50px!important;
+                    min-height:50px!important;
+                    font-size:12px!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-meta,
+                #pg-vent.vent-fullscreen-page .vent-clean-meta{
+                    display:none!important;
+                }
+
+                /* Give the fixed controls room by letting avatar canvas continue behind them */
+                #pg-vent.vent-clean-ui .vent-avatar-container,
+                #pg-vent.vent-clean-ui .vent-clean-stage,
+                #pg-vent.vent-fullscreen-page .vent-avatar-container,
+                #pg-vent.vent-fullscreen-page .vent-clean-stage{
+                    padding-bottom:0!important;
+                    overflow:hidden!important;
+                }
+            }
+
+            @supports(-webkit-touch-callout:none) and (max-height:720px){
+                #pg-vent.vent-clean-ui .vent-clean-bottom,
+                #pg-vent.vent-fullscreen-page .vent-clean-bottom{
+                    bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 8px)!important;
+                    gap:6px!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-listen-card,
+                #pg-vent.vent-fullscreen-page .vent-clean-listen-card{
+                    min-height:52px!important;
+                    max-height:62px!important;
+                    padding:7px 11px!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-listen-copy strong,
+                #pg-vent.vent-fullscreen-page .vent-clean-listen-copy strong{
+                    font-size:14px!important;
+                }
+                #pg-vent.vent-clean-ui .vent-subtitle-container,
+                #pg-vent.vent-fullscreen-page .vent-subtitle-container{
+                    font-size:11px!important;
+                    -webkit-line-clamp:1!important;
+                }
+                #pg-vent.vent-clean-ui .vent-rec-wrap.vent-clean-mic-pill,
+                #pg-vent.vent-fullscreen-page .vent-rec-wrap.vent-clean-mic-pill{
+                    height:48px!important;
+                    min-height:48px!important;
+                }
+                #pg-vent.vent-clean-ui #rec-btn,
+                #pg-vent.vent-fullscreen-page #rec-btn{
+                    width:44px!important;
+                    height:44px!important;
+                    min-width:44px!important;
+                    min-height:44px!important;
+                    font-size:20px!important;
+                }
+            }
+
 </style>
 
     </head>
