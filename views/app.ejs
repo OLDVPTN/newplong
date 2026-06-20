@@ -8196,6 +8196,199 @@
                 }
             }
 
+
+            /* Vent fullscreen controls visibility fix
+               Keeps listen-card + mic visible above bottom nav on Android/iOS,
+               while preserving existing functions and AvatarSpeaker logic. */
+            #pg-vent.vent-clean-ui .vent-clean-bottom,
+            #pg-vent.vent-fullscreen-page .vent-clean-bottom{
+                position:absolute!important;
+                left:50%!important;
+                right:auto!important;
+                transform:translateX(-50%)!important;
+                width:min(92vw,760px)!important;
+                max-width:760px!important;
+                z-index:320!important;
+                display:flex!important;
+                flex-direction:column!important;
+                align-items:stretch!important;
+                gap:10px!important;
+                pointer-events:none!important;
+            }
+
+            #pg-vent.vent-clean-ui .vent-clean-listen-card,
+            #pg-vent.vent-clean-ui .vent-clean-controls,
+            #pg-vent.vent-fullscreen-page .vent-clean-listen-card,
+            #pg-vent.vent-fullscreen-page .vent-clean-controls{
+                pointer-events:auto!important;
+            }
+
+            #pg-vent.vent-clean-ui .vent-clean-controls,
+            #pg-vent.vent-fullscreen-page .vent-clean-controls{
+                width:100%!important;
+                display:grid!important;
+                grid-template-columns:1fr 112px!important;
+                align-items:center!important;
+                gap:10px!important;
+            }
+
+            #pg-vent.vent-clean-ui .vent-clean-controls:not(.is-recording),
+            #pg-vent.vent-fullscreen-page .vent-clean-controls:not(.is-recording){
+                grid-template-columns:1fr!important;
+            }
+
+            #pg-vent.vent-clean-ui .vent-clean-controls:not(.is-recording) #vent-stop-speech,
+            #pg-vent.vent-fullscreen-page .vent-clean-controls:not(.is-recording) #vent-stop-speech{
+                display:none!important;
+            }
+
+            #pg-vent.vent-clean-ui .vent-clean-controls.is-recording #vent-stop-speech,
+            #pg-vent.vent-fullscreen-page .vent-clean-controls.is-recording #vent-stop-speech{
+                display:flex!important;
+            }
+
+            #pg-vent.vent-clean-ui .vent-rec-wrap.vent-clean-mic-pill,
+            #pg-vent.vent-fullscreen-page .vent-rec-wrap.vent-clean-mic-pill{
+                width:100%!important;
+                min-width:0!important;
+                height:64px!important;
+                margin:0!important;
+                border-radius:999px!important;
+            }
+
+            #pg-vent.vent-clean-ui #rec-btn,
+            #pg-vent.vent-fullscreen-page #rec-btn{
+                width:58px!important;
+                height:58px!important;
+                font-size:27px!important;
+            }
+
+            #pg-vent.vent-clean-ui .vent-clean-stop,
+            #pg-vent.vent-fullscreen-page .vent-clean-stop{
+                height:58px!important;
+                border-radius:999px!important;
+            }
+
+            #pg-vent.vent-clean-ui .vent-clean-meta,
+            #pg-vent.vent-fullscreen-page .vent-clean-meta{
+                display:none!important;
+            }
+
+            @media(max-width:899px){
+                #pg-vent.vent-clean-ui .vent-clean-bottom,
+                #pg-vent.vent-fullscreen-page .vent-clean-bottom{
+                    bottom:calc(var(--nav-h) + var(--s-b) + 12px)!important;
+                    width:90vw!important;
+                    gap:8px!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-listen-card,
+                #pg-vent.vent-fullscreen-page .vent-clean-listen-card{
+                    min-height:66px!important;
+                    padding:10px 14px!important;
+                    border-radius:24px!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-listen-copy strong,
+                #pg-vent.vent-fullscreen-page .vent-clean-listen-copy strong{
+                    font-size:18px!important;
+                    line-height:1.15!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-subtitle-container,
+                #pg-vent.vent-fullscreen-page .vent-subtitle-container{
+                    font-size:14px!important;
+                    line-height:1.25!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-controls,
+                #pg-vent.vent-fullscreen-page .vent-clean-controls{
+                    grid-template-columns:1fr 96px!important;
+                    gap:8px!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-controls:not(.is-recording),
+                #pg-vent.vent-fullscreen-page .vent-clean-controls:not(.is-recording){
+                    grid-template-columns:1fr!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-rec-wrap.vent-clean-mic-pill,
+                #pg-vent.vent-fullscreen-page .vent-rec-wrap.vent-clean-mic-pill{
+                    height:58px!important;
+                }
+
+                #pg-vent.vent-clean-ui #rec-btn,
+                #pg-vent.vent-fullscreen-page #rec-btn{
+                    width:54px!important;
+                    height:54px!important;
+                    font-size:25px!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-stop,
+                #pg-vent.vent-fullscreen-page .vent-clean-stop{
+                    height:54px!important;
+                    font-size:13px!important;
+                }
+            }
+
+            @media(min-width:900px){
+                #pg-vent.vent-clean-ui .vent-clean-bottom,
+                #pg-vent.vent-fullscreen-page .vent-clean-bottom{
+                    bottom:24px!important;
+                    width:min(720px,72vw)!important;
+                }
+            }
+
+            @supports(-webkit-touch-callout:none){
+                #pg-vent.vent-clean-ui .vent-clean-bottom,
+                #pg-vent.vent-fullscreen-page .vent-clean-bottom{
+                    bottom:calc(var(--nav-h) + var(--s-b) + 14px)!important;
+                    transform:translate3d(-50%,0,0)!important;
+                    -webkit-transform:translate3d(-50%,0,0)!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-rec-wrap.vent-clean-mic-pill,
+                #pg-vent.vent-fullscreen-page .vent-rec-wrap.vent-clean-mic-pill{
+                    transform:translate3d(0,0,0)!important;
+                    -webkit-transform:translate3d(0,0,0)!important;
+                }
+            }
+
+            @media(max-height:720px){
+                #pg-vent.vent-clean-ui .vent-clean-bottom,
+                #pg-vent.vent-fullscreen-page .vent-clean-bottom{
+                    gap:6px!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-listen-card,
+                #pg-vent.vent-fullscreen-page .vent-clean-listen-card{
+                    min-height:58px!important;
+                    padding:8px 12px!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-clean-listen-copy strong,
+                #pg-vent.vent-fullscreen-page .vent-clean-listen-copy strong{
+                    font-size:15px!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-subtitle-container,
+                #pg-vent.vent-fullscreen-page .vent-subtitle-container{
+                    font-size:12px!important;
+                }
+
+                #pg-vent.vent-clean-ui .vent-rec-wrap.vent-clean-mic-pill,
+                #pg-vent.vent-fullscreen-page .vent-rec-wrap.vent-clean-mic-pill{
+                    height:52px!important;
+                }
+
+                #pg-vent.vent-clean-ui #rec-btn,
+                #pg-vent.vent-fullscreen-page #rec-btn{
+                    width:48px!important;
+                    height:48px!important;
+                    font-size:22px!important;
+                }
+            }
+
 </style>
 
     </head>
