@@ -7928,80 +7928,78 @@
                 to{transform:rotate(360deg)}
             }
 
-            /* Vent mobile Safari full-stage fix */
-            body.vkm-vent-active #main{
-                padding-bottom:0!important;
-            }
-            body.vkm-vent-active #pg-vent.vent-clean-ui{
-                width:100%!important;
-                max-width:none!important;
-                margin:0!important;
-                padding:0!important;
-                flex:1 1 auto!important;
-                min-height:0!important;
-                height:calc(var(--real-vh, 1vh) * 100)!important;
-                overflow:hidden!important;
-            }
-            body.vkm-vent-active #pg-vent.vent-clean-ui .vent-clean-stage{
-                height:calc(var(--real-vh, 1vh) * 100)!important;
-                min-height:calc(var(--real-vh, 1vh) * 100)!important;
-                max-height:calc(var(--real-vh, 1vh) * 100)!important;
-                overflow:hidden!important;
-                background-position:center!important;
-            }
-            body.vkm-vent-active #pg-vent.vent-clean-ui .vent-clean-stage canvas:not(#wave-canvas){
+            /* Vent mobile Safari safe layout restore */
+            #pg-vent.vent-clean-ui .vent-clean-stage canvas:not(#wave-canvas){
                 transform:translateZ(0)!important;
                 -webkit-transform:translateZ(0)!important;
                 backface-visibility:hidden!important;
                 -webkit-backface-visibility:hidden!important;
             }
-            body.vkm-vent-active #pg-vent.vent-clean-ui .vent-clean-bottom{
-                position:absolute!important;
-                left:50%!important;
-                bottom:calc(var(--nav-h) + var(--s-b) + 10px)!important;
-                transform:translateX(-50%)!important;
-                width:min(90%,720px)!important;
-                z-index:260!important;
-            }
             @media(max-width:899px){
-                body.vkm-vent-active #pg-vent.vent-clean-ui.on{
+                #pg-vent.vent-clean-ui.on{
                     display:flex!important;
+                    flex:1 1 auto!important;
+                    min-height:0!important;
+                    padding:0!important;
+                    overflow:hidden!important;
                 }
-                body.vkm-vent-active #pg-vent.vent-clean-ui .vent-clean-listen-card{
+                #pg-vent.vent-clean-ui .vent-clean-stage{
+                    height:calc(100svh - var(--nav-h) - var(--s-b))!important;
+                    min-height:0!important;
+                    max-height:calc(100svh - var(--nav-h) - var(--s-b))!important;
+                    overflow:hidden!important;
+                    background-position:center!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-bottom{
+                    position:absolute!important;
+                    left:50%!important;
+                    bottom:calc(10px + var(--s-b))!important;
+                    transform:translateX(-50%)!important;
+                    width:min(90%,720px)!important;
+                    z-index:260!important;
+                }
+                #pg-vent.vent-clean-ui .vent-clean-listen-card{
                     min-height:64px!important;
                     border-radius:24px!important;
                     padding:9px 13px 9px 9px!important;
                 }
-                body.vkm-vent-active #pg-vent.vent-clean-ui .vent-clean-listen-copy strong{
+                #pg-vent.vent-clean-ui .vent-clean-listen-copy strong{
                     font-size:17px!important;
                 }
-                body.vkm-vent-active #pg-vent.vent-clean-ui .vent-subtitle-container{
+                #pg-vent.vent-clean-ui .vent-subtitle-container{
                     font-size:13px!important;
                     line-height:1.25!important;
                 }
-                body.vkm-vent-active #pg-vent.vent-clean-ui .vent-clean-controls{
+                #pg-vent.vent-clean-ui .vent-clean-controls{
                     grid-template-columns:1fr 96px!important;
                     gap:8px!important;
                 }
-                body.vkm-vent-active #pg-vent.vent-clean-ui .vent-clean-controls:not(.is-recording){
+                #pg-vent.vent-clean-ui .vent-clean-controls:not(.is-recording){
                     grid-template-columns:1fr!important;
                 }
-                body.vkm-vent-active #pg-vent.vent-clean-ui .vent-rec-wrap.vent-clean-mic-pill{
+                #pg-vent.vent-clean-ui .vent-rec-wrap.vent-clean-mic-pill{
                     height:54px!important;
                 }
-                body.vkm-vent-active #pg-vent.vent-clean-ui #rec-btn{
+                #pg-vent.vent-clean-ui #rec-btn{
                     width:50px!important;
                     height:50px!important;
                     font-size:24px!important;
                 }
-                body.vkm-vent-active #pg-vent.vent-clean-ui .vent-clean-stop{
+                #pg-vent.vent-clean-ui .vent-clean-stop{
                     height:52px!important;
                     font-size:13px!important;
                 }
-                body.vkm-vent-active #pg-vent.vent-clean-ui .vent-clean-meta{
+                #pg-vent.vent-clean-ui .vent-clean-meta{
                     display:none!important;
                 }
             }
+            @supports(-webkit-touch-callout:none){
+                #pg-vent.vent-clean-ui .vent-clean-stage{
+                    height:calc(100svh - var(--nav-h) - var(--s-b))!important;
+                    max-height:calc(100svh - var(--nav-h) - var(--s-b))!important;
+                }
+            }
+
 
             /* Vent avatar picker */
             #pg-vent.vent-clean-ui .vent-avatar-picker{
@@ -8980,8 +8978,8 @@
 
                         <div class="vent-avatar-picker" aria-label="Pilih avatar Vent">
                             <span>Avatar</span>
-                            <button type="button" class="vent-avatar-choice" data-vent-avatar="f_ava">Female</button>
-                            <button type="button" class="vent-avatar-choice" data-vent-avatar="avatar_test">Male</button>
+                            <button type="button" class="vent-avatar-choice" data-vent-avatar="f_ava">Ava</button>
+                            <button type="button" class="vent-avatar-choice" data-vent-avatar="avatar_test">Test</button>
                         </div>
 
                         <div class="vent-clean-bottom">
@@ -10157,8 +10155,8 @@
         const VENT_AVATAR_PATH = '/assets/avatars/F_AVA.vrm';
         const VENT_AVATAR_STORAGE_KEY = 'vkm_vent_avatar_choice';
         const VENT_AVATAR_OPTIONS = [
-            { id:'f_ava', label:'Female', path:'/assets/avatars/F_AVA.vrm' },
-            { id:'avatar_test', label:'Male', path:'/assets/avatars/M_AVA.vrm' }
+            { id:'f_ava', label:'Ava', path:'/assets/avatars/F_AVA.vrm' },
+            { id:'avatar_test', label:'Test', path:'/assets/avatars/AvatarTest.vrm' }
         ];
         const VENT_IDLE_ANIMATION = '/assets/animations/VRMA_01(全身を見せる).vrma';
         const VENT_GREETING_ANIMATION = '/assets/animations/VRMA_02(挨拶).vrma';
@@ -10178,12 +10176,6 @@
         function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
         function byId(id){return document.getElementById(id)}
         function setText(id,text){const el=byId(id);if(el)el.textContent=text||''}
-        function updateVentActiveClass(){
-            const page=byId('pg-vent');
-            const active=!!(page&&page.classList.contains('on'));
-            document.body&&document.body.classList.toggle('vkm-vent-active',active);
-        }
-
 
         function getVentAvatarOption(id){
             const fallback = VENT_AVATAR_OPTIONS[0];
@@ -10634,14 +10626,9 @@
             isSpeaking:()=>ventSpeaking
         };
         function bootVentAvatarWhenReady(){
-            updateVentActiveClass();
             registerVentAvatarPicker();
             startVentAvatarSpeaker();
-            if(isVentVisible()){
-                setTimeout(forceVentAvatarCanvasLayout,60);
-                setTimeout(forceVentAvatarCanvasLayout,260);
-                setTimeout(forceVentAvatarCanvasLayout,700);
-            }
+            if(isVentVisible())forceVentAvatarCanvasLayout();
         }
 
         if(document.readyState==='loading'){
@@ -10658,16 +10645,7 @@
         });
 
         new MutationObserver(()=>bootVentAvatarWhenReady()).observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
-        ['resize','orientationchange','pageshow','visibilitychange'].forEach((eventName)=>{
-            window.addEventListener(eventName,()=>{
-                updateVentActiveClass();
-                if(isVentVisible()){
-                    setTimeout(forceVentAvatarCanvasLayout,120);
-                    setTimeout(forceVentAvatarCanvasLayout,520);
-                }
-            },{passive:true});
-        });
-        setInterval(()=>{updateVentActiveClass();if(isVentVisible())bootVentAvatarWhenReady()},1200);
+        setInterval(()=>{if(isVentVisible())bootVentAvatarWhenReady()},1200);
         </script>
 
 
@@ -10830,18 +10808,11 @@ var EMO={marah:{label:"Marah",color:"#DC2626",hue:0,icon:"fa-fire",desc:"Api Cha
             var authMode="login";
             
             function setRealViewportHeight(){
-                try{
-                    var h=(window.visualViewport&&window.visualViewport.height)?window.visualViewport.height:window.innerHeight;
-                    document.documentElement.style.setProperty('--real-vh',(h*.01)+'px');
-                }catch(e){}
+                try{document.documentElement.style.setProperty('--real-vh',(window.innerHeight*.01)+'px')}catch(e){}
             }
             setRealViewportHeight();
             window.addEventListener('resize',setRealViewportHeight,{passive:true});
-            window.addEventListener('orientationchange',function(){setTimeout(setRealViewportHeight,250);setTimeout(setRealViewportHeight,650)},{passive:true});
-            if(window.visualViewport){
-                window.visualViewport.addEventListener('resize',setRealViewportHeight,{passive:true});
-                window.visualViewport.addEventListener('scroll',setRealViewportHeight,{passive:true});
-            }
+            window.addEventListener('orientationchange',function(){setTimeout(setRealViewportHeight,250)},{passive:true});
 var authToken=localStorage.getItem("vkm_token")||"";
             var authUser=null;
             var syncTimer=null;
