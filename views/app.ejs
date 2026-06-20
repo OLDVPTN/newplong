@@ -8074,6 +8074,128 @@
                 }
             }
 
+
+            /* Vent avatar fullscreen only override
+               Scope: Vent page only. No JavaScript/function changes. */
+            #pg-vent.vent-clean-ui,
+            #pg-vent.vent-fullscreen-page{
+                width:100%!important;
+                max-width:none!important;
+                height:calc(var(--real-vh, 1vh) * 100)!important;
+                min-height:calc(var(--real-vh, 1vh) * 100)!important;
+                max-height:calc(var(--real-vh, 1vh) * 100)!important;
+                margin:0!important;
+                padding:0!important;
+                overflow:hidden!important;
+                align-items:stretch!important;
+                justify-content:stretch!important;
+            }
+
+            #pg-vent.vent-clean-ui.on,
+            #pg-vent.vent-fullscreen-page.on{
+                display:flex!important;
+            }
+
+            #pg-vent.vent-clean-ui .vent-avatar-container,
+            #pg-vent.vent-clean-ui .vent-clean-stage,
+            #pg-vent.vent-fullscreen-page .vent-avatar-container,
+            #pg-vent.vent-fullscreen-page .vent-clean-stage{
+                position:relative!important;
+                width:100%!important;
+                max-width:none!important;
+                height:calc(var(--real-vh, 1vh) * 100)!important;
+                min-height:calc(var(--real-vh, 1vh) * 100)!important;
+                max-height:calc(var(--real-vh, 1vh) * 100)!important;
+                margin:0!important;
+                padding:0!important;
+                border-radius:0!important;
+                overflow:hidden!important;
+                flex:1 1 auto!important;
+            }
+
+            #pg-vent.vent-clean-ui .vent-avatar-container > canvas:not(#wave-canvas),
+            #pg-vent.vent-clean-ui .vent-clean-stage > canvas:not(#wave-canvas),
+            #pg-vent.vent-clean-ui .vent-avatar-container canvas:not(#wave-canvas),
+            #pg-vent.vent-clean-ui .vent-clean-stage canvas:not(#wave-canvas),
+            #pg-vent.vent-fullscreen-page .vent-avatar-container > canvas:not(#wave-canvas),
+            #pg-vent.vent-fullscreen-page .vent-clean-stage > canvas:not(#wave-canvas),
+            #pg-vent.vent-fullscreen-page .vent-avatar-container canvas:not(#wave-canvas),
+            #pg-vent.vent-fullscreen-page .vent-clean-stage canvas:not(#wave-canvas){
+                position:absolute!important;
+                inset:0!important;
+                width:100%!important;
+                height:100%!important;
+                max-width:none!important;
+                max-height:none!important;
+                display:block!important;
+                z-index:1!important;
+                transform:translateZ(0)!important;
+                -webkit-transform:translateZ(0)!important;
+                backface-visibility:hidden!important;
+                -webkit-backface-visibility:hidden!important;
+                background:transparent!important;
+            }
+
+            body.vkm-vent-active #main{
+                padding-bottom:0!important;
+            }
+
+            body.vkm-vent-active #pg-vent.vent-clean-ui,
+            body.vkm-vent-active #pg-vent.vent-fullscreen-page{
+                height:calc(var(--real-vh, 1vh) * 100)!important;
+                min-height:calc(var(--real-vh, 1vh) * 100)!important;
+                max-height:calc(var(--real-vh, 1vh) * 100)!important;
+            }
+
+            body.vkm-vent-active #pg-vent.vent-clean-ui .vent-avatar-container,
+            body.vkm-vent-active #pg-vent.vent-clean-ui .vent-clean-stage,
+            body.vkm-vent-active #pg-vent.vent-fullscreen-page .vent-avatar-container,
+            body.vkm-vent-active #pg-vent.vent-fullscreen-page .vent-clean-stage{
+                height:calc(var(--real-vh, 1vh) * 100)!important;
+                min-height:calc(var(--real-vh, 1vh) * 100)!important;
+                max-height:calc(var(--real-vh, 1vh) * 100)!important;
+            }
+
+            @media(min-width:900px){
+                #pg-vent.vent-clean-ui,
+                #pg-vent.vent-fullscreen-page{
+                    max-width:none!important;
+                    width:100%!important;
+                    padding:0!important;
+                }
+                #pg-vent.vent-clean-ui .vent-avatar-container,
+                #pg-vent.vent-clean-ui .vent-clean-stage,
+                #pg-vent.vent-fullscreen-page .vent-avatar-container,
+                #pg-vent.vent-fullscreen-page .vent-clean-stage{
+                    height:100vh!important;
+                    min-height:100vh!important;
+                    max-height:100vh!important;
+                }
+            }
+
+            @supports(height:100svh){
+                #pg-vent.vent-clean-ui,
+                #pg-vent.vent-fullscreen-page,
+                #pg-vent.vent-clean-ui .vent-avatar-container,
+                #pg-vent.vent-clean-ui .vent-clean-stage,
+                #pg-vent.vent-fullscreen-page .vent-avatar-container,
+                #pg-vent.vent-fullscreen-page .vent-clean-stage{
+                    height:100svh!important;
+                    min-height:100svh!important;
+                    max-height:100svh!important;
+                }
+                body.vkm-vent-active #pg-vent.vent-clean-ui,
+                body.vkm-vent-active #pg-vent.vent-fullscreen-page,
+                body.vkm-vent-active #pg-vent.vent-clean-ui .vent-avatar-container,
+                body.vkm-vent-active #pg-vent.vent-clean-ui .vent-clean-stage,
+                body.vkm-vent-active #pg-vent.vent-fullscreen-page .vent-avatar-container,
+                body.vkm-vent-active #pg-vent.vent-fullscreen-page .vent-clean-stage{
+                    height:100svh!important;
+                    min-height:100svh!important;
+                    max-height:100svh!important;
+                }
+            }
+
 </style>
 
     </head>
