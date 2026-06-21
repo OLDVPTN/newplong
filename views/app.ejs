@@ -9049,6 +9049,743 @@
                 }
             }
 
+
+            /* ═══════ REFERENCE STYLE DASHBOARD — CLEAN CUTE DESKTOP CARD ═══════ */
+            #pg-home.ref-dashboard-page{
+                padding:0!important;
+                max-width:none!important;
+                width:100%!important;
+                overflow:hidden!important;
+                background:#C8D7EC!important;
+            }
+            #pg-home.ref-dashboard-page.on{display:flex!important}
+            .ref-dash-stage{
+                flex:1;
+                min-height:0;
+                width:100%;
+                overflow:auto;
+                -webkit-overflow-scrolling:touch;
+                padding:20px 12px calc(var(--nav-h) + var(--s-b) + 18px);
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:
+                    radial-gradient(circle at 10% 10%,rgba(255,255,255,.34),transparent 24%),
+                    radial-gradient(circle at 90% 80%,rgba(255,255,255,.22),transparent 30%),
+                    #C8D7EC;
+            }
+            .ref-dash-app{
+                width:min(100%,1120px);
+                min-height:min(640px,calc(100dvh - var(--nav-h) - var(--s-b) - 40px));
+                border-radius:18px;
+                background:#F3F6FC;
+                border:1px solid rgba(255,255,255,.72);
+                box-shadow:0 28px 80px rgba(63,83,117,.22),0 8px 22px rgba(63,83,117,.10),inset 0 1px 0 rgba(255,255,255,.88);
+                overflow:hidden;
+                display:grid;
+                grid-template-columns:70px minmax(0,1fr);
+            }
+            .ref-dash-rail{
+                background:rgba(255,255,255,.82);
+                border-right:1px solid rgba(226,232,240,.72);
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                padding:22px 0;
+                gap:22px;
+            }
+            .ref-rail-logo{
+                width:32px;height:32px;
+                position:relative;
+                display:grid;
+                place-items:center;
+            }
+            .ref-rail-logo span{
+                position:absolute;
+                width:8px;height:16px;
+                border-radius:999px;
+                transform-origin:50% 120%;
+            }
+            .ref-rail-logo span:nth-child(1){background:#FF4D70;transform:rotate(-45deg) translateY(-3px)}
+            .ref-rail-logo span:nth-child(2){background:#FACC15;transform:rotate(45deg) translateY(-3px)}
+            .ref-rail-logo span:nth-child(3){background:#3B82F6;transform:rotate(180deg) translateY(-3px)}
+            .ref-rail-icons{
+                display:flex;
+                flex-direction:column;
+                gap:12px;
+                margin-top:10px;
+            }
+            .ref-rail-icons button,.ref-rail-gear{
+                width:34px;height:34px;
+                display:grid;
+                place-items:center;
+                border-radius:12px;
+                color:#8A95A7;
+                transition:background .15s ease,color .15s ease,transform .15s ease;
+            }
+            .ref-rail-icons button.on{
+                color:#3F7DD8;
+                background:#EAF2FF;
+            }
+            .ref-rail-icons button:hover,.ref-rail-gear:hover{
+                transform:translateY(-1px);
+                color:#3F7DD8;
+                background:#EDF4FF;
+            }
+            .ref-rail-gear{
+                margin-top:auto;
+            }
+            .ref-dash-main{
+                min-width:0;
+                display:flex;
+                flex-direction:column;
+                padding:20px 26px 26px;
+                gap:22px;
+                overflow:hidden;
+            }
+            .ref-dash-top{
+                display:grid;
+                grid-template-columns:230px 1fr auto;
+                align-items:center;
+                gap:18px;
+                flex:0 0 auto;
+            }
+            .ref-search{
+                height:36px;
+                display:flex;
+                align-items:center;
+                gap:9px;
+                padding:0 14px;
+                border-radius:8px;
+                background:#fff;
+                color:#B5BDCC;
+                font-size:12px;
+                box-shadow:0 8px 18px rgba(87,105,134,.06);
+            }
+            .ref-search i{font-size:12px;margin-left:auto;order:2;color:#9DA8BB}
+            .ref-date{
+                justify-self:center;
+                display:flex;
+                align-items:center;
+                gap:8px;
+                color:#4D5A6D;
+                font-size:12px;
+                font-weight:700;
+            }
+            .ref-profile-mini{
+                justify-self:end;
+                display:flex;
+                align-items:center;
+                gap:12px;
+                min-width:0;
+            }
+            .ref-icon-btn{
+                width:32px;height:32px;
+                border-radius:50%;
+                background:transparent;
+                color:#7F8CA2;
+                display:grid;
+                place-items:center;
+                position:relative;
+            }
+            .ref-icon-btn::after{
+                content:'';
+                position:absolute;
+                top:6px;right:7px;
+                width:7px;height:7px;
+                background:#FACC15;
+                border:2px solid #F3F6FC;
+                border-radius:50%;
+            }
+            .ref-mini-avatar{
+                width:36px;height:36px;
+                border-radius:50%;
+                overflow:hidden;
+                background:#FEE2E2;
+                box-shadow:0 5px 12px rgba(15,23,42,.08);
+            }
+            .ref-mini-avatar img{width:100%;height:100%;object-fit:cover}
+            .ref-profile-mini strong{
+                display:block;
+                font-size:13px;
+                color:#2B3445;
+                line-height:1.15;
+                max-width:120px;
+                white-space:nowrap;
+                overflow:hidden;
+                text-overflow:ellipsis;
+            }
+            .ref-profile-mini span{
+                display:block;
+                font-size:10px;
+                color:#93A0B4;
+                margin-top:2px;
+            }
+            .ref-dash-content{
+                flex:1;
+                min-height:0;
+                display:grid;
+                grid-template-columns:minmax(0,1fr) 300px;
+                gap:30px;
+                overflow:hidden;
+            }
+            .ref-left-pane,.ref-right-pane{
+                min-width:0;
+            }
+            .ref-left-pane{
+                display:flex;
+                flex-direction:column;
+                gap:26px;
+            }
+            .ref-right-pane{
+                display:flex;
+                flex-direction:column;
+                gap:18px;
+                padding-top:58px;
+            }
+            .ref-section-title{
+                font-size:25px;
+                line-height:1;
+                color:#2D3648;
+                letter-spacing:-.05em;
+                font-weight:700;
+                margin-left:14px;
+            }
+            .ref-hero-card{
+                min-height:230px;
+                border-radius:18px;
+                background:#fff;
+                box-shadow:0 18px 34px rgba(87,105,134,.11);
+                display:grid;
+                grid-template-columns:minmax(0,1fr) 270px;
+                padding:44px 42px 32px;
+                position:relative;
+                overflow:visible;
+            }
+            .ref-hero-copy h1{
+                font-size:42px;
+                line-height:1;
+                font-weight:800;
+                color:#2E394D;
+                letter-spacing:-.06em;
+            }
+            .ref-hero-copy h1 span{color:#2E394D}
+            .ref-hero-copy p{
+                margin-top:20px;
+                color:#8C97AA;
+                font-size:15px;
+            }
+            .ref-hero-links{
+                margin-top:26px;
+                display:grid;
+                grid-template-columns:max-content max-content;
+                gap:12px 34px;
+            }
+            .ref-hero-links button{
+                display:flex;
+                align-items:center;
+                gap:9px;
+                color:#536278;
+                font-size:12px;
+                font-weight:700;
+                transition:color .14s ease,transform .14s ease;
+            }
+            .ref-hero-links button:hover{
+                color:#3F7DD8;
+                transform:translateX(2px);
+            }
+            .ref-hero-links i{
+                width:14px;height:14px;
+                display:grid;
+                place-items:center;
+                border-radius:4px;
+                font-size:8px;
+                background:#EFF5FF;
+                color:#3F7DD8;
+            }
+            .ref-hero-links button:nth-child(2) i{background:#FFF8DE;color:#EAB308}
+            .ref-hero-links button:nth-child(3) i{background:#FEEBEE;color:#F43F5E}
+            .ref-hero-links button:nth-child(4) i{background:#ECFDF5;color:#10B981}
+            .ref-mascot-wrap{
+                position:absolute;
+                right:58px;
+                top:-52px;
+                width:260px;
+                height:270px;
+                pointer-events:none;
+                filter:drop-shadow(0 18px 24px rgba(50,63,82,.12));
+            }
+            .ref-mascot-body{
+                position:absolute;
+                left:44px;top:48px;
+                width:176px;height:198px;
+                border-radius:48% 48% 42% 42%;
+                background:#fff;
+                border:5px solid #4B5567;
+            }
+            .ref-mascot-body::before,
+            .ref-mascot-body::after{
+                content:'';
+                position:absolute;
+                bottom:22px;
+                width:52px;height:42px;
+                border:5px solid #4B5567;
+                background:#fff;
+                border-radius:42% 42% 50% 50%;
+            }
+            .ref-mascot-body::before{left:-24px;transform:rotate(18deg)}
+            .ref-mascot-body::after{right:-24px;transform:rotate(-18deg)}
+            .ref-mascot-ear{
+                position:absolute;
+                top:22px;
+                width:58px;height:58px;
+                border-radius:50%;
+                background:#fff;
+                border:5px solid #4B5567;
+                z-index:0;
+            }
+            .ref-mascot-ear::after{
+                content:'';
+                position:absolute;
+                inset:10px;
+                border-radius:50%;
+                background:#FFDB5C;
+                border:4px solid #4B5567;
+            }
+            .ref-mascot-ear.left{left:46px}
+            .ref-mascot-ear.right{right:46px}
+            .ref-mascot-face{
+                position:absolute;
+                left:50%;
+                top:70px;
+                transform:translateX(-50%);
+                width:92px;height:60px;
+            }
+            .ref-mascot-face::before,
+            .ref-mascot-face::after{
+                content:'';
+                position:absolute;
+                top:7px;
+                width:22px;height:12px;
+                border-bottom:5px solid #4B5567;
+                border-radius:0 0 22px 22px;
+            }
+            .ref-mascot-face::before{left:4px}
+            .ref-mascot-face::after{right:4px}
+            .ref-mascot-face i{
+                position:absolute;
+                left:50%;
+                top:24px;
+                width:22px;height:16px;
+                transform:translateX(-50%);
+                border-radius:50%;
+                background:#4B5567;
+            }
+            .ref-mascot-face b{
+                position:absolute;
+                left:50%;
+                top:38px;
+                width:38px;height:24px;
+                transform:translateX(-50%);
+                border-bottom:4px solid #4B5567;
+                border-radius:0 0 36px 36px;
+            }
+            .ref-mascot-cheek{
+                position:absolute;
+                top:105px;
+                width:20px;height:14px;
+                border-radius:50%;
+                background:#FF7A7A;
+                opacity:.72;
+            }
+            .ref-mascot-cheek.left{left:42px}
+            .ref-mascot-cheek.right{right:42px}
+            .ref-mascot-cup{
+                position:absolute;
+                right:-16px;
+                top:112px;
+                width:44px;height:38px;
+                border-radius:8px 8px 14px 14px;
+                background:#4C7DB9;
+                border:4px solid #4B5567;
+            }
+            .ref-mascot-cup::after{
+                content:'';
+                position:absolute;
+                right:-18px;
+                top:7px;
+                width:18px;height:18px;
+                border:4px solid #4B5567;
+                border-left:0;
+                border-radius:0 14px 14px 0;
+            }
+            .ref-stat-row{
+                display:grid;
+                grid-template-columns:repeat(4,minmax(0,1fr));
+                gap:20px;
+            }
+            .ref-stat-card{
+                min-height:162px;
+                border-radius:18px;
+                background:#fff;
+                box-shadow:0 18px 30px rgba(87,105,134,.12);
+                padding:24px 24px 18px;
+                display:flex;
+                flex-direction:column;
+                justify-content:space-between;
+                position:relative;
+                overflow:hidden;
+            }
+            .ref-stat-card::after{
+                content:'';
+                position:absolute;
+                left:20px;right:20px;bottom:0;
+                height:8px;
+                border-radius:999px 999px 0 0;
+                background:rgba(130,156,198,.09);
+            }
+            .ref-stat-head{
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+            }
+            .ref-stat-head > i{
+                width:34px;height:34px;
+                display:grid;
+                place-items:center;
+                border-radius:11px;
+                font-size:18px;
+                color:var(--ref-accent,#3B82F6);
+                border:3px solid color-mix(in srgb,var(--ref-accent,#3B82F6) 24%, transparent);
+            }
+            .ref-stat-head button{
+                color:#A8B1C3;
+                width:24px;height:24px;
+            }
+            .ref-stat-card span{
+                display:block;
+                margin-top:16px;
+                color:#8B96A8;
+                font-size:13px;
+                line-height:1.25;
+                font-weight:700;
+                min-height:34px;
+            }
+            .ref-stat-card strong{
+                display:block;
+                margin-top:4px;
+                color:#2E394D;
+                font-size:23px;
+                letter-spacing:-.03em;
+                line-height:1;
+                font-weight:800;
+            }
+            .ref-stat-card small{
+                margin-top:8px;
+                color:#A8B1C3;
+                font-size:11px;
+                font-weight:600;
+                line-height:1.25;
+            }
+            .ref-stat-card.accent-pink{--ref-accent:#F05A7A}
+            .ref-stat-card.accent-blue{--ref-accent:#4B7FBA}
+            .ref-stat-card.accent-yellow{--ref-accent:#FACC15}
+            .ref-stat-card.accent-green{--ref-accent:#62C96B}
+            .ref-control-row{
+                display:flex;
+                justify-content:flex-end;
+                gap:12px;
+            }
+            .ref-filter,.ref-create{
+                height:36px;
+                border-radius:7px;
+                padding:0 16px;
+                font-size:12px;
+                font-weight:700;
+                display:flex;
+                align-items:center;
+                gap:8px;
+            }
+            .ref-filter{
+                background:#F8FAFF;
+                color:#536278;
+                border:1px solid #E3E9F4;
+            }
+            .ref-create{
+                background:#4D7DC3;
+                color:#fff;
+                box-shadow:0 10px 16px rgba(77,125,195,.18);
+            }
+            .ref-notif-card{
+                margin-top:6px;
+            }
+            .ref-notif-head{
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                margin-bottom:18px;
+                color:#2E394D;
+                font-size:18px;
+                font-weight:800;
+            }
+            .ref-notif-head div{
+                display:flex;
+                align-items:center;
+                gap:10px;
+            }
+            .ref-notif-head i{color:#8A95A7;font-size:16px}
+            .ref-notif-head button{
+                color:#7BA0D8;
+                font-size:11px;
+                font-weight:800;
+            }
+            .ref-notif-item{
+                width:100%;
+                min-height:62px;
+                display:grid;
+                grid-template-columns:42px minmax(0,1fr) 18px;
+                align-items:center;
+                gap:12px;
+                padding:10px 12px;
+                border-radius:16px;
+                background:#fff;
+                box-shadow:0 12px 22px rgba(87,105,134,.08);
+                margin-bottom:12px;
+                text-align:left;
+                transition:transform .14s ease,box-shadow .14s ease;
+            }
+            .ref-notif-item:hover{
+                transform:translateY(-2px);
+                box-shadow:0 18px 28px rgba(87,105,134,.12);
+            }
+            .ref-notif-item > i{
+                width:36px;height:36px;
+                border-radius:11px;
+                display:grid;
+                place-items:center;
+                color:#fff;
+                background:var(--notif-color,#3B82F6);
+                font-size:15px;
+            }
+            .ref-notif-item.yellow{--notif-color:#FACC15}
+            .ref-notif-item.pink{--notif-color:#FF5A70}
+            .ref-notif-item.blue{--notif-color:#4C7DB9}
+            .ref-notif-item b{
+                display:block;
+                color:#3E4A5F;
+                font-size:12px;
+                line-height:1.2;
+                font-weight:800;
+            }
+            .ref-notif-item small{
+                display:block;
+                margin-top:3px;
+                color:#9AA5B7;
+                font-size:10px;
+                line-height:1.2;
+                font-weight:600;
+            }
+            .ref-notif-item em{
+                width:18px;height:18px;
+                display:grid;
+                place-items:center;
+                border-radius:50%;
+                color:#98A4B7;
+                border:1px solid #D7DEE9;
+                font-size:9px;
+                font-style:normal;
+            }
+            .ref-mini-stats{
+                display:grid;
+                grid-template-columns:repeat(2,minmax(0,1fr));
+                gap:12px;
+            }
+            .ref-mini-stats article{
+                min-height:100px;
+                border-radius:18px;
+                background:#fff;
+                box-shadow:0 12px 22px rgba(87,105,134,.08);
+                padding:14px;
+                display:flex;
+                flex-direction:column;
+                gap:4px;
+            }
+            .ref-mini-stats i{
+                width:30px;height:30px;
+                border-radius:10px;
+                display:grid;
+                place-items:center;
+                background:#EEF5FF;
+                color:#4D7DC3;
+            }
+            .ref-mini-stats span{
+                color:#8B96A8;
+                font-size:11px;
+                font-weight:800;
+                margin-top:6px;
+            }
+            .ref-mini-stats strong{
+                color:#2E394D;
+                font-size:19px;
+                line-height:1;
+            }
+            .ref-mini-stats small{
+                color:#A8B1C3;
+                font-size:10px;
+            }
+            .ref-coin-hidden{
+                position:absolute!important;
+                width:1px!important;
+                height:1px!important;
+                overflow:hidden!important;
+                clip:rect(0,0,0,0)!important;
+                white-space:nowrap!important;
+                opacity:0!important;
+                pointer-events:none!important;
+            }
+            @supports not (color: color-mix(in srgb, red 50%, white)){
+                .ref-stat-head > i{border-color:#E6ECF6}
+            }
+            @media(max-width:980px){
+                .ref-dash-stage{align-items:flex-start}
+                .ref-dash-app{
+                    grid-template-columns:1fr;
+                    border-radius:0;
+                    min-height:100%;
+                    box-shadow:none;
+                }
+                .ref-dash-rail{display:none}
+                .ref-dash-main{
+                    padding:16px 14px calc(var(--nav-h) + var(--s-b) + 18px);
+                    gap:16px;
+                    overflow:visible;
+                }
+                .ref-dash-top{
+                    grid-template-columns:1fr auto;
+                    gap:12px;
+                }
+                .ref-search{display:none}
+                .ref-date{justify-self:start}
+                .ref-profile-mini{justify-self:end}
+                .ref-profile-mini div:not(.ref-mini-avatar){display:none}
+                .ref-dash-content{
+                    display:flex;
+                    flex-direction:column;
+                    gap:16px;
+                    overflow:visible;
+                }
+                .ref-right-pane{padding-top:0}
+                .ref-section-title{
+                    margin-left:2px;
+                    font-size:24px;
+                }
+                .ref-hero-card{
+                    grid-template-columns:1fr;
+                    min-height:260px;
+                    padding:28px 22px;
+                    overflow:hidden;
+                }
+                .ref-hero-copy h1{
+                    font-size:36px;
+                    max-width:65%;
+                }
+                .ref-hero-copy p{max-width:56%}
+                .ref-hero-links{
+                    grid-template-columns:1fr 1fr;
+                    max-width:58%;
+                    gap:10px 14px;
+                }
+                .ref-mascot-wrap{
+                    right:-18px;
+                    top:12px;
+                    transform:scale(.82);
+                    transform-origin:top right;
+                }
+                .ref-stat-row{
+                    grid-template-columns:repeat(2,minmax(0,1fr));
+                    gap:12px;
+                }
+                .ref-control-row{display:none}
+                .ref-notif-card{margin-top:0}
+            }
+            @media(max-width:560px){
+                .ref-dash-stage{
+                    padding:0;
+                    display:block;
+                }
+                .ref-dash-app{
+                    width:100%;
+                    border:0;
+                    background:#F3F6FC;
+                }
+                .ref-dash-main{
+                    padding:14px 12px calc(var(--nav-h) + var(--s-b) + 16px);
+                }
+                .ref-hero-card{
+                    border-radius:18px;
+                    min-height:250px;
+                    padding:26px 18px;
+                }
+                .ref-hero-copy h1{
+                    font-size:32px;
+                    max-width:72%;
+                }
+                .ref-hero-copy p{
+                    margin-top:12px;
+                    max-width:64%;
+                    font-size:13px;
+                }
+                .ref-hero-links{
+                    margin-top:18px;
+                    grid-template-columns:1fr;
+                    max-width:54%;
+                    gap:9px;
+                }
+                .ref-hero-links button{
+                    font-size:11px;
+                }
+                .ref-mascot-wrap{
+                    right:-52px;
+                    top:0;
+                    transform:scale(.72);
+                }
+                .ref-stat-row{
+                    grid-template-columns:1fr 1fr;
+                    gap:10px;
+                }
+                .ref-stat-card{
+                    min-height:140px;
+                    padding:18px 16px 14px;
+                    border-radius:16px;
+                }
+                .ref-stat-card span{
+                    font-size:11px;
+                    min-height:28px;
+                }
+                .ref-stat-card strong{
+                    font-size:20px;
+                }
+                .ref-mini-stats{
+                    grid-template-columns:1fr 1fr;
+                    gap:10px;
+                }
+                .ref-notif-head{
+                    font-size:16px;
+                    margin-bottom:12px;
+                }
+            }
+            @media(max-width:380px){
+                .ref-hero-copy h1{font-size:28px;max-width:74%}
+                .ref-hero-copy p{max-width:66%}
+                .ref-mascot-wrap{
+                    right:-70px;
+                    transform:scale(.64);
+                }
+                .ref-stat-row,.ref-mini-stats{
+                    grid-template-columns:1fr;
+                }
+            }
+
 </style>
 
     </head>
@@ -9217,134 +9954,164 @@
                 </div>-->
 
                 <!-- HOME -->
-                <section id="pg-home" class="<%= pageId === 'pg-home' ? 'pg on home-foku dashboard-stats-page cute-dashboard-page' : 'pg home-foku dashboard-stats-page cute-dashboard-page' %>" aria-label="Dashboard">
-                    <div class="cute-dash-shell">
-                        <div class="cute-dash-hero" aria-label="Ringkasan perjalanan">
-                            <div class="cute-hero-bg cute-hero-bg-1"></div>
-                            <div class="cute-hero-bg cute-hero-bg-2"></div>
-                            <div class="cute-hero-top">
-                                <div class="cute-greet">
-                                    <span class="cute-kicker"><i class="fas fa-sparkles"></i> Dashboard</span>
-                                    <h1>Hai, <b id="dash-user-name">VokaMon User</b> 🌷</h1>
-                                    <p id="dash-user-bio">Statistik perjalanan emosimu tampil di sini.</p>
-                                    <small id="foku-date">01 March 2026</small>
+                <section id="pg-home" class="<%= pageId === 'pg-home' ? 'pg on home-foku dashboard-stats-page cute-dashboard-page ref-dashboard-page' : 'pg home-foku dashboard-stats-page cute-dashboard-page ref-dashboard-page' %>" aria-label="Dashboard">
+                    <div class="ref-dash-stage">
+                        <div class="ref-dash-app">
+                            <aside class="ref-dash-rail" aria-hidden="true">
+                                <div class="ref-rail-logo">
+                                    <span></span><span></span><span></span>
                                 </div>
-                                <div class="cute-coin-card">
-                                    <span>Soul Coins</span>
-                                    <strong id="dash-coins-pill">0</strong>
-                                    <i class="fas fa-coins"></i>
+                                <div class="ref-rail-icons">
+                                    <button type="button" class="on" tabindex="-1"><i class="fas fa-table-cells-large"></i></button>
+                                    <button type="button" tabindex="-1"><i class="fas fa-wallet"></i></button>
+                                    <button type="button" tabindex="-1"><i class="fas fa-calendar-check"></i></button>
+                                    <button type="button" tabindex="-1"><i class="fas fa-user-group"></i></button>
                                 </div>
-                            </div>
+                                <button type="button" class="ref-rail-gear" tabindex="-1"><i class="fas fa-gear"></i></button>
+                            </aside>
 
-                            <div class="cute-hero-bottom">
-                                <div class="cute-avatar-orb">
-                                    <img src="/assets/nav/account.png" alt="" loading="lazy" decoding="async">
-                                </div>
-                                <div class="cute-recap-card">
-                                    <span>Weekly Recap</span>
-                                    <strong id="dash-recap-title">Progress minggu ini</strong>
-                                    <p id="dash-recap-body">Data mingguan akan muncul setelah kamu mulai check-in atau memakai fitur Plong.</p>
-                                </div>
-                            </div>
+                            <main class="ref-dash-main">
+                                <header class="ref-dash-top">
+                                    <div class="ref-search" aria-hidden="true">
+                                        <i class="fas fa-search"></i>
+                                        <span>Search...</span>
+                                    </div>
+                                    <div class="ref-date">
+                                        <i class="far fa-calendar"></i>
+                                        <span id="foku-date">01 March 2026</span>
+                                    </div>
+                                    <div class="ref-profile-mini">
+                                        <button type="button" class="ref-icon-btn" data-page="pg-notifications"><i class="far fa-bell"></i></button>
+                                        <div class="ref-mini-avatar"><img src="/assets/nav/account.png" alt="" loading="lazy" decoding="async"></div>
+                                        <div>
+                                            <strong class="ref-profile-name">VokaMon User</strong>
+                                            <span>Plong companion</span>
+                                        </div>
+                                    </div>
+                                </header>
+
+                                <section class="ref-dash-content">
+                                    <div class="ref-left-pane">
+                                        <div class="ref-section-title">Dashboard</div>
+
+                                        <section class="ref-hero-card">
+                                            <div class="ref-hero-copy">
+                                                <h1>Hi, <span id="dash-user-name">VokaMon User</span>!</h1>
+                                                <p id="dash-user-bio">Apa yang ingin kamu rawat hari ini?</p>
+                                                <div class="ref-hero-links">
+                                                    <button type="button" data-page="pg-mood"><i class="fas fa-face-smile"></i> Check-in Mood</button>
+                                                    <button type="button" data-page="pg-pet"><i class="fas fa-paw"></i> Rawat Pet</button>
+                                                    <button type="button" data-page="pg-garden"><i class="fas fa-seedling"></i> Kebun Emosi</button>
+                                                    <button type="button" data-page="pg-vent"><i class="fas fa-microphone-lines"></i> Curhat Voice</button>
+                                                </div>
+                                            </div>
+                                            <div class="ref-mascot-wrap" aria-hidden="true">
+                                                <div class="ref-mascot-ear left"></div>
+                                                <div class="ref-mascot-ear right"></div>
+                                                <div class="ref-mascot-body">
+                                                    <div class="ref-mascot-face">
+                                                        <i></i>
+                                                        <b></b>
+                                                    </div>
+                                                    <div class="ref-mascot-cheek left"></div>
+                                                    <div class="ref-mascot-cheek right"></div>
+                                                    <div class="ref-mascot-cup"></div>
+                                                </div>
+                                            </div>
+                                        </section>
+
+                                        <section class="ref-stat-row" aria-label="Statistik utama">
+                                            <article class="ref-stat-card accent-pink">
+                                                <div class="ref-stat-head"><i class="fas fa-coins"></i><button type="button" aria-label="Detail"><i class="fas fa-ellipsis-vertical"></i></button></div>
+                                                <span>Soul Coins</span>
+                                                <strong id="dash-stat-coins">0</strong>
+                                                <small>Total saldo aktif</small>
+                                            </article>
+                                            <article class="ref-stat-card accent-blue">
+                                                <div class="ref-stat-head"><i class="fas fa-user-group"></i><button type="button" aria-label="Detail"><i class="fas fa-ellipsis-vertical"></i></button></div>
+                                                <span>Teman</span>
+                                                <strong id="dash-stat-friends">0</strong>
+                                                <small>Relasi accepted</small>
+                                            </article>
+                                            <article class="ref-stat-card accent-yellow">
+                                                <div class="ref-stat-head"><i class="fas fa-face-smile"></i><button type="button" aria-label="Detail"><i class="fas fa-ellipsis-vertical"></i></button></div>
+                                                <span>Mood Check-in</span>
+                                                <strong id="dash-stat-mood">0</strong>
+                                                <small id="dash-stat-mood-small">0 hari ini</small>
+                                            </article>
+                                            <article class="ref-stat-card accent-green">
+                                                <div class="ref-stat-head"><i class="fas fa-seedling"></i><button type="button" aria-label="Detail"><i class="fas fa-ellipsis-vertical"></i></button></div>
+                                                <span>Level Kebun</span>
+                                                <strong id="dash-stat-garden">1</strong>
+                                                <small id="dash-stat-garden-small">0/40 EXP</small>
+                                            </article>
+                                        </section>
+                                    </div>
+
+                                    <aside class="ref-right-pane">
+                                        <div class="ref-control-row">
+                                            <button type="button" class="ref-filter">By day <i class="fas fa-chevron-down"></i></button>
+                                            <button type="button" class="ref-create" data-page="pg-mood"><i class="far fa-square-plus"></i> Check-in</button>
+                                        </div>
+
+                                        <section class="ref-notif-card">
+                                            <div class="ref-notif-head">
+                                                <div><i class="far fa-bell"></i> Notifications</div>
+                                                <button type="button" data-page="pg-notifications">See all</button>
+                                            </div>
+                                            <button type="button" class="ref-notif-item yellow" data-page="pg-quests">
+                                                <i class="fas fa-list-check"></i>
+                                                <span><b>Daily quest tersedia.</b><small>Klaim progress harianmu.</small></span>
+                                                <em class="fas fa-chevron-right"></em>
+                                            </button>
+                                            <button type="button" class="ref-notif-item pink" data-page="pg-vent">
+                                                <i class="fas fa-microphone-lines"></i>
+                                                <span><b>Curhat voice siap.</b><small>Ceritakan perasaanmu.</small></span>
+                                                <em class="fas fa-chevron-right"></em>
+                                            </button>
+                                            <button type="button" class="ref-notif-item blue" data-page="pg-notifications">
+                                                <i class="fas fa-bell"></i>
+                                                <span><b id="dash-notif-text">0 belum dibaca</b><small>Lihat kabar terbaru.</small></span>
+                                                <em class="fas fa-chevron-right"></em>
+                                            </button>
+                                        </section>
+
+                                        <section class="ref-mini-stats">
+                                            <article>
+                                                <i class="fas fa-spa"></i>
+                                                <span>Ruang Tenang</span>
+                                                <strong id="dash-stat-calm">0</strong>
+                                                <small id="dash-stat-calm-small">0 detik</small>
+                                            </article>
+                                            <article>
+                                                <i class="fas fa-medal"></i>
+                                                <span>Badge</span>
+                                                <strong id="dash-stat-badges">0</strong>
+                                                <small>Achievement</small>
+                                            </article>
+                                            <article>
+                                                <i class="fas fa-hands-holding-heart"></i>
+                                                <span>Dukungan</span>
+                                                <strong id="dash-stat-support">0</strong>
+                                                <small>Terkirim</small>
+                                            </article>
+                                            <article>
+                                                <i class="fas fa-wand-magic-sparkles"></i>
+                                                <span>AI Summary</span>
+                                                <strong id="dash-stat-summary">0</strong>
+                                                <small>Ringkasan</small>
+                                            </article>
+                                        </section>
+
+                                        <div class="ref-coin-hidden" aria-hidden="true">
+                                            <span id="dash-coins-pill">0</span>
+                                            <span id="dash-recap-title">Progress minggu ini</span>
+                                            <span id="dash-recap-body">Data mingguan akan muncul setelah kamu mulai check-in atau memakai fitur Plong.</span>
+                                        </div>
+                                    </aside>
+                                </section>
+                            </main>
                         </div>
-
-                        <div class="cute-quick-row" aria-label="Aksi cepat dashboard">
-                            <button class="cute-quick primary" type="button" data-page="pg-mood">
-                                <i class="fas fa-face-smile"></i>
-                                <span>Check-in Mood</span>
-                            </button>
-                            <button class="cute-quick" type="button" data-page="pg-account">
-                                <i class="fas fa-user-pen"></i>
-                                <span>Edit Profil</span>
-                            </button>
-                            <button class="cute-quick" type="button" data-page="pg-vent">
-                                <i class="fas fa-microphone-lines"></i>
-                                <span>Curhat Voice</span>
-                            </button>
-                        </div>
-
-                        <section class="cute-stat-grid" aria-label="Statistik utama">
-                            <article class="cute-stat-card coin">
-                                <div class="cute-stat-icon"><i class="fas fa-coins"></i></div>
-                                <span>Soul Coins</span>
-                                <strong id="dash-stat-coins">0</strong>
-                                <small>Total saldo aktif</small>
-                            </article>
-                            <article class="cute-stat-card friends">
-                                <div class="cute-stat-icon"><i class="fas fa-user-group"></i></div>
-                                <span>Teman</span>
-                                <strong id="dash-stat-friends">0</strong>
-                                <small>Relasi accepted</small>
-                            </article>
-                            <article class="cute-stat-card mood">
-                                <div class="cute-stat-icon"><i class="fas fa-face-smile"></i></div>
-                                <span>Mood Check-in</span>
-                                <strong id="dash-stat-mood">0</strong>
-                                <small id="dash-stat-mood-small">0 hari ini</small>
-                            </article>
-                            <article class="cute-stat-card calm">
-                                <div class="cute-stat-icon"><i class="fas fa-spa"></i></div>
-                                <span>Ruang Tenang</span>
-                                <strong id="dash-stat-calm">0</strong>
-                                <small id="dash-stat-calm-small">0 detik</small>
-                            </article>
-                            <article class="cute-stat-card badge">
-                                <div class="cute-stat-icon"><i class="fas fa-medal"></i></div>
-                                <span>Badge</span>
-                                <strong id="dash-stat-badges">0</strong>
-                                <small>Achievement terbuka</small>
-                            </article>
-                            <article class="cute-stat-card garden">
-                                <div class="cute-stat-icon"><i class="fas fa-seedling"></i></div>
-                                <span>Level Kebun</span>
-                                <strong id="dash-stat-garden">1</strong>
-                                <small id="dash-stat-garden-small">0/40 EXP</small>
-                            </article>
-                            <article class="cute-stat-card support">
-                                <div class="cute-stat-icon"><i class="fas fa-hands-holding-heart"></i></div>
-                                <span>Dukungan</span>
-                                <strong id="dash-stat-support">0</strong>
-                                <small>Terkirim ke teman</small>
-                            </article>
-                            <article class="cute-stat-card summary">
-                                <div class="cute-stat-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
-                                <span>AI Summary</span>
-                                <strong id="dash-stat-summary">0</strong>
-                                <small>Ringkasan emosi</small>
-                            </article>
-                        </section>
-
-                        <section class="cute-life-panel" aria-label="Ruang aktif">
-                            <div class="cute-panel-head">
-                                <div>
-                                    <span>Ruang kecilmu</span>
-                                    <strong>Pilih mau lanjut ke mana?</strong>
-                                </div>
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <div class="cute-action-grid">
-                                <button type="button" class="cute-action-card pet" data-page="pg-pet">
-                                    <img src="/assets/nav/pet.png" alt="" loading="lazy" decoding="async">
-                                    <strong>Buka Pet</strong>
-                                    <span>Rawat pendamping emosimu</span>
-                                </button>
-                                <button type="button" class="cute-action-card garden" data-page="pg-garden">
-                                    <img src="/assets/nav/garden.png" alt="" loading="lazy" decoding="async">
-                                    <strong>Buka Kebun</strong>
-                                    <span>Lihat progress tanaman</span>
-                                </button>
-                                <button type="button" class="cute-action-card quest" data-page="pg-quests">
-                                    <i class="fas fa-list-check"></i>
-                                    <strong>Daily Quest</strong>
-                                    <span>Klaim progress harian</span>
-                                </button>
-                                <button type="button" class="cute-action-card notif" data-page="pg-notifications">
-                                    <i class="fas fa-bell"></i>
-                                    <strong>Notifikasi</strong>
-                                    <span id="dash-notif-text">0 belum dibaca</span>
-                                </button>
-                            </div>
-                        </section>
                     </div>
                 </section>
 
