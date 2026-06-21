@@ -10650,6 +10650,8 @@
         let ventResizeObserver = null;
         let ventLoadedAvatarId = null;
         let ventPendingAvatarChoice = null;
+        let ventDesiredAvatarId = null;
+        let ventAvatarSwitchToken = 0;
 
         function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
         function byId(id){return document.getElementById(id)}
@@ -10686,15 +10688,26 @@
         }
         function queueVentAvatarSwitch(id){
             const option=getVentAvatarOption(id);
+            ventDesiredAvatarId=option.id;
             ventPendingAvatarChoice=option.id;
             saveSelectedVentAvatar(option.id);
             updateVentAvatarPicker();
             setText('vent-loading-text','Avatar sedang dimuat. Akan ganti ke '+option.label+' setelah siap...');
             setText('vent-status-text','Menyiapkan avatar '+option.label+'...');
         }
+        function clearStaleVentAvatarQueue(exceptId){
+            if(!exceptId || ventPendingAvatarChoice!==exceptId){
+                ventPendingAvatarChoice=null;
+            }
+        }
         function runPendingVentAvatarSwitch(){
             const pending=ventPendingAvatarChoice;
+            const desired=ventDesiredAvatarId || pending;
             if(!pending||ventStarting)return false;
+            if(desired && pending!==desired){
+                ventPendingAvatarChoice=null;
+                return false;
+            }
             const loaded=getLoadedVentAvatarId();
             if(pending===loaded){
                 ventPendingAvatarChoice=null;
@@ -10985,9 +10998,14 @@
                 return;
             }
 
+            ventDesiredAvatarId=option.id;
+            clearStaleVentAvatarQueue(option.id);
+            const switchToken=++ventAvatarSwitchToken;
+
             const loaded=getLoadedVentAvatarId();
             if(ventReady && loaded===option.id){
                 saveSelectedVentAvatar(option.id);
+                ventPendingAvatarChoice=null;
                 updateVentAvatarPicker();
                 return;
             }
@@ -11023,6 +11041,16 @@
                 await ventAvatar.ready();
                 await sleep(220);
 
+                if(switchToken!==ventAvatarSwitchToken || ventDesiredAvatarId!==option.id){
+                    ventStarting=false;
+                    const desired=ventDesiredAvatarId;
+                    if(desired&&desired!==option.id){
+                        setTimeout(()=>switchVentAvatar(desired),60);
+                    }
+                    return;
+                }
+
+                ventPendingAvatarChoice=null;
                 ventReady=true;
                 ventStarting=false;
                 forceVentAvatarCanvasLayout();
@@ -11089,6 +11117,7 @@
 
             try{
                 const selectedAvatar=getSelectedVentAvatar();
+                if(!ventDesiredAvatarId)ventDesiredAvatarId=selectedAvatar.id;
                 updateVentAvatarPicker();
                 cleanupVentAvatarCanvas();
                 ventAvatar=new AvatarSpeaker({
@@ -11098,6 +11127,7 @@
                 });
                 container.dataset.ventAvatar=selectedAvatar.id;
                 ventLoadedAvatarId=selectedAvatar.id;
+                if(ventPendingAvatarChoice===selectedAvatar.id)ventPendingAvatarChoice=null;
 
                 watchVentResize();
                 await ventAvatar.ready();
