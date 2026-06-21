@@ -10648,6 +10648,8 @@
         let ventIdleMode = false;
         let ventIdleAnimating = false;
         let ventResizeObserver = null;
+        let ventLoadedAvatarId = null;
+        let ventPendingAvatarChoice = null;
 
         function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
         function byId(id){return document.getElementById(id)}
@@ -10677,6 +10679,30 @@
         }
         function setVentAvatarPickerDisabled(disabled){
             document.querySelectorAll('[data-vent-avatar]').forEach((button)=>button.disabled=!!disabled);
+        }
+        function getLoadedVentAvatarId(){
+            const container=byId('vent-avatar-container');
+            return (container&&container.dataset&&container.dataset.ventAvatar) || ventLoadedAvatarId || '';
+        }
+        function queueVentAvatarSwitch(id){
+            const option=getVentAvatarOption(id);
+            ventPendingAvatarChoice=option.id;
+            saveSelectedVentAvatar(option.id);
+            updateVentAvatarPicker();
+            setText('vent-loading-text','Avatar sedang dimuat. Akan ganti ke '+option.label+' setelah siap...');
+            setText('vent-status-text','Menyiapkan avatar '+option.label+'...');
+        }
+        function runPendingVentAvatarSwitch(){
+            const pending=ventPendingAvatarChoice;
+            if(!pending||ventStarting)return false;
+            const loaded=getLoadedVentAvatarId();
+            if(pending===loaded){
+                ventPendingAvatarChoice=null;
+                return false;
+            }
+            ventPendingAvatarChoice=null;
+            setTimeout(()=>switchVentAvatar(pending),80);
+            return true;
         }
         function cleanupVentAvatarCanvas(){
             const container=byId('vent-avatar-container');
@@ -10948,17 +10974,26 @@
 
 
         async function switchVentAvatar(choiceId){
-            const option=saveSelectedVentAvatar(choiceId);
-            updateVentAvatarPicker();
+            const option=getVentAvatarOption(choiceId);
 
             const container=byId('vent-avatar-container');
             const subtitle=byId('vent-subtitle-container');
             if(!container)return;
 
             if(ventStarting){
-                setText('vent-loading-text','Avatar sedang dimuat...');
+                queueVentAvatarSwitch(option.id);
                 return;
             }
+
+            const loaded=getLoadedVentAvatarId();
+            if(ventReady && loaded===option.id){
+                saveSelectedVentAvatar(option.id);
+                updateVentAvatarPicker();
+                return;
+            }
+
+            saveSelectedVentAvatar(option.id);
+            updateVentAvatarPicker();
 
             ventStarting=true;
             setVentAvatarPickerDisabled(true);
@@ -10982,6 +11017,7 @@
                     subtitleContainer: subtitle
                 });
                 container.dataset.ventAvatar=option.id;
+                ventLoadedAvatarId=option.id;
 
                 watchVentResize();
                 await ventAvatar.ready();
@@ -10998,12 +11034,14 @@
                 setText('vent-status-text','Avatar '+option.label+' siap mendengarkan.');
                 try{await animateVentAvatar(VENT_GREETING_ANIMATION)}catch(_){}
                 resetVentIdleTimer();
+                runPendingVentAvatarSwitch();
             }catch(error){
                 ventStarting=false;
                 console.error('Gagal mengganti avatar:',error);
                 showVentLoadError('Gagal mengganti avatar. Coba pilih avatar lain.');
                 updateVentAvatarPicker();
                 setText('vent-status-text','Avatar gagal diganti.');
+                runPendingVentAvatarSwitch();
             }
         }
 
@@ -11011,9 +11049,11 @@
             document.querySelectorAll('[data-vent-avatar]').forEach((button)=>{
                 if(button.dataset.boundVentAvatar)return;
                 button.dataset.boundVentAvatar='1';
-                button.addEventListener('click',()=>{
+                button.addEventListener('click',(event)=>{
+                    event.preventDefault();
                     const id=button.dataset.ventAvatar;
-                    if(!id || getSelectedVentAvatar().id===id)return;
+                    if(!id)return;
+                    if(ventReady && !ventStarting && getLoadedVentAvatarId()===id)return;
                     switchVentAvatar(id);
                 });
             });
@@ -11057,6 +11097,7 @@
                     subtitleContainer: subtitle
                 });
                 container.dataset.ventAvatar=selectedAvatar.id;
+                ventLoadedAvatarId=selectedAvatar.id;
 
                 watchVentResize();
                 await ventAvatar.ready();
@@ -11080,6 +11121,7 @@
 
                 registerVentActivity();
                 resetVentIdleTimer();
+                runPendingVentAvatarSwitch();
             }catch(error){
                 ventStarting=false;
                 console.error('Gagal memuat AvatarSpeaker Vent:',error);
