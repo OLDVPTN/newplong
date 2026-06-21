@@ -8823,6 +8823,7 @@
                                     <p>Pilih warna dan gaya untuk avatar 3D kamu</p>
                                 </div>
 
+
                                 <div class="avatar-3d-tabs">
                                     <button type="button" class="avatar-3d-tab active" data-tab="body">
                                         <i class="fas fa-user"></i>
@@ -11070,7 +11071,7 @@
                 hideVentLoading();
                 updateVentAvatarPicker();
                 const activeAvatar=getSelectedVentAvatar();
-                setText('vent-subtitle-container','Avatar '+activeAvatar.label+' siap. Tekan mic dan mulai bicara.');
+                setText('vent-subtitle-container','Aku siap mendengarkan ceritamu. Tekan mic dan mulai bicara.');
                 setText('vent-status-text','Avatar '+activeAvatar.label+' siap mendengarkan.');
 
                 await sleep(120);
