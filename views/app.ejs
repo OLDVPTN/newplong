@@ -8549,6 +8549,506 @@
                 }
             }
 
+
+            /* ═══════ CUTE MODERN DASHBOARD REDESIGN ═══════ */
+            #pg-home.cute-dashboard-page{
+                padding:0!important;
+                overflow:hidden!important;
+                background:
+                    radial-gradient(circle at 12% 6%,rgba(255,202,212,.48),transparent 25%),
+                    radial-gradient(circle at 86% 10%,rgba(187,247,208,.50),transparent 26%),
+                    linear-gradient(180deg,#FFF9F5 0%,#F7FBFF 52%,#FFF7ED 100%)!important;
+            }
+            #pg-home.cute-dashboard-page.on{
+                display:flex!important;
+            }
+            .cute-dash-shell{
+                flex:1;
+                min-height:0;
+                width:100%;
+                max-width:920px;
+                margin:0 auto;
+                padding:calc(14px + var(--s-t)) 14px calc(var(--nav-h) + var(--s-b) + 20px);
+                overflow-y:auto;
+                overflow-x:hidden;
+                -webkit-overflow-scrolling:touch;
+                overscroll-behavior-y:contain;
+                display:flex;
+                flex-direction:column;
+                gap:12px;
+            }
+            .cute-dash-hero{
+                position:relative;
+                overflow:hidden;
+                border-radius:30px;
+                padding:18px;
+                min-height:238px;
+                background:
+                    linear-gradient(145deg,rgba(255,255,255,.88),rgba(255,244,239,.72)),
+                    radial-gradient(circle at 18% 18%,rgba(255,192,203,.35),transparent 28%),
+                    radial-gradient(circle at 88% 20%,rgba(167,243,208,.42),transparent 30%);
+                border:1px solid rgba(255,255,255,.78);
+                box-shadow:0 22px 60px rgba(232,77,26,.10),0 8px 24px rgba(15,23,42,.05),inset 0 1px 0 rgba(255,255,255,.82);
+                isolation:isolate;
+            }
+            .cute-dash-hero::before{
+                content:'';
+                position:absolute;
+                inset:auto -34px -50px auto;
+                width:170px;
+                height:170px;
+                border-radius:50%;
+                background:radial-gradient(circle,rgba(255,184,108,.24),transparent 68%);
+                z-index:-1;
+            }
+            .cute-dash-hero::after{
+                content:'🌸';
+                position:absolute;
+                right:22px;
+                top:20px;
+                font-size:42px;
+                filter:drop-shadow(0 12px 20px rgba(232,77,26,.12));
+                opacity:.92;
+                transform:rotate(8deg);
+            }
+            .cute-hero-bg{
+                position:absolute;
+                border-radius:999px;
+                pointer-events:none;
+                z-index:-1;
+                filter:blur(.2px);
+            }
+            .cute-hero-bg-1{
+                left:-44px;
+                top:-50px;
+                width:150px;
+                height:150px;
+                background:rgba(255,208,218,.50);
+            }
+            .cute-hero-bg-2{
+                right:60px;
+                bottom:-54px;
+                width:180px;
+                height:180px;
+                background:rgba(187,247,208,.44);
+            }
+            .cute-hero-top{
+                display:flex;
+                justify-content:space-between;
+                gap:14px;
+                align-items:flex-start;
+                position:relative;
+                z-index:1;
+            }
+            .cute-kicker{
+                display:inline-flex;
+                align-items:center;
+                gap:6px;
+                padding:6px 10px;
+                border-radius:999px;
+                background:rgba(255,255,255,.76);
+                border:1px solid rgba(255,255,255,.74);
+                color:var(--ac);
+                font-size:10px;
+                font-weight:1000;
+                text-transform:uppercase;
+                letter-spacing:.06em;
+                box-shadow:0 8px 18px rgba(232,77,26,.06);
+            }
+            .cute-greet h1{
+                margin-top:10px;
+                font-size:clamp(24px,6vw,38px);
+                line-height:1.03;
+                letter-spacing:-.05em;
+                color:#242432;
+                max-width:560px;
+            }
+            .cute-greet h1 b{
+                color:var(--ac);
+                font-weight:1000;
+            }
+            .cute-greet p{
+                margin-top:8px;
+                max-width:520px;
+                font-size:13px;
+                line-height:1.55;
+                color:#686676;
+            }
+            .cute-greet small{
+                display:inline-flex;
+                margin-top:10px;
+                color:#8b8898;
+                font-size:11px;
+                font-weight:800;
+            }
+            .cute-coin-card{
+                min-width:104px;
+                padding:12px 13px;
+                border-radius:24px;
+                background:linear-gradient(180deg,#FFF,#FFF7ED);
+                border:1px solid rgba(255,255,255,.82);
+                box-shadow:0 14px 30px rgba(245,158,11,.13),inset 0 1px 0 rgba(255,255,255,.9);
+                text-align:right;
+                position:relative;
+                overflow:hidden;
+            }
+            .cute-coin-card span{
+                display:block;
+                font-size:9px;
+                font-weight:1000;
+                letter-spacing:.06em;
+                text-transform:uppercase;
+                color:#c27616;
+            }
+            .cute-coin-card strong{
+                display:block;
+                margin-top:2px;
+                font-size:26px;
+                line-height:1;
+                color:#9a5310;
+                letter-spacing:-.04em;
+            }
+            .cute-coin-card i{
+                position:absolute;
+                left:10px;
+                bottom:8px;
+                color:#f5b43b;
+                opacity:.45;
+                font-size:28px;
+            }
+            .cute-hero-bottom{
+                display:grid;
+                grid-template-columns:82px minmax(0,1fr);
+                gap:12px;
+                align-items:stretch;
+                margin-top:18px;
+                position:relative;
+                z-index:1;
+            }
+            .cute-avatar-orb{
+                width:82px;
+                min-height:82px;
+                border-radius:28px;
+                display:grid;
+                place-items:center;
+                background:linear-gradient(145deg,#FFE4EC,#ECFDF5);
+                border:1px solid rgba(255,255,255,.78);
+                box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 12px 28px rgba(15,23,42,.08);
+            }
+            .cute-avatar-orb img{
+                width:56px;
+                height:56px;
+                object-fit:contain;
+                filter:drop-shadow(0 9px 14px rgba(15,23,42,.10));
+            }
+            .cute-recap-card{
+                min-width:0;
+                border-radius:26px;
+                padding:14px;
+                background:rgba(255,255,255,.72);
+                border:1px solid rgba(255,255,255,.78);
+                box-shadow:inset 0 1px 0 rgba(255,255,255,.82),0 10px 28px rgba(15,23,42,.045);
+                backdrop-filter:blur(14px);
+                -webkit-backdrop-filter:blur(14px);
+            }
+            .cute-recap-card span{
+                display:block;
+                color:#f97316;
+                font-size:10px;
+                font-weight:1000;
+                letter-spacing:.06em;
+                text-transform:uppercase;
+            }
+            .cute-recap-card strong{
+                display:block;
+                margin-top:4px;
+                font-size:16px;
+                color:#27253a;
+                font-weight:1000;
+            }
+            .cute-recap-card p{
+                margin-top:4px;
+                color:#777486;
+                font-size:12px;
+                line-height:1.5;
+            }
+            .cute-quick-row{
+                display:grid;
+                grid-template-columns:1.15fr 1fr 1fr;
+                gap:8px;
+            }
+            .cute-quick{
+                min-height:46px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                gap:8px;
+                padding:10px;
+                border-radius:18px;
+                background:rgba(255,255,255,.84);
+                color:#5a5868;
+                border:1px solid rgba(228,228,231,.80);
+                box-shadow:0 10px 24px rgba(15,23,42,.045);
+                font-size:12px;
+                font-weight:1000;
+                transition:transform .14s ease,box-shadow .14s ease,background .14s ease;
+            }
+            .cute-quick.primary{
+                background:linear-gradient(135deg,var(--ac),#ff8c65);
+                color:white;
+                border-color:rgba(232,77,26,.25);
+                box-shadow:0 14px 28px rgba(232,77,26,.18);
+            }
+            .cute-quick:hover{
+                transform:translateY(-2px);
+                box-shadow:0 16px 30px rgba(15,23,42,.08);
+            }
+            .cute-stat-grid{
+                display:grid;
+                grid-template-columns:repeat(2,minmax(0,1fr));
+                gap:9px;
+            }
+            .cute-stat-card{
+                position:relative;
+                overflow:hidden;
+                min-height:118px;
+                border-radius:24px;
+                padding:12px;
+                background:rgba(255,255,255,.84);
+                border:1px solid rgba(255,255,255,.74);
+                box-shadow:0 14px 34px rgba(15,23,42,.055),inset 0 1px 0 rgba(255,255,255,.82);
+                display:flex;
+                flex-direction:column;
+                justify-content:space-between;
+                isolation:isolate;
+            }
+            .cute-stat-card::after{
+                content:'';
+                position:absolute;
+                right:-34px;
+                bottom:-40px;
+                width:110px;
+                height:110px;
+                border-radius:50%;
+                background:var(--stat-glow,rgba(255,205,138,.25));
+                z-index:-1;
+            }
+            .cute-stat-card.coin{--stat-glow:rgba(250,204,21,.25)}
+            .cute-stat-card.friends{--stat-glow:rgba(96,165,250,.22)}
+            .cute-stat-card.mood{--stat-glow:rgba(244,114,182,.20)}
+            .cute-stat-card.calm{--stat-glow:rgba(45,212,191,.22)}
+            .cute-stat-card.badge{--stat-glow:rgba(251,146,60,.22)}
+            .cute-stat-card.garden{--stat-glow:rgba(74,222,128,.24)}
+            .cute-stat-card.support{--stat-glow:rgba(196,181,253,.24)}
+            .cute-stat-card.summary{--stat-glow:rgba(125,211,252,.24)}
+            .cute-stat-icon{
+                width:38px;
+                height:38px;
+                border-radius:16px;
+                display:grid;
+                place-items:center;
+                background:rgba(255,255,255,.72);
+                border:1px solid rgba(255,255,255,.72);
+                color:var(--ac);
+                box-shadow:0 8px 18px rgba(15,23,42,.055);
+            }
+            .cute-stat-card span{
+                margin-top:8px;
+                font-size:11px;
+                color:#7b788a;
+                font-weight:900;
+            }
+            .cute-stat-card strong{
+                display:block;
+                margin-top:1px;
+                color:#252437;
+                font-size:26px;
+                line-height:1;
+                letter-spacing:-.05em;
+            }
+            .cute-stat-card small{
+                margin-top:6px;
+                color:#9b98a8;
+                font-size:10px;
+                line-height:1.28;
+                font-weight:700;
+            }
+            .cute-life-panel{
+                border-radius:28px;
+                padding:14px;
+                background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,250,240,.78));
+                border:1px solid rgba(255,255,255,.76);
+                box-shadow:0 16px 40px rgba(15,23,42,.055),inset 0 1px 0 rgba(255,255,255,.84);
+            }
+            .cute-panel-head{
+                display:flex;
+                align-items:flex-start;
+                justify-content:space-between;
+                gap:12px;
+                margin-bottom:12px;
+            }
+            .cute-panel-head span{
+                display:block;
+                font-size:10px;
+                color:var(--ac);
+                font-weight:1000;
+                letter-spacing:.06em;
+                text-transform:uppercase;
+            }
+            .cute-panel-head strong{
+                display:block;
+                margin-top:2px;
+                font-size:17px;
+                color:#27253a;
+                font-weight:1000;
+                letter-spacing:-.02em;
+            }
+            .cute-panel-head i{
+                width:38px;
+                height:38px;
+                border-radius:16px;
+                display:grid;
+                place-items:center;
+                background:#FFE4EC;
+                color:#f43f5e;
+            }
+            .cute-action-grid{
+                display:grid;
+                grid-template-columns:repeat(2,minmax(0,1fr));
+                gap:9px;
+            }
+            .cute-action-card{
+                min-height:104px;
+                text-align:left;
+                border-radius:22px;
+                padding:12px;
+                display:flex;
+                flex-direction:column;
+                align-items:flex-start;
+                justify-content:space-between;
+                background:#fff;
+                border:1px solid rgba(228,228,231,.78);
+                box-shadow:0 10px 26px rgba(15,23,42,.045);
+                transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease;
+                position:relative;
+                overflow:hidden;
+            }
+            .cute-action-card::after{
+                content:'';
+                position:absolute;
+                right:-28px;
+                top:-28px;
+                width:88px;
+                height:88px;
+                border-radius:50%;
+                background:rgba(255,226,183,.38);
+                pointer-events:none;
+            }
+            .cute-action-card img,
+            .cute-action-card > i{
+                width:34px;
+                height:34px;
+                object-fit:contain;
+                font-size:26px;
+                color:var(--ac);
+                filter:drop-shadow(0 8px 12px rgba(15,23,42,.08));
+                position:relative;
+                z-index:1;
+            }
+            .cute-action-card strong{
+                margin-top:10px;
+                color:#27253a;
+                font-size:14px;
+                line-height:1.1;
+                font-weight:1000;
+                position:relative;
+                z-index:1;
+            }
+            .cute-action-card span{
+                margin-top:4px;
+                color:#8a8798;
+                font-size:11px;
+                line-height:1.35;
+                position:relative;
+                z-index:1;
+            }
+            .cute-action-card:hover{
+                transform:translateY(-3px);
+                box-shadow:0 18px 36px rgba(15,23,42,.08);
+                border-color:var(--ac-bd);
+            }
+            @media(min-width:700px){
+                .cute-dash-shell{padding-left:18px;padding-right:18px}
+                .cute-stat-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+                .cute-action-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+            }
+            @media(min-width:900px){
+                #pg-home.cute-dashboard-page{
+                    max-width:none!important;
+                    width:100%!important;
+                }
+                .cute-dash-shell{
+                    max-width:1040px;
+                    padding:28px 28px 32px;
+                }
+                .cute-dash-hero{padding:24px;min-height:268px}
+                .cute-hero-bottom{grid-template-columns:100px minmax(0,1fr)}
+                .cute-avatar-orb{width:100px;min-height:100px;border-radius:32px}
+                .cute-avatar-orb img{width:70px;height:70px}
+                .cute-stat-card{min-height:130px}
+            }
+            @media(max-width:420px){
+                .cute-dash-shell{
+                    padding-left:10px;
+                    padding-right:10px;
+                    gap:10px;
+                }
+                .cute-dash-hero{
+                    border-radius:26px;
+                    padding:15px;
+                    min-height:228px;
+                }
+                .cute-dash-hero::after{
+                    font-size:34px;
+                    right:16px;
+                    top:16px;
+                }
+                .cute-hero-top{
+                    gap:10px;
+                }
+                .cute-coin-card{
+                    min-width:88px;
+                    border-radius:20px;
+                    padding:10px;
+                }
+                .cute-coin-card strong{
+                    font-size:22px;
+                }
+                .cute-hero-bottom{
+                    grid-template-columns:70px minmax(0,1fr);
+                    gap:10px;
+                }
+                .cute-avatar-orb{
+                    width:70px;
+                    min-height:70px;
+                    border-radius:24px;
+                }
+                .cute-avatar-orb img{
+                    width:48px;
+                    height:48px;
+                }
+                .cute-quick-row{
+                    grid-template-columns:1fr;
+                }
+                .cute-stat-card{
+                    min-height:110px;
+                    border-radius:22px;
+                }
+                .cute-action-grid{
+                    grid-template-columns:1fr 1fr;
+                }
+            }
+
 </style>
 
     </head>
@@ -8717,56 +9217,133 @@
                 </div>-->
 
                 <!-- HOME -->
-                <section id="pg-home" class="<%= pageId === 'pg-home' ? 'pg on home-foku dashboard-stats-page' : 'pg home-foku dashboard-stats-page' %>" aria-label="Dashboard">
-                    <div class="foku-shell dash-shell">
-                        <div class="foku-topbar dash-topbar">
-                            <div class="foku-greet">
-                                <span>Dashboard</span>
-                                <strong>Statistik Pengguna</strong>
-                                <small id="foku-date">01 March 2026</small>
+                <section id="pg-home" class="<%= pageId === 'pg-home' ? 'pg on home-foku dashboard-stats-page cute-dashboard-page' : 'pg home-foku dashboard-stats-page cute-dashboard-page' %>" aria-label="Dashboard">
+                    <div class="cute-dash-shell">
+                        <div class="cute-dash-hero" aria-label="Ringkasan perjalanan">
+                            <div class="cute-hero-bg cute-hero-bg-1"></div>
+                            <div class="cute-hero-bg cute-hero-bg-2"></div>
+                            <div class="cute-hero-top">
+                                <div class="cute-greet">
+                                    <span class="cute-kicker"><i class="fas fa-sparkles"></i> Dashboard</span>
+                                    <h1>Hai, <b id="dash-user-name">VokaMon User</b> 🌷</h1>
+                                    <p id="dash-user-bio">Statistik perjalanan emosimu tampil di sini.</p>
+                                    <small id="foku-date">01 March 2026</small>
+                                </div>
+                                <div class="cute-coin-card">
+                                    <span>Soul Coins</span>
+                                    <strong id="dash-coins-pill">0</strong>
+                                    <i class="fas fa-coins"></i>
+                                </div>
                             </div>
-                            <div class="foku-points-pill">
-                                <i class="fas fa-coins"></i>
-                                <span id="dash-coins-pill">0</span>
+
+                            <div class="cute-hero-bottom">
+                                <div class="cute-avatar-orb">
+                                    <img src="/assets/nav/account.png" alt="" loading="lazy" decoding="async">
+                                </div>
+                                <div class="cute-recap-card">
+                                    <span>Weekly Recap</span>
+                                    <strong id="dash-recap-title">Progress minggu ini</strong>
+                                    <p id="dash-recap-body">Data mingguan akan muncul setelah kamu mulai check-in atau memakai fitur Plong.</p>
+                                </div>
                             </div>
                         </div>
 
-                        <section class="dash-hero-stats" aria-label="Ringkasan statistik">
-                            <article class="dash-profile-card">
-                                <div class="dash-profile-bg"></div>
-                                <div class="dash-profile-avatar"><img src="/assets/nav/account.png" alt="" loading="lazy" decoding="async"></div>
+                        <div class="cute-quick-row" aria-label="Aksi cepat dashboard">
+                            <button class="cute-quick primary" type="button" data-page="pg-mood">
+                                <i class="fas fa-face-smile"></i>
+                                <span>Check-in Mood</span>
+                            </button>
+                            <button class="cute-quick" type="button" data-page="pg-account">
+                                <i class="fas fa-user-pen"></i>
+                                <span>Edit Profil</span>
+                            </button>
+                            <button class="cute-quick" type="button" data-page="pg-vent">
+                                <i class="fas fa-microphone-lines"></i>
+                                <span>Curhat Voice</span>
+                            </button>
+                        </div>
+
+                        <section class="cute-stat-grid" aria-label="Statistik utama">
+                            <article class="cute-stat-card coin">
+                                <div class="cute-stat-icon"><i class="fas fa-coins"></i></div>
+                                <span>Soul Coins</span>
+                                <strong id="dash-stat-coins">0</strong>
+                                <small>Total saldo aktif</small>
+                            </article>
+                            <article class="cute-stat-card friends">
+                                <div class="cute-stat-icon"><i class="fas fa-user-group"></i></div>
+                                <span>Teman</span>
+                                <strong id="dash-stat-friends">0</strong>
+                                <small>Relasi accepted</small>
+                            </article>
+                            <article class="cute-stat-card mood">
+                                <div class="cute-stat-icon"><i class="fas fa-face-smile"></i></div>
+                                <span>Mood Check-in</span>
+                                <strong id="dash-stat-mood">0</strong>
+                                <small id="dash-stat-mood-small">0 hari ini</small>
+                            </article>
+                            <article class="cute-stat-card calm">
+                                <div class="cute-stat-icon"><i class="fas fa-spa"></i></div>
+                                <span>Ruang Tenang</span>
+                                <strong id="dash-stat-calm">0</strong>
+                                <small id="dash-stat-calm-small">0 detik</small>
+                            </article>
+                            <article class="cute-stat-card badge">
+                                <div class="cute-stat-icon"><i class="fas fa-medal"></i></div>
+                                <span>Badge</span>
+                                <strong id="dash-stat-badges">0</strong>
+                                <small>Achievement terbuka</small>
+                            </article>
+                            <article class="cute-stat-card garden">
+                                <div class="cute-stat-icon"><i class="fas fa-seedling"></i></div>
+                                <span>Level Kebun</span>
+                                <strong id="dash-stat-garden">1</strong>
+                                <small id="dash-stat-garden-small">0/40 EXP</small>
+                            </article>
+                            <article class="cute-stat-card support">
+                                <div class="cute-stat-icon"><i class="fas fa-hands-holding-heart"></i></div>
+                                <span>Dukungan</span>
+                                <strong id="dash-stat-support">0</strong>
+                                <small>Terkirim ke teman</small>
+                            </article>
+                            <article class="cute-stat-card summary">
+                                <div class="cute-stat-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+                                <span>AI Summary</span>
+                                <strong id="dash-stat-summary">0</strong>
+                                <small>Ringkasan emosi</small>
+                            </article>
+                        </section>
+
+                        <section class="cute-life-panel" aria-label="Ruang aktif">
+                            <div class="cute-panel-head">
                                 <div>
-                                    <span>Halo,</span>
-                                    <strong id="dash-user-name">VokaMon User</strong>
-                                    <p id="dash-user-bio">Statistik perjalanan emosimu tampil di sini.</p>
+                                    <span>Ruang kecilmu</span>
+                                    <strong>Pilih mau lanjut ke mana?</strong>
                                 </div>
-                                <button class="feature-btn" type="button" data-page="pg-account"><i class="fas fa-user-pen"></i> Edit Profil</button>
-                            </article>
-
-                            <article class="dash-focus-card">
-                                <span>Weekly Recap</span>
-                                <strong id="dash-recap-title">Progress minggu ini</strong>
-                                <p id="dash-recap-body">Data mingguan akan muncul setelah kamu mulai check-in atau memakai fitur Plong.</p>
-                                <button class="feature-btn primary" type="button" data-page="pg-mood"><i class="fas fa-face-smile"></i> Check-in Mood</button>
-                            </article>
-                        </section>
-
-                        <section class="dash-stat-grid" aria-label="Statistik utama">
-                            <article class="dash-stat-card"><i class="fas fa-coins"></i><span>Soul Coins</span><strong id="dash-stat-coins">0</strong><small>Total saldo aktif</small></article>
-                            <article class="dash-stat-card"><i class="fas fa-user-group"></i><span>Teman</span><strong id="dash-stat-friends">0</strong><small>Relasi accepted</small></article>
-                            <article class="dash-stat-card"><i class="fas fa-face-smile"></i><span>Mood Check-in</span><strong id="dash-stat-mood">0</strong><small id="dash-stat-mood-small">0 hari ini</small></article>
-                            <article class="dash-stat-card"><i class="fas fa-spa"></i><span>Ruang Tenang</span><strong id="dash-stat-calm">0</strong><small id="dash-stat-calm-small">0 detik</small></article>
-                            <article class="dash-stat-card"><i class="fas fa-medal"></i><span>Badge</span><strong id="dash-stat-badges">0</strong><small>Achievement terbuka</small></article>
-                            <article class="dash-stat-card"><i class="fas fa-seedling"></i><span>Level Kebun</span><strong id="dash-stat-garden">1</strong><small id="dash-stat-garden-small">0/40 EXP</small></article>
-                            <article class="dash-stat-card"><i class="fas fa-hands-holding-heart"></i><span>Dukungan</span><strong id="dash-stat-support">0</strong><small>Terkirim ke teman</small></article>
-                            <article class="dash-stat-card"><i class="fas fa-wand-magic-sparkles"></i><span>AI Summary</span><strong id="dash-stat-summary">0</strong><small>Ringkasan emosi</small></article>
-                        </section>
-
-                        <section class="dash-action-grid">
-                            <button type="button" class="dash-action-card" data-page="pg-pet"><i class="fas fa-paw"></i><strong>Buka Pet</strong><span>Rawat pendamping emosimu</span></button>
-                            <button type="button" class="dash-action-card" data-page="pg-garden"><i class="fas fa-seedling"></i><strong>Buka Kebun</strong><span>Lihat progress tanaman</span></button>
-                            <button type="button" class="dash-action-card" data-page="pg-quests"><i class="fas fa-list-check"></i><strong>Daily Quest</strong><span>Klaim progress harian</span></button>
-                            <button type="button" class="dash-action-card" data-page="pg-notifications"><i class="fas fa-bell"></i><strong>Notifikasi</strong><span id="dash-notif-text">0 belum dibaca</span></button>
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="cute-action-grid">
+                                <button type="button" class="cute-action-card pet" data-page="pg-pet">
+                                    <img src="/assets/nav/pet.png" alt="" loading="lazy" decoding="async">
+                                    <strong>Buka Pet</strong>
+                                    <span>Rawat pendamping emosimu</span>
+                                </button>
+                                <button type="button" class="cute-action-card garden" data-page="pg-garden">
+                                    <img src="/assets/nav/garden.png" alt="" loading="lazy" decoding="async">
+                                    <strong>Buka Kebun</strong>
+                                    <span>Lihat progress tanaman</span>
+                                </button>
+                                <button type="button" class="cute-action-card quest" data-page="pg-quests">
+                                    <i class="fas fa-list-check"></i>
+                                    <strong>Daily Quest</strong>
+                                    <span>Klaim progress harian</span>
+                                </button>
+                                <button type="button" class="cute-action-card notif" data-page="pg-notifications">
+                                    <i class="fas fa-bell"></i>
+                                    <strong>Notifikasi</strong>
+                                    <span id="dash-notif-text">0 belum dibaca</span>
+                                </button>
+                            </div>
                         </section>
                     </div>
                 </section>
