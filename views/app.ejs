@@ -10648,10 +10648,6 @@
         let ventIdleMode = false;
         let ventIdleAnimating = false;
         let ventResizeObserver = null;
-        let ventLoadedAvatarId = null;
-        let ventPendingAvatarChoice = null;
-        let ventDesiredAvatarId = null;
-        let ventAvatarSwitchToken = 0;
 
         function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
         function byId(id){return document.getElementById(id)}
@@ -10681,41 +10677,6 @@
         }
         function setVentAvatarPickerDisabled(disabled){
             document.querySelectorAll('[data-vent-avatar]').forEach((button)=>button.disabled=!!disabled);
-        }
-        function getLoadedVentAvatarId(){
-            const container=byId('vent-avatar-container');
-            return (container&&container.dataset&&container.dataset.ventAvatar) || ventLoadedAvatarId || '';
-        }
-        function queueVentAvatarSwitch(id){
-            const option=getVentAvatarOption(id);
-            ventDesiredAvatarId=option.id;
-            ventPendingAvatarChoice=option.id;
-            saveSelectedVentAvatar(option.id);
-            updateVentAvatarPicker();
-            setText('vent-loading-text','Avatar sedang dimuat. Akan ganti ke '+option.label+' setelah siap...');
-            setText('vent-status-text','Menyiapkan avatar '+option.label+'...');
-        }
-        function clearStaleVentAvatarQueue(exceptId){
-            if(!exceptId || ventPendingAvatarChoice!==exceptId){
-                ventPendingAvatarChoice=null;
-            }
-        }
-        function runPendingVentAvatarSwitch(){
-            const pending=ventPendingAvatarChoice;
-            const desired=ventDesiredAvatarId || pending;
-            if(!pending||ventStarting)return false;
-            if(desired && pending!==desired){
-                ventPendingAvatarChoice=null;
-                return false;
-            }
-            const loaded=getLoadedVentAvatarId();
-            if(pending===loaded){
-                ventPendingAvatarChoice=null;
-                return false;
-            }
-            ventPendingAvatarChoice=null;
-            setTimeout(()=>switchVentAvatar(pending),80);
-            return true;
         }
         function cleanupVentAvatarCanvas(){
             const container=byId('vent-avatar-container');
@@ -10987,31 +10948,17 @@
 
 
         async function switchVentAvatar(choiceId){
-            const option=getVentAvatarOption(choiceId);
+            const option=saveSelectedVentAvatar(choiceId);
+            updateVentAvatarPicker();
 
             const container=byId('vent-avatar-container');
             const subtitle=byId('vent-subtitle-container');
             if(!container)return;
 
             if(ventStarting){
-                queueVentAvatarSwitch(option.id);
+                setText('vent-loading-text','Avatar sedang dimuat...');
                 return;
             }
-
-            ventDesiredAvatarId=option.id;
-            clearStaleVentAvatarQueue(option.id);
-            const switchToken=++ventAvatarSwitchToken;
-
-            const loaded=getLoadedVentAvatarId();
-            if(ventReady && loaded===option.id){
-                saveSelectedVentAvatar(option.id);
-                ventPendingAvatarChoice=null;
-                updateVentAvatarPicker();
-                return;
-            }
-
-            saveSelectedVentAvatar(option.id);
-            updateVentAvatarPicker();
 
             ventStarting=true;
             setVentAvatarPickerDisabled(true);
@@ -11035,22 +10982,11 @@
                     subtitleContainer: subtitle
                 });
                 container.dataset.ventAvatar=option.id;
-                ventLoadedAvatarId=option.id;
 
                 watchVentResize();
                 await ventAvatar.ready();
                 await sleep(220);
 
-                if(switchToken!==ventAvatarSwitchToken || ventDesiredAvatarId!==option.id){
-                    ventStarting=false;
-                    const desired=ventDesiredAvatarId;
-                    if(desired&&desired!==option.id){
-                        setTimeout(()=>switchVentAvatar(desired),60);
-                    }
-                    return;
-                }
-
-                ventPendingAvatarChoice=null;
                 ventReady=true;
                 ventStarting=false;
                 forceVentAvatarCanvasLayout();
@@ -11062,14 +10998,12 @@
                 setText('vent-status-text','Avatar '+option.label+' siap mendengarkan.');
                 try{await animateVentAvatar(VENT_GREETING_ANIMATION)}catch(_){}
                 resetVentIdleTimer();
-                runPendingVentAvatarSwitch();
             }catch(error){
                 ventStarting=false;
                 console.error('Gagal mengganti avatar:',error);
                 showVentLoadError('Gagal mengganti avatar. Coba pilih avatar lain.');
                 updateVentAvatarPicker();
                 setText('vent-status-text','Avatar gagal diganti.');
-                runPendingVentAvatarSwitch();
             }
         }
 
@@ -11077,11 +11011,9 @@
             document.querySelectorAll('[data-vent-avatar]').forEach((button)=>{
                 if(button.dataset.boundVentAvatar)return;
                 button.dataset.boundVentAvatar='1';
-                button.addEventListener('click',(event)=>{
-                    event.preventDefault();
+                button.addEventListener('click',()=>{
                     const id=button.dataset.ventAvatar;
-                    if(!id)return;
-                    if(ventReady && !ventStarting && getLoadedVentAvatarId()===id)return;
+                    if(!id || getSelectedVentAvatar().id===id)return;
                     switchVentAvatar(id);
                 });
             });
@@ -11117,7 +11049,6 @@
 
             try{
                 const selectedAvatar=getSelectedVentAvatar();
-                if(!ventDesiredAvatarId)ventDesiredAvatarId=selectedAvatar.id;
                 updateVentAvatarPicker();
                 cleanupVentAvatarCanvas();
                 ventAvatar=new AvatarSpeaker({
@@ -11126,8 +11057,6 @@
                     subtitleContainer: subtitle
                 });
                 container.dataset.ventAvatar=selectedAvatar.id;
-                ventLoadedAvatarId=selectedAvatar.id;
-                if(ventPendingAvatarChoice===selectedAvatar.id)ventPendingAvatarChoice=null;
 
                 watchVentResize();
                 await ventAvatar.ready();
@@ -11151,7 +11080,6 @@
 
                 registerVentActivity();
                 resetVentIdleTimer();
-                runPendingVentAvatarSwitch();
             }catch(error){
                 ventStarting=false;
                 console.error('Gagal memuat AvatarSpeaker Vent:',error);
